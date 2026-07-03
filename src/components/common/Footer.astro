@@ -16,25 +16,119 @@ import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 
   <div class="bg-dark">
   <!-- Mapa de Google Maps -->
-  <div class="mx-auto max-w-[1512px] px-6 pt-12 lg:px-24">
+  <div class="mx-auto max-w-[1512px] px-6 pt-8 sm:pt-12 lg:px-24">
     <iframe
       src="https://www.google.com/maps?q=Brainstorming+Marketing+Growth+Strategists+San+Fernando+165+Miraflores+Lima+Peru&output=embed&z=16&hl=es"
       width="100%"
-      height="300"
+      height="250"
       style="border:0; border-radius: 12px;"
       allowfullscreen=""
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
       title="Brainstorming Marketing - San Fernando 165, Miraflores"
+      class="sm:h-[300px]"
     ></iframe>
   </div>
 
-  <div class="mx-auto max-w-[1512px] px-6 py-12 lg:px-24">
-    <div
-      class="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5"
-    >
+  <div class="mx-auto max-w-[1512px] px-6 py-8 sm:py-12 lg:px-24">
+    <!-- Mobile/Tablet: layout por filas -->
+    <div class="lg:hidden">
+      <!-- Fila 1: Logo + redes -->
+      <div class="mb-8">
+        <Image
+          src={footerLogo}
+          alt="Brainstorming"
+          class="h-7 w-auto sm:h-8"
+        />
+        <ul class="mt-5 flex items-center gap-2 sm:mt-6">
+          {
+            redes.map(r => (
+              <li>
+                <a href={r.href} aria-label={r.label} class="text-white transition-opacity hover:opacity-70">
+                  <Icon name={r.name} class="h-8 w-8 sm:h-9 sm:w-9" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Fila 2: Soluciones + Empresa -->
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8">
+        <div>
+          <h3 class="font-heading text-lg font-bold">Soluciones</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              soluciones.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold">Empresa</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              empresa.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Fila 3: Recursos + Contacto -->
+      <div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8">
+        <div>
+          <h3 class="font-heading text-lg font-bold">Recursos</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              recursos.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold">Contacto</h3>
+          <ul class="mt-4 flex flex-col gap-3 text-[13px] sm:text-sm">
+            <li class="flex items-center gap-2">
+              <Icon name="footer-map" class="h-4 w-4 shrink-0" />
+              <span>Lima, Perú</span>
+            </li>
+            <li>
+              <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2 transition-colors hover:text-primary-300">
+                <Icon name="footer-mail" class="h-4 w-4 shrink-0" />
+                <span>conversemos@brainstorming.la</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-primary-300">
+                <Icon name="footer-phone" class="h-4 w-4 shrink-0" />
+                <span>+51 992 528 363</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: layout 5 columnas -->
+    <div class="hidden grid-cols-5 gap-8 lg:grid">
       <!-- Logo + redes -->
-      <div class="col-span-2 sm:col-span-3 lg:col-span-1">
+      <div>
         <Image
           src={footerLogo}
           alt="Brainstorming"
@@ -69,13 +163,14 @@ import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
         </ul>
       </div>
 
-      <!-- Nosotros / Proyectos / Contacto -->
+      <!-- Empresa -->
       <div>
-        <ul class="flex flex-col gap-5">
+        <h3 class="font-heading text-xl font-bold">Empresa</h3>
+        <ul class="mt-5 flex flex-col gap-4">
           {
             empresa.map(l => (
               <li>
-                <a href={l.href} class="font-heading text-xl font-bold text-white transition-colors hover:text-primary-300">
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
                   {l.label}
                 </a>
               </li>
@@ -127,7 +222,7 @@ import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 
   <!-- Barra inferior -->
   <div class="border-t border-white/10">
-    <p class="py-6 text-center text-sm text-white/80">
+    <p class="py-5 text-center text-xs text-white/80 sm:py-6 sm:text-sm">
       Copyright © 2024 Brainstorming
     </p>
   </div>

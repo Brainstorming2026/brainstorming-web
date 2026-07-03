@@ -1,0 +1,163 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const soluciones = [
+  { label: 'Branding', href: '#branding' },
+  { label: 'Desarrollo Web', href: '#desarrollo-web' },
+  { label: 'Inbound Marketing', href: '#inbound-marketing' },
+  { label: 'Inbound Sales', href: '#inbound-sales' },
+  { label: 'Optimización de Procesos y CX', href: '#optimizacion' },
+]
+
+const empresa = [
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Contacto', href: '#contacto' },
+]
+
+const recursos = [
+  { label: 'Blog', href: '#blog' },
+  { label: 'Guías Prácticas', href: '#guias' },
+  { label: 'Políticas de privacidad', href: '#privacidad' },
+]
+
+const redes = [
+  { name: 'footer-linkedln', href: 'https://www.linkedin.com/company/brainstorming-marketing-%26-communications/?originalSubdomain=pe', label: 'LinkedIn' },
+  { name: 'footer-facebook', href: 'https://www.facebook.com/BrainstormingLa/', label: 'Facebook' },
+  { name: 'footer-ig', href: 'https://www.instagram.com/brainstormingmkt/', label: 'Instagram' },
+  { name: 'footer-yt', href: 'https://www.youtube.com/channel/UC-xpaBcv9dnpuE3adXizFcA/featured', label: 'YouTube' },
+  { name: 'footer-tiktok', href: 'https://www.tiktok.com/@brainstormingmkt', label: 'TikTok' },
+];
+---
+
+<footer class="text-white">
+  <!-- Borde curvo superior: sus esquinas transparentes revelan la sección de
+       arriba, por eso NO lleva fondo oscuro detrás. -->
+  <img
+    src="/images/footer-up.png"
+    alt=""
+    aria-hidden="true"
+    class="-mb-px block w-full select-none"
+  />
+
+  <div class="bg-dark">
+  <!-- Mapa de Google Maps -->
+  <div class="mx-auto max-w-[1512px] px-6 pt-12 lg:px-24">
+    <iframe
+      src="https://www.google.com/maps?q=Brainstorming+Marketing+Growth+Strategists+San+Fernando+165+Miraflores+Lima+Peru&output=embed&z=16&hl=es"
+      width="100%"
+      height="300"
+      style="border:0; border-radius: 12px;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Brainstorming Marketing - San Fernando 165, Miraflores"
+    ></iframe>
+  </div>
+
+  <div class="mx-auto max-w-[1512px] px-6 py-12 lg:px-24">
+    <div
+      class="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5"
+    >
+      <!-- Logo + redes -->
+      <div class="col-span-2 sm:col-span-3 lg:col-span-1">
+        <img
+          src="/images/footer-brainstormiing.png"
+          alt="Brainstorming"
+          width="212"
+          height="34"
+          class="h-8 w-auto"
+        />
+        <ul class="mt-8 flex items-center gap-2">
+          {
+            redes.map(r => (
+              <li>
+                <a href={r.href} aria-label={r.label} class="text-white transition-opacity hover:opacity-70">
+                  <Icon name={r.name} class="h-9 w-9" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Soluciones -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Soluciones</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {
+            soluciones.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Nosotros / Proyectos / Contacto -->
+      <div>
+        <ul class="flex flex-col gap-5">
+          {
+            empresa.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-xl font-bold text-white transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Recursos -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Recursos</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {
+            recursos.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Contacto</h3>
+        <ul class="mt-5 flex flex-col gap-4 text-[15px]">
+          <li class="flex items-center gap-2.5">
+            <Icon name="footer-map" class="h-5 w-5 shrink-0" />
+            <span>Lima, Perú</span>
+          </li>
+          <li>
+            <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+              <Icon name="footer-mail" class="h-5 w-5 shrink-0" />
+              <span>conversemos@brainstorming.la</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+              <Icon name="footer-phone" class="h-5 w-5 shrink-0" />
+              <span>+51 992 528 363</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="border-t border-white/10">
+    <p class="py-6 text-center text-sm text-white/80">
+      Copyright © 2024 Brainstorming
+    </p>
+  </div>
+  </div>
+</footer>

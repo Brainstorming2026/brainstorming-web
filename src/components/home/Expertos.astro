@@ -1,0 +1,80 @@
+---
+import { Icon } from 'astro-icon/components'
+
+// Sección "¿Por qué Brainstorming?" (Figma node 500-5123, 1512×756).
+// Fondo section-background-black.png (azul claro → colinas negras). Card blanca
+// con 4 expertise usando iconos expert-*.
+
+const experts = [
+  {
+    icon: 'expert-huella',
+    title: 'Branding',
+    desc: 'Estrategía e identidad de marca',
+  },
+  {
+    icon: 'expert-window',
+    title: 'Desarrollo de páginas y plataformas web',
+    desc: '',
+  },
+  {
+    icon: 'expert-iman',
+    title: 'Inbound Marketing',
+    desc: 'Marketing de contenidos',
+  },
+  {
+    icon: 'expert-money',
+    title: 'Inbound Sales',
+    desc: 'Implementación de CRM y automatizaciones',
+  },
+];
+---
+
+<section id="expertos" class="relative overflow-hidden">
+  <!-- Fondo (azul claro arriba → negro abajo) -->
+  <img
+    src="/images/section-background-black.png"
+    alt=""
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover select-none"
+  />
+
+  <div class="relative mx-auto max-w-[1512px] px-6 pb-16 pt-20 lg:px-24">
+    <!-- Encabezado -->
+    <div class="mx-auto max-w-4xl text-center">
+      <h2 class="font-heading text-3xl font-bold text-ink sm:text-4xl">
+        ¿Por qué Brainstorming?
+      </h2>
+      <p class="mx-auto mt-6 max-w-3xl text-[15px] leading-6 text-ink-500">
+        Nuestra metodología de trabajo se enfoca en asegurar tu éxito comercial
+        a través del planteamiento y ejecución de estrategias digitales. Junto a
+        un ambiente digital de trabajo colaborativo y comunicación eficiente,
+        podemos tener entregas precisas y un detallado monitoreo de las
+        actividades y procesos para garantizar la ejecución del plan de trabajo.
+      </p>
+      <h3 class="mt-6 font-heading text-2xl font-bold text-ink sm:text-3xl">
+        Somos expertos en:
+      </h3>
+    </div>
+
+    <!-- Card de expertise -->
+    <div
+      class="mx-auto mt-12 max-w-[1000px] rounded-[20px] bg-white p-8 shadow-2xl sm:p-12"
+    >
+      <div class="grid gap-x-12 gap-y-10 sm:grid-cols-2">
+        {
+          experts.map(e => (
+            <div class="flex items-center gap-5">
+              <Icon name={e.icon} class="h-18 w-18 shrink-0" />
+              <div>
+                <h4 class="font-heading text-lg font-bold leading-tight text-ink sm:text-xl">
+                  {e.title}
+                </h4>
+                {e.desc && <p class="mt-1 text-sm text-ink-500">{e.desc}</p>}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

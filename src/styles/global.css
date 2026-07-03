@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* ============================================================
+   Fuentes de marca (Figma): Nexa (títulos/botones) + Helvetica (cuerpo).
+   No son fuentes de Google. Coloca los archivos en /public/fonts/
+   y descomenta los @font-face. Mientras tanto usa el fallback.
+   ============================================================ */
+
+/*
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+*/
+
+@theme {
+  /* === Tipografía === */
+  --font-heading: "Nexa", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* === Primario / marca (violeta Brainstorming) === */
+  --color-primary: #7d44e4;
+  --color-primary-50: #f4eefe;
+  --color-primary-100: #e6d6fc;
+  --color-primary-200: #cdadf7;
+  --color-primary-300: #b184f1;
+  --color-primary-400: #965fec;
+  --color-primary-500: #7d44e4; /* base */
+  --color-primary-600: #6a34c9;
+  --color-primary-700: #5628a3;
+  --color-primary-800: #421f7d;
+  --color-primary-900: #2f1659;
+  --color-primary-950: #1b0c34;
+
+  /* === Neutral oscuro (secciones dark) === */
+  --color-dark: #212222;
+  --color-dark-50: #f4f4f4;
+  --color-dark-100: #e4e4e4;
+  --color-dark-200: #c8c8c8;
+  --color-dark-300: #a0a0a0;
+  --color-dark-400: #6b6b6b;
+  --color-dark-500: #454545;
+  --color-dark-600: #333434;
+  --color-dark-700: #2a2b2b;
+  --color-dark-800: #212222; /* base dark */
+  --color-dark-900: #161717;
+  --color-dark-950: #0a0a0a;
+
+  /* === Navy (sección "¿Por qué?" / bloques oscuros azules) === */
+  --color-navy: #223b79;
+  --color-navy-500: #223b79;
+  --color-navy-600: #1c3163;
+  --color-navy-700: #16274e;
+
+  /* === Azul claro (fondos degradados) === */
+  --color-mist: #d7dfee;
+  --color-mist-50: #f7f9fc;
+  --color-mist-100: #eef2f8;
+  --color-mist-200: #d7dfee; /* base */
+  --color-mist-300: #b8c6de;
+
+  /* === Texto === */
+  --color-ink: #000000;
+  --color-ink-500: #666666;
+}

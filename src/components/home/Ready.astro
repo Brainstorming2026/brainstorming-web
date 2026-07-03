@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components'
+
+// Sección "Antes de contarte..." (Figma). Fondo con manchas moradas
+// (service-background.png), heading + subtítulo a la izquierda y card de
+// checklist a la derecha con service-checkbox.svg.
+
+const preguntas = [
+  '¿Obtener todos los clientes que puedas gestionar, de forma predecible?',
+  '¿Tener totalmente identificados, en tiempo real, los KPIs que miden el cumplimiento de tus objetivos?',
+  '¿Escalar tu negocio y llegar a más consumidores con tu propuesta de valor?',
+];
+---
+
+<section id="ready" class="relative overflow-hidden bg-white">
+  <!-- Fondo decorativo (manchas). Va detrás del contenido pero SOBRE el blanco
+       del section (sin -z-10, si no el bg blanco lo tapa). -->
+  <img
+    src="/images/service-background.png"
+    alt=""
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover select-none"
+  />
+
+  <div
+    class="relative mx-auto grid max-w-[1512px] items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-16 lg:px-24 lg:py-28"
+  >
+    <!-- Texto -->
+    <div>
+      <h2 class="font-heading text-3xl font-bold leading-tight text-ink sm:text-4xl lg:text-5xl">
+        Antes de contarte como lo hacemos, queremos saber si estas listo para…
+      </h2>
+      <p class="mt-8 max-w-md font-heading text-base font-bold text-ink sm:text-lg">
+        Si respondiste que sí a estas preguntas (esperamos que sí), te interesará
+        mucho lo que viene a continuación…
+      </p>
+    </div>
+
+    <!-- Card checklist (Figma: 660×375, radio 20) -->
+    <div class="w-full max-w-[660px] rounded-[20px] bg-white p-7 shadow-xl sm:p-10 lg:justify-self-end">
+      <ul class="flex flex-col gap-7">
+        {
+          preguntas.map(q => (
+            <li class="flex items-start gap-5">
+              <Icon name="service-checkbox" class="h-18 w-18 shrink-0" />
+              <p class="pt-1.5 text-[15px] leading-6 text-ink-500">{q}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

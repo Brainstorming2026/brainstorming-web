@@ -1,0 +1,112 @@
+---
+import { Icon } from 'astro-icon/components'
+
+// Enlaces del navbar (Figma node 500-5557). Los que tienen dropdown llevan chevron.
+const links: { label: string, href: string, dropdown?: boolean }[] = [
+  { label: 'Inicio', href: '#hero' },
+  { label: 'Soluciones', href: '#embudo' },
+  { label: 'Cómo funciona', href: '#roadmap' },
+  { label: 'Expertos', href: '#expertos' },
+  { label: 'Clientes', href: '#clientes' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-black/10 bg-white">
+  <nav
+    class="mx-auto flex h-20 max-w-[1512px] items-center justify-between px-6 lg:px-16"
+    aria-label="Principal"
+  >
+    <!-- Logo -->
+    <a href="/" class="shrink-0" aria-label="Brainstorming — inicio">
+      <img
+        src="/images/brainstorming-logo.png"
+        alt="Brainstorming"
+        width="192"
+        height="31"
+        class="h-8 w-auto"
+      />
+    </a>
+
+    <!-- Navegación desktop -->
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        links.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class="flex items-center gap-1.5 px-4 py-2 font-heading text-base font-bold text-ink transition-colors hover:text-primary"
+            >
+              {link.label}
+              {link.dropdown && (
+                <Icon name="chevron-down" class="h-2.5 w-2.5 text-ink" />
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Botón CTA desktop -->
+    <a
+      href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20agendar%20una%20asesoría"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden rounded-[10px] bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-600 lg:inline-block"
+    >
+      Agendar Asesoría
+    </a>
+
+    <!-- Botón hamburguesa móvil -->
+    <button
+      type="button"
+      id="nav-toggle"
+      class="text-ink lg:hidden"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Icon name="menu" class="h-7 w-7" />
+    </button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-black/10 bg-white px-6 py-4 lg:hidden"
+  >
+    <ul class="flex flex-col gap-1">
+      {
+        links.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class="flex items-center gap-1.5 py-2 font-heading text-base font-bold text-ink hover:text-primary"
+            >
+              {link.label}
+              {link.dropdown && <Icon name="chevron-down" class="h-2.5 w-2.5" />}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20agendar%20una%20asesoría"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-3 block rounded-[10px] bg-primary px-6 py-3 text-center text-sm font-semibold text-white hover:bg-primary-600"
+    >
+      Agendar Asesoría
+    </a>
+  </div>
+</header>
+
+<script>
+const toggle = document.getElementById('nav-toggle')
+const menu = document.getElementById('mobile-menu')
+
+toggle?.addEventListener('click', () => {
+  const open = menu?.classList.toggle('hidden') === false
+  toggle.setAttribute('aria-expanded', String(open))
+  toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú')
+})
+</script>

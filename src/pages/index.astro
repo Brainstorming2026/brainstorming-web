@@ -1,0 +1,26 @@
+---
+import Clientes from '@/components/home/Clientes.astro'
+import Ecosistema from '@/components/home/Ecosistema.astro'
+import Embudo from '@/components/home/Embudo.astro'
+import Expertos from '@/components/home/Expertos.astro'
+import Hero from '@/components/home/Hero.astro'
+import Problemas from '@/components/home/Problemas.astro'
+import Ready from '@/components/home/Ready.astro'
+import Roadmap from '@/components/home/Roadmap.astro'
+import Roas from '@/components/home/Roas.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Brainstorming — Consultoría en Transformación Digital">
+  <Hero />
+  <Problemas />
+  <Ready />
+  <Roadmap />
+  <Ecosistema />
+  <Embudo />
+  <Expertos />
+  <Roas />
+  <Clientes />
+</Layout>

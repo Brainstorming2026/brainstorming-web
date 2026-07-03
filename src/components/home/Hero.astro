@@ -1,0 +1,51 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const youtubeId = 'RLTb4js9G4M';
+---
+
+<section id="hero" class="bg-white">
+  <div
+    class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:gap-16 lg:px-24 lg:py-24"
+  >
+    <!-- Titular -->
+    <h1
+      class="font-heading text-4xl font-bold leading-tight text-ink sm:text-5xl"
+    >
+      Te ayudamos a escalar las ventas de tu negocio y mejorar tu rentabilidad
+      mediante soluciones digitales centradas en tus consumidores.
+    </h1>
+
+    <!-- Video con facade -->
+    <div
+      id="hero-video"
+      data-id={youtubeId}
+      class="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg"
+    >
+      <img
+        src="/images/hero-video.png"
+        alt="Video de presentación de Brainstorming"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20"
+      >
+        <button
+          type="button"
+          aria-label="Reproducir video"
+          class="text-white/90 transition-transform group-hover:scale-110"
+        >
+          <Icon name="play" class="h-20 w-20 drop-shadow-lg" />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const holder = document.getElementById('hero-video')
+holder?.addEventListener('click', () => {
+  const id = holder.dataset.id
+  holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video Brainstorming" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+})
+</script>

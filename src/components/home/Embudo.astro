@@ -1,0 +1,118 @@
+---
+import { embudoPasos } from '@/data';
+---
+
+<section id="embudo" class="bg-white py-20 lg:py-24">
+  <!-- Texto -->
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <h2
+      class="mx-auto max-w-[1150px] text-center font-heading font-bold leading-[1.35] text-ink"
+      style="font-size: clamp(28px, 4vw, 40px);"
+    >
+      La clave para que tu ecosistema digital sea exitoso recae en el embudo de
+      ventas, la base conceptual para tu estrategia digital.
+    </h2>
+    <p class="mx-auto mt-6 max-w-[1120px] text-center font-body text-[15px] leading-6 text-ink">
+      El planteamiento estratégico de tu proceso de captación, nutrición,
+      conversión y fidelización de clientes, nos permite determinar los canales
+      óptimos para difundir diferentes tipos de contenido, según tus objetivos de
+      marketing.
+    </p>
+  </div>
+
+  <!-- Infografía del embudo - Desktop (full 1512px) -->
+  <img
+    src="/images/key-background.png"
+    alt="Embudo de ventas: damos a conocer tu marca, generamos tráfico, cerramos ventas y fidelizamos"
+    width="1512"
+    height="877"
+    class="hidden w-full lg:block"
+    loading="lazy"
+  />
+
+  <!-- Mobile: 4 cards con slide derecho -->
+  <div class="mx-auto mt-8 max-w-[600px] space-y-4 px-6 lg:hidden">
+    {
+      embudoPasos.map((paso, index) => (
+        <div class="embudo-card-wrapper relative overflow-hidden">
+          <!-- Card principal -->
+          <div class={`embudo-main rounded-2xl ${paso.bgClass} transition-transform duration-300`}>
+            <button
+              type="button"
+              class="embudo-toggle flex w-full items-center gap-4 p-6 text-left"
+              aria-expanded="false"
+              data-index={index}
+            >
+              <div class="flex-1">
+                <h3 class={`font-heading text-lg font-bold ${paso.textColor}`}>{paso.title}</h3>
+                <p class={`mt-2 text-sm leading-5 ${paso.textColor === 'text-white' ? 'text-white/80' : 'text-ink-500'}`}>{paso.description}</p>
+              </div>
+              <svg
+                class="embudo-chevron h-6 w-6 shrink-0 transition-transform duration-300"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Panel deslizante derecho -->
+          <div class={`embudo-panel absolute inset-y-0 right-0 w-full translate-x-full transition-transform duration-300 ${paso.bgClass} rounded-2xl`}>
+            <button
+              type="button"
+              class="embudo-back flex h-full w-full items-center gap-4 p-6 text-left"
+            >
+              <svg
+                class="h-6 w-6 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              <div class="flex-1">
+                <p class={`text-center text-base leading-6 font-bold ${paso.textColor}`}>
+                  {paso.channels}
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+document.addEventListener('astro:page-load', () => {
+  const cards = document.querySelectorAll('.embudo-card-wrapper')
+
+  cards.forEach((card) => {
+    const mainCard = card.querySelector('.embudo-main')
+    const panel = card.querySelector('.embudo-panel')
+    const toggleBtn = card.querySelector('.embudo-toggle')
+    const backBtn = card.querySelector('.embudo-back')
+    const chevron = toggleBtn?.querySelector('.embudo-chevron')
+
+    toggleBtn?.addEventListener('click', () => {
+      mainCard?.classList.add('-translate-x-full')
+      panel?.classList.remove('translate-x-full')
+      chevron?.classList.add('rotate-180')
+    })
+
+    backBtn?.addEventListener('click', () => {
+      mainCard?.classList.remove('-translate-x-full')
+      panel?.classList.add('translate-x-full')
+      chevron?.classList.remove('rotate-180')
+    })
+  })
+})
+</script>

@@ -1,0 +1,78 @@
+---
+// Secciones "Por qué elegirnos" (bg #f7f7f7 + badge) y "Nuestros clientes"
+// (bg blanco + grid de logos de la carpeta clientes). Figma 500-5270 / 500-5279.
+
+// Orden según Figma (styla y subasta no están en la carpeta, se omiten).
+const clientes = [
+  'aguaclara',
+'alumspazio',
+'amadocacao',
+'aruma',
+'atsaairlines',
+'digital',
+'gris',
+'godini',
+'helena',
+  'latinamerican',
+'limagas',
+'lorenzee',
+'mikio',
+'musicalma',
+'note',
+'orquidea',
+'pringles',
+'renace',
+  'retyg',
+'rua',
+'siemens',
+'stanley',
+'sgs',
+'moneda',
+'sonqo',
+'beauty',
+'vendefactura',
+  'walon',
+'lawash',
+];
+---
+
+<!-- Por qué elegirnos -->
+<section id="clientes" class="bg-[#f7f7f7]">
+  <div class="mx-auto max-w-[1512px] px-6 py-16 text-center lg:px-24">
+    <h2 class="font-heading text-3xl font-bold text-ink sm:text-[35px]">
+      Por qué elegirnos
+    </h2>
+    <img
+      src="/images/choose-first.png"
+      alt="Top Web Development Companies — DesignRush"
+      class="mx-auto mt-6 w-[152px]"
+      loading="lazy"
+    />
+  </div>
+</section>
+
+<!-- Nuestros clientes -->
+<section class="bg-white">
+  <div class="mx-auto max-w-[1512px] px-6 py-16 lg:px-24 lg:py-20">
+    <h2 class="text-center font-heading text-3xl font-bold text-ink sm:text-[35px]">
+      Nuestros clientes:
+    </h2>
+
+    <div
+      class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-6 sm:grid-cols-5 lg:grid-cols-9"
+    >
+      {
+        clientes.map(c => (
+          <div class="flex items-center justify-center">
+            <img
+              src={`/images/clientes/customer-${c}.png`}
+              alt={c}
+              class="max-h-25 w-auto max-w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

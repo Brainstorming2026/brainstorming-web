@@ -1,40 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components'
-
-const soluciones = [
-  { label: 'Branding', href: '#branding' },
-  { label: 'Desarrollo Web', href: '#desarrollo-web' },
-  { label: 'Inbound Marketing', href: '#inbound-marketing' },
-  { label: 'Inbound Sales', href: '#inbound-sales' },
-  { label: 'Optimización de Procesos y CX', href: '#optimizacion' },
-]
-
-const empresa = [
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Contacto', href: '#contacto' },
-]
-
-const recursos = [
-  { label: 'Blog', href: '#blog' },
-  { label: 'Guías Prácticas', href: '#guias' },
-  { label: 'Políticas de privacidad', href: '#privacidad' },
-]
-
-const redes = [
-  { name: 'footer-linkedln', href: 'https://www.linkedin.com/company/brainstorming-marketing-%26-communications/?originalSubdomain=pe', label: 'LinkedIn' },
-  { name: 'footer-facebook', href: 'https://www.facebook.com/BrainstormingLa/', label: 'Facebook' },
-  { name: 'footer-ig', href: 'https://www.instagram.com/brainstormingmkt/', label: 'Instagram' },
-  { name: 'footer-yt', href: 'https://www.youtube.com/channel/UC-xpaBcv9dnpuE3adXizFcA/featured', label: 'YouTube' },
-  { name: 'footer-tiktok', href: 'https://www.tiktok.com/@brainstormingmkt', label: 'TikTok' },
-];
+import { Image } from 'astro:assets'
+import { soluciones, empresa, recursos, redes } from '@/data'
+import footerUp from '@/assets/decorative/footer-up.webp'
+import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 ---
 
 <footer class="text-white">
-  <!-- Borde curvo superior: sus esquinas transparentes revelan la sección de
-       arriba, por eso NO lleva fondo oscuro detrás. -->
-  <img
-    src="/images/footer-up.png"
+  <Image
+    src={footerUp}
     alt=""
     aria-hidden="true"
     class="-mb-px block w-full select-none"
@@ -61,11 +35,9 @@ const redes = [
     >
       <!-- Logo + redes -->
       <div class="col-span-2 sm:col-span-3 lg:col-span-1">
-        <img
-          src="/images/footer-brainstormiing.png"
+        <Image
+          src={footerLogo}
           alt="Brainstorming"
-          width="212"
-          height="34"
           class="h-8 w-auto"
         />
         <ul class="mt-8 flex items-center gap-2">

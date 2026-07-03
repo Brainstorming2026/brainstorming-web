@@ -1,5 +1,7 @@
 ---
-import { embudoPasos } from '@/data';
+import { Image } from 'astro:assets'
+import { embudoPasos } from '@/data'
+import keyBg from '@/assets/backgrounds/key-background.webp'
 ---
 
 <section id="embudo" class="bg-white py-20 lg:py-24">
@@ -21,13 +23,10 @@ import { embudoPasos } from '@/data';
   </div>
 
   <!-- Infografía del embudo - Desktop (full 1512px) -->
-  <img
-    src="/images/key-background.png"
+  <Image
+    src={keyBg}
     alt="Embudo de ventas: damos a conocer tu marca, generamos tráfico, cerramos ventas y fidelizamos"
-    width="1512"
-    height="877"
     class="hidden w-full lg:block"
-    loading="lazy"
   />
 
   <!-- Mobile: 4 cards con slide derecho -->

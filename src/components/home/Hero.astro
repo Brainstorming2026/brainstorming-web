@@ -1,7 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
-
-const youtubeId = 'RLTb4js9G4M';
+import { Image } from 'astro:assets'
+import { heroYoutubeId as youtubeId } from '@/data'
+import heroVideo from '@/assets/logos/hero-video.webp'
 ---
 
 <section id="hero" class="bg-white">
@@ -22,8 +23,8 @@ const youtubeId = 'RLTb4js9G4M';
       data-id={youtubeId}
       class="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg"
     >
-      <img
-        src="/images/hero-video.png"
+      <Image
+        src={heroVideo}
         alt="Video de presentación de Brainstorming"
         class="absolute inset-0 h-full w-full object-cover"
       />

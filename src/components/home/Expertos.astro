@@ -1,38 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components'
-
-// Sección "¿Por qué Brainstorming?" (Figma node 500-5123, 1512×756).
-// Fondo section-background-black.png (azul claro → colinas negras). Card blanca
-// con 4 expertise usando iconos expert-*.
-
-const experts = [
-  {
-    icon: 'expert-huella',
-    title: 'Branding',
-    desc: 'Estrategía e identidad de marca',
-  },
-  {
-    icon: 'expert-window',
-    title: 'Desarrollo de páginas y plataformas web',
-    desc: '',
-  },
-  {
-    icon: 'expert-iman',
-    title: 'Inbound Marketing',
-    desc: 'Marketing de contenidos',
-  },
-  {
-    icon: 'expert-money',
-    title: 'Inbound Sales',
-    desc: 'Implementación de CRM y automatizaciones',
-  },
-];
+import { Image } from 'astro:assets'
+import { experts } from '@/data'
+import sectionBg from '@/assets/backgrounds/section-background-black.webp'
 ---
 
 <section id="expertos" class="relative overflow-hidden">
   <!-- Fondo (azul claro arriba → negro abajo) -->
-  <img
-    src="/images/section-background-black.png"
+  <Image
+    src={sectionBg}
     alt=""
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 h-full w-full object-cover select-none"

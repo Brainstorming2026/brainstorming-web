@@ -1,22 +1,15 @@
 ---
 import { Icon } from 'astro-icon/components'
-
-// Sección "Antes de contarte..." (Figma). Fondo con manchas moradas
-// (service-background.png), heading + subtítulo a la izquierda y card de
-// checklist a la derecha con service-checkbox.svg.
-
-const preguntas = [
-  '¿Obtener todos los clientes que puedas gestionar, de forma predecible?',
-  '¿Tener totalmente identificados, en tiempo real, los KPIs que miden el cumplimiento de tus objetivos?',
-  '¿Escalar tu negocio y llegar a más consumidores con tu propuesta de valor?',
-];
+import { Image } from 'astro:assets'
+import { preguntas } from '@/data'
+import serviceBg from '@/assets/backgrounds/service-background.webp'
 ---
 
 <section id="ready" class="relative overflow-hidden bg-white">
   <!-- Fondo decorativo (manchas). Va detrás del contenido pero SOBRE el blanco
        del section (sin -z-10, si no el bg blanco lo tapa). -->
-  <img
-    src="/images/service-background.png"
+  <Image
+    src={serviceBg}
     alt=""
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 h-full w-full object-cover select-none"

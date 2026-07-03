@@ -1,14 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
-
-// Enlaces del navbar (Figma node 500-5557). Los que tienen dropdown llevan chevron.
-const links: { label: string, href: string, dropdown?: boolean }[] = [
-  { label: 'Inicio', href: '#hero' },
-  { label: 'Soluciones', href: '#embudo' },
-  { label: 'Cómo funciona', href: '#roadmap' },
-  { label: 'Expertos', href: '#expertos' },
-  { label: 'Clientes', href: '#clientes' },
-];
+import { Image } from 'astro:assets'
+import { navLinks as links } from '@/data'
+import logo from '@/assets/logos/brainstorming-logo.webp'
 ---
 
 <header class="sticky top-0 z-50 border-b border-black/10 bg-white">
@@ -18,11 +12,9 @@ const links: { label: string, href: string, dropdown?: boolean }[] = [
   >
     <!-- Logo -->
     <a href="/" class="shrink-0" aria-label="Brainstorming — inicio">
-      <img
-        src="/images/brainstorming-logo.png"
+      <Image
+        src={logo}
         alt="Brainstorming"
-        width="192"
-        height="31"
         class="h-8 w-auto"
       />
     </a>

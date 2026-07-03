@@ -1,7 +1,9 @@
 ---
-// Sección "¿Cómo llevar tu empresa al siguiente nivel?" (Figma node 500-5077).
-// Infografía en dos imágenes: roadpmap-first (card Estrategia) + roadmap-second
-// (flujo). Fondo: gradiente lineal 0% #FFFFFF → 40% #D7DFEE (mist).
+import { Image } from 'astro:assets'
+import roadmapFirstMobile from '@/assets/roadmap/roadmap-first-mobile.webp'
+import roadmapFirst from '@/assets/roadmap/roadpmap-first.webp'
+import roadmapSecondMobile from '@/assets/roadmap/roadmap-second-mobile.webp'
+import roadmapSecond from '@/assets/roadmap/roadmap-second.webp'
 ---
 
 <section id="roadmap" class="bg-gradient-to-b from-white to-mist to-40%">
@@ -14,37 +16,25 @@
 
     <!-- Infografía -->
     <div class="mx-auto mt-12 max-w-[1361px]">
-      <img
-        src="/images/roadmap-first-mobile.webp"
+      <Image
+        src={roadmapFirstMobile}
         alt="Estrategia e identidad de marca"
-        width="848"
-        height="257"
         class="mx-auto block w-full lg:hidden"
-        loading="lazy"
       />
-      <img
-        src="/images/roadpmap-first.png"
+      <Image
+        src={roadmapFirst}
         alt="Estrategia e identidad de marca"
-        width="848"
-        height="257"
         class="mx-auto hidden w-full max-w-[848px] lg:block mr-55"
-        loading="lazy"
       />
-      <img
-        src="/images/roadmap-second-mobile.webp"
+      <Image
+        src={roadmapSecondMobile}
         alt="Canales de tráfico, Appointment Funnel, CRM, entrenamiento de ventas y escalabilidad"
-        width="1361"
-        height="668"
         class="mt-2 block w-full lg:hidden"
-        loading="lazy"
       />
-      <img
-        src="/images/roadmap-second.png"
+      <Image
+        src={roadmapSecond}
         alt="Canales de tráfico, Appointment Funnel, CRM, entrenamiento de ventas y escalabilidad"
-        width="1361"
-        height="668"
         class="mt-2 hidden w-full lg:block"
-        loading="lazy"
       />
     </div>
   </div>

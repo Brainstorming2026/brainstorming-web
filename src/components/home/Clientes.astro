@@ -1,39 +1,7 @@
 ---
-// Secciones "Por qué elegirnos" (bg #f7f7f7 + badge) y "Nuestros clientes"
-// (bg blanco + grid de logos de la carpeta clientes). Figma 500-5270 / 500-5279.
-
-// Orden según Figma (styla y subasta no están en la carpeta, se omiten).
-const clientes = [
-  'aguaclara',
-'alumspazio',
-'amadocacao',
-'aruma',
-'atsaairlines',
-'digital',
-'gris',
-'godini',
-'helena',
-  'latinamerican',
-'limagas',
-'lorenzee',
-'mikio',
-'musicalma',
-'note',
-'orquidea',
-'pringles',
-'renace',
-  'retyg',
-'rua',
-'siemens',
-'stanley',
-'sgs',
-'moneda',
-'sonqo',
-'beauty',
-'vendefactura',
-  'walon',
-'lawash',
-];
+import { Image } from 'astro:assets'
+import chooseFirst from '@/assets/decorative/choose-first.webp'
+import { clienteLogos } from '@/assets/clientes'
 ---
 
 <!-- Por qué elegirnos -->
@@ -42,11 +10,10 @@ const clientes = [
     <h2 class="font-heading text-3xl font-bold text-ink sm:text-[35px]">
       Por qué elegirnos
     </h2>
-    <img
-      src="/images/choose-first.png"
+    <Image
+      src={chooseFirst}
       alt="Top Web Development Companies — DesignRush"
       class="mx-auto mt-6 w-[152px]"
-      loading="lazy"
     />
   </div>
 </section>
@@ -62,13 +29,12 @@ const clientes = [
       class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-6 sm:grid-cols-5 lg:grid-cols-9"
     >
       {
-        clientes.map(c => (
+        clienteLogos.map(c => (
           <div class="flex items-center justify-center">
-            <img
-              src={`/images/clientes/customer-${c}.png`}
-              alt={c}
+            <Image
+              src={c.image}
+              alt={c.slug}
               class="max-h-25 w-auto max-w-full object-contain"
-              loading="lazy"
             />
           </div>
         ))

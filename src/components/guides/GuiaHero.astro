@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/guides/hero-bg.webp'
+import heroImg from '@/assets/guides/hero-image.webp'
+import iconDownload from '@/icons/guias-download.svg'
+import { categoryLabels, guides } from '@/data/guides'
+
+const featuredGuides = guides.filter(guia => guia.featured)
+---
+
+<section class="relative min-h-screen overflow-hidden">
+  <Image
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
+  <div class="relative z-10 mx-auto flex min-h-screen max-w-[1512px] flex-col justify-between px-6 py-25 lg:px-24">
+    <div class="flex flex-1 flex-col items-center justify-center gap-10 lg:flex-row lg:items-start lg:justify-start lg:pt-0">
+      <div class="w-full lg:w-1/2">
+        <h1
+          class="font-heading text-[40px] font-bold leading-[50px] text-white sm:text-[60px] sm:leading-[80px]"
+        >
+          Repositorio de Guías Prácticas de Brainstorming
+        </h1>
+        <p
+          class="mt-5 max-w-[500px] text-[18px] leading-6 text-white/80 sm:text-[20px] sm:leading-[28px]"
+        >
+          Aprende todo sobre el Marketing Digital con nuestras Guías Prácticas especializadas.
+        </p>
+      </div>
+      <div class="flex w-full justify-center lg:w-1/2">
+        <Image
+          src={heroImg}
+          alt="Guías prácticas"
+          class="h-auto max-h-[500px] w-full max-w-[600px] object-contain"
+        />
+      </div>
+    </div>
+
+    <div class="mt-20">
+      <h2
+        class="text-center font-heading text-[30px] font-bold text-white sm:text-[36px]"
+      >
+        Contenidos más consultados por nuestros usuarios
+      </h2>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredGuides.map((guia) => (
+          <div class="flex flex-col">
+            <Image
+              src={guia.image}
+              alt=""
+              class="h-[220px] w-full rounded-[16px] object-cover"
+            />
+            <p class="mt-4 text-[14px] text-white/60">{categoryLabels[guia.category]}</p>
+            <h3 class="mt-2 font-heading text-[18px] font-bold leading-[26px] text-white">
+              {guia.title}
+            </h3>
+            <a
+              href={guia.pdf}
+              download
+              class="mt-4 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+            >
+              <img src={iconDownload.src} alt="" class="h-4 w-4" />
+              DESCARGAR GUÍA
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

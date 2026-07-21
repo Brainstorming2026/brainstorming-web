@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets'
+
+import logoAguaclara from '@/assets/projects-logos/proyecto-logo-aguaclara.png'
+import logoAlumspazio from '@/assets/projects-logos/proyecto-logo-alumspazio.png'
+import logoAmado from '@/assets/projects-logos/proyecto-logo-amado.png'
+import logoAruma from '@/assets/projects-logos/proyecto-logo-aruma.png'
+import logoAtsa from '@/assets/projects-logos/proyecto-logo-atsa.png'
+import logoBeauty from '@/assets/projects-logos/proyecto-logo-beauty.png'
+import logoDfactoring from '@/assets/projects-logos/proyecto-logo-digitalfactoring.png'
+import logoGordini from '@/assets/projects-logos/proyecto-logo-gordini.png'
+import logoHelena from '@/assets/projects-logos/proyecto-logo-helena.png'
+import logoLatin from '@/assets/projects-logos/proyecto-logo-latinamerican.png'
+import logoLimagas from '@/assets/projects-logos/proyecto-logo-limagas.png'
+import logoLorenzee from '@/assets/projects-logos/proyecto-logo-lorenzee.png'
+import logoMikio from '@/assets/projects-logos/proyecto-logo-mikio.png'
+import logoMusikalma from '@/assets/projects-logos/proyecto-logo-musikalma.png'
+import logoOrquidea from '@/assets/projects-logos/proyecto-logo-orquidea.png'
+import logoRenace from '@/assets/projects-logos/proyecto-logo-renace.png'
+import logoRetyg from '@/assets/projects-logos/proyecto-logo-retyg.png'
+import logoSgs from '@/assets/projects-logos/proyecto-logo-SGS.png'
+import logoSocgeo from '@/assets/projects-logos/proyecto-logo-socgeo.png'
+import logoSonqo from '@/assets/projects-logos/proyecto-logo-sonqo.png'
+import logoStyla from '@/assets/projects-logos/proyecto-logo-styla.png'
+import logoSubasta from '@/assets/projects-logos/proyecto-logo-subasta.png'
+import logoVendetufactura from '@/assets/projects-logos/proyecto-logo-vendetufactura.png'
+import logoWalon from '@/assets/projects-logos/proyecto-logo-walon.png'
+import logoNote from '@/assets/projects-logos/proyecto-logonote.png'
+import curva from '@/icons/proyecto-curva.svg'
+
+const logos = [
+  { image: logoAguaclara, alt: 'Aguaclara' },
+  { image: logoAlumspazio, alt: 'Alumspazio' },
+  { image: logoAmado, alt: 'Amado Cacao' },
+  { image: logoAruma, alt: 'Aruma' },
+  { image: logoAtsa, alt: 'Atsa Airlines' },
+  { image: logoDfactoring, alt: 'Digital Factoring' },
+  { image: logoGordini, alt: 'Gordini' },
+  { image: logoHelena, alt: 'Helena' },
+  { image: logoLatin, alt: 'Latin American Outdoors' },
+  { image: logoLimagas, alt: 'Limagas' },
+  { image: logoLorenzee, alt: 'Lorenzetti' },
+  { image: logoMikio, alt: 'Mikio' },
+  { image: logoMusikalma, alt: 'Musikalma' },
+  { image: logoNote, alt: 'Note' },
+  { image: logoOrquidea, alt: 'Orquídea' },
+  { image: logoRenace, alt: 'Renace' },
+  { image: logoRetyg, alt: 'Retyg' },
+  { image: logoSgs, alt: 'SGS' },
+  { image: logoSocgeo, alt: 'Socgeo' },
+  { image: logoSonqo, alt: 'Sonqo' },
+  { image: logoStyla, alt: 'Styla' },
+  { image: logoSubasta, alt: 'Subasta' },
+  { image: logoVendetufactura, alt: 'Vende Tu Factura' },
+  { image: logoWalon, alt: 'Walon' },
+  { image: logoBeauty, alt: 'The Beauty Trust' },
+]
+---
+
+<section class="relative bg-gradient-to-b from-primary to-navy">
+  <img
+    src={curva.src}
+    alt=""
+    class="absolute top-0 left-0 block h-[120px] w-full object-cover object-top"
+    aria-hidden="true"
+  />
+  <div class="mx-auto max-w-[1512px] px-6 pt-28 pb-16 lg:px-24">
+    <h2 class="text-center font-heading text-[35px] font-bold text-white">
+      Empresas
+    </h2>
+    <div
+      class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-8 sm:grid-cols-5 lg:grid-cols-9"
+    >
+      {
+        logos.map(logo => (
+          <div class="flex items-center justify-center">
+            <Image
+              src={logo.image}
+              alt={logo.alt}
+              class="max-h-16 w-auto max-w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

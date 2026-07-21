@@ -1,0 +1,16 @@
+---
+import Conversemos from '@/components/common/Conversemos.astro'
+import Empresas from '@/components/projects/Empresas.astro'
+import ProyectosHero from '@/components/projects/ProyectosHero.astro'
+import ProyectosList from '@/components/projects/ProyectosList.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Proyectos — Brainstorming">
+  <ProyectosHero />
+  <ProyectosList />
+  <Empresas />
+  <Conversemos />
+</Layout>

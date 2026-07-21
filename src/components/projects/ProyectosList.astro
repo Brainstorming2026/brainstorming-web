@@ -1,0 +1,66 @@
+---
+import type { CategoriaTipo } from '@/data/proyectos'
+import { Image } from 'astro:assets'
+import { categoriaLabels, proyectos } from '@/data/proyectos'
+
+import iconBranding from '@/icons/proyecto-huellas.svg'
+import iconInbound from '@/icons/proyecto-iman.svg'
+import iconDesarrollo from '@/icons/proyecto-web.svg'
+
+const iconMap: Record<CategoriaTipo, { src: string }> = {
+  'branding': iconBranding,
+  'desarrollo-web': iconDesarrollo,
+  'inbound-marketing': iconInbound,
+}
+---
+
+<section class="bg-section-dark">
+  <div class="mx-auto max-w-[1512px] px-6 py-16 lg:px-24">
+    {
+      proyectos.map((p, i) => (
+        <article
+          class:list={[
+            'grid items-stretch gap-0 overflow-hidden rounded-lg md:grid-cols-2',
+            i > 0 && 'mt-6',
+          ]}
+        >
+          <div class="relative min-h-[300px] overflow-hidden bg-black/10">
+            <Image
+              src={p.imagen}
+              alt={p.nombre}
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="flex flex-col justify-center bg-section-dark px-8 py-10">
+            <div class="mb-4 flex flex-col gap-3">
+              {p.categorias.map(cat => (
+                <img
+                  src={iconMap[cat].src}
+                  alt={categoriaLabels[cat]}
+                  class="h-10 w-10"
+                />
+              ))}
+            </div>
+
+            <h2 class="font-heading text-[35px] font-bold leading-tight text-white">
+              {p.nombre}
+            </h2>
+            <p class="mt-2 font-heading text-[16px] font-bold text-white/70">
+              {p.categorias.map(c => categoriaLabels[c]).join(' / ')}
+            </p>
+            <div class="mt-8">
+              <a
+                href={`/proyectos/${p.slug}`}
+                class="inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+              >
+                VER PROYECTO
+              </a>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

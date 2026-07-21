@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/nosotros/nosotros-hero.png'
+---
+
+<section class="relative h-screen overflow-hidden bg-indigo">
+  <Image
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
+  <div
+    class="relative z-10 mx-auto flex h-full max-w-[1512px] items-center justify-end px-6 lg:px-24"
+  >
+    <div class="max-w-[480px]">
+      <h1 class="font-heading text-[40px] font-bold leading-tight text-white sm:text-[55px]">
+        ¿Quiénes<br />Somos?
+      </h1>
+      <div class="mt-4 h-[3px] w-12 bg-white"></div>
+      <p class="mt-6 text-[16px] leading-relaxed text-white/90">
+        Somos una consultora de servicio completo en constante innovación, que
+        diseña soluciones digitales centradas en el consumidor para optimizar
+        pequeñas y grandes empresas.
+      </p>
+    </div>
+  </div>
+</section>

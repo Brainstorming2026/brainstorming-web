@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets'
+import bgWhy from '@/assets/nosotros/nosotros-bg-why.png'
+import checkIcon from '@/assets/nosotros/nosotros-check.png'
+
+const reasons = [
+  {
+    title: 'Vivimos para cumplir tus objetivos',
+    description:
+      'Creamos estrategias con objetivos SMART y MVPs que agregan valor a tu negocio rápidamente.',
+  },
+  {
+    title: 'Mejora Constante',
+    description:
+      'Trabajamos todos tus productos bajo un proceso iterativo para lograr la mejora constante.',
+  },
+  {
+    title: 'Tu éxito es el nuestro',
+    description:
+      'Tus resultados son los nuestros. Creemos que las relaciones a largo plazo traen resultados exponenciales.',
+  },
+]
+---
+
+<section class="relative overflow-hidden bg-white">
+  <Image
+    src={bgWhy}
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+  />
+  <div
+    class="relative z-10 mx-auto grid max-w-[1512px] items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:px-24"
+  >
+    <h2 class="font-heading text-[45px] font-bold leading-tight text-ink sm:text-[60px]">
+      ¿Por Qué<br />Nosotros?
+    </h2>
+
+    <div class="flex flex-col gap-10">
+      {
+        reasons.map(reason => (
+          <div class="flex gap-5">
+            <Image
+              src={checkIcon}
+              alt=""
+              class="h-12 w-12 shrink-0"
+              loading="lazy"
+            />
+            <div>
+              <h3 class="font-heading text-[20px] font-bold text-ink">
+                {reason.title}
+              </h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-gray-body">
+                {reason.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

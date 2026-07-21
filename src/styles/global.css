@@ -72,7 +72,69 @@ html {
   --color-mist-200: #d7dfee; /* base */
   --color-mist-300: #b8c6de;
 
+  /* === Rojo (acento) === */
+  --color-accent: #e62a4b;
+  --color-accent-50: #fef2f4;
+  --color-accent-100: #fde6ea;
+  --color-accent-200: #fbc9d5;
+  --color-accent-300: #f89db5;
+  --color-accent-400: #f2648a;
+  --color-accent-500: #e62a4b; /* base */
+  --color-accent-600: #d41839;
+  --color-accent-700: #b20f2d;
+  --color-accent-800: #940f29;
+  --color-accent-900: #7f1028;
+
+  /* === Amarillo (destacado) === */
+  --color-highlight: #ffd401;
+  --color-highlight-50: #fffce6;
+  --color-highlight-100: #fff9bf;
+  --color-highlight-200: #fff080;
+  --color-highlight-300: #ffe533;
+  --color-highlight-400: #ffd401; /* base */
+  --color-highlight-500: #e6bf01;
+  --color-highlight-600: #b39400;
+  --color-highlight-700: #806900;
+  --color-highlight-800: #4d3f00;
+  --color-highlight-900: #332a00;
+
+  /* === Púrpura oscuro === */
+  --color-purple-dark: #6342c8;
+  --color-purple-dark-50: #f3f0fc;
+  --color-purple-dark-100: #e5ddf9;
+  --color-purple-dark-200: #cbbbf3;
+  --color-purple-dark-300: #ab90ea;
+  --color-purple-dark-400: #8b65e0;
+  --color-purple-dark-500: #6342c8; /* base */
+  --color-purple-dark-600: #5535b8;
+  --color-purple-dark-700: #472aa0;
+  --color-purple-dark-800: #3a2188;
+  --color-purple-dark-900: #2d1a6d;
+
+  /* === Grises === */
+  --color-gray-light: #f3f3fb;
+  --color-gray-medium: #7a7a7a;
+  --color-gray-dark: #585959;
+  --color-gray-body: #54595f;
+  --color-gray-footer: #4b4f58;
+  --color-gray-border: #424242;
+
+  /* === Secciones oscuras (Proyectos, etc.) === */
+  --color-section-dark: #3e3f3f;
+
+  /* === Nosotros hero === */
+  --color-indigo: #423c90;
+
   /* === Texto === */
   --color-ink: #000000;
   --color-ink-500: #666666;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
 }

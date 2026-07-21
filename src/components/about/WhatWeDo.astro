@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets'
+import doing from '@/assets/nosotros/nosotros-doing.png'
+---
+
+<section class="bg-white py-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <h2 class="font-heading text-[40px] font-bold text-ink sm:text-[50px]">
+      ¿Qué hacemos?
+    </h2>
+  </div>
+
+  <Image
+    src={doing}
+    alt="Metodología doble diamante y mejora constante"
+    class="w-full"
+    loading="lazy"
+  />
+
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="mt-16 grid gap-12 md:grid-cols-2">
+      <div>
+        <h3 class="font-heading text-[24px] font-bold text-ink">
+          El Doble Diamante y el MVP
+        </h3>
+        <p class="mt-4 text-[16px] leading-relaxed text-gray-body">
+          En Brainstorming diseñamos productos digitales acorde a tus recursos y
+          necesidades. Empatizamos con los usuarios para identificar puntos de
+          dolor en tu empresa o en tu cliente para desarrollar soluciones
+          funcionales y eficaces desde su primera entrega.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-heading text-[24px] font-bold text-ink">
+          La mejora constante
+        </h3>
+        <p class="mt-4 text-[16px] leading-relaxed text-gray-body">
+          Luego de que tu MVP (Producto Mínimo Viable) entregó resultados, es
+          hora de estudiarlos e identificar sus oportunidades de mejora.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

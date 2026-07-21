@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets'
+import sectionBg from '@/assets/projects/Section.png'
+---
+
+<section
+  id="proyectos-hero"
+  class="relative h-screen overflow-hidden bg-section-dark"
+>
+  <Image
+    src={sectionBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+  />
+  <div
+    class="relative z-10 mx-auto flex h-full max-w-[1512px] flex-col justify-start px-6 pb-20 pt-25 lg:px-24"
+  >
+    <h1
+      class="max-w-[670px] font-heading text-[40px] font-bold leading-[56px] text-white sm:text-[60px] sm:leading-[100px]"
+    >
+      En nuestros proyectos hacemos tangibles nuestras soluciones.
+    </h1>
+    <p
+      class="mt-5 max-w-[670px] text-[18px] leading-6 text-white/90 sm:text-[22px] sm:leading-[24px]"
+    >
+      Conoce los objetivos y soluciones creados para ellos.
+    </p>
+  </div>
+</section>

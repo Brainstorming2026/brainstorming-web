@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets'
+import alejandro from '@/assets/equipo/equipo-alejandro.png'
+import andrea from '@/assets/equipo/equipo-andrea.png'
+import claus from '@/assets/equipo/equipo-claus.png'
+import danae from '@/assets/equipo/equipo-danae.png'
+import giacomo from '@/assets/equipo/equipo-giacomo.png'
+import gino from '@/assets/equipo/equipo-gino.png'
+import manuel from '@/assets/equipo/equipo-manuel.png'
+import rafaela from '@/assets/equipo/equipo-rafaela.png'
+import sergio from '@/assets/equipo/equipo-sergio.png'
+import bgCurve from '@/assets/nosotros/nosotros-equipo-bg.png'
+
+const team = [
+  { image: manuel, name: 'Manuel Acevedo', role: 'CEO' },
+  { image: alejandro, name: 'Alejandro Panizo', role: 'Director Comercial' },
+  { image: giacomo, name: 'Giacomo De Col', role: 'Project Manager Senior' },
+  { image: claus, name: 'Claus Kothe', role: 'Project Manager Junior' },
+  { image: andrea, name: 'Andrea Gaviria', role: 'Account Manager' },
+  { image: gino, name: 'Gino Santoro', role: 'Digital Content Manager' },
+  { image: rafaela, name: 'Rafaela Siguas', role: 'Diseñadora Gráfica Senior' },
+  { image: danae, name: 'Danae del Solar', role: 'Diseñadora UX/UI' },
+  { image: sergio, name: 'Sergio Arce', role: 'Desarrollador Full Stack' },
+]
+---
+
+<section class="relative">
+  <Image
+    src={bgCurve}
+    alt=""
+    class="absolute top-0 left-0 w-full object-cover"
+    loading="lazy"
+  />
+  <div class="relative z-10 mx-auto max-w-[1512px] px-6 pt-40 pb-20 lg:px-24">
+    <h2 class="font-heading text-[35px] font-bold text-ink sm:text-[45px]">
+      Lo más importante<br />Nuestro Equipo
+    </h2>
+
+    <div class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        team.map(member => (
+          <div>
+            <Image
+              src={member.image}
+              alt={member.name}
+              class="aspect-[3/4] w-full object-contain object-top"
+              loading="lazy"
+            />
+            <h3 class="mt-4 font-heading text-[18px] font-bold text-ink">
+              {member.name}
+            </h3>
+            <p class="mt-1 text-[14px] text-gray-medium">{member.role}</p>
+            <div class="mt-4 h-[2px] bg-primary" />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

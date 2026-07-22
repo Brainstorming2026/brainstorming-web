@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets'
+import processImg from '@/assets/branding/branding-process.webp'
+---
+
+<section class="bg-white">
+  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      ¿Suena fácil cierto?
+    </h2>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-6 text-dark-500">
+      Es más complejo de lo que crees. Para hacer nuestro mundo más entendible para ti,
+      vamos a resumir algunas de las herramientas y técnicas que utilizamos para brindar
+      a tu público la mejor experiencia:
+    </p>
+
+    <Image
+      src={processImg}
+      alt="9 herramientas y técnicas de Branding: Análisis de Usuarios y Objetivos, Buyer Persona y Mapa de Empatía, Customer Journey, Estrategia de Contenidos, Creación e Implementación de Contenido, Tracción de Tráfico, Atracción de Tráfico orgánico, Analítica y Reporting, Análisis de Resultados y Estrategia"
+      class="mx-auto mt-12 h-auto w-full"
+      widths={[560, 1120]}
+      sizes="(min-width: 1140px) 1120px, 100vw"
+      loading="lazy"
+    />
+  </div>
+</section>

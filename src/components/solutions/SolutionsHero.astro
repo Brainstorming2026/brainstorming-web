@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
-import { soluciones } from '@/data/soluciones'
+import { solutions } from '@/data/solutions'
 ---
 
 <section class="bg-gradient-to-b from-mist to-white">
@@ -10,18 +10,21 @@ import { soluciones } from '@/data/soluciones'
     </h1>
 
     <div class="mx-auto mt-14 grid max-w-[1140px] gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {soluciones.map(solucion => (
-        <div id={solucion.slug} class="relative scroll-mt-24 pb-6">
-          <div class={`absolute inset-x-6 bottom-0 h-16 rounded-full opacity-40 blur-2xl ${solucion.glowClass}`} aria-hidden="true" />
-          <div class="relative flex h-full flex-col items-center rounded-[16px] bg-white px-6 py-10 text-center shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
-            <Icon name={solucion.icon} class={`h-16 w-16 shrink-0 ${solucion.colorClass}`} />
+      {solutions.map(solution => (
+        <div id={solution.slug} class="relative scroll-mt-24 pb-6">
+          <div class={`absolute inset-x-6 bottom-0 h-16 rounded-full opacity-40 blur-2xl ${solution.glowClass}`} aria-hidden="true" />
+          <a
+            href={solution.href ?? `#${solution.slug}`}
+            class="relative flex h-full flex-col items-center rounded-[16px] bg-white px-6 py-10 text-center shadow-[0_10px_40px_rgba(0,0,0,0.06)] transition-shadow hover:shadow-[0_10px_40px_rgba(0,0,0,0.12)]"
+          >
+            <Icon name={solution.icon} class={`h-16 w-16 shrink-0 ${solution.colorClass}`} />
             <h2 class="mt-6 font-heading text-xl font-bold text-dark">
-              {solucion.title}
+              {solution.title}
             </h2>
             <p class="mt-4 text-[15px] leading-6 text-dark-500">
-              {solucion.desc}
+              {solution.desc}
             </p>
-          </div>
+          </a>
         </div>
       ))}
     </div>

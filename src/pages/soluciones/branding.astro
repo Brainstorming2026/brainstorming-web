@@ -1,0 +1,16 @@
+---
+import BrandingCta from '@/components/branding/BrandingCta.astro'
+import BrandingFunnel from '@/components/branding/BrandingFunnel.astro'
+import BrandingHero from '@/components/branding/BrandingHero.astro'
+import BrandingSteps from '@/components/branding/BrandingSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Branding — Brainstorming">
+  <BrandingHero />
+  <BrandingFunnel />
+  <BrandingSteps />
+  <BrandingCta />
+</Layout>

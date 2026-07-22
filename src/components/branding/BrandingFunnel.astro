@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets'
+import funnelImg from '@/assets/branding/branding-funnel.webp'
+---
+
+<section class="bg-gradient-to-b from-mist to-white">
+  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      Seguro te preguntarás, ¿cómo lo hacen?
+    </h2>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-6 text-dark-500">
+      Convertir desconocidos en promotores de nuestra marca, mediante la Metodología Inbound, consta de 4 etapas:
+    </p>
+
+    <Image
+      src={funnelImg}
+      alt="Metodología Inbound: Atraer, Convertir, Cerrar y Deleitar"
+      class="mx-auto mt-12 h-auto w-full"
+      widths={[560, 1120]}
+      sizes="(min-width: 1140px) 1120px, 100vw"
+      loading="lazy"
+    />
+  </div>
+</section>

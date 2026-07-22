@@ -1,14 +1,16 @@
-export interface Solucion {
+export interface Solution {
   slug: string
   icon: string
   title: string
   desc: string
-  /** Clases Tailwind (texto + glow) usando los tokens de color ya definidos en global.css, según el acento que indica cada card en Figma. */
+  /** Tailwind classes (text + glow) using the color tokens already defined in global.css, matching each card's accent in Figma. */
   colorClass: string
   glowClass: string
+  /** Set once the dedicated solution page exists; falls back to an in-page anchor otherwise. */
+  href?: string
 }
 
-export const soluciones: Solucion[] = [
+export const solutions: Solution[] = [
   {
     slug: 'branding',
     icon: 'expert-huella',
@@ -16,6 +18,7 @@ export const soluciones: Solucion[] = [
     desc: 'Agrega valor a tu marca construyendo una identidad gráfica y conceptual coherente',
     colorClass: 'text-navy',
     glowClass: 'bg-navy',
+    href: '/soluciones/branding',
   },
   {
     slug: 'desarrollo-web',

@@ -12,7 +12,6 @@ const currentPath = Astro.url.pathname
     class="mx-auto flex h-20 max-w-[1512px] items-center justify-between px-6 lg:px-16"
     aria-label="Principal"
   >
-    <!-- Logo -->
     <a href="/" class="shrink-0" aria-label="Brainstorming — inicio">
       <Image
         src={logo}
@@ -21,32 +20,45 @@ const currentPath = Astro.url.pathname
       />
     </a>
 
-    <!-- Navegación desktop -->
     <ul class="hidden items-center gap-1 lg:flex">
       {
         links.map((link) => {
           const isActive = link.href !== '/' && currentPath.startsWith(link.href)
+          const hasDropdown = link.children && link.children.length > 0
           return (
-            <li>
+            <li class="relative group">
               <a
-                href={link.href}
+                href={hasDropdown ? '#' : link.href}
                 class:list={[
                   'flex items-center gap-1.5 px-4 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
                   isActive ? 'text-primary' : 'text-ink',
                 ]}
               >
                 {link.label}
-                {link.dropdown && (
+                {hasDropdown && (
                   <Icon name="chevron-down" class="h-2.5 w-2.5" />
                 )}
               </a>
+              {hasDropdown && (
+                <ul class="invisible absolute left-0 top-full z-50 min-w-[200px] rounded-[10px] border border-black/10 bg-white py-2 shadow-lg opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                  {link.children?.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block px-4 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-primary/5 hover:text-primary"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           )
         })
       }
     </ul>
 
-    <!-- Botón CTA desktop -->
     <a
       href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20agendar%20una%20asesoría"
       target="_blank"
@@ -56,7 +68,6 @@ const currentPath = Astro.url.pathname
       Agendar Asesoría
     </a>
 
-    <!-- Botón hamburguesa móvil -->
     <button
       type="button"
       id="nav-toggle"
@@ -69,7 +80,6 @@ const currentPath = Astro.url.pathname
     </button>
   </nav>
 
-  <!-- Menú móvil -->
   <div
     id="mobile-menu"
     class="hidden border-t border-black/10 bg-white px-6 py-4 lg:hidden"
@@ -78,18 +88,33 @@ const currentPath = Astro.url.pathname
       {
         links.map((link) => {
           const isActive = link.href !== '/' && currentPath.startsWith(link.href)
+          const hasDropdown = link.children && link.children.length > 0
           return (
             <li>
               <a
-                href={link.href}
+                href={hasDropdown ? '#' : link.href}
                 class:list={[
                   'flex items-center gap-1.5 py-2 font-heading text-base font-bold hover:text-primary',
                   isActive ? 'text-primary' : 'text-ink',
                 ]}
               >
                 {link.label}
-                {link.dropdown && <Icon name="chevron-down" class="h-2.5 w-2.5" />}
+                {hasDropdown && <Icon name="chevron-down" class="h-2.5 w-2.5" />}
               </a>
+              {hasDropdown && (
+                <ul class="ml-4 flex flex-col gap-1">
+                  {link.children?.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block py-1.5 text-sm font-bold text-ink hover:text-primary"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           )
         })

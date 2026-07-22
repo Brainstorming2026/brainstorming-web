@@ -2,13 +2,32 @@ export interface NavLink {
   label: string
   href: string
   dropdown?: boolean
+  children?: { label: string; href: string }[]
 }
 
 export const navLinks: NavLink[] = [
   { label: 'Nosotros', href: '/nosotros' },
-  { label: 'Soluciones', href: '/#embudo', dropdown: true },
+  {
+    label: 'Soluciones',
+    href: '#',
+    dropdown: true,
+    children: [
+      { label: 'Branding', href: '#' },
+      { label: 'Desarrollo Web', href: '#' },
+      { label: 'Inbound Marketing', href: '#' },
+      { label: 'Inbound Sales', href: '#' },
+    ],
+  },
   { label: 'Proyectos', href: '/proyectos' },
-  { label: 'Recursos', href: '#', dropdown: true },
+  {
+    label: 'Recursos',
+    href: '#',
+    dropdown: true,
+    children: [
+      { label: 'Blog', href: '#' },
+      { label: 'Guías Prácticas', href: '/guias' },
+    ],
+  },
   { label: 'Trabaja con Nosotros', href: '#' },
   { label: 'US Site', href: '#' },
 ]

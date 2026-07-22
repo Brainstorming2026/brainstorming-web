@@ -28,7 +28,7 @@ const currentPath = Astro.url.pathname
           return (
             <li class="relative group">
               <a
-                href={hasDropdown ? '#' : link.href}
+                href={link.href}
                 class:list={[
                   'flex items-center gap-1.5 px-4 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
                   isActive ? 'text-primary' : 'text-ink',
@@ -92,7 +92,7 @@ const currentPath = Astro.url.pathname
           return (
             <li>
               <a
-                href={hasDropdown ? '#' : link.href}
+                href={link.href}
                 class:list={[
                   'flex items-center gap-1.5 py-2 font-heading text-base font-bold hover:text-primary',
                   isActive ? 'text-primary' : 'text-ink',

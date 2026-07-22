@@ -9,13 +9,13 @@ export const navLinks: NavLink[] = [
   { label: 'Nosotros', href: '/nosotros' },
   {
     label: 'Soluciones',
-    href: '#',
+    href: '/soluciones',
     dropdown: true,
     children: [
-      { label: 'Branding', href: '#' },
-      { label: 'Desarrollo Web', href: '#' },
-      { label: 'Inbound Marketing', href: '#' },
-      { label: 'Inbound Sales', href: '#' },
+      { label: 'Branding', href: '/soluciones#branding' },
+      { label: 'Desarrollo Web', href: '/soluciones#desarrollo-web' },
+      { label: 'Inbound Marketing', href: '/soluciones#inbound-marketing' },
+      { label: 'Inbound Sales', href: '/soluciones#inbound-sales' },
     ],
   },
   { label: 'Proyectos', href: '/proyectos' },

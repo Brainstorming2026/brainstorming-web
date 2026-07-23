@@ -1,0 +1,14 @@
+---
+import DesarrolloCta from '@/components/desarrollo/DesarrolloCta.astro'
+import DesarrolloHero from '@/components/desarrollo/DesarrolloHero.astro'
+import DesarrolloSteps from '@/components/desarrollo/DesarrolloSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Desarrollo Web — Brainstorming">
+  <DesarrolloHero />
+  <DesarrolloSteps />
+  <DesarrolloCta />
+</Layout>

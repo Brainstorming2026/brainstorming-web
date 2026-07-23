@@ -27,6 +27,7 @@ export const solutions: Solution[] = [
     desc: 'Desarrolla una web que responda a tus objetivos comerciales y respire el ADN de tu marca',
     colorClass: 'text-accent',
     glowClass: 'bg-accent',
+    href: '/soluciones/desarrollo-web',
   },
   {
     slug: 'inbound-marketing',
@@ -35,6 +36,7 @@ export const solutions: Solution[] = [
     desc: 'Atrae prospectos, conviértelos en clientes y deléitalos con contenidos relevantes',
     colorClass: 'text-highlight',
     glowClass: 'bg-highlight',
+    href: '/soluciones/inbound-marketing',
   },
   {
     slug: 'inbound-sales',

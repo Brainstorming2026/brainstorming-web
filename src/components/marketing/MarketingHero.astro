@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/marketing/marketing-hero-bg.png'
+---
+
+<section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
+  <Image
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+    fetchpriority="high"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] items-center px-6 py-16 lg:min-h-[702px] lg:px-24">
+    <div class="max-w-[600px]">
+      <h1 class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
+        No solo creamos marcas, también historias y experiencias.
+      </h1>
+      <p class="mt-6 text-[16px] leading-6 text-dark-500">
+        Sabemos lo importante que es para ti proyectar una visión de tu negocio al mundo.
+        En Brainstorming, trabajamos en definir la personalidad y valores de tu marca, con
+        el objetivo de alcanzar el posicionamiento que deseas, conquistando la mente y
+        corazón de los consumidores.
+      </p>
+    </div>
+  </div>
+</section>

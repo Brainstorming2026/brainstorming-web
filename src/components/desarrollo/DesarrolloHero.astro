@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/desarrollo/desarrollo-bg.webp'
+---
+
+<section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
+  <Image
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+    fetchpriority="high"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] items-center px-6 py-16 lg:min-h-[702px] lg:px-24">
+    <div class="max-w-[600px]">
+      <h1 class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
+        En la actualidad, tener presencia en Internet es un requisito básico para cualquier empresa.
+      </h1>
+      <p class="mt-6 text-[16px] leading-6 text-dark-500">
+        Una página web es la ventaja que le permitirá comunicarte a tus clientes en el
+        mundo digital. Te ayudamos a brindar valor agregado a tu empresa a través de un sitio
+        web optimizado y capaz de resaltar ser referente, que combine con las
+        necesidades de tu empresa.
+      </p>
+    </div>
+  </div>
+</section>

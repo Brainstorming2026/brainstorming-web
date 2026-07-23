@@ -13,7 +13,7 @@ export const navLinks: NavLink[] = [
     dropdown: true,
     children: [
       { label: 'Branding', href: '/soluciones/branding' },
-      { label: 'Desarrollo Web', href: '/soluciones#desarrollo-web' },
+      { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
       { label: 'Inbound Marketing', href: '/soluciones#inbound-marketing' },
       { label: 'Inbound Sales', href: '/soluciones#inbound-sales' },
     ],

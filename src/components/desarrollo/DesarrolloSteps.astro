@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets'
+import bgH from '@/assets/desarrollo/desarrollo-bg-h.webp'
+import desarrollo1 from '@/assets/desarrollo/desarrollo-1.webp'
+import desarrollo2 from '@/assets/desarrollo/desarrollo-2.webp'
+import desarrollo3 from '@/assets/desarrollo/desarrollo-3.webp'
+import { Icon } from 'astro-icon/components'
+
+const rowImages = [desarrollo1, desarrollo2, desarrollo3]
+---
+
+<section class="relative overflow-hidden">
+  <Image
+    src={bgH}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-mist to-transparent" />
+  <div class="relative z-10 mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      Nuestro proceso de trabajo nos ayuda a obtener un producto
+      <br class="hidden sm:block" />
+      que superará tus expectativas.
+    </h2>
+
+    <div class="mt-12 space-y-6">
+      <Image
+        src={rowImages[0]}
+        alt="Proceso paso 1-3"
+        class="mx-auto h-auto w-full"
+        widths={[560, 1120]}
+        sizes="(min-width: 1140px) 1120px, 100vw"
+        loading="lazy"
+      />
+      <Image
+        src={rowImages[1]}
+        alt="Proceso paso 4-6"
+        class="mx-auto h-auto w-full"
+        widths={[560, 1120]}
+        sizes="(min-width: 1140px) 1120px, 100vw"
+        loading="lazy"
+      />
+      <Image
+        src={rowImages[2]}
+        alt="Proceso paso 7-9"
+        class="mx-auto h-auto w-full"
+        widths={[560, 1120]}
+        sizes="(min-width: 1140px) 1120px, 100vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      ¿En qué puede esto ayudar a tu negocio?
+    </h2>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Tener una herramienta de generación de clientes potenciales y ventas habilitada 24/7 en todo el mundo.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Generar una buena experiencia para tus clientes cuando te busquen en internet.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Tener una plataforma donde publicar contenido de interés para tu público.
+          </span>
+        </li>
+      </ul>
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Acortar tus ciclos de cierre de clientes.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Aumentar tu tasa de conversión de clientes.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Aumentar tu tasa de recompra.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Tener plataforma digital optimizada tanto para computadoras, tablets y móviles.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

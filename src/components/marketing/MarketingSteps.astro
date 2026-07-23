@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import stepTop from '@/assets/marketing/marketing-1.png'
+import stepBottom from '@/assets/marketing/marketing-2.png'
+---
+
+<section class="bg-gradient-to-b from-mist to-white">
+  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      Nuestro proceso de trabajo nos ayuda a crear y comunicar
+      <br class="hidden sm:block" />
+      estratégicamente tu marca.
+    </h2>
+
+    <div class="mt-14 flex flex-col items-center gap-10">
+
+      <Image
+        src={stepTop}
+        alt="Proceso de trabajo - Parte superior"
+        class="w-full max-w-[850px] h-auto"
+        widths={[850, 1700]}
+        sizes="(min-width: 1024px) 850px, 100vw"
+        loading="lazy"
+      />
+
+      <Image
+        src={stepBottom}
+        alt="Proceso de trabajo - Parte inferior"
+        class="w-full max-w-[850px] h-auto"
+        widths={[850, 1700]}
+        sizes="(min-width: 1024px) 850px, 100vw"
+        loading="lazy"
+      />
+
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
+    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      ¿En qué puede ayudar esto a tu marca?
+    </h2>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Alinear tu cultura, estrategia y productos con tus consumidores.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Ser percibido de por el cliente de la misma manera en todos tus canales.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Crear confianza con tu público conectando de forma positiva con él.
+          </span>
+        </li>
+      </ul>
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Atraer nuevos clientes y generar valor financiero.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Permitir a tu equipo de desarrollo de contenido mayor agilidad y calidad.
+          </span>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+          <span class="text-[15px] leading-6 text-dark-500">
+            Identificar tu propuesta de valor y comunicar.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

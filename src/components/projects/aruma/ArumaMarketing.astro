@@ -33,21 +33,24 @@ const posts = [campaign1, campaign2]
   />
 </section>
 
-<section class="bg-[#7f1757] pb-16 pt-8">
-  <div class="mx-auto max-w-[1500px] px-6 lg:px-24">
-    <div class="grid items-center gap-8 sm:grid-cols-2">
-      {
-        posts.map((post, i) => (
-          <Image
-            src={post}
-            alt={`Publicación de campaña Aruma ${i + 1}`}
-            class="mx-auto h-auto w-full max-w-[500px]"
-            widths={[640, 1280]}
-            sizes="(min-width: 640px) 640px, 90vw"
-            loading="lazy"
-          />
-        ))
-      }
+<section class="bg-[#7f1757] py-16">
+  <div class="mx-auto max-w-[1600px] px-8">
+    <div class="grid lg:grid-cols-[3fr_1fr] items-center gap-10">
+      <div>
+        <Image
+          src={posts[0]}
+          alt="Facebook"
+          class="w-full max-w-[950px]"
+        />
+      </div>
+
+      <div class="flex justify-center">
+        <Image
+          src={posts[1]}
+          alt="Instagram"
+          class="w-full max-w-[360px]"
+        />
+      </div>
     </div>
   </div>
 </section>

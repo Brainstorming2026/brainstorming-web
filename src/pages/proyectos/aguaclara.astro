@@ -1,0 +1,14 @@
+---
+import AguaclaraHero from '@/components/projects/aguaclara/AguaclaraHero.astro'
+import AguaclaraMarketing from '@/components/projects/aguaclara/AguaclaraMarketing.astro'
+import AguaclaraWeb from '@/components/projects/aguaclara/AguaclaraWeb.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Aguaclara — Brainstorming">
+  <AguaclaraHero />
+  <AguaclaraMarketing />
+  <AguaclaraWeb />
+</Layout>

@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import Conversemos from '@/components/common/Conversemos.astro'
+import webBg from '@/assets/projects/proyecto-aguaclara-bg-web.png'
+import webImg from '@/assets/projects/proyecto-aguaclara-web.png'
+---
+
+<section class="relative overflow-hidden bg-white py-16 lg:min-h-[820px] lg:py-20">
+  <Image
+    src={webBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto grid max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
+    <Image
+      src={webImg}
+      alt="Renovación de la página web de Aguaclara en desktop y móvil"
+      class="mx-auto h-auto w-full max-w-[520px]"
+      widths={[520, 1040]}
+      sizes="(min-width: 1024px) 520px, 90vw"
+      loading="lazy"
+    />
+
+    <div>
+      <div class="flex items-center gap-2 font-heading text-sm font-bold text-dark">
+        <Icon name="expert-window" class="h-6 w-6 text-dark-300" />
+        <span>Desarrollo web</span>
+      </div>
+      <h2 class="mt-4 font-heading text-3xl font-bold leading-tight text-dark sm:text-4xl">
+        Renovación de su página web
+      </h2>
+      <p class="mt-6 max-w-[440px] text-[14px] leading-6 text-dark-500">
+        Un paso necesario para potenciar la marca consistió en la renovación de su página Web con
+        un estilo más moderno, llamativo y funcional. Los valores de Aguaclara permanecieron
+        centrales, pero su forma se acercó más a las expectativas de sus usuarios en esta era
+        digital.
+      </p>
+    </div>
+  </div>
+</section>
+
+<Conversemos
+  heading="¿Quieres ser parte de nuestro portafolio?"
+  whatsappText="Hola, me gustaría formar parte de su portafolio"
+/>

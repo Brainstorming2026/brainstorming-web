@@ -5,6 +5,7 @@ import desarrollo1 from '@/assets/desarrollo/desarrollo-1.webp'
 import desarrollo2 from '@/assets/desarrollo/desarrollo-2.webp'
 import desarrollo3 from '@/assets/desarrollo/desarrollo-3.webp'
 import { Icon } from 'astro-icon/components'
+import { desarrolloBenefits } from '@/data'
 
 const rowImages = [desarrollo1, desarrollo2, desarrollo3]
 ---
@@ -63,50 +64,24 @@ const rowImages = [desarrollo1, desarrollo2, desarrollo3]
 
     <div class="mt-10 grid gap-8 sm:grid-cols-2">
       <ul class="space-y-4">
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Tener una herramienta de generación de clientes potenciales y ventas habilitada 24/7 en todo el mundo.
-          </span>
-        </li>
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Generar una buena experiencia para tus clientes cuando te busquen en internet.
-          </span>
-        </li>
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Tener una plataforma donde publicar contenido de interés para tu público.
-          </span>
-        </li>
+        {
+          desarrolloBenefits.left.map((text) => (
+            <li class="flex items-start gap-3">
+              <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
+            </li>
+          ))
+        }
       </ul>
       <ul class="space-y-4">
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Acortar tus ciclos de cierre de clientes.
-          </span>
-        </li>
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Aumentar tu tasa de conversión de clientes.
-          </span>
-        </li>
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Aumentar tu tasa de recompra.
-          </span>
-        </li>
-        <li class="flex items-start gap-3">
-          <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-          <span class="text-[15px] leading-6 text-dark-500">
-            Tener plataforma digital optimizada tanto para computadoras, tablets y móviles.
-          </span>
-        </li>
+        {
+          desarrolloBenefits.right.map((text) => (
+            <li class="flex items-start gap-3">
+              <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </div>

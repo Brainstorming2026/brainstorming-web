@@ -14,13 +14,13 @@ export const soluciones: FooterLink[] = [
   { label: 'Desarrollo Web', href: '#desarrollo-web' },
   { label: 'Inbound Marketing', href: '#inbound-marketing' },
   { label: 'Inbound Sales', href: '#inbound-sales' },
-  { label: 'Optimización de Procesos y CX', href: '#optimizacion' },
+  { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
 ]
 
 export const empresa: FooterLink[] = [
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Contacto', href: '/contacto' },
 ]
 
 export const recursos: FooterLink[] = [

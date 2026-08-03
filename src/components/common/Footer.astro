@@ -2,16 +2,14 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { soluciones, empresa, recursos, redes } from '@/data'
-import footerUp from '@/assets/decorative/footer-up.webp'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 ---
 
 <footer class="text-white">
-  <Image
-    src={footerUp}
-    alt=""
+  <Icon
+    name="footer-up"
     aria-hidden="true"
-    class="-mb-px block w-full select-none"
+    class="-mb-px block h-auto w-full select-none"
   />
 
   <div class="bg-dark">

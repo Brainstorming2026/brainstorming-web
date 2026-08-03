@@ -1,0 +1,12 @@
+---
+import ContactoForm from '@/components/contacto/ContactoForm.astro'
+import ContactoHero from '@/components/contacto/ContactoHero.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Contacto — Brainstorming">
+  <ContactoHero />
+  <ContactoForm />
+</Layout>

@@ -1,22 +1,24 @@
 ---
 import { Icon } from 'astro-icon/components'
-import { marketingBenefits, marketingSteps } from '@/data'
+import { salesBenefits, salesSteps } from '@/data'
 ---
 
 <section class="bg-gradient-to-b from-mist to-white">
   <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
     <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      Nuestro proceso de trabajo nos ayuda a crear y comunicar
-      <br class="hidden sm:block" />
-      estratégicamente tu marca.
+      ¿Cómo funciona el proceso de Inbound Sales?
     </h2>
+    <p class="mx-auto mt-4 max-w-[700px] text-center text-[15px] leading-6 text-dark-500">
+      Conoce los 6 pasos que seguimos para lograr que la experiencia de compra esté siempre
+      alineada al contexto de tus usuarios.
+    </p>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {
-        marketingSteps.map((step, index) => (
+        salesSteps.map((step, index) => (
           <div class="flex items-center gap-4 rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
-            <span class="font-heading text-3xl font-bold text-[#0063D6]">{index + 1}</span>
-            <Icon name={step.icon} class="h-10 w-10 flex-shrink-0" />
+            <span class="font-heading text-3xl font-bold text-primary">{index + 1}</span>
+            <Icon name={step.icon} class="h-9 w-9 flex-shrink-0 text-primary" />
             <p class="text-[13.5px] leading-5 text-dark-500">{step.text}</p>
           </div>
         ))
@@ -28,15 +30,15 @@ import { marketingBenefits, marketingSteps } from '@/data'
 <section class="bg-white py-16">
   <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
     <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      ¿En qué puede ayudar esto a tu marca?
+      ¿En qué puede esto ayudar a tu negocio?
     </h2>
 
     <div class="mt-10 grid gap-8 sm:grid-cols-2">
       <ul class="space-y-4">
         {
-          marketingBenefits.left.map((text) => (
+          salesBenefits.left.map((text) => (
             <li class="flex items-start gap-3">
-              <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+              <Icon name="sales-check" class="mt-1 h-3 w-auto flex-shrink-0" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
             </li>
           ))
@@ -44,9 +46,9 @@ import { marketingBenefits, marketingSteps } from '@/data'
       </ul>
       <ul class="space-y-4">
         {
-          marketingBenefits.right.map((text) => (
+          salesBenefits.right.map((text) => (
             <li class="flex items-start gap-3">
-              <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
+              <Icon name="sales-check" class="mt-1 h-3 w-auto flex-shrink-0" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
             </li>
           ))

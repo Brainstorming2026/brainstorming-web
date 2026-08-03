@@ -14,8 +14,9 @@ export const navLinks: NavLink[] = [
     children: [
       { label: 'Branding', href: '/soluciones/branding' },
       { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
-      { label: 'Inbound Marketing', href: '/soluciones#inbound-marketing' },
-      { label: 'Inbound Sales', href: '/soluciones#inbound-sales' },
+      { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
+      { label: 'Inbound Sales', href: '/soluciones/inbound-sales' },
+      { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
     ],
   },
   { label: 'Proyectos', href: '/proyectos' },

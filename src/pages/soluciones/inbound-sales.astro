@@ -1,0 +1,14 @@
+---
+import SalesCta from '@/components/sales/SalesCta.astro'
+import SalesHero from '@/components/sales/SalesHero.astro'
+import SalesSteps from '@/components/sales/SalesSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Inbound Sales — Brainstorming">
+  <SalesHero />
+  <SalesSteps />
+  <SalesCta />
+</Layout>

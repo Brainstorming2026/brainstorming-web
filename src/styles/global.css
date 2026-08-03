@@ -98,6 +98,10 @@ html {
   --color-highlight-800: #4d3f00;
   --color-highlight-900: #332a00;
 
+  /* === Naranja (Optimización de Procesos y CX) === */
+  --color-orange: #f17900;
+  --color-orange-500: #f17900;
+
   /* === Púrpura oscuro === */
   --color-purple-dark: #6342c8;
   --color-purple-dark-50: #f3f0fc;

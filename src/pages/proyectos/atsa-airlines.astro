@@ -9,11 +9,11 @@ import Layout from '@/layouts/Layout.astro'
 
 export const prerender = true;
 
-const proyecto = proyectos.find(p => p.slug === 'aguaclara')!
-const detalle = proyectosDetalle.aguaclara
+const proyecto = proyectos.find(p => p.slug === 'atsa-airlines')!
+const detalle = proyectosDetalle['atsa-airlines']
 ---
 
-<Layout title="Aguaclara — Brainstorming">
+<Layout title="Atsa Airlines — Brainstorming">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}
   {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}

@@ -1,15 +1,20 @@
 ---
 import Conversemos from '@/components/common/Conversemos.astro'
-import ArumaHero from '@/components/projects/aruma/ArumaHero.astro'
-import ArumaMarketing from '@/components/projects/aruma/ArumaMarketing.astro'
+import ProjectCampaign from '@/components/projects/ProjectCampaign.astro'
+import ProjectHero from '@/components/projects/ProjectHero.astro'
+import { proyectos } from '@/data/proyectos'
+import { proyectosDetalle } from '@/data/proyectosDetalle'
 import Layout from '@/layouts/Layout.astro'
 
 export const prerender = true;
+
+const proyecto = proyectos.find(p => p.slug === 'aruma')!
+const detalle = proyectosDetalle.aruma
 ---
 
 <Layout title="Aruma — Brainstorming">
-  <ArumaHero />
-  <ArumaMarketing />
+  <ProjectHero proyecto={proyecto} detalle={detalle} />
+  {detalle.campania && <ProjectCampaign campania={detalle.campania} />}
   <Conversemos
     heading="¿Quieres ser parte de nuestro portafolio?"
     whatsappText="Hola, me gustaría formar parte de su portafolio"

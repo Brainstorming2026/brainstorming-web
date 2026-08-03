@@ -2,18 +2,11 @@
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 import logoAlumspazio from '@/assets/clientes/customer-alumspazio.webp'
-import heroBg from '@/assets/projects/projects-alumspazio-bg.png'
-import heroImg from '@/assets/projects/projects-alumspazio-hero.png'
-import { categoriaLabels, proyectos } from '@/data/proyectos'
+import heroBg from '@/assets/projects/alumspazio/bg.png'
+import heroImg from '@/assets/projects/alumspazio/hero.png'
+import { categoriaIcons, categoriaLabels, proyectos } from '@/data/proyectos'
 
 const proyecto = proyectos.find(p => p.slug === 'alumspazio')!
-
-const iconMap = {
-  'branding': 'expert-huella',
-  'desarrollo-web': 'expert-window',
-  'inbound-marketing': 'expert-iman',
-  'inbound-sales': 'expert-money',
-} as const
 ---
 
 <section class="relative flex min-h-screen items-center overflow-hidden bg-white py-28 lg:py-32">
@@ -27,20 +20,20 @@ const iconMap = {
   />
   <div class="relative z-10 mx-auto grid w-full max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
     <div class="text-center">
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col text-center gap-3">
         {
           proyecto.categorias.map(cat => (
-            <Icon name={iconMap[cat]} class="h-7 w-7 text-dark-300" />
+            <Icon name={categoriaIcons[cat]} class="h-7 w-7 text-dark-300" />
           ))
         }
       </div>
 
       <Image src={logoAlumspazio} alt="Alum Spazio" class="mx-auto mt-8 h-auto w-44" />
 
-      <p class="mt-8 font-heading text-[15px] items-center font-bold text-dark">
+      <p class="mt-8 font-heading text-[15px] font-bold text-dark">
         {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}
       </p>
-      <p class="mx-auto mt-4 max-w-[440px] items-center text-[14px] leading-6 text-dark-500">
+      <p class="mx-auto mt-4 max-w-[440px] text-[14px] leading-6 text-dark-500">
         Alum Spazio es una empresa dedicada a la comercialización de productos para construcción,
         diseño de interior, arquitectura y remodelación. Necesitaban desarrollar una web, renovar
         su manual de marca, mejorar su reconocimiento de marca y obtener una imagen que evocara

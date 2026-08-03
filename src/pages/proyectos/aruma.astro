@@ -1,0 +1,17 @@
+---
+import Conversemos from '@/components/common/Conversemos.astro'
+import ArumaHero from '@/components/projects/aruma/ArumaHero.astro'
+import ArumaMarketing from '@/components/projects/aruma/ArumaMarketing.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Aruma — Brainstorming">
+  <ArumaHero />
+  <ArumaMarketing />
+  <Conversemos
+    heading="¿Quieres ser parte de nuestro portafolio?"
+    whatsappText="Hola, me gustaría formar parte de su portafolio"
+  />
+</Layout>

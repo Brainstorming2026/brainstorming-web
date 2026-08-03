@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import logoAruma from '@/assets/projects/aruma/logo.png'
+import heroBg from '@/assets/projects/aruma/bg.png'
+import heroImg from '@/assets/projects/aruma/hero.png'
+import { categoriaIcons, categoriaLabels, proyectos } from '@/data/proyectos'
+
+const proyecto = proyectos.find(p => p.slug === 'aruma')!
+---
+
+<section class="relative overflow-hidden bg-white min-h-[600px] lg:min-h-[702px] flex items-center">
+  <Image
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto grid w-full max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
+    <div class="text-center">
+      <div class="flex flex-col gap-3">
+        {
+          proyecto.categorias.map(cat => (
+            <Icon name={categoriaIcons[cat]} class="h-10 w-10 text-dark-300" />
+          ))
+        }
+      </div>
+
+      <Image src={logoAruma} alt="Aruma" class="mx-auto h-auto w-50" />
+
+      <p class="mt-6 font-heading text-[15px] font-bold text-dark">
+        {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}
+      </p>
+      <p class="mt-4 max-w-[440px] text-[14px] leading-6 mx-auto text-dark-500">
+        Aruma es una tienda de belleza especializada, la primera en su tipo en el Perú. Busca
+        potenciar la belleza auténtica de todos brindando una experiencia única en la búsqueda de
+        los mejores productos de belleza. Necesitaban una estrategia digital que vaya más allá del
+        discurso de ventas, necesitaban conectar con su audiencia.
+      </p>
+    </div>
+
+    <div class="relative">
+      <Image
+        src={heroImg}
+        alt="Portadas de la revista digital Aruma"
+        class="relative z-10 mx-auto h-auto w-full max-w-[620px]"
+        widths={[620, 1240]}
+        sizes="(min-width: 1024px) 620px, 80vw"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>

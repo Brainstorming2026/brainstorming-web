@@ -179,3 +179,9 @@ export const categoriaLabels: Record<CategoriaTipo, string> = {
   'desarrollo-web': 'Desarrollo Web',
   'inbound-marketing': 'Inbound Marketing',
 }
+
+export const categoriaIcons: Record<CategoriaTipo, string> = {
+  'branding': 'expert-huella',
+  'desarrollo-web': 'expert-window',
+  'inbound-marketing': 'expert-iman',
+}

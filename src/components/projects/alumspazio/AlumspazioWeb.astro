@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import webBg from '@/assets/projects/projects-alumspazio-webbg.png'
+import webImg from '@/assets/projects/projects-alumspazio-web.png'
+---
+
+<section class="relative overflow-hidden bg-white py-16 lg:min-h-[820px] lg:py-20">
+  <Image
+    src={webBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto grid max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
+    <Image
+      src={webImg}
+      alt="Renovación de la página web de Alum Spazio en desktop y móvil"
+      class="mx-auto h-auto w-full max-w-[420px]"
+      widths={[420, 840]}
+      sizes="(min-width: 1024px) 420px, 90vw"
+      loading="lazy"
+    />
+
+    <div>
+      <div class="flex items-center gap-2 font-heading text-sm font-bold text-dark">
+        <Icon name="expert-window" class="h-6 w-6 text-dark-300" />
+        <span>Desarrollo web</span>
+      </div>
+      <h2 class="mt-4 font-heading text-3xl font-bold leading-tight text-dark sm:text-4xl">
+        Desarrollo integral de su sitio Web
+      </h2>
+      <p class="mt-6 max-w-[440px] text-[14px] leading-6 text-dark-500">
+        El cliente necesitaba que su Web sea fácil de usar, intuitiva para sus usuarios. Algo
+        esencial que requerían era que la calidad de la página sea tanto visual como funcional.
+        Debía informar de manera rápida y fácil al cliente acerca de los productos y sus
+        cualidades. Una vez que el cliente identificara su necesidad, la Web debía proporcionar la
+        facilidad de contacto para que el lead pueda ser captado con rapidez.
+      </p>
+      <p class="mt-4 max-w-[440px] text-[14px] leading-6 text-dark-500">
+        Combinando las sensibilidades visuales del Manual de Identidad de Marca con aspectos
+        funcionales de la experiencia del usuario, desarrollamos una Web efectiva y atractiva a la
+        vez.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,12 +1,12 @@
 ---
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
-import logoAguaclara from '@/assets/clientes/customer-aguaclara.webp'
-import heroBg from '@/assets/projects/proyecto-aguaclara-bg.png'
-import heroImg from '@/assets/projects/proyecto-aguaclara-herp.png'
+import logoAlumspazio from '@/assets/clientes/customer-alumspazio.webp'
+import heroBg from '@/assets/projects/projects-alumspazio-bg.png'
+import heroImg from '@/assets/projects/projects-alumspazio-hero.png'
 import { categoriaLabels, proyectos } from '@/data/proyectos'
 
-const proyecto = proyectos.find(p => p.slug === 'aguaclara')!
+const proyecto = proyectos.find(p => p.slug === 'alumspazio')!
 
 const iconMap = {
   'branding': 'expert-huella',
@@ -26,7 +26,7 @@ const iconMap = {
     sizes="100vw"
   />
   <div class="relative z-10 mx-auto grid w-full max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
-    <div>
+    <div class="text-center">
       <div class="flex flex-col gap-3">
         {
           proyecto.categorias.map(cat => (
@@ -35,26 +35,26 @@ const iconMap = {
         }
       </div>
 
-      <Image src={logoAguaclara} alt="Aguaclara" class="mx-auto mt-8 h-auto w-44" />
+      <Image src={logoAlumspazio} alt="Alum Spazio" class="mx-auto mt-8 h-auto w-44" />
 
-      <p class="mt-8 font-heading text-[15px] text-center font-bold text-dark">
+      <p class="mt-8 font-heading text-[15px] items-center font-bold text-dark">
         {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}
       </p>
-      <p class="mx-auto mt-4 max-w-[440px] text-center text-[14px] leading-6 text-dark-500">
-        Aguaclara Swimwear es una empresa dedicada al diseño, fabricación y comercialización de
-        prendas de baño de lujo para damas. Sus diseños se inspiran en raíces culturales y
-        naturales amazónicas. Necesitaban atraer más clientes a su página web, la cual necesitaba
-        una renovación completa.
+      <p class="mx-auto mt-4 max-w-[440px] items-center text-[14px] leading-6 text-dark-500">
+        Alum Spazio es una empresa dedicada a la comercialización de productos para construcción,
+        diseño de interior, arquitectura y remodelación. Necesitaban desarrollar una web, renovar
+        su manual de marca, mejorar su reconocimiento de marca y obtener una imagen que evocara
+        confort.
       </p>
     </div>
 
     <div class="relative">
       <Image
         src={heroImg}
-        alt="Publicaciones de Instagram de Aguaclara con descuentos promocionales"
-        class="relative z-10 mx-auto h-auto w-full max-w-[420px]"
-        widths={[420, 840]}
-        sizes="(min-width: 1024px) 420px, 80vw"
+        alt="Sitio web de Alum Spazio en desktop y móvil"
+        class="relative z-10 mx-auto h-auto w-full max-w-[480px]"
+        widths={[480, 960]}
+        sizes="(min-width: 1024px) 480px, 80vw"
         loading="eager"
       />
     </div>

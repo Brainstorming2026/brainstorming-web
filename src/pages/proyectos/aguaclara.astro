@@ -3,6 +3,7 @@ import AguaclaraHero from '@/components/projects/aguaclara/AguaclaraHero.astro'
 import AguaclaraMarketing from '@/components/projects/aguaclara/AguaclaraMarketing.astro'
 import AguaclaraWeb from '@/components/projects/aguaclara/AguaclaraWeb.astro'
 import Layout from '@/layouts/Layout.astro'
+import Conversemos from '@/components/common/Conversemos.astro'
 
 export const prerender = true;
 ---
@@ -11,4 +12,8 @@ export const prerender = true;
   <AguaclaraHero />
   <AguaclaraMarketing />
   <AguaclaraWeb />
+  <Conversemos
+    heading="¿Quieres ser parte de nuestro portafolio?"
+    whatsappText="Hola, me gustaría formar parte de su portafolio"
+  />
 </Layout>

@@ -1,29 +1,18 @@
 {
-  "name": "brainstorming-web",
+  "name": "brainstorming",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
+  "packageManager": "pnpm@10.12.4",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.1.3",
-    "astro-icon": "^1.1.5",
-    "tailwindcss": "^4.3.2",
-    "typescript": "^6.0.3"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^9.1.0",
-    "eslint": "^10.6.0",
-    "eslint-plugin-astro": "^1.7.0"
+    "dev:web": "pnpm --filter @brainstorming/web dev",
+    "build:web": "pnpm --filter @brainstorming/web build",
+    "dev:us": "pnpm --filter @brainstorming/us dev",
+    "build:us": "pnpm --filter @brainstorming/us build",
+    "dev:blog": "pnpm --filter @brainstorming/blog dev",
+    "build:blog": "pnpm --filter @brainstorming/blog build",
+    "lint": "pnpm -r lint"
   }
 }

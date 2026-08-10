@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import type { ProyectoFeature } from '@/data/proyectosDetalle'
+
+interface Props {
+  feature: ProyectoFeature
+}
+
+const { feature } = Astro.props
+const imagenPrimero = (feature.imagenLado ?? 'izquierda') === 'izquierda'
+const textoClaro = feature.textoClaro ?? false
+---
+
+<section class="relative overflow-hidden bg-white lg:py-20">
+  <Image
+    src={feature.bgImagen}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto grid max-w-[1512px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-24">
+    {
+      imagenPrimero && (
+        <Image
+          src={feature.imagen}
+          alt={feature.imagenAlt}
+          class="mx-auto h-auto w-full max-w-[520px]"
+          widths={[520, 1040]}
+          sizes="(min-width: 1024px) 520px, 90vw"
+          loading="lazy"
+        />
+      )
+    }
+
+    <div>
+      <div class:list={['flex items-center gap-2 font-heading text-sm font-bold', textoClaro ? 'text-white' : 'text-dark']}>
+        <Icon name={feature.icon} class:list={['h-6 w-6', textoClaro ? 'text-white/70' : 'text-dark-300']} />
+        <span>{feature.label}</span>
+      </div>
+      <h2 class:list={['mt-4 max-w-[520px] font-heading text-3xl font-bold leading-tight sm:text-7xl', textoClaro ? 'text-white' : 'text-dark']}>
+        {feature.heading}
+      </h2>
+      {
+        feature.parrafos.map((parrafo, i) => (
+          <p class:list={['max-w-[440px] text-[14px] leading-6 text-dark-500', i === 0 ? 'mt-6' : 'mt-4']}>
+            {parrafo}
+          </p>
+        ))
+      }
+    </div>
+
+    {
+      !imagenPrimero && (
+        <Image
+          src={feature.imagen}
+          alt={feature.imagenAlt}
+          class="mx-auto h-auto w-full max-w-[520px]"
+          widths={[520, 1040]}
+          sizes="(min-width: 1024px) 520px, 90vw"
+          loading="lazy"
+        />
+      )
+    }
+  </div>
+</section>

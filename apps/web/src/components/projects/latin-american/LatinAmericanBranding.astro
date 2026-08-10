@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import brandingBg from '@/assets/projects/latin-american/branding-bg.png'
+import colorsImg from '@/assets/projects/latin-american/colors.png'
+import identityImg from '@/assets/projects/latin-american/identity.png'
+import renovationImg from '@/assets/projects/latin-american/renovation.png'
+
+const lineas = [
+  'Renovación de su Manual',
+  'de Identidad de Marca y',
+  'creación de Presentaciones',
+  'de Alto Impacto',
+]
+---
+
+<section class="relative overflow-hidden bg-dark py-16 lg:py-20">
+  <Image
+    src={brandingBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <div class="flex items-center gap-2 font-heading text-lg font-bold text-white">
+          <Icon name="expert-huella" class="h-6 w-6 text-white/70" />
+          <span>Branding</span>
+        </div>
+
+        <h2 class="mt-4 font-heading text-3xl font-bold leading-tight text-white sm:text-6xl">
+          {
+            lineas.map(linea => (
+              <span class="relative block py-1 pl-4">
+                {linea}
+              </span>
+            ))
+          }
+        </h2>
+      </div>
+
+      <Image
+        src={renovationImg}
+        alt="Presentaciones de Alto Impacto de Latin American Outdoors"
+        class="mx-auto h-auto w-full max-w-[560px]"
+        widths={[560, 1120]}
+        sizes="(min-width: 1024px) 560px, 90vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<div class="relative h-10 overflow-hidden sm:h-14 lg:h-20" aria-hidden="true">
+  <Icon name="branding-up" class="absolute inset-x-0 top-0 h-auto w-full select-none" />
+</div>
+
+<section class="bg-white mb-16 lg:mb-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto_auto] lg:items-center">
+      <p class="max-w-[440px] text-[14px] leading-6 text-dark-500">
+        La empresa necesitaba reinventar su identidad y concepto de marca de la manera más
+        adecuada para ganar más mercado y vender a más clientes. Con una paleta de colores más
+        moderna y un estilo visual más sintetizado, potenciamos su identidad gráfica sin perder la
+        esencia de marca. Sus presentaciones de alto impacto, esenciales en el negocio,
+        necesitaban esa actualización.
+      </p>
+
+      <Image
+        src={identityImg}
+        alt="Iconografía de elementos publicitarios de Latin American Outdoors"
+        class="h-auto w-full max-w-[570px]"
+        loading="lazy"
+      />
+
+      <Image
+        src={colorsImg}
+        alt="Paleta de colores de Latin American Outdoors"
+        class="relative z-10 mx-auto h-auto w-auto max-h-[600px] lg:-mt-40"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

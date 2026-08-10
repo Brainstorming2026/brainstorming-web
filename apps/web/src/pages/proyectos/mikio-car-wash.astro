@@ -1,0 +1,26 @@
+---
+import Conversemos from '@/components/common/Conversemos.astro'
+import MikioBranding from '@/components/projects/mikio/MikioBranding.astro'
+import ProjectCampaign from '@/components/projects/ProjectCampaign.astro'
+import ProjectFeature from '@/components/projects/ProjectFeature.astro'
+import ProjectHero from '@/components/projects/ProjectHero.astro'
+import { proyectos } from '@/data/proyectos'
+import { proyectosDetalle } from '@/data/proyectosDetalle'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+
+const proyecto = proyectos.find(p => p.slug === 'mikio-car-wash')!
+const detalle = proyectosDetalle['mikio-car-wash']
+---
+
+<Layout title="Mikio Car Wash — Brainstorming">
+  <ProjectHero proyecto={proyecto} detalle={detalle} />
+  <MikioBranding />
+  {detalle.campania && <ProjectCampaign campania={detalle.campania} />}
+  {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}
+  <Conversemos
+    heading="¿Quieres ser parte de nuestro portafolio?"
+    whatsappText="Hola, me gustaría formar parte de su portafolio"
+  />
+</Layout>

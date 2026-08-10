@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import brandingBg from '@/assets/projects/beauty/bg2.png'
+import badge1 from '@/assets/projects/beauty/img1.png'
+import badge2 from '@/assets/projects/beauty/img2.png'
+import iconsImg from '@/assets/projects/beauty/hero2.png'
+---
+
+<section class="relative overflow-hidden bg-gray-light py-16 lg:py-20">
+  <Image
+    src={brandingBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 hidden h-full w-1/2 object-cover lg:right-0 lg:left-auto lg:block"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="50vw"
+  />
+  <div class="relative z-10 mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+      <div>
+        <div class="flex items-center gap-2 font-heading text-sm font-bold text-dark">
+          <Icon name="expert-huella" class="h-6 w-6 text-dark-300" />
+          <span>Branding</span>
+        </div>
+
+        <h2 class="mt-4 max-w-[440px] font-heading text-3xl font-bold leading-tight text-dark sm:text-6xl">
+          Creación de Identidad Visual (logotipo)
+        </h2>
+
+        <div class="mt-8 flex gap-4">
+          <Image src={badge1} alt="Variante del isotipo de The Beauty Trust sobre fondo blanco" class="h-16 w-16" loading="lazy" />
+          <Image src={badge2} alt="Variante del isotipo de The Beauty Trust sobre degradado" class="h-16 w-16" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white pb-16 lg:pb-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-10 pt-12 lg:grid-cols-[1fr_auto] lg:items-center">
+      <p class="max-w-[550px] text-[14px] leading-6 text-dark-500">
+        Era esencial para The Beauty Trust que su branding refleje un balance entre elegancia,
+        clase y calidez. Con la identidad visual creada, pudimos integrar la belleza/feminidad y la
+        inteligencia/expertise que la marca provee a sus usuarios. El diseño minimalista y la
+        elección de colores con un degradado elegante transmite la onda moderna, limpia y formal
+        que inspira confianza y seguridad al consumidor final.
+      </p>
+
+      <Image
+        src={iconsImg}
+        alt="Iconografía de productos de belleza de The Beauty Trust"
+        class="mx-auto h-auto w-full max-w-[360px]"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

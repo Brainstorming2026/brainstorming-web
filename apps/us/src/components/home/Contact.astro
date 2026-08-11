@@ -19,7 +19,7 @@ const investmentRanges = ['Less than $50,000', '$50,000 - $100,000', '$100,000 -
     />
   </svg>
 
-  <section class="relative overflow-hidden bg-mist-100">
+  <section id="contact" class="relative overflow-hidden bg-mist-100">
     <div
       class="absolute inset-y-0 right-0 w-full bg-gradient-to-br from-primary to-navy-700 lg:w-1/2"
     >
@@ -27,9 +27,9 @@ const investmentRanges = ['Less than $50,000', '$50,000 - $100,000', '$100,000 -
 
     <Image
       src={arrow}
-      alt="dsada"
+      alt=""
       role="presentation"
-      class="pointer-events-none absolute top-20 left-1/2 z-30 hidden w-14 -translate-x-1/2 opacity-90 lg:block"
+      class="contact-arrow pointer-events-none absolute top-[62%] left-[58%] z-30 hidden w-16 -translate-x-1/2 -translate-y-1/2 opacity-90 lg:block"
     />
 
     <div class="relative mx-auto grid max-w-[1512px] gap-10 px-6 pt-20 pb-12 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:pt-28 lg:pb-16">
@@ -122,3 +122,19 @@ const investmentRanges = ['Less than $50,000', '$50,000 - $100,000', '$100,000 -
     </div>
   </section>
 </div>
+
+<style>
+  .contact-arrow {
+    animation: contact-arrow-bounce 1.6s ease-in-out infinite;
+  }
+
+  @keyframes contact-arrow-bounce {
+    0%,
+    100% {
+      transform: translate(-50%, -50%);
+    }
+    50% {
+      transform: translate(-35%, -50%);
+    }
+  }
+</style>

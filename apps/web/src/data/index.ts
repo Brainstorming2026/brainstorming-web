@@ -19,6 +19,9 @@ export type { ProcessStep } from './marketing'
 export { navLinks } from './navbar'
 export type { NavLink } from './navbar'
 
+export { officeLocation } from './office'
+export type { OfficeLocation } from './office'
+
 export { problemaCards } from './problemas'
 
 export { procesosBenefits } from './procesos'

@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { soluciones, empresa, recursos, redes } from '@/data'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
+import FooterMap from '@/components/common/FooterMap'
 
 interface Props {
   /** Tailwind bg-color class matching the section right above the footer, so the curve's transparent edges blend in seamlessly instead of showing a white gap. */
@@ -22,18 +23,11 @@ const { curveBg = 'bg-white' } = Astro.props
   </div>
 
   <div class="bg-dark">
-  <!-- Mapa de Google Maps -->
+  <!-- Mapa de ubicación -->
   <div class="mx-auto max-w-[1512px] px-6 pt-8 sm:pt-12 lg:px-24">
-    <iframe
-      src="https://www.google.com/maps?q=Brainstorming+Marketing+Growth+Strategists+San+Fernando+165+Miraflores+Lima+Peru&output=embed&z=16&hl=es"
-      width="100%"
-      style="border:0; border-radius: 12px; height: 250px;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="Brainstorming Marketing - San Fernando 165, Miraflores"
-      class="sm:!h-[300px]"
-    ></iframe>
+    <div class="h-[250px] overflow-hidden rounded-xl sm:h-[300px]">
+      <FooterMap client:only="react" />
+    </div>
   </div>
 
   <div class="mx-auto max-w-[1512px] px-6 py-8 sm:py-12 lg:px-24">

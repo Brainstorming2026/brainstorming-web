@@ -13,7 +13,7 @@ const proyecto = proyectos.find(p => p.slug === 'black-decker')!
 const detalle = proyectosDetalle['black-decker']
 ---
 
-<Layout title="Black & Decker — Brainstorming">
+<Layout title="Black & Decker — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}
   {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}

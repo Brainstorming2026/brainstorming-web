@@ -14,7 +14,7 @@ const proyecto = proyectos.find(p => p.slug === 'subasta-tu-factura')!
 const detalle = proyectosDetalle['subasta-tu-factura']
 ---
 
-<Layout title="Subasta tus Facturas — Brainstorming">
+<Layout title="Subasta tus Facturas — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <SubastaBranding />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}

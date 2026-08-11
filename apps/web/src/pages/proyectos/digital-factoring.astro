@@ -12,7 +12,7 @@ const proyecto = proyectos.find(p => p.slug === 'digital-factoring')!
 const detalle = proyectosDetalle['digital-factoring']
 ---
 
-<Layout title="Digital Factoring — Brainstorming">
+<Layout title="Digital Factoring — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}
   <Conversemos

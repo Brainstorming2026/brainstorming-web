@@ -3,14 +3,23 @@ import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { soluciones, empresa, recursos, redes } from '@/data'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
+
+interface Props {
+  /** Tailwind bg-color class matching the section right above the footer, so the curve's transparent edges blend in seamlessly instead of showing a white gap. */
+  curveBg?: string
+}
+
+const { curveBg = 'bg-white' } = Astro.props
 ---
 
 <footer class="text-white">
-  <Icon
-    name="footer-up"
-    aria-hidden="true"
-    class="-mb-px block h-auto w-full select-none"
-  />
+  <div class={curveBg}>
+    <Icon
+      name="footer-up"
+      aria-hidden="true"
+      class="block h-auto w-full select-none text-dark"
+    />
+  </div>
 
   <div class="bg-dark">
   <!-- Mapa de Google Maps -->

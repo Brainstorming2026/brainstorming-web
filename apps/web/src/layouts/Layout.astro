@@ -7,9 +7,11 @@ import '@/styles/global.css'
 interface Props {
   title: string
   description?: string
+  /** Tailwind bg-color class matching the last section before the footer. */
+  footerCurveBg?: string
 }
 
-const { title, description = 'Brainstorming — Agencia de Marketing' } = Astro.props;
+const { title, description = 'Brainstorming — Agencia de Marketing', footerCurveBg } = Astro.props;
 ---
 
 <!doctype html>
@@ -38,6 +40,6 @@ const { title, description = 'Brainstorming — Agencia de Marketing' } = Astro.
     <main transition:animate={fade({ duration: '0.4s' })}>
       <slot />
     </main>
-    <Footer />
+    <Footer curveBg={footerCurveBg} />
   </body>
 </html>

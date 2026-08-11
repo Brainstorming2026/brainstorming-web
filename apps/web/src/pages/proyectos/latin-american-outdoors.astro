@@ -13,7 +13,7 @@ const proyecto = proyectos.find(p => p.slug === 'latin-american-outdoors')!
 const detalle = proyectosDetalle['latin-american-outdoors']
 ---
 
-<Layout title="Latin American Outdoors — Brainstorming">
+<Layout title="Latin American Outdoors — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <LatinAmericanBranding />
   {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}

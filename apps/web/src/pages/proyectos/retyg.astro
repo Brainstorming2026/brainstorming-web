@@ -14,7 +14,7 @@ const proyecto = proyectos.find(p => p.slug === 'retyg')!
 const detalle = proyectosDetalle.retyg
 ---
 
-<Layout title="Retyg SAC — Brainstorming">
+<Layout title="Retyg SAC — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <RetygBranding />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}

@@ -13,7 +13,7 @@ const proyecto = proyectos.find(p => p.slug === 'alumspazio')!
 const detalle = proyectosDetalle.alumspazio
 ---
 
-<Layout title="Alum Spazio — Brainstorming">
+<Layout title="Alum Spazio — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <AlumspazioBranding />
   {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}

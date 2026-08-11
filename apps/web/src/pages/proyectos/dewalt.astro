@@ -12,7 +12,7 @@ const proyecto = proyectos.find(p => p.slug === 'dewalt')!
 const detalle = proyectosDetalle.dewalt
 ---
 
-<Layout title="DeWALT — Brainstorming">
+<Layout title="DeWALT — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}
   <Conversemos

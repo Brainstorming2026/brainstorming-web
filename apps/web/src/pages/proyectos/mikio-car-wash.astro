@@ -14,7 +14,7 @@ const proyecto = proyectos.find(p => p.slug === 'mikio-car-wash')!
 const detalle = proyectosDetalle['mikio-car-wash']
 ---
 
-<Layout title="Mikio Car Wash — Brainstorming">
+<Layout title="Mikio Car Wash — Brainstorming" footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <MikioBranding />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}

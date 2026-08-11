@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets'
+import bg from '@/assets/hero/bg.png'
+import down from '@/assets/hero/down.png'
+import Navbar from '@/components/common/Navbar.astro'
+---
+
+<section class="relative overflow-hidden bg-white min-h-[600px] lg:min-h-[721px]">
+  <Image
+    src={bg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+
+  <div class="relative z-10">
+    <Navbar />
+
+    <div class="max-w-7xl px-6 pt-4 lg:px-16">
+      <h1 class="font-heading text-4xl leading-[1.15] font-bold text-white sm:text-5xl lg:text-[56px]">
+        Performance through <span class="text-gold">innovation and creativity</span>
+      </h1>
+      <p class="mt-6 max-w-2xl font-body text-base leading-relaxed text-white/85">
+        We are a consulting firm committed to achieving your business objectives, generating
+        growth through strategic actions based around your business priorities.
+      </p>
+
+      <button
+        type="button"
+        aria-label="Scroll to learn more"
+        class="mt-10 hidden animate-bounce lg:inline-flex"
+        onclick="document.getElementById('why-oakrs')?.scrollIntoView({ behavior: 'smooth' })"
+      >
+        <Image src={down} alt="" class="h-auto w-70" />
+      </button>
+    </div>
+  </div>
+</section>

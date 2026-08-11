@@ -1,0 +1,27 @@
+---
+interface Props {
+  /** Color del relleno (Tailwind color, ej. "text-primary"). */
+  color: string
+  /** 'top' = onda pegada al techo de una sección; 'bottom' = pegada al piso (versión espejada). */
+  edge?: 'top' | 'bottom'
+  class?: string
+}
+
+const { color, edge = 'top', class: className } = Astro.props
+---
+
+<svg
+  viewBox="-1059.05 0 3630.09 363.01"
+  preserveAspectRatio="none"
+  class:list={[
+    'block h-[80px] w-full lg:h-[120px]',
+    color,
+    edge === 'bottom' && '-scale-y-100',
+    className,
+  ]}
+>
+  <path
+    fill="currentColor"
+    d="M755.995 352.12C-599.117 349.579-1056.15 71.876-1059.05 0v363.01H2571.04V3.6301C2571.04 70.4239 2111.11 355.024 755.995 352.12Z"
+  />
+</svg>

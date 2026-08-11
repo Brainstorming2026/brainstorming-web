@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+@theme {
+  /* === Tipografía === */
+  --font-heading: "Nexa", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* === Primario / marca (violeta Brainstorming) === */
+  --color-primary: #7d44e4;
+  --color-primary-500: #7d44e4;
+  --color-primary-600: #6a34c9;
+
+  /* === Neutral oscuro === */
+  --color-dark: #212222;
+
+  /* === Navy (bloques oscuros de esta landing) === */
+  --color-navy: #223b79;
+  --color-navy-600: #26438b;
+  --color-navy-700: #254187;
+
+  /* === Azul claro (fondos degradados) === */
+  --color-mist: #d7dfee;
+  --color-mist-200: #c0cfe6;
+  --color-mist-100: #dee1eb;
+
+  /* === Dorado (acento propio de US / OAKRs Workshop) === */
+  --color-gold: #f9d099;
+}

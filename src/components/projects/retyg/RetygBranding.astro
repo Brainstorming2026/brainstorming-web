@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import brandingBg from '@/assets/projects/retyg/bg2-w.png'
+import brandingImg from '@/assets/projects/retyg/hero2.png'
+import colorsImg from '@/assets/projects/retyg/colors.png'
+
+const lineas = ['Creación de', 'Manual de', 'Identidad de', 'Marca']
+---
+
+<section class="relative overflow-hidden bg-[#ffffffhbae] py-16 lg:py-20">
+  <Image
+    src={brandingBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <div class="flex items-center gap-2 font-heading text-sm font-bold text-white">
+          <Icon name="expert-huella" class="h-6 w-6 text-white/70" />
+          <span>Branding</span>
+        </div>
+
+        <h2 class="mt-4 font-heading text-3xl font-bold leading-tight text-white sm:text-6xl">
+          {
+            lineas.map(linea => (
+              <span class="relative block py-1">
+                {linea}
+              </span>
+            ))
+          }
+        </h2>
+      </div>
+
+      <Image
+        src={brandingImg}
+        alt="Manual de identidad de marca de Retyg SAC: carpeta corporativa, hoja membretada y tarjetas de presentación"
+        class="mx-auto h-auto w-full max-w-[560px]"
+        widths={[560, 1120]}
+        sizes="(min-width: 1024px) 560px, 90vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="bg-white mb-16 lg:mb-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-10 pt-12 lg:grid-cols-[1fr_auto] lg:items-center">
+      <p class="max-w-[550px] text-[14px] leading-6 text-dark-500">
+        Una marca con esta trayectoria y profesionalismo necesitaba una identidad gráfica que lo
+        refleje. Por eso, los colores son de tonos corporativos, los elementos del logo son
+        elegantes y las aplicaciones tienen un aspecto sobrio que transmite solidez y confianza al
+        usuario.
+      </p>
+
+      <Image
+        src={colorsImg}
+        alt="Paleta de colores de Retyg SAC: Steel Blue, Denim, Pigment Green, Orange, Shuttle Grey y Black"
+        class="mx-auto h-auto w-full max-w-[440px]"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

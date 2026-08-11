@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets'
+import illustration from '@/assets/okrs/figure6.png'
+---
+
+<section class="bg-gradient-to-br from-navy to-navy-600 py-16 lg:py-24">
+  <div class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-16">
+    <Image
+      src={illustration}
+      alt="A team building ideas together, represented as a lightbulb made of sticky notes"
+      class="mx-auto h-auto w-full max-w-[480px]"
+      widths={[300, 600]}
+      sizes="(min-width: 1024px) 480px, 90vw"
+      loading="lazy"
+    />
+
+    <div class="text-right">
+      <h2 class="font-heading text-2xl leading-snug font-normal text-white sm:text-[32px]">
+        The Workshop will provide you with a clear plan of action to continue growing your business.
+      </h2>
+      <p class="mt-4 font-body text-lg text-white/85">
+        An important benefit of this Workshop is that it is fully tailored to your needs, providing
+        customized actions to help you achieve your goals.
+      </p>
+    </div>
+  </div>
+</section>

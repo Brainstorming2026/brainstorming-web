@@ -1,0 +1,30 @@
+---
+export const prerender = true
+
+import Footer from '@/components/common/Footer.astro'
+import Contact from '@/components/home/Contact.astro'
+import Hero from '@/components/home/Hero.astro'
+import OurClients from '@/components/home/OurClients.astro'
+import ResultsFunnel from '@/components/home/ResultsFunnel.astro'
+import ResultsGrid from '@/components/home/ResultsGrid.astro'
+import Testimonials from '@/components/home/Testimonials.astro'
+import ThreeParts from '@/components/home/ThreeParts.astro'
+import WhyOakrs from '@/components/home/WhyOakrs.astro'
+import WhyValuable from '@/components/home/WhyValuable.astro'
+import WorkshopBenefit from '@/components/home/WorkshopBenefit.astro'
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout title="Brainstorming US — OAKRs Workshop">
+  <Hero />
+  <WhyValuable />
+  <WhyOakrs />
+  <ThreeParts />
+  <WorkshopBenefit />
+  <ResultsFunnel />
+  <ResultsGrid />
+  <Testimonials />
+  <OurClients />
+  <Contact />
+  <Footer />
+</Layout>

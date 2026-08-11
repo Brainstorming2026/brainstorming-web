@@ -1,0 +1,124 @@
+---
+import { Image } from 'astro:assets'
+import illustration from '@/assets/contact/hero-contact.png'
+import arrow from '@/assets/contact/right.png'
+
+const investmentRanges = ['Less than $50,000', '$50,000 - $100,000', '$100,000 - $500,000', 'Over $500,000']
+---
+
+<div class="relative">
+  <svg
+    viewBox="0 0 1512 50"
+    preserveAspectRatio="none"
+    fill="none"
+    class="pointer-events-none absolute top-0 left-0 z-10 h-[50px] w-full text-white lg:h-[90px]"
+  >
+    <path
+      fill="currentColor"
+      d="M316.384 3.44999C406.123 6.09999 493.138 12.45 607.846 28.45C652.64 34.8 724.219 43.95 759.932 46.4C795.646 48.85 839.532 50.3 874.187 49.05C889.622 48.5 908.387 48.35 950.003 45.35C991.165 42.2 1038.08 37.05 1070.16 33C1132.66 25.05 1213.77 22.05 1272.94 21.7C1403.69 20.9 1512.65 37.1 1512.65 37.1V-1.14441e-05H-0.6521V17.35C-0.6521 17.35 77.2829 7.64999 160.06 4.49999C242.233 1.49999 280.67 2.39999 316.384 3.44999Z"
+    />
+  </svg>
+
+  <section class="relative overflow-hidden bg-mist-100">
+    <div
+      class="absolute inset-y-0 right-0 w-full bg-gradient-to-br from-primary to-navy-700 lg:w-1/2"
+    >
+    </div>
+
+    <Image
+      src={arrow}
+      alt="dsada"
+      role="presentation"
+      class="pointer-events-none absolute top-20 left-1/2 z-30 hidden w-14 -translate-x-1/2 opacity-90 lg:block"
+    />
+
+    <div class="relative mx-auto grid max-w-[1512px] gap-10 px-6 pt-20 pb-12 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:pt-28 lg:pb-16">
+      <div class="flex flex-col lg:justify-center">
+        <h2 class="font-heading text-3xl font-bold text-navy sm:text-4xl">Book a free strategy call today</h2>
+        <p class="mt-3 max-w-[420px] font-body text-dark/70">
+          Are you ready to learn the necessary steps to grow your business?
+        </p>
+
+        <div class="relative mt-8 max-w-md">
+          <Image
+            src={illustration}
+            alt="Three professionals collaborating around a table with laptops, planning a business strategy"
+            class="h-auto w-full object-contain"
+            widths={[400, 740]}
+            sizes="(min-width: 1024px) 480px, 90vw"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-white p-8 shadow-xl lg:max-w-[540px] lg:ml-auto">
+        <h3 class="text-center font-heading text-xl font-bold text-navy">
+          Just fill out this form and we'll get in touch!
+        </h3>
+        <p class="mt-1 text-center font-body text-sm italic text-dark/60">Fields marked with an * are required</p>
+
+        <form class="mt-6 flex flex-col gap-4">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name*"
+            required
+            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name*"
+            required
+            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
+          />
+          <input
+            type="email"
+            name="companyEmail"
+            placeholder="Company Email *"
+            required
+            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone number *"
+            required
+            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
+          />
+
+          <fieldset>
+            <legend class="font-body text-sm text-dark">Annual Investment in Digital Advertising *</legend>
+            <div class="mt-2 flex flex-col gap-1.5">
+              {
+                investmentRanges.map(range => (
+                  <label class="flex items-center gap-2 font-body text-sm text-dark/80">
+                    <input type="radio" name="investment" value={range} required class="accent-primary" />
+                    {range}
+                  </label>
+                ))
+              }
+            </div>
+            <p class="mt-2 font-body text-xs text-dark/50">This information helps us tailor a plan that maximizes your ROI.</p>
+          </fieldset>
+
+          <label class="font-body text-sm font-bold text-dark">
+            Please share anything that will help us to prepare for our meeting
+            <textarea
+              name="message"
+              rows="3"
+              class="mt-2 w-full rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
+            ></textarea>
+          </label>
+
+          <button
+            type="submit"
+            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600"
+          >
+            SUBMIT
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

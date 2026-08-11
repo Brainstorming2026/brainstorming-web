@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets'
+import hero from '@/assets/results/hero-results.png'
+---
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
+    <h2 class="text-center font-heading text-3xl font-bold text-dark sm:text-[48px] sm:leading-[1.2]">
+      4 out of 5 clients that took this workshop, hired us to execute the Project Plan.
+    </h2>
+    <p class="mx-auto mt-4 max-w-[800px] text-center font-body text-dark/60">
+      If you execute the actions outlined in the workshop, you will have real-time, tangible data, enabling swift and precise decision-making for optimal results.
+    </p>
+
+    <Image
+      src={hero}
+      alt="4 out of 5 clients that took this workshop hired us to execute the Project Plan. Ad performance funnel: Impressions 482,230, Link clicks 4,470, Leads 770, Sales 140."
+      class="mx-auto mt-10 h-auto w-full"
+      widths={[758, 1512]}
+      sizes="(min-width: 1024px) 1480px, 100vw"
+      loading="lazy"
+    />
+  </div>
+</section>

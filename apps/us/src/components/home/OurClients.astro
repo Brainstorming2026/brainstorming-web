@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets'
+import pracda from '@/assets/clients/pracda.png'
+import viveparacas from '@/assets/clients/viveparacas.png'
+import pringles from '@/assets/clients/pringles.png'
+import siemens from '@/assets/clients/siemens.png'
+import nadira from '@/assets/clients/nadira.png'
+import stanley from '@/assets/clients/stanley.png'
+import gris from '@/assets/clients/gris.png'
+import sgs from '@/assets/clients/sgs.png'
+import atsa from '@/assets/clients/atsa.png'
+import construplan from '@/assets/clients/construplan.png'
+
+const row1 = [
+  { logo: pracda, name: 'Grupo Pracda' },
+  { logo: viveparacas, name: 'Vive Paracas' },
+  { logo: pringles, name: 'Pringles' },
+  { logo: siemens, name: 'Siemens' },
+  { logo: nadira, name: 'Nadira' },
+  { logo: stanley, name: 'Stanley Black & Decker' },
+]
+
+const row2 = [
+  { logo: gris, name: 'Grin' },
+  { logo: sgs, name: 'SGS' },
+  { logo: atsa, name: 'ATSA Airlines' },
+  { logo: construplan, name: 'Construplan' },
+]
+---
+
+<section class="bg-white py-16 lg:py-20">
+  <div class="mx-auto max-w-9xl px-6 lg:px-16">
+    <h2 class="text-center font-heading text-3xl font-normal text-dark sm:text-4xl">Our clients</h2>
+
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+      {
+        row1.map(client => (
+          <Image src={client.logo} alt={client.name} class="h-30 w-auto object-contain" loading="lazy" />
+        ))
+      }
+    </div>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
+      {
+        row2.map(client => (
+          <Image src={client.logo} alt={client.name} class="h-30 w-auto object-contain" loading="lazy" />
+        ))
+      }
+    </div>
+
+    <p class="mt-12 text-center font-heading text-xl font-bold text-navy">
+      Remote-first, Founded in Peru &amp; Operating in Miami
+    </p>
+  </div>
+</section>

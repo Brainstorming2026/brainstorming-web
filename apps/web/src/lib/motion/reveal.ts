@@ -73,6 +73,28 @@ export function revealClip(el: HTMLElement, options: RevealOptions = {}) {
   }
 }
 
+/** Dibuja una línea/barra (scaleX 0→1) — firma visual bajo un titular o card. */
+export function drawLine(el: HTMLElement, { delay = 0, scrollTrigger = false }: { delay?: number, scrollTrigger?: boolean } = {}) {
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3, delay })
+    return
+  }
+
+  gsap.fromTo(
+    el,
+    { scaleX: 0, transformOrigin: '0% 50%' },
+    {
+      scaleX: 1,
+      duration: 0.5,
+      ease: ease.out,
+      delay,
+      ...(scrollTrigger && { scrollTrigger: { trigger: el, start: 'top 90%' } }),
+    },
+  )
+}
+
 /** Revela un video/media circular desde el centro (Hero, Roas). */
 export function revealCircle(el: HTMLElement, { delay = 0, scrollTrigger = false }: { delay?: number, scrollTrigger?: boolean } = {}) {
   const { gsap } = ensureGsap()

@@ -32,21 +32,21 @@ const reasons = [
   <div
     class="relative z-10 mx-auto grid max-w-[1512px] items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:px-24"
   >
-    <h2 class="font-heading text-[45px] font-bold leading-tight text-ink sm:text-[60px]">
+    <h2 id="whyus-headline" class="font-heading text-[45px] font-bold leading-tight text-ink sm:text-[60px]">
       ¿Por Qué<br />Nosotros?
     </h2>
 
-    <div class="flex flex-col gap-10">
+    <div id="whyus-list" class="flex flex-col gap-10">
       {
         reasons.map(reason => (
-          <div class="flex gap-5">
+          <div class="whyus-item flex gap-5">
             <Image
               src={checkIcon}
               alt=""
-              class="h-12 w-12 shrink-0"
+              class="whyus-icon h-12 w-12 shrink-0"
               loading="lazy"
             />
-            <div>
+            <div class="whyus-text">
               <h3 class="font-heading text-[20px] font-bold text-ink">
                 {reason.title}
               </h3>
@@ -60,3 +60,40 @@ const reasons = [
     </div>
   </div>
 </section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+const ROW_GAP = 0.4
+
+registerMotion(() => {
+  const headline = document.getElementById('whyus-headline')
+  const items = Array.from(document.querySelectorAll<HTMLElement>('#whyus-list .whyus-item'))
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (items.length === 0) return
+
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo(items, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+
+  const icons = items.map(i => i.querySelector('.whyus-icon')).filter(Boolean)
+  const texts = items.map(i => i.querySelector('.whyus-text')).filter(Boolean)
+  gsap.set(icons, { scale: 0.5, opacity: 0 })
+  gsap.set(texts, { opacity: 0, x: -16 })
+
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '#whyus-list', start: 'top 80%' } })
+  items.forEach((item, i) => {
+    const icon = item.querySelector('.whyus-icon')
+    const text = item.querySelector('.whyus-text')
+    const rowStart = i * ROW_GAP
+    if (icon) tl.to(icon, { scale: 1, opacity: 1, duration: 0.35, ease: ease.back }, rowStart)
+    if (text) tl.to(text, { opacity: 1, x: 0, duration: 0.45, ease: ease.out }, rowStart + 0.1)
+  })
+})
+</script>

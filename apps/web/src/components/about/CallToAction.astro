@@ -6,24 +6,54 @@
     <p class="text-[16px] text-gray-body">
       Lo mejor de todo, disfrutamos contigo cada parte del proceso.
     </p>
-    <h2 class="mt-4 font-heading text-[35px] font-bold text-ink sm:text-[40px]">
+    <h2 id="cta-headline" class="mt-4 font-heading text-[35px] font-bold text-ink sm:text-[40px]">
       ¿Listo para empezar tu proyecto?
     </h2>
-    <div class="mt-8 flex flex-wrap justify-center gap-4">
+    <div id="cta-buttons" class="mt-8 flex flex-wrap justify-center gap-4">
       <a
         href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20empezar%20un%20proyecto"
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        class="cta-btn rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
       >
         CONVERSEMOS
       </a>
       <a
         href="/proyectos"
-        class="rounded-[10px] border border-primary px-8 py-3 font-heading text-sm font-bold text-primary transition-colors hover:bg-primary-50"
+        class="cta-btn rounded-[10px] border border-primary px-8 py-3 font-heading text-sm font-bold text-primary transition-colors hover:bg-primary-50"
       >
         VER PROYECTOS
       </a>
     </div>
   </div>
 </section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('cta-headline')
+  const buttons = document.querySelectorAll('#cta-buttons .cta-btn')
+  if (headline) splitHeadline(headline, { by: 'words' })
+  if (buttons.length === 0) return
+
+  const { gsap } = ensureGsap()
+  if (prefersReducedMotion()) {
+    gsap.fromTo(buttons, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+
+  gsap.set(buttons, { scale: 0.9, opacity: 0 })
+  gsap.to(buttons, {
+    scale: 1,
+    opacity: 1,
+    duration: 0.5,
+    ease: ease.back,
+    stagger: 0.1,
+    scrollTrigger: { trigger: '#cta-buttons', start: 'top 90%' },
+  })
+})
+</script>

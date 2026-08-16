@@ -5,6 +5,7 @@ import heroBg from '@/assets/nosotros/nosotros-hero.png'
 
 <section class="relative h-screen overflow-hidden bg-indigo">
   <Image
+    id="about-hero-bg"
     src={heroBg}
     alt=""
     class="pointer-events-none absolute inset-0 h-full w-full object-cover"
@@ -14,11 +15,11 @@ import heroBg from '@/assets/nosotros/nosotros-hero.png'
     class="relative z-10 mx-auto flex h-full max-w-[1512px] items-center justify-end px-6 lg:px-24"
   >
     <div class="max-w-[480px]">
-      <h1 class="font-heading text-[40px] font-bold leading-tight text-white sm:text-[55px]">
+      <h1 id="about-hero-headline" class="font-heading text-[40px] font-bold leading-tight text-white sm:text-[55px]">
         ¿Quiénes<br />Somos?
       </h1>
-      <div class="mt-4 h-[3px] w-12 bg-white"></div>
-      <p class="mt-6 text-[16px] leading-relaxed text-white/90">
+      <div id="about-hero-line" class="mt-4 h-[3px] w-12 bg-white"></div>
+      <p id="about-hero-text" class="mt-6 text-[16px] leading-relaxed text-white/90">
         Somos una consultora de servicio completo en constante innovación, que
         diseña soluciones digitales centradas en el consumidor para optimizar
         pequeñas y grandes empresas.
@@ -26,3 +27,27 @@ import heroBg from '@/assets/nosotros/nosotros-hero.png'
     </div>
   </div>
 </section>
+
+<script>
+import { drawLine, ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('about-hero-bg')
+  const headline = document.getElementById('about-hero-headline')
+  const line = document.getElementById('about-hero-line')
+  const text = document.getElementById('about-hero-text')
+  const { gsap } = ensureGsap()
+
+  // Oculto YA (no recién cuando termine el titular) — evita el flash de
+  // contenido visible antes de animar.
+  if (line) gsap.set(line, { scaleX: 0, transformOrigin: '0% 50%' })
+  if (text) gsap.set(text, { opacity: 0, y: 10 })
+
+  if (headline) splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+    if (line) drawLine(line)
+    if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+  } })
+
+  if (bg) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+})
+</script>

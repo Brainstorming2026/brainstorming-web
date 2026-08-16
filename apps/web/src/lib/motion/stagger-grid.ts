@@ -7,6 +7,10 @@ interface StaggerGridOptions {
   variant?: 'wipe' | 'organic'
   /** Rotación inicial en grados, se asienta en 0 (Problemas cards). */
   rotateFrom?: number
+  /** Override de duración por item — secciones "calmadas" (ej. equipo/valores) piden más pausa que un grid de datos. */
+  itemDuration?: number
+  /** Override del espaciado entre items del batch. */
+  itemStagger?: number
 }
 
 /**
@@ -15,7 +19,7 @@ interface StaggerGridOptions {
  * por item, más barato en secciones con muchos elementos.
  */
 export function staggerGrid(items: Element[] | NodeListOf<Element>, options: StaggerGridOptions = {}) {
-  const { variant = 'wipe', rotateFrom = 0 } = options
+  const { variant = 'wipe', rotateFrom = 0, itemDuration = duration.gridItem, itemStagger = duration.cardStagger } = options
   const list = Array.from(items)
   if (list.length === 0)
     return
@@ -34,8 +38,8 @@ export function staggerGrid(items: Element[] | NodeListOf<Element>, options: Sta
 
   const to: gsap.TweenVars
     = variant === 'wipe'
-      ? { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, y: 0, rotate: 0, duration: duration.gridItem, ease: ease.out }
-      : { opacity: 1, scale: 1, y: 0, duration: duration.gridItem, ease: ease.out }
+      ? { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, y: 0, rotate: 0, duration: itemDuration, ease: ease.out }
+      : { opacity: 1, scale: 1, y: 0, duration: itemDuration, ease: ease.out }
 
   // Oculta todo YA, en cuanto carga la página — no recién al cruzar el
   // trigger. Si no, el elemento se ve normal mientras el usuario scrollea
@@ -49,6 +53,6 @@ export function staggerGrid(items: Element[] | NodeListOf<Element>, options: Sta
     // ya son single-shot por defecto de GSAP).
     once: true,
     onEnter: (batch: Element[]) =>
-      gsap.to(batch, { ...to, stagger: duration.cardStagger, overwrite: true }),
+      gsap.to(batch, { ...to, stagger: itemStagger, overwrite: true }),
   })
 }

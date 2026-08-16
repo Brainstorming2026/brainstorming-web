@@ -32,14 +32,14 @@ const team = [
     loading="lazy"
   />
   <div class="relative z-10 mx-auto max-w-[1512px] px-6 pt-40 pb-20 lg:px-24">
-    <h2 class="font-heading text-[35px] font-bold text-ink sm:text-[45px]">
+    <h2 id="team-headline" class="font-heading text-[35px] font-bold text-ink sm:text-[45px]">
       Lo más importante<br />Nuestro Equipo
     </h2>
 
-    <div class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="team-grid" class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
       {
         team.map(member => (
-          <div>
+          <div class="team-card">
             <Image
               src={member.image}
               alt={member.name}
@@ -50,10 +50,40 @@ const team = [
               {member.name}
             </h3>
             <p class="mt-1 text-[14px] text-gray-medium">{member.role}</p>
-            <div class="mt-4 h-[2px] bg-primary" />
+            <div class="team-line mt-4 h-[2px] bg-primary" />
           </div>
         ))
       }
     </div>
   </div>
 </section>
+
+<script>
+import { drawLine, ensureGsap, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('team-headline')
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#team-grid .team-card'))
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (cards.length === 0) return
+
+  const lines = cards.map(c => c.querySelector<HTMLElement>('.team-line')).filter((el): el is HTMLElement => !!el)
+  if (!prefersReducedMotion()) ensureGsap().gsap.set(lines, { scaleX: 0, transformOrigin: '0% 50%' })
+
+  staggerGrid(cards, { variant: 'organic' })
+
+  // La "firma" (línea bajo el nombre) se dibuja justo después de que cada
+  // card termina de entrar — no todas juntas.
+  cards.forEach((card, i) => {
+    const line = card.querySelector<HTMLElement>('.team-line')
+    if (!line) return
+    ensureGsap().ScrollTrigger.create({
+      trigger: card,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => drawLine(line, { delay: 0.15 + (i % 3) * 0.1 }),
+    })
+  })
+})
+</script>

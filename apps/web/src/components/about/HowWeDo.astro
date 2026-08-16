@@ -32,7 +32,7 @@ const pillars = [
   <div class="bg-gradient-to-b from-navy to-dark">
     <div class="mx-auto max-w-[1512px] px-6 py-20 lg:px-24">
       <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div>
+        <div id="howwedo-text">
           <h2 class="font-heading text-[40px] font-bold text-white sm:text-[50px]">
             ¿Cómo lo hacemos?
           </h2>
@@ -59,7 +59,7 @@ const pillars = [
           </p>
         </div>
 
-        <div class="flex justify-center">
+        <div id="howwedo-circle-wrap" class="flex justify-center">
           <Image
             src={circle}
             alt="Metodologías Brainstorming"
@@ -74,10 +74,10 @@ const pillars = [
   <!-- Part 2: Three pillars -->
   <div class="bg-white py-16">
     <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
-      <div class="grid gap-12 md:grid-cols-3">
+      <div id="howwedo-pillars" class="grid gap-12 md:grid-cols-3">
         {
           pillars.map(pillar => (
-            <div class="text-center">
+            <div class="howwedo-pillar text-center">
               <Image
                 src={pillar.image}
                 alt={pillar.title}
@@ -97,3 +97,52 @@ const pillars = [
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, staggerGrid } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const text = document.getElementById('howwedo-text')
+  // La imagen tiene animate-spin-slow (CSS keyframes en `transform`) — animo el
+  // WRAPPER, no la imagen, para no pisar la rotación con el scale de entrada.
+  const circle = document.getElementById('howwedo-circle-wrap')
+  const pillars = document.querySelectorAll('#howwedo-pillars .howwedo-pillar')
+
+  // Reveal por bloque (h2/h3/p), no un wipe de clip-path sobre todo el texto
+  // junto — con varios párrafos se lee mejor si cada uno entra en su turno.
+  if (text && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    const blocks = Array.from(text.children) as HTMLElement[]
+    gsap.set(blocks, { opacity: 0, y: 26 })
+    gsap.to(blocks, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: ease.out,
+      stagger: 0.16,
+      scrollTrigger: { trigger: text, start: 'top 82%' },
+    })
+  }
+  else if (text) {
+    ensureGsap().gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+  }
+
+  if (circle && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    gsap.set(circle, { scale: 0.85, opacity: 0 })
+    gsap.to(circle, {
+      scale: 1,
+      opacity: 1,
+      duration: 1,
+      ease: ease.out,
+      scrollTrigger: { trigger: circle, start: 'top 80%' },
+    })
+  }
+
+  // Sección de "quiénes somos": ritmo pausado, no un grid de datos — más
+  // lento y con más separación entre pilares para que se sienta premium.
+  staggerGrid(pillars, { variant: 'organic', itemDuration: 1.7, itemStagger: 0.28 })
+})
+</script>

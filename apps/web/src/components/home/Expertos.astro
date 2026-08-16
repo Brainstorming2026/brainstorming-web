@@ -8,6 +8,7 @@ import sectionBg from '@/assets/backgrounds/section-background-black.webp'
 <section id="expertos" class="relative overflow-hidden">
   <!-- Fondo (azul claro arriba → negro abajo) -->
   <Image
+    id="expertos-bg"
     src={sectionBg}
     alt=""
     aria-hidden="true"
@@ -34,13 +35,14 @@ import sectionBg from '@/assets/backgrounds/section-background-black.webp'
 
     <!-- Card de expertise -->
     <div
+      id="expertos-card"
       class="mx-auto mt-12 max-w-[1000px] rounded-[20px] bg-white p-8 shadow-2xl sm:p-12"
     >
       <div class="grid gap-x-12 gap-y-10 sm:grid-cols-2">
         {
           experts.map(e => (
-            <div class="flex items-center gap-5">
-              <Icon name={e.icon} class="h-18 w-18 shrink-0" />
+            <div class="expertos-item flex items-center gap-5">
+              <Icon name={e.icon} class="h-18 w-18 shrink-0 text-primary" />
               <div>
                 <h4 class="font-heading text-lg font-bold leading-tight text-ink sm:text-xl">
                   {e.title}
@@ -54,3 +56,26 @@ import sectionBg from '@/assets/backgrounds/section-background-black.webp'
     </div>
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('expertos-bg')
+  const card = document.getElementById('expertos-card')
+  const items = document.querySelectorAll('#expertos-card .expertos-item')
+
+  if (bg && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    gsap.fromTo(
+      bg,
+      { scale: 1 },
+      { scale: 1.08, ease: 'none', scrollTrigger: { trigger: bg.closest('section'), start: 'top bottom', end: 'bottom top', scrub: 0.8 } },
+    )
+  }
+  if (card) revealClip(card, { direction: 'up' })
+  staggerGrid(items, { variant: 'organic' })
+})
+</script>

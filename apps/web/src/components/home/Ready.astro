@@ -30,13 +30,19 @@ import serviceBg from '@/assets/backgrounds/service-background.webp'
     </div>
 
     <!-- Card checklist (Figma: 660×375, radio 20) -->
-    <div class="w-full max-w-[660px] rounded-[20px] bg-white p-7 shadow-xl sm:p-10 lg:justify-self-end">
+    <div
+      id="ready-card"
+      class="w-full max-w-[660px] rounded-[20px] bg-white p-7 shadow-xl sm:p-10 lg:justify-self-end"
+      style="perspective: 1200px;"
+    >
       <ul class="flex flex-col gap-7">
         {
           preguntas.map(q => (
-            <li class="flex items-start gap-5">
-              <Icon name="service-checkbox" class="h-18 w-18 shrink-0" />
-              <p class="pt-1.5 text-[15px] leading-6 text-ink-500">{q}</p>
+            <li class="ready-item flex items-start gap-5">
+              <Icon name="service-checkbox" class="ready-check h-18 w-18 shrink-0" />
+              <p class="ready-text overflow-hidden pt-1.5 text-[15px] leading-6 text-ink-500">
+                <span class="block">{q}</span>
+              </p>
             </li>
           ))
         }
@@ -44,3 +50,59 @@ import serviceBg from '@/assets/backgrounds/service-background.webp'
     </div>
   </div>
 </section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion } from '@/lib/motion/lifecycle'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+/** Espaciado entre filas: cada fila arranca cuando la anterior casi termina de leerse. */
+const ROW_GAP = 0.55
+const TEXT_DURATION = 0.75
+/** El check-icon (service-checkbox.svg) trae 2 <path>: [0] contorno de la caja, [1] el trazo del ✓. */
+const BOX_DRAW_AT = 0.4
+const MARK_DRAW_AT = 0.75
+
+registerMotion(() => {
+  const card = document.getElementById('ready-card')
+  const items = Array.from(document.querySelectorAll<HTMLElement>('#ready-card .ready-item'))
+  if (!card || items.length === 0) return
+
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo(items, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.05 })
+    return
+  }
+
+  const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: 'top 78%' } })
+
+  tl.fromTo(card, { rotateX: 8, transformOrigin: '50% 100%' }, { rotateX: 0, duration: 0.9, ease: ease.out }, 0)
+
+  items.forEach((item, i) => {
+    const text = item.querySelector('.ready-text span')
+    const check = item.querySelector<SVGElement>('.ready-check')
+    const [boxPath, markPath] = check ? Array.from(check.querySelectorAll('path')) : []
+    const rowStart = 0.15 + i * ROW_GAP
+
+    if (text) {
+      tl.fromTo(text, { xPercent: -100 }, { xPercent: 0, duration: TEXT_DURATION, ease: ease.out }, rowStart)
+    }
+
+    // El check se DIBUJA (como si lo trazara una pluma), no aparece de golpe:
+    // caja primero, el ✓ justo después, cierre con un pulso corto de confirmación.
+    if (boxPath && markPath) {
+      gsap.set([boxPath, markPath], { drawSVG: '0%' })
+      tl.to(boxPath, { drawSVG: '100%', duration: 0.45, ease: 'power2.out' }, rowStart + BOX_DRAW_AT)
+      tl.to(markPath, { drawSVG: '100%', duration: 0.4, ease: 'power2.out' }, rowStart + MARK_DRAW_AT)
+      tl.fromTo(
+        check,
+        { scale: 1 },
+        { scale: 1.14, duration: 0.16, ease: 'power1.out', yoyo: true, repeat: 1 },
+        rowStart + MARK_DRAW_AT + 0.3,
+      )
+    }
+  })
+})
+</script>

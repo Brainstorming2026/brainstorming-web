@@ -26,14 +26,16 @@ import { clienteLogos } from '@/assets/clientes'
     </h2>
 
     <div
+      id="clientes-grid"
       class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-6 sm:grid-cols-5 lg:grid-cols-9"
     >
       {
         clienteLogos.map(c => (
-          <div class="flex items-center justify-center">
+          <div class="cliente-logo flex h-25 items-center justify-center">
             <Image
               src={c.image}
               alt={c.slug}
+              loading="eager"
               class="max-h-25 w-auto max-w-full object-contain"
             />
           </div>
@@ -42,3 +44,12 @@ import { clienteLogos } from '@/assets/clientes'
     </div>
   </div>
 </section>
+
+<script>
+import { registerMotion, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const logos = document.querySelectorAll('#clientes-grid .cliente-logo')
+  staggerGrid(logos, { variant: 'wipe' })
+})
+</script>

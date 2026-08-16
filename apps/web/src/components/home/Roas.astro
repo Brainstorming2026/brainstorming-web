@@ -50,12 +50,12 @@ import { roasLogos } from '@/assets/roast'
     </div>
 
     <!-- Clientes + ROAS -->
-    <div class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+    <div id="roas-grid" class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
       {
         roas.map(r => {
           const logo = roasLogos.find(l => l.slug === r.logo)
           return (
-            <div class="flex flex-col items-center">
+            <div class="roas-item flex flex-col items-center">
               {logo && (
                 <Image
                   src={logo.image}
@@ -79,5 +79,16 @@ const holder = document.getElementById('roas-video')
 holder?.addEventListener('click', () => {
   const id = holder.dataset.id
   holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video ROAS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+})
+</script>
+
+<script>
+import { registerMotion, revealCircle, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const video = document.getElementById('roas-video')
+  const logos = document.querySelectorAll('#roas-grid .roas-item')
+  if (video) revealCircle(video, { scrollTrigger: true })
+  staggerGrid(logos, { variant: 'organic' })
 })
 </script>

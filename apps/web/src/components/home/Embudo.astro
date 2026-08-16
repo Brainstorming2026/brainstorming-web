@@ -24,6 +24,7 @@ import keyBg from '@/assets/backgrounds/key-background.webp'
 
   <!-- Infografía del embudo - Desktop (full 1512px) -->
   <Image
+    id="embudo-infografia"
     src={keyBg}
     alt="Embudo de ventas: damos a conocer tu marca, generamos tráfico, cerramos ventas y fidelizamos"
     class="hidden w-full lg:block"
@@ -113,5 +114,17 @@ document.addEventListener('astro:page-load', () => {
       chevron?.classList.remove('rotate-180')
     })
   })
+})
+</script>
+
+<script>
+import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const infografia = document.getElementById('embudo-infografia')
+  if (infografia) revealClip(infografia, { direction: 'left', mode: 'scrub' })
+
+  const cards = document.querySelectorAll('#embudo .embudo-card-wrapper')
+  staggerGrid(cards, { variant: 'organic' })
 })
 </script>

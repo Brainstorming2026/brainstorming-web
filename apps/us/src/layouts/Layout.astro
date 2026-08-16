@@ -1,0 +1,38 @@
+---
+import '@/styles/global.css'
+import WhatsAppButton from '@/components/common/WhatsAppButton.astro'
+import { getLang, localizePath, useTranslations } from '@/i18n/utils'
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description = 'Brainstorming — OAKRs Workshop' } = Astro.props
+const lang = getLang(Astro.url)
+const whatsapp = useTranslations(lang, 'whatsapp')
+
+const path = Astro.url.pathname.replace(/^\/es/, '') || '/'
+const canonicalEn = new URL(localizePath(path, 'en'), Astro.site)
+const canonicalEs = new URL(localizePath(path, 'es'), Astro.site)
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/brainstorming-icon-file.png?v=2" />
+    <link rel="apple-touch-icon" href="/brainstorming-icon-file.png?v=2" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="alternate" hreflang="en" href={canonicalEn} />
+    <link rel="alternate" hreflang="es" href={canonicalEs} />
+    <link rel="alternate" hreflang="x-default" href={canonicalEn} />
+    <title>{title}</title>
+  </head>
+  <body class="font-body text-dark">
+    <slot />
+    <WhatsAppButton message={whatsapp.message} />
+  </body>
+</html>

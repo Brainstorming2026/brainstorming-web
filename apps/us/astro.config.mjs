@@ -1,0 +1,25 @@
+import tailwindcss from '@tailwindcss/vite'
+
+import icon from 'astro-icon'
+
+// @ts-check
+import { defineConfig } from 'astro/config'
+
+export default defineConfig({
+  site: 'https://us.brainstorming.la',
+  trailingSlash: 'never',
+  output: 'static',
+
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
+  integrations: [icon()],
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'es'],
+    routing: { prefixDefaultLocale: false },
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+})

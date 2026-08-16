@@ -1,0 +1,65 @@
+---
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout title="Page not found — Brainstorming">
+  <section class="relative grid min-h-dvh place-items-center overflow-hidden bg-white">
+    <div aria-hidden="true" class="pointer-events-none absolute -top-40 -right-32 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[110px]" />
+    <div aria-hidden="true" class="pointer-events-none absolute -bottom-48 -left-32 h-[380px] w-[380px] rounded-full bg-mist-100 blur-[110px]" />
+
+    <div class="relative mx-auto flex w-full max-w-[640px] flex-col items-center px-6 text-center">
+      <p id="notfound-code" class="font-heading text-[110px] font-bold leading-none text-dark sm:text-[150px]">
+        404
+      </p>
+      <p id="notfound-eyebrow" class="mt-3 font-heading text-sm font-bold tracking-wide text-primary">
+        PAGE NOT FOUND
+      </p>
+      <h1 id="notfound-heading" class="mt-4 font-heading text-4xl font-bold leading-tight text-dark sm:text-5xl">
+        Even the best workshops need a redirect.
+      </h1>
+      <p id="notfound-desc" class="mt-6 max-w-[460px] text-[15px] leading-6 text-dark/60">
+        The page you're looking for doesn't exist. Let's get you back to the OAKRs Workshop.
+      </p>
+
+      <div id="notfound-actions" class="mt-10">
+        <a
+          href="/"
+          class="inline-block rounded-full bg-primary px-9 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        >
+          BACK TO HOME
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const code = document.getElementById('notfound-code')
+  const eyebrow = document.getElementById('notfound-eyebrow')
+  const heading = document.getElementById('notfound-heading')
+  const desc = document.getElementById('notfound-desc')
+  const actions = document.getElementById('notfound-actions')
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([code, eyebrow, heading, desc, actions].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+
+  if (code) gsap.fromTo(code, { opacity: 0, y: 20, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power2.out' })
+  if (eyebrow) gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 })
+  if (desc) gsap.set(desc, { opacity: 0, y: 12 })
+  if (actions) gsap.set(actions, { opacity: 0, y: 12 })
+
+  if (heading) {
+    splitHeadline(heading, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (desc) gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      if (actions) gsap.to(actions, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 })
+    } })
+  }
+})
+</script>

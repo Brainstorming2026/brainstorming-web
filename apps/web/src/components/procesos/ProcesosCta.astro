@@ -1,0 +1,48 @@
+---
+---
+
+<section class="bg-white py-16 text-center">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <h2 id="procesos-cta-headline" class="font-heading text-[28px] font-bold text-dark sm:text-[35px]">
+      ¿Listo para potenciar tus operaciones de manera eficiente?
+    </h2>
+    <div id="procesos-cta-buttons" class="mt-8 flex flex-wrap items-center justify-center gap-4">
+      <a
+        href="https://wa.me/51992528363?text=Hola,%20me%20interesa%20optimizar%20mis%20procesos%20y%20CX"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cta-btn inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+      >
+        CONVERSEMOS
+      </a>
+      <a
+        href="/proyectos"
+        class="cta-btn inline-block rounded-[10px] border border-primary px-8 py-3 font-heading text-sm font-bold text-primary transition-colors hover:bg-primary/5"
+      >
+        VER PROYECTOS
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('procesos-cta-headline')
+  const buttons = document.querySelectorAll('#procesos-cta-buttons .cta-btn')
+  if (headline) splitHeadline(headline, { by: 'words' })
+  if (buttons.length === 0) return
+
+  const { gsap } = ensureGsap()
+  if (prefersReducedMotion()) {
+    gsap.fromTo(buttons, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+  gsap.set(buttons, { scale: 0.9, opacity: 0 })
+  gsap.to(buttons, { scale: 1, opacity: 1, duration: 0.5, ease: ease.back, stagger: 0.1, scrollTrigger: { trigger: '#procesos-cta-buttons', start: 'top 90%' } })
+})
+</script>

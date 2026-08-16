@@ -1,0 +1,23 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  phone?: string
+  message?: string
+}
+
+const {
+  phone = '51992528363',
+  message = 'Hi! I\'d like to learn more about the OAKRs Workshop.',
+} = Astro.props
+---
+
+<a
+  href={`https://wa.me/${phone}?text=${encodeURIComponent(message)}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat on WhatsApp"
+  class="fixed right-6 bottom-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105"
+>
+  <Icon name="whatsapp" class="h-7 w-7" />
+</a>

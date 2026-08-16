@@ -1,0 +1,172 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import logo from '@/assets/logos/brainstorming-logo.webp'
+import { navLinks as links } from '@/data'
+
+const currentPath = Astro.url.pathname
+---
+
+<header class="sticky top-0 z-50 border-b border-black/10 bg-white">
+  <nav
+    class="mx-auto flex h-20 max-w-[1512px] items-center justify-between px-6 lg:px-16"
+    aria-label="Principal"
+  >
+    <a href="/" class="shrink-0" aria-label="Brainstorming — inicio">
+      <Image
+        src={logo}
+        alt="Brainstorming"
+        class="h-8 w-auto"
+      />
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        links.map((link) => {
+          const isActive = link.href !== '/' && currentPath.startsWith(link.href)
+          const hasDropdown = link.children && link.children.length > 0
+          return (
+            <li class="relative group">
+              <a
+                href={link.href}
+                class:list={[
+                  'flex items-center gap-1.5 px-4 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
+                  isActive ? 'text-primary' : 'text-ink',
+                ]}
+              >
+                {link.label}
+                {hasDropdown && (
+                  <Icon name="chevron-down" class="h-2.5 w-2.5" />
+                )}
+              </a>
+              {hasDropdown && (
+                <ul class="invisible absolute left-0 top-full z-50 min-w-[200px] rounded-[10px] border border-black/10 bg-white py-2 shadow-lg opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                  {link.children?.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block px-4 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-primary/5 hover:text-primary"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          )
+        })
+      }
+    </ul>
+
+    <a
+      href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20agendar%20una%20asesoría"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden rounded-[10px] bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-600 lg:inline-block"
+    >
+      Agendar Asesoría
+    </a>
+
+    <button
+      type="button"
+      id="nav-toggle"
+      class="text-ink lg:hidden"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Icon name="menu" class="h-7 w-7" />
+    </button>
+  </nav>
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-black/10 bg-white px-6 py-4 lg:hidden"
+  >
+    <ul class="flex flex-col gap-1">
+      {
+        links.map((link) => {
+          const isActive = link.href !== '/' && currentPath.startsWith(link.href)
+          const hasDropdown = link.children && link.children.length > 0
+          return (
+            <li>
+              <div class="flex items-center justify-between">
+                <a
+                  href={link.href}
+                  class:list={[
+                    'flex-1 py-2 font-heading text-base font-bold hover:text-primary',
+                    isActive ? 'text-primary' : 'text-ink',
+                  ]}
+                >
+                  {link.label}
+                </a>
+                {hasDropdown && (
+                  <button
+                    type="button"
+                    class="mobile-dropdown-toggle p-2 text-ink"
+                    aria-expanded="false"
+                    aria-label={`Mostrar submenú de ${link.label}`}
+                  >
+                    <Icon name="chevron-down" class="h-2.5 w-2.5 transition-transform" />
+                  </button>
+                )}
+              </div>
+              {hasDropdown && (
+                <ul class="mobile-dropdown-panel ml-4 hidden flex-col gap-1">
+                  {link.children?.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block py-1.5 text-sm font-bold text-ink hover:text-primary"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          )
+        })
+      }
+    </ul>
+    <a
+      href="https://wa.me/51992528363?text=Hola,%20me%20gustaría%20agendar%20una%20asesoría"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-3 block rounded-[10px] bg-primary px-6 py-3 text-center text-sm font-semibold text-white hover:bg-primary-600"
+    >
+      Agendar Asesoría
+    </a>
+  </div>
+</header>
+
+<script>
+document.addEventListener('astro:page-load', () => {
+  const toggle = document.getElementById('nav-toggle')
+  const menu = document.getElementById('mobile-menu')
+
+  menu?.classList.add('hidden')
+  toggle?.setAttribute('aria-expanded', 'false')
+  toggle?.setAttribute('aria-label', 'Abrir menú')
+
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false
+    toggle.setAttribute('aria-expanded', String(open))
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú')
+  })
+
+  document.querySelectorAll('.mobile-dropdown-toggle').forEach((btn) => {
+    const panel = btn.closest('li')?.querySelector('.mobile-dropdown-panel')
+    const chevron = btn.querySelector('svg')
+
+    btn.addEventListener('click', () => {
+      const open = panel?.classList.toggle('hidden') === false
+      panel?.classList.toggle('flex', open)
+      btn.setAttribute('aria-expanded', String(open))
+      chevron?.classList.toggle('rotate-180', open)
+    })
+  })
+})
+</script>

@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets'
+import hero from '@/assets/results/hero-results.png'
+import { getLang, useTranslations } from '@/i18n/utils'
+
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'funnel')
+---
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
+    <h2 id="funnel-headline" class="text-center font-heading text-3xl font-bold text-dark sm:text-[48px] sm:leading-[1.2]">
+      {t.headline}
+    </h2>
+    <p class="mx-auto mt-4 max-w-[800px] text-center font-body text-dark/60">
+      {t.text}
+    </p>
+
+    <Image
+      id="funnel-img"
+      src={hero}
+      alt={t.imgAlt}
+      class="mx-auto mt-10 h-auto w-full"
+      widths={[758, 1512]}
+      sizes="(min-width: 1024px) 1480px, 100vw"
+      loading="lazy"
+    />
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('funnel-headline')
+  const img = document.getElementById('funnel-img')
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (!img) return
+
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+    return
+  }
+
+  // El funnel es una forma apilada/inclinada — que "se asiente" bamboleando
+  // en vez de un reveal plano encaja mejor con su propia geometría.
+  gsap.set(img, { transformOrigin: '50% 10%' })
+  gsap.timeline({ scrollTrigger: { trigger: img, start: 'top 82%' } })
+    .fromTo(img, { opacity: 0, y: 50, rotate: -7 }, { opacity: 1, y: 0, rotate: 5, duration: 0.7, ease: 'power2.out' })
+    .to(img, { rotate: -3, duration: 0.35, ease: 'sine.inOut' })
+    .to(img, { rotate: 1.5, duration: 0.3, ease: 'sine.inOut' })
+    .to(img, { rotate: 0, duration: 0.25, ease: 'sine.inOut' })
+})
+</script>

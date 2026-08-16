@@ -1,0 +1,20 @@
+---
+import AboutHero from '@/components/about/AboutHero.astro'
+import HowWeDo from '@/components/about/HowWeDo.astro'
+import Team from '@/components/about/Team.astro'
+import WhatWeDo from '@/components/about/WhatWeDo.astro'
+import WhyUs from '@/components/about/WhyUs.astro'
+import CallToAction from '@/components/about/CallToAction.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Nosotros — Brainstorming">
+  <AboutHero />
+  <WhatWeDo />
+  <HowWeDo />
+  <Team />
+  <WhyUs />
+  <CallToAction />
+</Layout>

@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import { categoriaIcons, categoriaLabels, type Proyecto } from '@/data/proyectos'
+import type { ProyectoDetalle } from '@/data/proyectosDetalle'
+
+interface Props {
+  proyecto: Proyecto
+  detalle: ProyectoDetalle
+}
+
+const { proyecto, detalle } = Astro.props
+const imagenSeparada = Boolean(detalle.heroImg)
+---
+
+<section class="relative overflow-hidden bg-white min-h-[600px] lg:min-h-[702px] flex items-center">
+  <Image
+    id="project-hero-bg"
+    data-standalone={imagenSeparada ? 'false' : 'true'}
+    src={detalle.heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div id="project-hero-content" class="relative z-10 mx-auto grid w-full max-w-[1512px] gap-12 px-6 py-16 lg:grid-cols-2 lg:items-center lg:px-24">
+    <div class="text-center">
+      <div id="project-hero-icons" class="flex flex-col gap-3">
+        {
+          proyecto.categorias.map(cat => (
+            <Icon name={categoriaIcons[cat]} class="hero-piece h-8 w-8 text-dark-300" />
+          ))
+        }
+      </div>
+
+      <Image id="project-hero-logo" src={detalle.logo} alt={proyecto.nombre} class="hero-piece mx-auto mt-6 h-auto w-40" />
+
+      <p id="project-hero-category" class="hero-piece mt-6 font-heading text-[15px] font-bold text-dark">
+        {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}
+      </p>
+      <p id="project-hero-desc" class="hero-piece mx-auto mt-4 max-w-[440px] text-[14px] leading-6 text-dark-500">
+        {detalle.descripcion}
+      </p>
+    </div>
+
+    {
+      imagenSeparada && (
+        <div id="project-hero-img" class="relative">
+          <Image
+            src={detalle.heroImg!}
+            alt={detalle.heroImgAlt}
+            class="relative z-10 mx-auto h-auto w-full max-w-[800px]"
+            widths={[800, 1200]}
+            sizes="(min-width: 1024px) 600px, 80vw"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, revealCircle, revealClip } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const icons = document.querySelectorAll('#project-hero-icons .hero-piece')
+  const logo = document.getElementById('project-hero-logo')
+  const category = document.getElementById('project-hero-category')
+  const desc = document.getElementById('project-hero-desc')
+  const img = document.getElementById('project-hero-img')
+  const bg = document.getElementById('project-hero-bg')
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([icons, logo, category, desc, img].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.06 })
+    return
+  }
+
+  if (bg) {
+    const standalone = bg.dataset.standalone === 'true'
+    if (standalone) {
+      // No hay heroImg separado — este bg ES la pieza visual (mockup +
+      // blob), así que se lleva el reveal protagonista: entra desde la
+      // derecha, que es donde vive la composición.
+      revealClip(bg, { direction: 'right' })
+    }
+    // Ken Burns ambiental siempre, sea protagonista o solo textura de fondo.
+    gsap.fromTo(bg, { scale: standalone ? 1.08 : 1 }, { scale: standalone ? 1 : 1.06, duration: standalone ? 1.4 : 9, ease: standalone ? ease.out : 'none' })
+  }
+
+  // Secuencia editorial: íconos → logo con pop → categoría → párrafo. No
+  // todo junto — cada pieza confirma la anterior, como leer una tarjeta de
+  // presentación.
+  const tl = gsap.timeline()
+  if (icons.length > 0) tl.fromTo(icons, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.65, ease: ease.out, stagger: 0.1 }, 0)
+  if (logo) tl.fromTo(logo, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.75, ease: ease.back }, 0.3)
+  if (category) tl.fromTo(category, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out }, 0.65)
+  if (desc) tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: ease.out }, 0.8)
+
+  // La imagen del producto se revela en círculo, haciendo eco del blob
+  // circular de fondo — no un fade genérico.
+  if (img) revealCircle(img, { delay: 0.3 })
+})
+</script>

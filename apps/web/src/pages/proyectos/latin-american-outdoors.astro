@@ -1,0 +1,24 @@
+---
+import Conversemos from '@/components/common/Conversemos.astro'
+import LatinAmericanBranding from '@/components/projects/latin-american/LatinAmericanBranding.astro'
+import ProjectFeature from '@/components/projects/ProjectFeature.astro'
+import ProjectHero from '@/components/projects/ProjectHero.astro'
+import { proyectos } from '@/data/proyectos'
+import { proyectosDetalle } from '@/data/proyectosDetalle'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+
+const proyecto = proyectos.find(p => p.slug === 'latin-american-outdoors')!
+const detalle = proyectosDetalle['latin-american-outdoors']
+---
+
+<Layout title="Latin American Outdoors — Brainstorming" footerCurveBg="bg-mist">
+  <ProjectHero proyecto={proyecto} detalle={detalle} />
+  <LatinAmericanBranding />
+  {detalle.features?.map(feature => <ProjectFeature feature={feature} />)}
+  <Conversemos
+    heading="¿Quieres ser parte de nuestro portafolio?"
+    whatsappText="Hola, me gustaría formar parte de su portafolio"
+  />
+</Layout>

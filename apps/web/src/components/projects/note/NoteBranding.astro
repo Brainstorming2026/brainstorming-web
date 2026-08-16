@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import brandingBg from '@/assets/projects/note/bg2.png'
+import colorsImg from '@/assets/projects/note/colors.png'
+import stepsImg from '@/assets/projects/note/steps.png'
+
+const lineas = ['Creación de', 'Manual de', 'Identidad de', 'Marca']
+---
+
+<section id="branding-intro" class="relative overflow-hidden bg-dark pb-24 pt-16 lg:pt-20">
+  <Image
+    id="branding-bg"
+    src={brandingBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    loading="lazy"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div id="branding-label" class="flex items-center gap-2 font-heading text-sm font-bold text-white">
+      <Icon name="expert-huella" class="h-6 w-6 text-white/70" />
+      <span>Branding</span>
+    </div>
+
+    <h2 id="branding-heading" class="mt-4 font-heading text-3xl font-bold leading-tight text-white sm:text-6xl">
+      {
+        lineas.map(linea => (
+          <span class="heading-line relative block py-1">
+            {linea}
+          </span>
+        ))
+      }
+    </h2>
+  </div>
+
+  <div id="branding-hero-img-wrap" class="relative z-10 mx-auto mt-16 h-auto w-full max-w-[920px] overflow-hidden px-6">
+    <Image
+      src={colorsImg}
+      alt="Presentaciones de Note Vapor en sus 6 sabores: Blueberry Ice, Watermelon Ice, Strong Mint, Banana Ice, Grape Ice y Tobacco"
+      class="branding-hero-img h-auto w-full"
+      loading="lazy"
+    />
+  </div>
+</section>
+
+<section id="branding-detail" class="bg-white pb-16 lg:pb-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div class="grid gap-10 pt-12 lg:grid-cols-[1fr_auto] lg:items-center">
+      <p id="branding-desc" class="max-w-[550px] text-[14px] leading-6 text-dark-500">
+        La esencia de la marca requería una identidad visual que sea tanto sobria como elegante
+        pero con un toque juguetón y llamativo. Como una persona extrovertida y divertida, pero que
+        a primera vista se muestra sofisticada y algo reservada. Los colores, provenientes de los
+        sabores de los vapes, fueron fundamentales para darle ese toque pintoresco.
+      </p>
+
+      <div id="branding-colors-wrap" class="mx-auto h-auto w-full max-w-[440px] overflow-hidden">
+        <Image
+          src={stepsImg}
+          alt="Iconografía de la identidad de marca de Note Vapor"
+          class="branding-colors-img h-auto w-full"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, revealClip } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('branding-bg')
+  const label = document.getElementById('branding-label')
+  const lines = document.querySelectorAll('#branding-heading .heading-line')
+  const heroImgWrap = document.getElementById('branding-hero-img-wrap')
+  const heroImg = document.querySelector<HTMLElement>('.branding-hero-img')
+  const desc = document.getElementById('branding-desc')
+  const colorsWrap = document.getElementById('branding-colors-wrap')
+
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([label, ...lines, desc].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.06 })
+    return
+  }
+
+  if (bg) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 10, ease: 'none' })
+  if (label) gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  if (lines.length > 0) {
+    gsap.set(lines, { opacity: 0, y: '100%' })
+    gsap.to(lines, { opacity: 1, y: '0%', duration: 1.0, ease: ease.out, stagger: 0.12, delay: 0.2 })
+  }
+  if (heroImgWrap) revealClip(heroImgWrap, { direction: 'up' })
+  if (heroImg) gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
+
+  if (desc) {
+    gsap.set(desc, { opacity: 0, y: 16 })
+    gsap.to(desc, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, scrollTrigger: { trigger: '#branding-detail', start: 'top 85%' } })
+  }
+  if (colorsWrap) revealClip(colorsWrap, { direction: 'up' })
+})
+</script>

@@ -1,0 +1,46 @@
+---
+import { ClientRouter, fade } from 'astro:transitions'
+import Footer from '@/components/common/Footer.astro'
+import Navbar from '@/components/common/Navbar.astro'
+import '@/styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  /** Tailwind bg-color class matching the last section before the footer. */
+  footerCurveBg?: string
+  showNavbar?: boolean
+}
+
+const { title, description = 'Brainstorming — Agencia de Marketing', footerCurveBg, showNavbar = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/brainstorming-icon-file.png?v=2" />
+    <link rel="apple-touch-icon" href="/brainstorming-icon-file.png?v=2" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <!-- Navegación suave entre páginas, sin recarga completa -->
+    <ClientRouter />
+  </head>
+  <body class="font-body text-ink antialiased overflow-x-hidden">
+    {showNavbar && <Navbar />}
+    <main transition:animate={fade({ duration: '0.4s' })}>
+      <slot />
+    </main>
+    <Footer curveBg={footerCurveBg} />
+  </body>
+</html>

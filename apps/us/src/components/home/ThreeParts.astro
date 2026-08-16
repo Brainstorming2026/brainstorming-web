@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets'
+import mockup from '@/assets/okrs/figure5.png'
+import { getLang, useTranslations } from '@/i18n/utils'
+
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'parts')
+const parts = t.items
+---
+
+<section class="bg-mist-200 pt-4 pb-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
+    <h2 id="parts-headline" class="font-heading text-3xl font-bold text-dark sm:text-4xl">
+      {t.headline} <span class="text-primary">{t.headlineAccent}</span> {t.headlineEnd}
+    </h2>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+      <div id="parts-img-wrap" class="h-auto w-full overflow-hidden rounded-2xl shadow-lg">
+        <Image
+          src={mockup}
+          alt={t.imgAlt}
+          class="parts-img h-auto w-full"
+          widths={[400, 700]}
+          sizes="(min-width: 1024px) 560px, 90vw"
+          loading="lazy"
+        />
+      </div>
+
+      <div id="parts-cards" class="flex flex-col gap-4">
+        {
+          parts.map(part => (
+            <div class="parts-card rounded-2xl bg-white p-6 shadow-sm">
+              <span class="inline-block rounded-full bg-primary px-4 py-1 font-heading text-xs font-bold text-white">
+                {part.label}
+              </span>
+              <h3 class="mt-3 font-heading text-xl font-bold text-navy">{part.heading}</h3>
+              <p class="mt-2 font-body text-sm text-dark/70">{part.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('parts-headline')
+  const imgWrap = document.getElementById('parts-img-wrap')
+  const img = document.querySelector<HTMLElement>('.parts-img')
+  const cards = document.querySelectorAll('#parts-cards .parts-card')
+  const { gsap } = ensureGsap()
+
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (imgWrap) revealClip(imgWrap, { direction: 'left' })
+  if (img && !prefersReducedMotion()) {
+    gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: imgWrap, start: 'top 85%' } })
+  }
+  staggerGrid(cards, { variant: 'wipe' })
+})
+</script>

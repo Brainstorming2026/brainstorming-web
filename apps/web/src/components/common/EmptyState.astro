@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets'
+import serviceBg from '@/assets/backgrounds/service-background.webp'
+
+interface Props {
+  eyebrow: string
+  heading: string
+  description: string
+  ctaLabel: string
+  ctaHref: string
+}
+
+const { eyebrow, heading, description, ctaLabel, ctaHref } = Astro.props
+---
+
+<section class="relative flex min-h-[75vh] items-center overflow-hidden bg-white">
+  <Image
+    id="empty-state-bg"
+    src={serviceBg}
+    alt=""
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover select-none"
+  />
+  <div class="relative mx-auto flex max-w-[720px] flex-col items-center px-6 py-24 text-center">
+    <p id="empty-state-eyebrow" class="font-heading text-sm font-bold tracking-wide text-primary">
+      {eyebrow}
+    </p>
+    <h1 id="empty-state-heading" class="mt-4 font-heading text-4xl font-bold leading-tight text-ink sm:text-5xl">
+      {heading}
+    </h1>
+    <p id="empty-state-desc" class="mt-6 max-w-[520px] text-[15px] leading-6 text-ink-500">
+      {description}
+    </p>
+    <a
+      id="empty-state-cta"
+      href={ctaHref}
+      class="mt-10 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+    >
+      {ctaLabel}
+    </a>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('empty-state-bg')
+  const eyebrow = document.getElementById('empty-state-eyebrow')
+  const heading = document.getElementById('empty-state-heading')
+  const desc = document.getElementById('empty-state-desc')
+  const cta = document.getElementById('empty-state-cta')
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([eyebrow, heading, desc, cta].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+
+  if (bg) gsap.fromTo(bg, { scale: 1.05, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' })
+  if (eyebrow) gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+  if (desc) gsap.set(desc, { opacity: 0, y: 12 })
+  if (cta) gsap.set(cta, { opacity: 0, scale: 0.92 })
+
+  if (heading) {
+    splitHeadline(heading, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (desc) gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      if (cta) gsap.to(cta, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.4)', delay: 0.15 })
+    } })
+  }
+})
+</script>

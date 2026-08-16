@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets'
+import doing from '@/assets/nosotros/nosotros-doing.png'
+---
+
+<section class="bg-white py-20">
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <h2 id="whatwedo-headline" class="font-heading text-[40px] font-bold text-ink sm:text-[50px]">
+      ¿Qué hacemos?
+    </h2>
+  </div>
+
+  <Image
+    id="whatwedo-diagram"
+    src={doing}
+    alt="Metodología doble diamante y mejora constante"
+    class="w-full"
+    loading="lazy"
+  />
+
+  <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+    <div id="whatwedo-cols" class="mt-16 grid gap-12 md:grid-cols-2">
+      <div class="whatwedo-col">
+        <h3 class="font-heading text-[24px] font-bold text-ink">
+          El Doble Diamante y el MVP
+        </h3>
+        <p class="mt-4 text-[16px] leading-relaxed text-gray-body">
+          En Brainstorming diseñamos productos digitales acorde a tus recursos y
+          necesidades. Empatizamos con los usuarios para identificar puntos de
+          dolor en tu empresa o en tu cliente para desarrollar soluciones
+          funcionales y eficaces desde su primera entrega.
+        </p>
+      </div>
+      <div class="whatwedo-col">
+        <h3 class="font-heading text-[24px] font-bold text-ink">
+          La mejora constante
+        </h3>
+        <p class="mt-4 text-[16px] leading-relaxed text-gray-body">
+          Luego de que tu MVP (Producto Mínimo Viable) entregó resultados, es
+          hora de estudiarlos e identificar sus oportunidades de mejora.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('whatwedo-headline')
+  const diagram = document.getElementById('whatwedo-diagram')
+  const cols = document.querySelectorAll('#whatwedo-cols .whatwedo-col')
+
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (diagram) revealClip(diagram, { direction: 'up', mode: 'scrub' })
+  staggerGrid(cols, { variant: 'organic' })
+})
+</script>

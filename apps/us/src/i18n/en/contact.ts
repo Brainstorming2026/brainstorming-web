@@ -1,0 +1,16 @@
+export default {
+  headline: 'Book a free strategy call today',
+  text: 'Are you ready to learn the necessary steps to grow your business?',
+  illustrationAlt: 'Three professionals collaborating around a table with laptops, planning a business strategy',
+  formTitle: 'Just fill out this form and we\'ll get in touch!',
+  requiredNote: 'Fields marked with an * are required',
+  firstName: 'First Name*',
+  lastName: 'Last Name*',
+  companyEmail: 'Company Email *',
+  phone: 'Phone number *',
+  investmentLegend: 'Annual Investment in Digital Advertising *',
+  investmentRanges: ['Less than $50,000', '$50,000 - $100,000', '$100,000 - $500,000', 'Over $500,000'],
+  investmentNote: 'This information helps us tailor a plan that maximizes your ROI.',
+  messageLabel: 'Please share anything that will help us to prepare for our meeting',
+  submit: 'SUBMIT',
+} as const

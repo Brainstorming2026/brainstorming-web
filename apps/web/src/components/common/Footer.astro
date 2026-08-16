@@ -1,0 +1,230 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { soluciones, empresa, recursos, redes } from '@/data'
+import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
+import FooterMap from '@/components/common/FooterMap'
+
+interface Props {
+  /** Tailwind bg-color class matching the section right above the footer, so the curve's transparent edges blend in seamlessly instead of showing a white gap. */
+  curveBg?: string
+}
+
+const { curveBg = 'bg-white' } = Astro.props
+---
+
+<footer class="text-white">
+  <div class={curveBg}>
+    <Icon
+      name="footer-up"
+      aria-hidden="true"
+      class="block h-auto w-full select-none text-dark"
+    />
+  </div>
+
+  <div class="bg-dark">
+  <!-- Mapa de ubicación -->
+  <div class="mx-auto max-w-[1512px] px-6 pt-8 sm:pt-12 lg:px-24">
+    <div class="h-[250px] overflow-hidden rounded-xl sm:h-[300px]">
+      <FooterMap client:only="react" />
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-[1512px] px-6 py-8 sm:py-12 lg:px-24">
+    <!-- Mobile/Tablet: layout por filas -->
+    <div class="lg:hidden">
+      <!-- Fila 1: Logo + redes -->
+      <div class="mb-8">
+        <Image
+          src={footerLogo}
+          alt="Brainstorming"
+          class="h-7 w-auto sm:h-8"
+        />
+        <ul class="mt-5 flex items-center gap-2 sm:mt-6">
+          {
+            redes.map(r => (
+              <li>
+                <a href={r.href} aria-label={r.label} class="text-white transition-opacity hover:opacity-70">
+                  <Icon name={r.name} class="h-8 w-8 sm:h-9 sm:w-9" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Fila 2: Soluciones + Empresa -->
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8">
+        <div>
+          <h3 class="font-heading text-lg font-bold">Soluciones</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              soluciones.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold">Empresa</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              empresa.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Fila 3: Recursos + Contacto -->
+      <div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8">
+        <div>
+          <h3 class="font-heading text-lg font-bold">Recursos</h3>
+          <ul class="mt-4 flex flex-col gap-3">
+            {
+              recursos.map(l => (
+                <li>
+                  <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold">Contacto</h3>
+          <ul class="mt-4 flex flex-col gap-3 text-[13px] sm:text-sm">
+            <li class="flex items-center gap-2">
+              <Icon name="footer-map" class="h-4 w-4 shrink-0" />
+              <span>Lima, Perú</span>
+            </li>
+            <li>
+              <a href="mailto:conversemos@brainstorming.la" class="flex items-start gap-2 transition-colors hover:text-primary-300">
+                <Icon name="footer-mail" class="mt-0.5 h-4 w-4 shrink-0" />
+                <span class="break-all">conversemos@brainstorming.la</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-primary-300">
+                <Icon name="footer-phone" class="h-4 w-4 shrink-0" />
+                <span>+51 992 528 363</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: layout 5 columnas -->
+    <div class="hidden grid-cols-5 gap-8 lg:grid">
+      <!-- Logo + redes -->
+      <div>
+        <Image
+          src={footerLogo}
+          alt="Brainstorming"
+          class="h-8 w-auto"
+        />
+        <ul class="mt-8 flex items-center gap-2">
+          {
+            redes.map(r => (
+              <li>
+                <a href={r.href} aria-label={r.label} class="text-white transition-opacity hover:opacity-70">
+                  <Icon name={r.name} class="h-9 w-9" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Soluciones -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Soluciones</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {
+            soluciones.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Empresa -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Empresa</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {
+            empresa.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Recursos -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Recursos</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {
+            recursos.map(l => (
+              <li>
+                <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="font-heading text-xl font-bold">Contacto</h3>
+        <ul class="mt-5 flex flex-col gap-4 text-[15px]">
+          <li class="flex items-center gap-2.5">
+            <Icon name="footer-map" class="h-5 w-5 shrink-0" />
+            <span>Lima, Perú</span>
+          </li>
+          <li>
+            <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+              <Icon name="footer-mail" class="h-5 w-5 shrink-0" />
+              <span>conversemos@brainstorming.la</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+              <Icon name="footer-phone" class="h-5 w-5 shrink-0" />
+              <span>+51 992 528 363</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="border-t border-white/10">
+    <p class="py-5 text-center text-xs text-white/80 sm:py-6 sm:text-sm">
+      Copyright © 2024 Brainstorming
+    </p>
+  </div>
+  </div>
+</footer>

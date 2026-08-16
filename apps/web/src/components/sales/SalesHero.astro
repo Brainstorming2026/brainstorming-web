@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/inboud-sales/inbound-hero.png'
+---
+
+<section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
+  <Image
+    id="sales-hero-bg"
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+    fetchpriority="high"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] items-center px-6 py-16 lg:min-h-[702px] lg:px-24">
+    <div class="max-w-[600px]">
+      <h1 id="sales-hero-headline" class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
+        Los consumidores cambiaron su forma de comprar. ¡Es hora que tú también cambies tu manera de vender!
+      </h1>
+      <p id="sales-hero-text" class="mt-6 text-[16px] leading-6 text-dark-500">
+        Hoy más que nunca, las marcas deben estar 100% alineadas con los hábitos de consumo
+        de sus prospectos o clientes. El proceso de compra ha evolucionado y tus procesos de
+        venta deben adaptarse, a fin de llegar a los usuarios de manera no invasiva. Descubre
+        cómo te podemos ayudar a reducir tu ciclo de ventas, gracias al Inbound Sales.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('sales-hero-bg')
+  const headline = document.getElementById('sales-hero-headline')
+  const text = document.getElementById('sales-hero-text')
+  const { gsap } = ensureGsap()
+
+  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+
+  if (headline) {
+    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+    } })
+  }
+  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+})
+</script>

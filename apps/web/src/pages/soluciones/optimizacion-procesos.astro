@@ -1,0 +1,14 @@
+---
+import ProcesosCta from '@/components/procesos/ProcesosCta.astro'
+import ProcesosHero from '@/components/procesos/ProcesosHero.astro'
+import ProcesosSteps from '@/components/procesos/ProcesosSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Optimización de Procesos y CX — Brainstorming">
+  <ProcesosHero />
+  <ProcesosSteps />
+  <ProcesosCta />
+</Layout>

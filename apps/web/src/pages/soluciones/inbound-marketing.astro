@@ -1,0 +1,14 @@
+---
+import MarketingCta from '@/components/marketing/MarketingCta.astro'
+import MarketingHero from '@/components/marketing/MarketingHero.astro'
+import MarketingSteps from '@/components/marketing/MarketingSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true;
+---
+
+<Layout title="Inbound Marketing — Brainstorming">
+  <MarketingHero />
+  <MarketingSteps />
+  <MarketingCta />
+</Layout>

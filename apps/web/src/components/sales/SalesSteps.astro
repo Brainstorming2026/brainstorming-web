@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import { salesBenefits } from '@/data'
+import inbound1 from '@/assets/inboud-sales/inbound-1.png'
+import inbound2 from '@/assets/inboud-sales/inbound-2.png'
+
+const rowImages = [inbound1, inbound2]
+---
+
+<section class="bg-gradient-to-b from-mist from-0% via-white via-35% to-white">
+  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
+    <h2 id="sales-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      ¿Cómo funciona el proceso de Inbound Sales?
+    </h2>
+    <p class="mx-auto mt-4 max-w-[700px] text-center text-[15px] leading-6 text-dark-500">
+      Conoce los 6 pasos que seguimos para lograr que la experiencia de compra esté siempre
+      alineada al contexto de tus usuarios.
+    </p>
+
+    <div id="sales-steps-imgs" class="mt-12 space-y-6">
+      <Image
+        class="sales-step-img mx-auto h-auto w-full"
+        src={rowImages[0]}
+        alt="Proceso paso 1-3"
+        widths={[560, 1120]}
+        sizes="(min-width: 1140px) 1120px, 100vw"
+        loading="lazy"
+      />
+      <Image
+        class="sales-step-img mx-auto h-auto w-full"
+        src={rowImages[1]}
+        alt="Proceso paso 4-6"
+        widths={[560, 1120]}
+        sizes="(min-width: 1140px) 1120px, 100vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-16">
+  <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
+    <h2 id="sales-benefits-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+      ¿En qué puede esto ayudar a tu negocio?
+    </h2>
+
+    <div id="sales-benefits" class="mt-10 grid gap-8 sm:grid-cols-2">
+      <ul class="space-y-4">
+        {
+          salesBenefits.left.map((text) => (
+            <li class="benefit-item flex items-start gap-3">
+              <Icon name="sales-check" class="mt-1 h-3 w-auto text-[#48267F] flex-shrink-0" />
+              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="space-y-4">
+        {
+          salesBenefits.right.map((text) => (
+            <li class="benefit-item flex items-start gap-3">
+              <Icon name="sales-check" class="mt-1 h-3 w-auto text-[#48267F] flex-shrink-0" />
+              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const stepsHeadline = document.getElementById('sales-steps-headline')
+  const imgs = document.querySelectorAll<HTMLElement>('#sales-steps-imgs .sales-step-img')
+  const benefitsHeadline = document.getElementById('sales-benefits-headline')
+  const benefits = document.querySelectorAll('#sales-benefits .benefit-item')
+
+  if (stepsHeadline) splitHeadline(stepsHeadline, { by: 'lines' })
+  imgs.forEach(img => revealClip(img, { direction: 'up', mode: 'scrub' }))
+  if (benefitsHeadline) splitHeadline(benefitsHeadline, { by: 'lines' })
+  staggerGrid(benefits, { variant: 'organic' })
+})
+</script>

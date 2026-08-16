@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets'
+import heroBg from '@/assets/procesos/procesor-bg.png'
+---
+
+<section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
+  <Image
+    id="procesos-hero-bg"
+    src={heroBg}
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+    fetchpriority="high"
+    widths={[758, 1512]}
+    sizes="100vw"
+  />
+  <div id="procesos-hero-content" class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] flex-col items-center justify-end px-6 pb-16 text-center lg:min-h-[702px] lg:px-24">
+    <h1 id="procesos-hero-headline" class="font-heading text-[32px] font-bold text-white sm:text-[40px]">
+      OPTIMIZACIÓN DE PROCESOS Y CX
+    </h1>
+    <p class="procesos-hero-block mt-4 max-w-[700px] font-heading text-[17px] font-bold leading-6 text-white sm:text-[19px]">
+      Mejora el rendimiento de tu empresa optimizando tus procesos y mantente alineado a tus consumidores en todo momento.
+    </p>
+    <p class="procesos-hero-block mt-4 max-w-[720px] text-[14px] leading-6 text-white/90">
+      ¡En Brainstorming llevamos la ingeniería a las empresas! Sobre los tres pilares fundamentales de la
+      innovación: tecnología, procesos y proyectos, buscamos optimizar el performance de tu negocio,
+      alineándolo con tu consumidor.
+    </p>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('procesos-hero-bg')
+  const headline = document.getElementById('procesos-hero-headline')
+  const blocks = Array.from(document.querySelectorAll<HTMLElement>('#procesos-hero-content .procesos-hero-block'))
+  const { gsap } = ensureGsap()
+
+  if (!prefersReducedMotion()) gsap.set(blocks, { opacity: 0, y: 10 })
+
+  if (headline) {
+    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+      gsap.to(blocks, { opacity: 1, y: 0, duration: 0.5, stagger: 0.15 })
+    } })
+  }
+  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+})
+</script>

@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets'
+import pracda from '@/assets/clients/pracda.png'
+import viveparacas from '@/assets/clients/viveparacas.png'
+import pringles from '@/assets/clients/pringles.png'
+import siemens from '@/assets/clients/siemens.png'
+import nadira from '@/assets/clients/nadira.png'
+import stanley from '@/assets/clients/stanley.png'
+import gris from '@/assets/clients/gris.png'
+import sgs from '@/assets/clients/sgs.png'
+import atsa from '@/assets/clients/atsa.png'
+import construplan from '@/assets/clients/construplan.png'
+import { getLang, useTranslations } from '@/i18n/utils'
+
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'clients')
+
+const row1 = [
+  { logo: pracda, name: 'Grupo Pracda' },
+  { logo: viveparacas, name: 'Vive Paracas' },
+  { logo: pringles, name: 'Pringles' },
+  { logo: siemens, name: 'Siemens' },
+  { logo: nadira, name: 'Nadira' },
+  { logo: stanley, name: 'Stanley Black & Decker' },
+]
+
+const row2 = [
+  { logo: gris, name: 'Grin' },
+  { logo: sgs, name: 'SGS' },
+  { logo: atsa, name: 'ATSA Airlines' },
+  { logo: construplan, name: 'Construplan' },
+]
+---
+
+<section class="relative bg-white py-16 lg:py-20">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-mist-200 to-white lg:h-28"></div>
+
+  <div class="relative mx-auto max-w-9xl px-6 lg:px-16">
+    <h2 id="clients-headline" class="text-center font-heading text-3xl font-normal text-dark sm:text-4xl">{t.headline}</h2>
+
+    <div id="clients-row1" class="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+      {
+        row1.map(client => (
+          <Image src={client.logo} alt={client.name} class="client-logo h-30 w-auto object-contain" loading="lazy" />
+        ))
+      }
+    </div>
+
+    <div id="clients-row2" class="mt-8 flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
+      {
+        row2.map(client => (
+          <Image src={client.logo} alt={client.name} class="client-logo h-30 w-auto object-contain" loading="lazy" />
+        ))
+      }
+    </div>
+
+    <p id="clients-tagline" class="mt-12 text-center font-heading text-xl font-bold text-navy">
+      {t.tagline}
+    </p>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('clients-headline')
+  const logos = document.querySelectorAll('#clients-row1 .client-logo, #clients-row2 .client-logo')
+  const tagline = document.getElementById('clients-tagline')
+  const { gsap } = ensureGsap()
+
+  if (headline) splitHeadline(headline, { by: 'words' })
+  staggerGrid(logos, { variant: 'wipe' })
+
+  if (tagline) {
+    if (prefersReducedMotion()) {
+      gsap.fromTo(tagline, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+    }
+    else {
+      gsap.set(tagline, { opacity: 0, y: 12 })
+      gsap.to(tagline, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: tagline, start: 'top 90%' } })
+    }
+  }
+})
+</script>

@@ -1,0 +1,94 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { roasYoutubeId as youtubeId, roas } from '@/data'
+import backgroundVideo from '@/assets/backgrounds/background-video.webp'
+import { roasLogos } from '@/assets/roast'
+---
+<section id="roas" class="bg-dark text-white">
+  <div class="mx-auto max-w-[1512px] px-6 py-20 lg:px-24 lg:py-24">
+    <!-- Bloque superior: texto + video -->
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 class="font-heading text-3xl font-bold leading-tight sm:text-4xl">
+          La importancia del ROAS Return on Advertising Spend
+        </h2>
+        <p class="mt-8 font-heading text-xl font-bold">
+          ¿Quieres empezar un proyecto con nosotros?
+        </p>
+        <a
+          href="#servicios"
+          class="mt-8 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        >
+          VER SERVICIOS
+        </a>
+      </div>
+
+      <!-- Video con facade -->
+      <div
+        id="roas-video"
+        data-id={youtubeId}
+        class="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg"
+      >
+        <Image
+          src={backgroundVideo}
+          alt="Video: ¿Qué es el ROAS?"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div
+          class="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20"
+        >
+          <button
+            type="button"
+            aria-label="Reproducir video"
+            class="text-white/90 transition-transform group-hover:scale-110"
+          >
+            <Icon name="play" class="h-20 w-20 drop-shadow-lg" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clientes + ROAS -->
+    <div id="roas-grid" class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+      {
+        roas.map(r => {
+          const logo = roasLogos.find(l => l.slug === r.logo)
+          return (
+            <div class="roas-item flex flex-col items-center">
+              {logo && (
+                <Image
+                  src={logo.image}
+                  alt={r.name}
+                  class="w-full max-w-[220px]"
+                />
+              )}
+              <p class="mt-5 text-center font-heading text-2xl font-bold leading-snug">
+                ROAS:<br />{r.value}
+              </p>
+            </div>
+          )
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+const holder = document.getElementById('roas-video')
+holder?.addEventListener('click', () => {
+  const id = holder.dataset.id
+  holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video ROAS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+})
+</script>
+
+<script>
+import { registerMotion, revealCircle, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const video = document.getElementById('roas-video')
+  const logos = document.querySelectorAll('#roas-grid .roas-item')
+  if (video) revealCircle(video, { scrollTrigger: true })
+  staggerGrid(logos, { variant: 'organic' })
+})
+</script>

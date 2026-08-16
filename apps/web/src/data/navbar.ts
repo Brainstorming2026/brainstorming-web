@@ -30,5 +30,5 @@ export const navLinks: NavLink[] = [
     ],
   },
   { label: 'Trabaja con Nosotros', href: '#' },
-  { label: 'US Site', href: '#' },
+  { label: 'US Site', href: 'https://us.brainstorming.la/' },
 ]

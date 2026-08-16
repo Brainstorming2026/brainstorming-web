@@ -1,46 +1,35 @@
 ---
 import { Image } from 'astro:assets'
 import mockup from '@/assets/okrs/figure5.png'
+import { getLang, useTranslations } from '@/i18n/utils'
 
-const parts = [
-  {
-    label: 'PART 1:',
-    heading: 'Understanding your business better',
-    description: 'We use tools such as the Business Model Canvas, Product Market Fit, Proto Personas and Customer Journey Maps.',
-  },
-  {
-    label: 'PART 2:',
-    heading: 'Proposing Actions',
-    description: 'We classify actions based on cost, priority, and impact, and design a scalable digital ecosystem that can expand with each iterative phase of your business growth.',
-  },
-  {
-    label: 'PART 3:',
-    heading: 'Project Plan',
-    description: 'We present the Project Gantt to give you a clear understanding of the project plan and the next steps involved.',
-  },
-]
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'parts')
+const parts = t.items
 ---
 
 <section class="bg-mist-200 pt-4 pb-20">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
-    <h2 class="font-heading text-3xl font-bold text-dark sm:text-4xl">
-      The 3 parts in the <span class="text-primary">OAKRs</span> Workshop
+    <h2 id="parts-headline" class="font-heading text-3xl font-bold text-dark sm:text-4xl">
+      {t.headline} <span class="text-primary">{t.headlineAccent}</span> {t.headlineEnd}
     </h2>
 
     <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-      <Image
-        src={mockup}
-        alt="Sample deliverable from Part 1 of the OAKRs Workshop: Knowing your business better"
-        class="h-auto w-full rounded-2xl shadow-lg"
-        widths={[400, 700]}
-        sizes="(min-width: 1024px) 560px, 90vw"
-        loading="lazy"
-      />
+      <div id="parts-img-wrap" class="h-auto w-full overflow-hidden rounded-2xl shadow-lg">
+        <Image
+          src={mockup}
+          alt={t.imgAlt}
+          class="parts-img h-auto w-full"
+          widths={[400, 700]}
+          sizes="(min-width: 1024px) 560px, 90vw"
+          loading="lazy"
+        />
+      </div>
 
-      <div class="flex flex-col gap-4">
+      <div id="parts-cards" class="flex flex-col gap-4">
         {
           parts.map(part => (
-            <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <div class="parts-card rounded-2xl bg-white p-6 shadow-sm">
               <span class="inline-block rounded-full bg-primary px-4 py-1 font-heading text-xs font-bold text-white">
                 {part.label}
               </span>
@@ -53,3 +42,23 @@ const parts = [
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('parts-headline')
+  const imgWrap = document.getElementById('parts-img-wrap')
+  const img = document.querySelector<HTMLElement>('.parts-img')
+  const cards = document.querySelectorAll('#parts-cards .parts-card')
+  const { gsap } = ensureGsap()
+
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (imgWrap) revealClip(imgWrap, { direction: 'left' })
+  if (img && !prefersReducedMotion()) {
+    gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: imgWrap, start: 'top 85%' } })
+  }
+  staggerGrid(cards, { variant: 'wipe' })
+})
+</script>

@@ -3,10 +3,15 @@ import { Image } from 'astro:assets'
 import bg from '@/assets/hero/bg.png'
 import down from '@/assets/hero/down.png'
 import Navbar from '@/components/common/Navbar.astro'
+import { getLang, useTranslations } from '@/i18n/utils'
+
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'hero')
 ---
 
 <section class="relative overflow-hidden bg-white min-h-[600px] lg:min-h-[721px]">
   <Image
+    id="hero-bg"
     src={bg}
     alt=""
     class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
@@ -19,12 +24,11 @@ import Navbar from '@/components/common/Navbar.astro'
     <Navbar />
 
     <div class="max-w-7xl px-6 pt-4 lg:px-16">
-      <h1 class="font-heading text-4xl leading-[1.15] font-bold text-white sm:text-5xl lg:text-[56px]">
-        Performance through <span class="text-gold">innovation and creativity</span>
+      <h1 id="hero-headline" class="font-heading text-4xl leading-[1.15] font-bold text-white sm:text-5xl lg:text-[56px]">
+        {t.headline} <span class="text-gold">{t.headlineAccent}</span>
       </h1>
-      <p class="mt-6 max-w-2xl font-body text-base leading-relaxed text-white/85">
-        We are a consulting firm committed to achieving your business objectives, generating
-        growth through strategic actions based around your business priorities.
+      <p id="hero-text" class="mt-6 max-w-2xl font-body text-base leading-relaxed text-white/85">
+        {t.text}
       </p>
 
       <button
@@ -38,3 +42,25 @@ import Navbar from '@/components/common/Navbar.astro'
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('hero-bg')
+  const headline = document.getElementById('hero-headline')
+  const text = document.getElementById('hero-text')
+  const { gsap } = ensureGsap()
+
+  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+
+  if (headline) {
+    // 'lines' preserva el <span class="text-gold"> intacto dentro del split.
+    splitHeadline(headline, { by: 'lines', scrollTrigger: false, onComplete: () => {
+      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+    } })
+  }
+  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 9, ease: 'none' })
+})
+</script>

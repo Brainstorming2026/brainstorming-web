@@ -5,7 +5,7 @@ import funnelImg from '@/assets/branding/branding-funnel.webp'
 
 <section class="bg-gradient-to-b from-mist to-white">
   <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
-    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+    <h2 id="branding-funnel-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
       Seguro te preguntarás, ¿cómo lo hacen?
     </h2>
     <p class="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-6 text-dark-500">
@@ -13,6 +13,7 @@ import funnelImg from '@/assets/branding/branding-funnel.webp'
     </p>
 
     <Image
+      id="branding-funnel-img"
       src={funnelImg}
       alt="Metodología Inbound: Atraer, Convertir, Cerrar y Deleitar"
       class="mx-auto mt-12 h-auto w-full"
@@ -22,3 +23,14 @@ import funnelImg from '@/assets/branding/branding-funnel.webp'
     />
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('branding-funnel-headline')
+  const img = document.getElementById('branding-funnel-img')
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (img) revealClip(img, { direction: 'left', mode: 'scrub' })
+})
+</script>

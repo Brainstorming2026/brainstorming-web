@@ -19,17 +19,19 @@ const featuredGuides = guides.filter(guia => guia.featured)
     <div class="flex flex-1 flex-col items-center justify-center gap-10 lg:flex-row lg:items-start lg:justify-start lg:pt-0">
       <div class="w-full lg:w-1/2">
         <h1
+          id="guias-hero-headline"
           class="font-heading text-[40px] font-bold leading-[50px] text-white sm:text-[60px] sm:leading-[80px]"
         >
           Repositorio de Guías Prácticas de Brainstorming
         </h1>
         <p
+          id="guias-hero-text"
           class="mt-5 max-w-[500px] text-[18px] leading-6 text-white/80 sm:text-[20px] sm:leading-[28px]"
         >
           Aprende todo sobre el Marketing Digital con nuestras Guías Prácticas especializadas.
         </p>
       </div>
-      <div class="flex w-full justify-center lg:w-1/2">
+      <div id="guias-hero-img" class="flex w-full justify-center lg:w-1/2">
         <Image
           src={heroImg}
           alt="Guías prácticas"
@@ -40,13 +42,14 @@ const featuredGuides = guides.filter(guia => guia.featured)
 
     <div class="mt-20">
       <h2
+        id="guias-featured-headline"
         class="text-center font-heading text-[30px] font-bold text-white sm:text-[36px]"
       >
         Contenidos más consultados por nuestros usuarios
       </h2>
-      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div id="guias-featured-grid" class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {featuredGuides.map((guia) => (
-          <div class="flex flex-col">
+          <div class="featured-card flex flex-col">
             <Image
               src={guia.image}
               alt=""
@@ -59,7 +62,7 @@ const featuredGuides = guides.filter(guia => guia.featured)
             <a
               href={guia.pdf}
               download
-              class="mt-4 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+              class="dl-btn mt-4 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
             >
               <img src={iconDownload.src} alt="" class="h-4 w-4" />
               DESCARGAR GUÍA
@@ -70,3 +73,28 @@ const featuredGuides = guides.filter(guia => guia.featured)
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, revealCircle, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('guias-hero-headline')
+  const text = document.getElementById('guias-hero-text')
+  const heroImg = document.getElementById('guias-hero-img')
+  const featuredHeadline = document.getElementById('guias-featured-headline')
+  const featuredCards = document.querySelectorAll('#guias-featured-grid .featured-card')
+  const { gsap } = ensureGsap()
+
+  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+
+  if (headline) {
+    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+    } })
+  }
+  if (heroImg) revealCircle(heroImg, { delay: 0.35 })
+  if (featuredHeadline) splitHeadline(featuredHeadline, { by: 'words' })
+  staggerGrid(featuredCards, { variant: 'organic' })
+})
+</script>

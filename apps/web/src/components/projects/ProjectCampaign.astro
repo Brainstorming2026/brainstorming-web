@@ -10,9 +10,9 @@ interface Props {
 const { campania } = Astro.props
 ---
 
-<section class="bg-white pt-16 lg:pt-20">
+<section id="campaign-intro" class="bg-white pt-16 lg:pt-20">
   <div class="mx-auto grid max-w-[1512px] gap-8 px-6 lg:grid-cols-2 lg:items-start lg:px-24">
-    <div>
+    <div class="campaign-block">
       <div class="flex items-center gap-2 font-heading text-sm font-bold text-dark">
         <Icon name="expert-iman" class="h-6 w-6 text-dark-300" />
         <span>Inbound Marketing</span>
@@ -21,7 +21,7 @@ const { campania } = Astro.props
         {campania.heading}
       </h2>
     </div>
-    <p class="text-[14px] leading-6 text-dark-500 lg:mt-1">
+    <p class="campaign-block text-[14px] leading-6 text-dark-500 lg:mt-1">
       {campania.parrafo}
     </p>
   </div>
@@ -41,7 +41,7 @@ const { campania } = Astro.props
   campania.video && (
     <section class="py-16 lg:py-20" style={{ backgroundColor: campania.colorFondo }}>
       <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
-        <div class="relative mx-auto max-w-[1190px] overflow-hidden rounded-lg bg-[#eee]">
+        <div id="campaign-video" class="relative mx-auto max-w-[1190px] overflow-hidden rounded-lg bg-[#eee]">
           {
             campania.video.thumbnail ? (
               <Image
@@ -74,6 +74,7 @@ const { campania } = Astro.props
 {
   campania.imagenes.length > 0 && (
     <section
+      id="campaign-gallery"
       class:list={[campania.video ? 'bg-white py-16 lg:py-20' : undefined]}
       style={campania.video ? undefined : { backgroundColor: campania.colorFondo }}
     >
@@ -84,7 +85,7 @@ const { campania } = Astro.props
               <Image
                 src={img.src}
                 alt={img.alt}
-                class="h-auto w-full"
+                class="gallery-img h-auto w-full"
                 style={{ maxWidth: `${img.maxWidth ?? 420}px` }}
                 widths={[img.maxWidth ?? 420, (img.maxWidth ?? 420) * 2]}
                 sizes={`(min-width: 640px) ${img.maxWidth ?? 420}px, 90vw`}
@@ -97,3 +98,28 @@ const { campania } = Astro.props
     </section>
   )
 }
+
+<script>
+import { ensureGsap, registerMotion, revealCircle, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const intro = document.querySelectorAll('#campaign-intro .campaign-block')
+  const video = document.getElementById('campaign-video')
+  const galleryImgs = document.querySelectorAll('#campaign-gallery .gallery-img')
+
+  if (intro.length > 0) {
+    const { gsap } = ensureGsap()
+    if (prefersReducedMotion()) {
+      gsap.fromTo(intro, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    }
+    else {
+      gsap.set(intro, { opacity: 0, y: 20 })
+      gsap.to(intro, { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out', stagger: 0.15, scrollTrigger: { trigger: '#campaign-intro', start: 'top 85%' } })
+    }
+  }
+
+  if (video) revealCircle(video, { scrollTrigger: true })
+  staggerGrid(galleryImgs, { variant: 'organic' })
+})
+</script>

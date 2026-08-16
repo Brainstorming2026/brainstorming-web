@@ -24,8 +24,8 @@ export const empresa: FooterLink[] = [
 ]
 
 export const recursos: FooterLink[] = [
-  { label: 'Blog', href: '#blog' },
-  { label: 'Guías Prácticas', href: '#guias' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Guías Prácticas', href: '/guias' },
   { label: 'Políticas de privacidad', href: '#privacidad' },
 ]
 

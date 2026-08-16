@@ -1,0 +1,16 @@
+export default {
+  headline: 'Agenda hoy una llamada estratégica gratuita',
+  text: '¿Listo para aprender los pasos necesarios para hacer crecer tu negocio?',
+  illustrationAlt: 'Tres profesionales colaborando alrededor de una mesa con laptops, planeando una estrategia de negocio',
+  formTitle: '¡Solo completa este formulario y nos pondremos en contacto!',
+  requiredNote: 'Los campos marcados con * son obligatorios',
+  firstName: 'Nombre*',
+  lastName: 'Apellido*',
+  companyEmail: 'Correo de la empresa *',
+  phone: 'Número de teléfono *',
+  investmentLegend: 'Inversión anual en publicidad digital *',
+  investmentRanges: ['Menos de $50,000', '$50,000 - $100,000', '$100,000 - $500,000', 'Más de $500,000'],
+  investmentNote: 'Esta información nos ayuda a diseñar un plan que maximice tu ROI.',
+  messageLabel: 'Cuéntanos algo que nos ayude a preparar nuestra reunión',
+  submit: 'ENVIAR',
+} as const

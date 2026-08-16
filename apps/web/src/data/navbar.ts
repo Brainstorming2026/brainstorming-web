@@ -25,7 +25,7 @@ export const navLinks: NavLink[] = [
     href: '#',
     dropdown: true,
     children: [
-      { label: 'Blog', href: '#' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Guías Prácticas', href: '/guias' },
     ],
   },

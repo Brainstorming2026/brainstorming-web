@@ -65,20 +65,21 @@ const logos = [
     aria-hidden="true"
   />
   <div class="mx-auto max-w-[1512px] px-6 pt-28 pb-16 lg:px-24">
-    <h2 class="text-center font-heading text-[35px] font-bold text-white">
+    <h2 id="empresas-headline" class="text-center font-heading text-[35px] font-bold text-white">
       Empresas
     </h2>
     <div
+      id="empresas-grid"
       class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-8 sm:grid-cols-5 lg:grid-cols-9"
     >
       {
         logos.map(logo => (
-          <div class="flex items-center justify-center">
+          <div class="empresa-logo flex h-16 items-center justify-center">
             <Image
               src={logo.image}
               alt={logo.alt}
+              loading="eager"
               class="max-h-16 w-auto max-w-full object-contain"
-              loading="lazy"
             />
           </div>
         ))
@@ -86,3 +87,14 @@ const logos = [
     </div>
   </div>
 </section>
+
+<script>
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('empresas-headline')
+  const logos = document.querySelectorAll('#empresas-grid .empresa-logo')
+  if (headline) splitHeadline(headline, { by: 'words' })
+  staggerGrid(logos, { variant: 'wipe' })
+})
+</script>

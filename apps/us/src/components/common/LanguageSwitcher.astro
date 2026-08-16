@@ -1,19 +1,24 @@
 ---
 import { Icon } from 'astro-icon/components'
+import { getLang, localizePath } from '@/i18n/utils'
 
 interface Locale {
-  code: string
+  code: 'en' | 'es'
   label: string
   flag: string
-  available: boolean
 }
 
 const locales: Locale[] = [
-  { code: 'en', label: 'English', flag: 'flag-us', available: true },
-  { code: 'es', label: 'Español', flag: 'flag-es', available: false },
+  { code: 'en', label: 'English', flag: 'flag-us' },
+  { code: 'es', label: 'Español', flag: 'flag-es' },
 ]
 
-const current = locales[0]
+const lang = getLang(Astro.url)
+const current = locales.find(l => l.code === lang) ?? locales[0]
+
+// Para "/" y "/es" mapeamos directo a home; el resto de rutas son anclas
+// dentro de la misma página, por eso basta con re-localizar "/".
+const targetPath = localizePath('/', lang === 'en' ? 'es' : 'en')
 ---
 
 <div class="relative" data-language-switcher>
@@ -37,32 +42,19 @@ const current = locales[0]
     {
       locales.map(locale => (
         <li>
-          {locale.available ? (
-            <a
-              href="/"
-              role="option"
-              aria-selected={locale.code === current.code}
-              class:list={[
-                'flex items-center gap-2.5 rounded-lg px-2.5 py-2 font-body text-sm',
-                locale.code === current.code ? 'bg-mist/60 font-bold text-dark' : 'text-dark/70 hover:bg-mist/40',
-              ]}
-            >
-              <Icon name={locale.flag} class="h-5 w-5 shrink-0 rounded-full" />
-              {locale.label}
-            </a>
-          ) : (
-            <span
-              role="option"
-              aria-disabled="true"
-              aria-selected="false"
-              title="Versión en español próximamente"
-              class="flex cursor-not-allowed items-center gap-2.5 rounded-lg px-2.5 py-2 font-body text-sm text-dark/35"
-            >
-              <Icon name={locale.flag} class="h-5 w-5 shrink-0 rounded-full grayscale" />
-              {locale.label}
-              <span class="ml-auto text-[10px] font-bold tracking-wide uppercase">Soon</span>
-            </span>
-          )}
+          <a
+            href={locale.code === lang ? undefined : (locale.code === 'en' ? localizePath('/', 'en') : targetPath)}
+            role="option"
+            aria-selected={locale.code === lang}
+            aria-disabled={locale.code === lang}
+            class:list={[
+              'flex items-center gap-2.5 rounded-lg px-2.5 py-2 font-body text-sm',
+              locale.code === lang ? 'pointer-events-none bg-mist/60 font-bold text-dark' : 'text-dark/70 hover:bg-mist/40',
+            ]}
+          >
+            <Icon name={locale.flag} class="h-5 w-5 shrink-0 rounded-full" />
+            {locale.label}
+          </a>
         </li>
       ))
     }

@@ -4,7 +4,6 @@ import { Image } from 'astro:assets'
 import bgMiddle from '@/assets/guides/bg-middle.webp'
 import { categoryLabels, guides } from '@/data/guides'
 import iconDownload from '@/icons/guias-download.svg'
-import iconOptimizacion from '@/icons/guides-optimizacion.svg'
 import iconSales from '@/icons/expert-money.svg'
 import iconBranding from '@/icons/expert-huella.svg'
 import iconInbound from '@/icons/expert-iman.svg'
@@ -14,31 +13,30 @@ const categories: { key: GuideCategory, label: string, icon: { src: string } }[]
   { key: 'branding', label: 'Branding', icon: iconBranding },
   { key: 'desarrollo-web', label: 'Desarrollo web', icon: iconDesarrollo },
   { key: 'inbound-marketing', label: 'Inbound Marketing', icon: iconInbound },
-  { key: 'optimizacion', label: 'Optimización de Procesos y CX', icon: iconOptimizacion },
   { key: 'inbound-sales', label: 'Inbound Sales', icon: iconSales },
 ]
 ---
 
 <section class="bg-white">
   <div class="mx-auto flex max-w-[1512px] flex-col lg:flex-row">
-    <div class="w-full bg-white px-6 pt-16 pb-10 lg:w-[537px] lg:shrink-0 lg:px-[54px] lg:pt-[50px]">
-      <h2 class="font-heading text-[30px] font-bold leading-[40px] text-ink sm:text-[34px]">
+    <div id="guias-sidebar" class="w-full bg-white px-6 pt-16 pb-10 lg:w-[537px] lg:shrink-0 lg:px-[54px] lg:pt-[50px]">
+      <h2 id="guias-sidebar-headline" class="font-heading text-[30px] font-bold leading-[40px] text-ink sm:text-[34px]">
         Descarga la Guía Práctica que necesitas
       </h2>
-      <p class="mt-6 text-[16px] leading-6 text-gray-body">
+      <p class="sidebar-block mt-6 text-[16px] leading-6 text-gray-body">
         Puedes buscar usando el filtro de categorías que está ubicado abajo. Elige una y descárgala con facilidad.
       </p>
-      <p class="mt-4 text-[16px] leading-6 text-gray-body">
+      <p class="sidebar-block mt-4 text-[16px] leading-6 text-gray-body">
         Aprende todo sobre el Marketing Digital
       </p>
-      <h3 class="mt-6 font-heading text-[20px] font-bold text-ink">
+      <h3 class="sidebar-block mt-6 font-heading text-[20px] font-bold text-ink">
         Categorías
       </h3>
       <div class="mt-4 flex flex-col gap-4">
         {categories.map(cat => (
           <button
             data-category={cat.key}
-            class="category-btn flex items-center gap-3 rounded-[10px] border border-ink/20 bg-white px-4 py-3 text-left text-[15px] text-ink transition-colors hover:border-primary hover:bg-primary/5"
+            class="category-btn sidebar-block flex items-center gap-3 rounded-[10px] border border-ink/20 bg-white px-4 py-3 text-left text-[15px] text-ink transition-[border-color,background-color,transform] duration-150 ease-out hover:border-primary hover:bg-primary/5 active:scale-[0.98]"
           >
             <img src={cat.icon.src} alt="" class="h-5 w-5" />
             {cat.label}
@@ -54,7 +52,7 @@ const categories: { key: GuideCategory, label: string, icon: { src: string } }[]
         class="pointer-events-none absolute inset-0 h-full w-full object-cover"
         loading="lazy"
       />
-      <div class="relative z-10 flex flex-col gap-4 px-[48px] pt-[50px] pb-16">
+      <div id="guias-groups" class="relative z-10 flex flex-col gap-4 px-[48px] pt-[50px] pb-16">
         {categories.map((cat) => {
           const catGuides = guides.filter(guia => guia.category === cat.key)
           if (catGuides.length === 0)
@@ -92,39 +90,99 @@ return null
 </section>
 
 <script>
- document.addEventListener('astro:page-load', () => {
-   const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn')
-   const groups = document.querySelectorAll<HTMLElement>('.category-group')
+import { ensureGsap, registerMotion } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
-   buttons.forEach((btn) => {
-     btn.addEventListener('click', () => {
-       const cat = btn.dataset.category
-       const isActive = btn.classList.contains('border-primary')
+registerMotion(() => {
+  const sidebarBlocks = document.querySelectorAll('#guias-sidebar .sidebar-block')
+  const sidebarHeadline = document.getElementById('guias-sidebar-headline')
+  const cards = document.querySelectorAll('#guias-groups .guide-card')
+  const { gsap } = ensureGsap()
 
-       buttons.forEach((b) => {
-         b.classList.remove('border-primary', 'bg-primary/5')
-         b.classList.add('border-ink/20', 'bg-white')
-       })
+  if (sidebarHeadline) {
+    if (prefersReducedMotion()) {
+      gsap.fromTo(sidebarHeadline, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+    }
+    else {
+      gsap.set(sidebarHeadline, { opacity: 0, y: 16 })
+      gsap.to(sidebarHeadline, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: '#guias-sidebar', start: 'top 80%' } })
+    }
+  }
+  if (sidebarBlocks.length > 0) {
+    if (prefersReducedMotion()) {
+      gsap.fromTo(sidebarBlocks, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.06 })
+    }
+    else {
+      gsap.set(sidebarBlocks, { opacity: 0, y: 14 })
+      gsap.to(sidebarBlocks, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.15, scrollTrigger: { trigger: '#guias-sidebar', start: 'top 80%' } })
+    }
+  }
+  // Un solo trigger para todo el grid (no ScrollTrigger.batch por card): las
+  // cards se filtran con display:none y un batch per-item se confunde con
+  // elementos ocultos. Un trigger sobre el contenedor evita ese problema.
+  if (cards.length > 0) {
+    if (prefersReducedMotion()) {
+      gsap.fromTo(cards, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.03 })
+    }
+    else {
+      gsap.set(cards, { opacity: 0, y: 20 })
+      gsap.to(cards, { opacity: 1, y: 0, duration: 1.1, ease: ease.out, stagger: 0.05, scrollTrigger: { trigger: '#guias-groups', start: 'top 85%' } })
+    }
+  }
 
-       if (!isActive) {
-         btn.classList.add('border-primary', 'bg-primary/5')
-         btn.classList.remove('border-ink/20', 'bg-white')
-       }
+  // --- Filtro de categoría ---
+  // El toggle en sí debe sentirse INSTANTÁNEO (es una interacción funcional,
+  // no decorativa) — por eso el crossfade es corto (~200-250ms), no el
+  // ritmo pausado de los reveals de scroll de arriba.
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn')
+  const groups = document.querySelectorAll<HTMLElement>('.category-group')
 
-       groups.forEach((group) => {
-         if (isActive || !cat) {
-           group.style.display = ''
-         }
- else {
-           group.style.display = group.dataset.categoryGroup === cat ? '' : 'none'
-         }
-       })
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.category
+      const isActive = btn.classList.contains('border-primary')
 
-       if (!isActive && cat) {
-         const target = document.querySelector<HTMLElement>(`[data-category-group="${cat}"]`)
-         target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-       }
-     })
-   })
- })
+      buttons.forEach((b) => {
+        b.classList.remove('border-primary', 'bg-primary/5')
+        b.classList.add('border-ink/20', 'bg-white')
+      })
+
+      if (!isActive) {
+        btn.classList.add('border-primary', 'bg-primary/5')
+        btn.classList.remove('border-ink/20', 'bg-white')
+      }
+
+      const showAll = isActive || !cat
+      const applyDisplay = () => {
+        groups.forEach((group) => {
+          group.style.display = showAll || group.dataset.categoryGroup === cat ? '' : 'none'
+        })
+      }
+
+      if (prefersReducedMotion()) {
+        applyDisplay()
+      }
+      else {
+        const visibleNow = Array.from(groups).filter(g => g.style.display !== 'none')
+        gsap.to(visibleNow, {
+          opacity: 0,
+          y: 6,
+          duration: 0.15,
+          ease: 'power1.in',
+          onComplete: () => {
+            applyDisplay()
+            const visibleAfter = Array.from(groups).filter(g => g.style.display !== 'none')
+            gsap.fromTo(visibleAfter, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', stagger: 0.04 })
+          },
+        })
+      }
+
+      if (!isActive && cat) {
+        const target = document.querySelector<HTMLElement>(`[data-category-group="${cat}"]`)
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    })
+  })
+})
 </script>

@@ -5,7 +5,7 @@ import processImg from '@/assets/branding/branding-process.webp'
 
 <section class="bg-white">
   <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
-    <h2 class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
+    <h2 id="branding-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
       ¿Suena fácil cierto?
     </h2>
     <p class="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-6 text-dark-500">
@@ -15,6 +15,7 @@ import processImg from '@/assets/branding/branding-process.webp'
     </p>
 
     <Image
+      id="branding-steps-img"
       src={processImg}
       alt="9 herramientas y técnicas de Branding: Análisis de Usuarios y Objetivos, Buyer Persona y Mapa de Empatía, Customer Journey, Estrategia de Contenidos, Creación e Implementación de Contenido, Tracción de Tráfico, Atracción de Tráfico orgánico, Analítica y Reporting, Análisis de Resultados y Estrategia"
       class="mx-auto mt-12 h-auto w-full"
@@ -24,3 +25,14 @@ import processImg from '@/assets/branding/branding-process.webp'
     />
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('branding-steps-headline')
+  const img = document.getElementById('branding-steps-img')
+  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (img) revealClip(img, { direction: 'up', mode: 'scrub' })
+})
+</script>

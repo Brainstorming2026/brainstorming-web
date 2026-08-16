@@ -25,8 +25,8 @@ export const solutions: Solution[] = [
     icon: 'expert-window',
     title: 'Desarrollo web',
     desc: 'Desarrolla una web que responda a tus objetivos comerciales y respire el ADN de tu marca',
-    colorClass: 'text-accent',
-    glowClass: 'bg-accent',
+    colorClass: 'text-[#e62a4b]',
+    glowClass: 'bg-[#e62a4b]',
     href: '/soluciones/desarrollo-web',
   },
   {

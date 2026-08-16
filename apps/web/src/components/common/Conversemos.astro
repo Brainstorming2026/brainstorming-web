@@ -10,18 +10,38 @@ const {
 } = Astro.props
 ---
 
-<section class="bg-mist py-16 text-center">
+<section class="conversemos-section bg-mist py-16 text-center">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
-    <h2 class="font-heading text-[28px] font-bold text-ink sm:text-[35px]">
+    <h2 class="conversemos-headline font-heading text-[28px] font-bold text-ink sm:text-[35px]">
       {heading}
     </h2>
     <a
       href={`https://wa.me/51992528363?text=${encodeURIComponent(whatsappText)}`}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-8 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+      class="conversemos-btn mt-8 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
     >
       CONVERSEMOS
     </a>
   </div>
 </section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  document.querySelectorAll<HTMLElement>('.conversemos-section').forEach((section) => {
+    const headline = section.querySelector<HTMLElement>('.conversemos-headline')
+    const btn = section.querySelector<HTMLElement>('.conversemos-btn')
+    if (headline) splitHeadline(headline, { by: 'words' })
+    if (!btn || prefersReducedMotion()) return
+
+    const { gsap } = ensureGsap()
+    gsap.set(btn, { scale: 0.9, opacity: 0 })
+    gsap.to(btn, { scale: 1, opacity: 1, duration: 0.5, ease: ease.back, scrollTrigger: { trigger: btn, start: 'top 90%' } })
+  })
+})
+</script>

@@ -5,13 +5,13 @@ import { solutions } from '@/data/solutions'
 
 <section class="bg-gradient-to-b from-mist to-white">
   <div class="mx-auto max-w-[1512px] px-6 pb-16 pt-20 lg:px-24">
-    <h1 class="mx-auto max-w-3xl text-center font-heading text-[28px] font-bold leading-tight text-dark sm:text-[35px] sm:leading-[42px]">
+    <h1 id="solutions-hero-headline" class="mx-auto max-w-3xl text-center font-heading text-[28px] font-bold leading-tight text-dark sm:text-[35px] sm:leading-[42px]">
       A través de nuestras soluciones, podrás cumplir tus objetivos.
     </h1>
 
-    <div class="mx-auto mt-14 grid max-w-[1140px] gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div id="solutions-hero-grid" class="mx-auto mt-14 grid max-w-[1140px] gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {solutions.map(solution => (
-        <div id={solution.slug} class="relative scroll-mt-24 pb-6">
+        <div id={solution.slug} class="solution-card relative scroll-mt-24 pb-6">
           <div class={`absolute inset-x-6 bottom-0 h-16 rounded-full opacity-40 blur-2xl ${solution.glowClass}`} aria-hidden="true" />
           <a
             href={solution.href ?? `#${solution.slug}`}
@@ -33,10 +33,11 @@ import { solutions } from '@/data/solutions'
 
 <section class="bg-gradient-to-t from-mist to-white">
   <div class="mx-auto max-w-[1140px] px-6 py-24 text-center lg:px-24">
-    <h2 class="font-heading text-[28px] font-bold text-dark sm:text-[35px]">
+    <h2 id="solutions-cta-headline" class="font-heading text-[28px] font-bold text-dark sm:text-[35px]">
       ¿Quieres conocer nuestros proyectos?
     </h2>
     <a
+      id="solutions-cta-btn"
       href="/proyectos"
       class="mt-10 inline-flex items-center justify-center rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
     >
@@ -44,3 +45,27 @@ import { solutions } from '@/data/solutions'
     </a>
   </div>
 </section>
+
+<script>
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const headline = document.getElementById('solutions-hero-headline')
+  const cards = document.querySelectorAll('#solutions-hero-grid .solution-card')
+  const ctaHeadline = document.getElementById('solutions-cta-headline')
+  const ctaBtn = document.getElementById('solutions-cta-btn')
+
+  if (headline) splitHeadline(headline, { by: 'words', scrollTrigger: false })
+  staggerGrid(cards, { variant: 'organic' })
+  if (ctaHeadline) splitHeadline(ctaHeadline, { by: 'words' })
+
+  if (ctaBtn && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    gsap.set(ctaBtn, { scale: 0.9, opacity: 0 })
+    gsap.to(ctaBtn, { scale: 1, opacity: 1, duration: 0.5, ease: ease.back, scrollTrigger: { trigger: ctaBtn, start: 'top 90%' } })
+  }
+})
+</script>

@@ -1,27 +1,55 @@
 ---
 import { Image } from 'astro:assets'
 import illustration from '@/assets/okrs/figure6.png'
+import { getLang, useTranslations } from '@/i18n/utils'
+
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'benefit')
 ---
 
 <section class="bg-gradient-to-br from-navy to-navy-600 py-16 lg:py-24">
   <div class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-16">
-    <Image
-      src={illustration}
-      alt="A team building ideas together, represented as a lightbulb made of sticky notes"
-      class="mx-auto h-auto w-full max-w-[480px]"
-      widths={[300, 600]}
-      sizes="(min-width: 1024px) 480px, 90vw"
-      loading="lazy"
-    />
+    <div id="benefit-img-wrap" class="mx-auto h-auto w-full max-w-[480px] overflow-hidden">
+      <Image
+        src={illustration}
+        alt={t.imgAlt}
+        class="benefit-img h-auto w-full"
+        widths={[300, 600]}
+        sizes="(min-width: 1024px) 480px, 90vw"
+        loading="lazy"
+      />
+    </div>
 
-    <div class="text-right">
+    <div id="benefit-text" class="text-right">
       <h2 class="font-heading text-2xl leading-snug font-normal text-white sm:text-[32px]">
-        The Workshop will provide you with a clear plan of action to continue growing your business.
+        {t.headline}
       </h2>
       <p class="mt-4 font-body text-lg text-white/85">
-        An important benefit of this Workshop is that it is fully tailored to your needs, providing
-        customized actions to help you achieve your goals.
+        {t.text}
       </p>
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, revealClip } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const imgWrap = document.getElementById('benefit-img-wrap')
+  const text = document.getElementById('benefit-text')
+
+  if (imgWrap) revealClip(imgWrap, { direction: 'left' })
+
+  if (text) {
+    const { gsap } = ensureGsap()
+    if (prefersReducedMotion()) {
+      gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+    }
+    else {
+      gsap.set(text, { opacity: 0, x: 24 })
+      gsap.to(text, { opacity: 1, x: 0, duration: 1.0, ease: 'power2.out', delay: 0.15, scrollTrigger: { trigger: text, start: 'top 85%' } })
+    }
+  }
+})
+</script>

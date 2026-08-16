@@ -6,30 +6,33 @@ import creationImg from '@/assets/projects/alumspazio/creation.png'
 import creationImageImg from '@/assets/projects/alumspazio/creation-image.png'
 ---
 
-<section class="bg-[#8c9091] pt-16 pb-32 lg:pt-20 lg:pb-40">
+<section id="branding-intro" class="bg-[#8c9091] pt-16 pb-32 lg:pt-20 lg:pb-40">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
     <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
       <div>
-        <div class="flex items-center gap-2 font-heading text-sm font-bold text-white">
+        <div id="branding-label" class="flex items-center gap-2 font-heading text-sm font-bold text-white">
           <Icon name="expert-huella" class="h-6 w-6 text-white/70" />
           <span>Branding</span>
         </div>
-        <h2 class="mt-4 font-heading text-3xl font-bold leading-tight text-white sm:text-7xl">
+        <h2 id="branding-heading" class="mt-4 font-heading text-3xl font-bold leading-tight text-white sm:text-7xl">
           Creación de Manual de Identidad de Marca
         </h2>
       </div>
 
-      <Image
-        src={creationImg}
-        alt="Manual de identidad de marca Alum Spazio: papelería, tarjetas y carpeta corporativa"
-        class="mx-auto h-auto w-full max-w-[520px]"
-        widths={[520, 1040]}
-        sizes="(min-width: 1024px) 520px, 90vw"
-        loading="lazy"
-      />
+      <div id="branding-hero-img-wrap" class="mx-auto h-auto w-full max-w-[520px] overflow-hidden">
+        <Image
+          src={creationImg}
+          alt="Manual de identidad de marca Alum Spazio: papelería, tarjetas y carpeta corporativa"
+          class="branding-hero-img h-auto w-full"
+          widths={[520, 1040]}
+          sizes="(min-width: 1024px) 520px, 90vw"
+          loading="lazy"
+        />
+      </div>
     </div>
 
     <Image
+      id="branding-overlap-img"
       src={creationImageImg}
       alt="Brochure de marca Alum Spazio con mensajes de identidad y fotografías de ambientes"
       class="relative z-10 mx-auto -mb-32 mt-16 h-auto w-full max-w-[900px] lg:-mb-40"
@@ -40,23 +43,65 @@ import creationImageImg from '@/assets/projects/alumspazio/creation-image.png'
   </div>
 </section>
 
-<section class="bg-white pt-16 pb-16 lg:pt-20">
+<section id="branding-detail" class="bg-white pt-16 pb-16 lg:pt-20">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
     <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
-      <p class="text-[14px] leading-6 text-dark-500">
+      <p id="branding-desc" class="text-[14px] leading-6 text-dark-500">
         Los objetivos del manual incluían transmitir seriedad y profesionalismo combinado con un
         trato personalizado y humano. Lograron materializar estos conceptos con una ejecución
         elegante y minimalista, hábido de colores serios pero llamativos.
       </p>
 
-      <Image
-        src={colorsImg}
-        alt="Paleta de colores Alum Spazio: Aluminium, Ship Cove, Viola, Black Pearl y Selago"
-        class="h-auto w-full max-w-[460px]"
-        widths={[460, 920]}
-        sizes="(min-width: 1024px) 460px, 80vw"
-        loading="lazy"
-      />
+      <div id="branding-colors-wrap" class="h-auto w-full max-w-[460px] overflow-hidden">
+        <Image
+          src={colorsImg}
+          alt="Paleta de colores Alum Spazio: Aluminium, Ship Cove, Viola, Black Pearl y Selago"
+          class="branding-colors-img h-auto w-full"
+          widths={[460, 920]}
+          sizes="(min-width: 1024px) 460px, 80vw"
+          loading="lazy"
+        />
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, revealClip } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const label = document.getElementById('branding-label')
+  const heading = document.getElementById('branding-heading')
+  const heroImgWrap = document.getElementById('branding-hero-img-wrap')
+  const heroImg = document.querySelector<HTMLElement>('.branding-hero-img')
+  const overlapImg = document.getElementById('branding-overlap-img')
+  const desc = document.getElementById('branding-desc')
+  const colorsWrap = document.getElementById('branding-colors-wrap')
+
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([label, heading, desc].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.06 })
+    return
+  }
+
+  if (label) gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  if (heading) gsap.fromTo(heading, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, delay: 0.15 })
+  if (heroImgWrap) revealClip(heroImgWrap, { direction: 'up' })
+  if (heroImg) gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
+
+  // Imagen con margen negativo: scale+fade, no clip-path (cortaría el solape feo).
+  if (overlapImg) {
+    gsap.set(overlapImg, { opacity: 0, y: 30 })
+    gsap.to(overlapImg, { opacity: 1, y: 0, duration: 0.9, ease: ease.out, scrollTrigger: { trigger: overlapImg, start: 'top 90%' } })
+  }
+
+  if (desc) {
+    gsap.set(desc, { opacity: 0, y: 16 })
+    gsap.to(desc, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, scrollTrigger: { trigger: '#branding-detail', start: 'top 85%' } })
+  }
+  if (colorsWrap) revealClip(colorsWrap, { direction: 'up' })
+})
+</script>

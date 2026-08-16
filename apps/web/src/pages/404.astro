@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '@/layouts/Layout.astro'
+import guideImg from '@/assets/guides/8-secretos-crear-tu-logo.webp'
+import iconDownload from '@/icons/guias-download.svg'
+---
+
+<Layout title="Página no encontrada — Brainstorming" showNavbar={false}>
+  <section class="relative flex min-h-screen items-center overflow-hidden bg-mist-50">
+    <div aria-hidden="true" class="pointer-events-none absolute -top-40 -right-32 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[110px]" />
+    <div aria-hidden="true" class="pointer-events-none absolute -bottom-48 -left-32 h-[380px] w-[380px] rounded-full bg-mist blur-[110px]" />
+
+    <div class="relative mx-auto flex w-full max-w-[720px] flex-col items-center px-6 py-24">
+      <a href="/" class="inline-block">
+        <img src="/brainstorming-icon-file.png?v=2" alt="Brainstorming" class="h-9 w-auto" />
+      </a>
+
+      <p id="notfound-eyebrow" class="mt-10 font-heading text-sm font-bold tracking-wide text-primary">
+        PÁGINA NO ENCONTRADA
+      </p>
+      <h1 id="notfound-heading" class="mt-4 text-center font-heading text-4xl font-bold leading-tight text-ink sm:text-5xl">
+        Hasta la mejor estrategia necesita un pivote.
+      </h1>
+      <p id="notfound-desc" class="mt-6 max-w-[520px] text-center text-[15px] leading-6 text-ink-500">
+        Esta página no existe, pero tu próximo proyecto sí. Volvamos a encaminarte.
+      </p>
+
+      <div id="notfound-actions" class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/"
+          class="inline-block rounded-full bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        >
+          VOLVER AL INICIO
+        </a>
+        <a
+          href="/proyectos"
+          class="inline-block rounded-full border border-primary px-8 py-3 font-heading text-sm font-bold text-primary transition-colors hover:bg-primary/5"
+        >
+          VER PROYECTOS
+        </a>
+      </div>
+
+      <a
+        id="notfound-card"
+        href="/pdfs/8-secretos-crear-tu-logo.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-14 flex w-full flex-col items-center gap-6 rounded-[16px] bg-white p-6 text-left shadow-sm transition-transform hover:-translate-y-0.5 sm:flex-row"
+      >
+        <Image src={guideImg} alt="" class="h-auto w-[140px] flex-shrink-0 rounded-[12px] object-cover" widths={[140, 280]} />
+        <div>
+          <span class="inline-block rounded-full bg-mist px-3 py-1 font-heading text-[11px] font-bold tracking-wide text-primary">
+            RECURSO GRATIS
+          </span>
+          <h2 class="mt-3 font-heading text-[17px] font-bold leading-snug text-ink">
+            No te vayas con las manos vacías.
+          </h2>
+          <p class="mt-2 text-[14px] leading-5 text-ink-500">
+            Descarga los 8 secretos que tu diseñador nunca te dirá al crear tu logo.
+          </p>
+          <span class="mt-3 inline-flex items-center gap-2 font-heading text-[13px] font-bold text-primary">
+            <img src={iconDownload.src} alt="" class="h-3.5 w-3.5" />
+            Descargar guía
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const eyebrow = document.getElementById('notfound-eyebrow')
+  const heading = document.getElementById('notfound-heading')
+  const desc = document.getElementById('notfound-desc')
+  const actions = document.getElementById('notfound-actions')
+  const card = document.getElementById('notfound-card')
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo([eyebrow, heading, desc, actions, card].filter(Boolean), { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 })
+    return
+  }
+
+  if (eyebrow) gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+  if (desc) gsap.set(desc, { opacity: 0, y: 12 })
+  if (actions) gsap.set(actions, { opacity: 0, y: 12 })
+  if (card) gsap.set(card, { opacity: 0, y: 16 })
+
+  if (heading) {
+    splitHeadline(heading, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (desc) gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      if (actions) gsap.to(actions, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 })
+      if (card) gsap.to(card, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.2 })
+    } })
+  }
+})
+</script>

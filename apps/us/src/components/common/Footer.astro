@@ -2,13 +2,13 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import logo from '@/assets/brainstorming/logo.png'
+import { getLang, localizePath, useTranslations } from '@/i18n/utils'
 
+const lang = getLang(Astro.url)
+const t = useTranslations(lang, 'footer')
 const year = new Date().getFullYear()
 
-const quickLinks = [
-  { label: 'Why OAKRs', href: '#why-oakrs' },
-  { label: 'Book a call', href: '#contact' },
-]
+const quickLinks = t.quickLinks
 
 const redes = [
   { name: 'footer-linkedln', href: 'https://www.linkedin.com/company/brainstorming-marketing-%26-communications/?originalSubdomain=pe', label: 'LinkedIn' },
@@ -21,11 +21,11 @@ const redes = [
   <div class="bg-dark">
     <div class="mx-auto grid max-w-[1512px] gap-10 px-6 py-12 lg:grid-cols-3 lg:px-16 lg:py-16">
       <div>
-        <a href="/">
+        <a href={localizePath('/', lang)}>
           <Image src={logo} alt="Brainstorming" class="h-7 w-auto" widths={[200, 400]} sizes="200px" />
         </a>
         <p class="mt-4 max-w-xs font-body text-sm text-white/60">
-          Remote-first, Founded in Peru &amp; Operating in Miami.
+          {t.tagline}
         </p>
         <ul class="mt-6 flex items-center gap-3">
           {
@@ -41,7 +41,7 @@ const redes = [
       </div>
 
       <div>
-        <h3 class="font-heading text-lg font-bold">Quick links</h3>
+        <h3 class="font-heading text-lg font-bold">{t.quickLinksTitle}</h3>
         <ul class="mt-4 flex flex-col gap-3">
           {
             quickLinks.map(l => (
@@ -56,7 +56,7 @@ const redes = [
       </div>
 
       <div>
-        <h3 class="font-heading text-lg font-bold">Contact</h3>
+        <h3 class="font-heading text-lg font-bold">{t.contactTitle}</h3>
         <ul class="mt-4 flex flex-col gap-3 text-sm">
           <li>
             <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2.5 text-white/70 transition-colors hover:text-primary-300">
@@ -76,7 +76,7 @@ const redes = [
 
     <div class="border-t border-white/10">
       <p class="py-5 text-center font-body text-xs text-white/60 sm:py-6 sm:text-sm">
-        Copyright &copy; {year} Brainstorming
+        {t.copyright.replace('{year}', String(year))}
       </p>
     </div>
   </div>

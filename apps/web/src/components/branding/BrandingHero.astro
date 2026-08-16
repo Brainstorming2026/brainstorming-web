@@ -5,6 +5,7 @@ import heroBg from '@/assets/branding/branding-bg.webp'
 
 <section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
   <Image
+    id="branding-hero-bg"
     src={heroBg}
     alt=""
     class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
@@ -15,10 +16,10 @@ import heroBg from '@/assets/branding/branding-bg.webp'
   />
   <div class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] items-center px-6 py-16 lg:min-h-[702px] lg:px-24">
     <div class="max-w-[600px]">
-      <h1 class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
+      <h1 id="branding-hero-headline" class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
         Haz que tus clientes vengan a ti, que se sientan genuinamente atraídos hacia tu marca.
       </h1>
-      <p class="mt-6 text-[16px] leading-6 text-dark-500">
+      <p id="branding-hero-text" class="mt-6 text-[16px] leading-6 text-dark-500">
         En Brainstorming, realizamos estrategias de contenidos que no resultan invasivas
         para el usuario, con la finalidad de atraer al consumidor mediante contenidos
         relevantes y experiencias que agreguen valor a tu público objetivo, considerando
@@ -28,3 +29,24 @@ import heroBg from '@/assets/branding/branding-bg.webp'
     </div>
   </div>
 </section>
+
+<script>
+import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const bg = document.getElementById('branding-hero-bg')
+  const headline = document.getElementById('branding-hero-headline')
+  const text = document.getElementById('branding-hero-text')
+  const { gsap } = ensureGsap()
+
+  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+
+  if (headline) {
+    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+    } })
+  }
+  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+})
+</script>

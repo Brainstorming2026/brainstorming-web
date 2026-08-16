@@ -17,11 +17,11 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    // maplibre-gl resolves its worker script relative to its own module URL at
-    // runtime; Vite's dep pre-bundling drops that file, so exclude it and let
-    // it load straight from node_modules where the worker sits alongside it.
     optimizeDeps: {
       exclude: ['maplibre-gl'],
+    },
+    worker: {
+      format: 'es',
     },
   },
 })

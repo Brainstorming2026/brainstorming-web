@@ -144,6 +144,13 @@ registerMotion(() => {
     })
   })
 
+  // Deep-link desde otros subdominios (ej. blog.brainstorming.la): ?abrir=<slug>
+  // abre el modal directo, sin duplicar el flujo de captura de lead alli.
+  const abrirSlug = new URLSearchParams(window.location.search).get('abrir')
+  if (abrirSlug && document.querySelector(`.guia-download-btn[data-guia-slug="${abrirSlug}"]`)) {
+    document.dispatchEvent(new CustomEvent('open-guia-lead-modal', { detail: { slug: abrirSlug } }))
+  }
+
   // --- Filtro de categoría ---
   // El toggle en sí debe sentirse INSTANTÁNEO (es una interacción funcional,
   // no decorativa) — por eso el crossfade es corto (~200-250ms), no el

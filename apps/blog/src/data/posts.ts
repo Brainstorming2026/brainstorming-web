@@ -111,6 +111,12 @@ export const relatedPosts: Post[] = [
   },
 ]
 
+// Union de todos los posts listados en la home, para resolver "relacionados"
+// en la pagina de articulo por categoria. Dedupe por slug (algunos posts
+// aparecen en mas de una seccion, ej. el destacado tambien esta en populares).
+export const allPosts: Post[] = [featuredPost, ...quickPosts, ...popularPosts, ...relatedPosts]
+  .filter((post, index, list) => list.findIndex(p => p.slug === post.slug) === index)
+
 export interface Category {
   label: string
   icon: string

@@ -1,0 +1,40 @@
+---
+import type { ArticleLeadMagnet } from '@/data/articles'
+import { Image } from 'astro:assets'
+
+interface Props {
+  leadMagnet: ArticleLeadMagnet
+}
+
+const { leadMagnet } = Astro.props
+---
+
+<section class="mx-auto max-w-[720px] px-6 pt-12 lg:px-0">
+  <div class="flex items-center gap-6 rounded-[16px] bg-mist-100 p-6">
+    <div class="flex-1">
+      <p class="font-body text-xs text-dark/60">{leadMagnet.eyebrow}</p>
+      <p class="mt-2 font-heading text-base font-bold text-dark">{leadMagnet.title}</p>
+      <a
+        href={leadMagnet.ctaHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-block rounded-[8px] bg-primary px-5 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+      >
+        {leadMagnet.ctaLabel}
+      </a>
+    </div>
+
+    <div class="hidden aspect-square w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:block">
+      {leadMagnet.image && (
+        <Image
+          src={leadMagnet.image}
+          alt=""
+          class="h-full w-full object-cover"
+          widths={[160, 320]}
+          sizes="128px"
+          loading="lazy"
+        />
+      )}
+    </div>
+  </div>
+</section>

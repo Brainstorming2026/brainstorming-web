@@ -7,4 +7,5 @@ export default {
   ],
   contactTitle: 'Contact',
   copyright: 'Copyright © {year} Brainstorming',
+  privacyPolicy: 'Privacy Policy',
 } as const

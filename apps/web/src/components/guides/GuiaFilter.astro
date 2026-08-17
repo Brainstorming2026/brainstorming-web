@@ -2,12 +2,13 @@
 import type { GuideCategory } from '@/data/guides'
 import { Image } from 'astro:assets'
 import bgMiddle from '@/assets/guides/bg-middle.webp'
+import GuiaLeadModal from '@/components/guides/GuiaLeadModal.astro'
 import { categoryLabels, guides } from '@/data/guides'
-import iconDownload from '@/icons/guias-download.svg'
-import iconSales from '@/icons/expert-money.svg'
 import iconBranding from '@/icons/expert-huella.svg'
 import iconInbound from '@/icons/expert-iman.svg'
+import iconSales from '@/icons/expert-money.svg'
 import iconDesarrollo from '@/icons/expert-window.svg'
+import iconDownload from '@/icons/guias-download.svg'
 
 const categories: { key: GuideCategory, label: string, icon: { src: string } }[] = [
   { key: 'branding', label: 'Branding', icon: iconBranding },
@@ -71,14 +72,14 @@ return null
                   <h3 class="mt-1 font-heading text-[15px] font-bold leading-[22px] text-ink">
                     {guia.title}
                   </h3>
-                  <a
-                    href={guia.pdf}
-                    download
-                    class="mt-3 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-5 py-2.5 font-heading text-[13px] font-bold text-white transition-colors hover:bg-primary-600"
+                  <button
+                    type="button"
+                    data-guia-slug={guia.slug}
+                    class="guia-download-btn mt-3 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-5 py-2.5 font-heading text-[13px] font-bold text-white transition-colors hover:bg-primary-600"
                   >
                     <img src={iconDownload.src} alt="" class="h-3.5 w-3.5" />
                     DESCARGAR GUÍA
-                  </a>
+                  </button>
                 </div>
               ))}
             </div>
@@ -88,6 +89,8 @@ return null
     </div>
   </div>
 </section>
+
+<GuiaLeadModal />
 
 <script>
 import { ensureGsap, registerMotion } from '@/lib/motion'
@@ -129,6 +132,23 @@ registerMotion(() => {
       gsap.set(cards, { opacity: 0, y: 20 })
       gsap.to(cards, { opacity: 1, y: 0, duration: 1.1, ease: ease.out, stagger: 0.05, scrollTrigger: { trigger: '#guias-groups', start: 'top 85%' } })
     }
+  }
+
+  // --- Descarga de guía (abre modal de captura de lead) ---
+  document.querySelectorAll<HTMLButtonElement>('.guia-download-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.guiaSlug
+      if (!slug)
+        return
+      document.dispatchEvent(new CustomEvent('open-guia-lead-modal', { detail: { slug } }))
+    })
+  })
+
+  // Deep-link desde otros subdominios (ej. blog.brainstorming.la): ?abrir=<slug>
+  // abre el modal directo, sin duplicar el flujo de captura de lead alli.
+  const abrirSlug = new URLSearchParams(window.location.search).get('abrir')
+  if (abrirSlug && document.querySelector(`.guia-download-btn[data-guia-slug="${abrirSlug}"]`)) {
+    document.dispatchEvent(new CustomEvent('open-guia-lead-modal', { detail: { slug: abrirSlug } }))
   }
 
   // --- Filtro de categoría ---

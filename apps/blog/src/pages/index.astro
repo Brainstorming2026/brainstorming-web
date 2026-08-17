@@ -1,0 +1,18 @@
+---
+import BlogHero from '@/components/blog/BlogHero.astro'
+import Categories from '@/components/blog/Categories.astro'
+import Newsletter from '@/components/blog/Newsletter.astro'
+import PopularPosts from '@/components/blog/PopularPosts.astro'
+import RelatedPosts from '@/components/blog/RelatedPosts.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+---
+
+<Layout title="Blog — Brainstorming">
+  <BlogHero />
+  <PopularPosts />
+  <Categories />
+  <RelatedPosts />
+  <Newsletter />
+</Layout>

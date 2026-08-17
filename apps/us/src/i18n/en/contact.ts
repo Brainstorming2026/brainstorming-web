@@ -12,5 +12,13 @@ export default {
   investmentRanges: ['Less than $50,000', '$50,000 - $100,000', '$100,000 - $500,000', 'Over $500,000'],
   investmentNote: 'This information helps us tailor a plan that maximizes your ROI.',
   messageLabel: 'Please share anything that will help us to prepare for our meeting',
+  privacyConsentPrefix: 'I accept the',
+  privacyConsentLink: 'Privacy Policy',
+  privacyConsentError: 'You must accept the Privacy Policy to continue.',
   submit: 'SUBMIT',
+  successMessage: 'Thank you! We\'ll be in touch soon.',
+  errorMessage: 'We could not send your message. Please try again.',
+  sendingTitle: 'Sending…',
+  successTitle: 'Message sent!',
+  errorTitle: 'Something went wrong',
 } as const

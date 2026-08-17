@@ -1,0 +1,54 @@
+---
+import { categories } from '@/data/posts'
+---
+
+<section class="bg-mist-100 py-16">
+  <div class="mx-auto grid max-w-[1140px] gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-16">
+    <div>
+      <h2 class="font-heading text-2xl font-bold text-dark sm:text-3xl">SUSCRÍBETE A NUESTRO BRAINSTORMING</h2>
+      <p class="mt-3 max-w-md font-body text-sm text-dark/70">
+        ¡Empieza a añadir valor a tu marca! Sigue nuestras publicaciones y descubre contenidos y recursos gratuitos para optimizar tus estrategias de negocio.
+      </p>
+    </div>
+
+    <form id="blog-newsletter-form" class="flex flex-col gap-4">
+      <fieldset>
+        <legend class="font-body text-sm text-dark">¿Cuáles son tus temas de interés?</legend>
+        <div class="mt-2 flex flex-wrap gap-x-6 gap-y-2">
+          {categories.map(category => (
+            <label class="flex items-center gap-2 font-body text-sm text-dark/80">
+              <input type="checkbox" name="topics" value={category.label} class="h-4 w-4 accent-primary" />
+              {category.label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <label class="flex flex-col gap-1">
+        <span class="font-body text-sm text-dark">Dirección de correo electrónico</span>
+        <div class="mt-1 flex gap-2">
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full min-w-0 rounded-[10px] border border-dark-300 bg-white px-4 py-3 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="shrink-0 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+          >
+            Suscribirme
+          </button>
+        </div>
+      </label>
+
+      <p class="font-body text-xs leading-relaxed text-dark/50">
+        En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada
+        únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de
+        interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento.
+        Obtén más información acerca de la protección de tus datos en nuestra
+        <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+      </p>
+    </form>
+  </div>
+</section>

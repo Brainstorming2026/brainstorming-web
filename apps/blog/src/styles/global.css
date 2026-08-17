@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* ============================================================
+   Fuentes de marca (Figma): Nexa (títulos/botones) + Helvetica (cuerpo).
+   No son fuentes de Google. Coloca los archivos en /public/fonts/
+   y descomenta los @font-face. Mientras tanto usa el fallback.
+   Mismo criterio que apps/web — mantener marca consistente entre subdominios.
+   ============================================================ */
+
+/*
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+*/
+
+@theme {
+  /* === Tipografía === */
+  --font-heading: "Nexa", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* === Primario / marca (violeta Brainstorming) === */
+  --color-primary: #7d44e4;
+  --color-primary-50: #f4eefe;
+  --color-primary-100: #e6d6fc;
+  --color-primary-200: #cdadf7;
+  --color-primary-300: #b184f1;
+  --color-primary-400: #965fec;
+  --color-primary-500: #7d44e4; /* base */
+  --color-primary-600: #6a34c9;
+  --color-primary-700: #5628a3;
+  --color-primary-800: #421f7d;
+  --color-primary-900: #2f1659;
+  --color-primary-950: #1b0c34;
+
+  /* === Neutral oscuro (secciones dark) === */
+  --color-dark: #212222;
+  --color-dark-50: #f4f4f4;
+  --color-dark-100: #e4e4e4;
+  --color-dark-200: #c8c8c8;
+  --color-dark-300: #a0a0a0;
+  --color-dark-400: #6b6b6b;
+  --color-dark-500: #454545;
+  --color-dark-600: #333434;
+  --color-dark-700: #2a2b2b;
+  --color-dark-800: #212222; /* base dark */
+  --color-dark-900: #161717;
+  --color-dark-950: #0a0a0a;
+
+  /* === Navy (bloques oscuros azules) === */
+  --color-navy: #223b79;
+  --color-navy-500: #223b79;
+  --color-navy-600: #1c3163;
+  --color-navy-700: #16274e;
+
+  /* === Azul claro (fondos degradados) === */
+  --color-mist: #d7dfee;
+  --color-mist-50: #f7f9fc;
+  --color-mist-100: #eef2f8;
+  --color-mist-150: #e1e7f2; /* fondo de cards de posts (Figma) */
+  --color-mist-200: #d7dfee; /* base */
+  --color-mist-300: #b8c6de;
+
+  /* === Rojo (acento) === */
+  --color-accent: #e62a4b;
+  --color-accent-50: #fef2f4;
+  --color-accent-100: #fde6ea;
+  --color-accent-200: #fbc9d5;
+  --color-accent-300: #f89db5;
+  --color-accent-400: #f2648a;
+  --color-accent-500: #e62a4b; /* base */
+  --color-accent-600: #d41839;
+  --color-accent-700: #b20f2d;
+  --color-accent-800: #940f29;
+  --color-accent-900: #7f1028;
+
+  /* === Amarillo (destacado) === */
+  --color-highlight: #ffd401;
+  --color-highlight-50: #fffce6;
+  --color-highlight-100: #fff9bf;
+  --color-highlight-200: #fff080;
+  --color-highlight-300: #ffe533;
+  --color-highlight-400: #ffd401; /* base */
+  --color-highlight-500: #e6bf01;
+  --color-highlight-600: #b39400;
+  --color-highlight-700: #806900;
+  --color-highlight-800: #4d3f00;
+  --color-highlight-900: #332a00;
+
+  /* === Naranja (Optimización de Procesos y CX) === */
+  --color-orange: #f17900;
+  --color-orange-500: #f17900;
+
+  /* === Púrpura oscuro === */
+  --color-purple-dark: #6342c8;
+  --color-purple-dark-50: #f3f0fc;
+  --color-purple-dark-100: #e5ddf9;
+  --color-purple-dark-200: #cbbbf3;
+  --color-purple-dark-300: #ab90ea;
+  --color-purple-dark-400: #8b65e0;
+  --color-purple-dark-500: #6342c8; /* base */
+  --color-purple-dark-600: #5535b8;
+  --color-purple-dark-700: #472aa0;
+  --color-purple-dark-800: #3a2188;
+  --color-purple-dark-900: #2d1a6d;
+
+  /* === Grises === */
+  --color-gray-light: #f3f3fb;
+  --color-gray-medium: #7a7a7a;
+  --color-gray-dark: #585959;
+  --color-gray-body: #54595f;
+  --color-gray-footer: #4b4f58;
+  --color-gray-border: #424242;
+
+  /* === Secciones oscuras === */
+  --color-section-dark: #3e3f3f;
+
+  /* === Texto === */
+  --color-ink: #000000;
+  --color-ink-500: #666666;
+}

@@ -1,4 +1,6 @@
 ---
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client'
+import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
 <section class="bg-white py-16 sm:py-20">
@@ -16,6 +18,8 @@
             name="nombre"
             placeholder="Nombre y Apellido"
             required
+            minlength="2"
+            maxlength="100"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -27,6 +31,8 @@
             name="telefono"
             placeholder="Teléfono"
             required
+            minlength="6"
+            maxlength="30"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -38,6 +44,7 @@
             name="email"
             placeholder="Email"
             required
+            maxlength="150"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -48,33 +55,124 @@
             name="mensaje"
             placeholder="Mensaje"
             required
+            minlength="10"
+            maxlength="2000"
             rows="2"
             class="resize-none border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           ></textarea>
         </label>
+
+        <label class="hidden" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+
+        <label class="flex items-start gap-2 text-xs text-dark/70">
+          <input
+            type="checkbox"
+            name="privacyConsent"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+          />
+          <span>
+            Acepto la <a href="/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+          </span>
+        </label>
+
+        <div id="contacto-turnstile" class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-action="contacto"></div>
       </div>
 
       <button
         type="submit"
-        class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        id="contacto-form-submit"
+        class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
       >
         ENVIAR
       </button>
-
-      <p id="contacto-form-success" class="mt-4 hidden text-sm font-semibold text-primary" role="status">
-        ¡Gracias! Te contactaremos pronto.
-      </p>
     </form>
   </div>
 </section>
 
-<script>
-  const form = document.querySelector<HTMLFormElement>('#contacto-form')
-  const success = document.querySelector<HTMLParagraphElement>('#contacto-form-success')
+<FormStatusModal />
 
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault()
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+declare global {
+  interface Window {
+    turnstile?: { reset: (widget?: string | HTMLElement) => void }
+  }
+}
+
+const form = document.querySelector<HTMLFormElement>('#contacto-form')
+const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
+const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+
+privacyCheckbox?.addEventListener('change', () => {
+  privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
+})
+privacyCheckbox?.addEventListener('invalid', () => {
+  privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+})
+
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!submitBtn)
+    return
+
+  // Verificacion explicita de campos: no depender solo del `required` nativo,
+  // que un submit programatico o un boton mal tipado podria saltarse.
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+
+  const data = new FormData(form)
+  const turnstileToken = data.get('cf-turnstile-response')
+  if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'error', title: 'Verificación pendiente', message: 'Espera unos segundos y vuelve a intentar.' },
+    }))
+    return
+  }
+
+  submitBtn.disabled = true
+  document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        nombre: data.get('nombre'),
+        telefono: data.get('telefono'),
+        email: data.get('email'),
+        mensaje: data.get('mensaje'),
+        turnstileToken,
+        privacyConsent: data.get('privacyConsent') === 'on',
+        website: data.get('website'),
+      }),
+    })
+
+    if (!res.ok) {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: 'No se pudo enviar', message: 'Intenta de nuevo en unos minutos.' },
+      }))
+      return
+    }
+
     form.reset()
-    success?.classList.remove('hidden')
-  })
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'success', title: '¡Mensaje enviado!', message: 'Te contactaremos pronto.' },
+    }))
+  }
+  catch {
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'error', title: 'No se pudo enviar', message: 'Revisa tu conexión e intenta de nuevo.' },
+    }))
+  }
+  finally {
+    submitBtn.disabled = false
+    window.turnstile?.reset('contacto-turnstile')
+  }
+})
 </script>

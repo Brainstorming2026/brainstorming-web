@@ -10,23 +10,23 @@ export interface FooterRed {
 }
 
 export const soluciones: FooterLink[] = [
-  { label: 'Branding', href: '#branding' },
-  { label: 'Desarrollo Web', href: '#desarrollo-web' },
-  { label: 'Inbound Marketing', href: '#inbound-marketing' },
-  { label: 'Inbound Sales', href: '#inbound-sales' },
+  { label: 'Branding', href: '/soluciones/branding' },
+  { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
+  { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
+  { label: 'Inbound Sales', href: '/soluciones/inbound-sales' },
   { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
 ]
 
 export const empresa: FooterLink[] = [
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Nosotros', href: '/nosotros' },
+  { label: 'Proyectos', href: '/proyectos' },
   { label: 'Contacto', href: '/contacto' },
 ]
 
 export const recursos: FooterLink[] = [
   { label: 'Blog', href: '/blog' },
   { label: 'Guías Prácticas', href: '/guias' },
-  { label: 'Políticas de privacidad', href: '#privacidad' },
+  { label: 'Políticas de privacidad', href: '/politica-de-privacidad' },
 ]
 
 export const redes: FooterRed[] = [

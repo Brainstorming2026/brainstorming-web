@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets'
 import heroBg from '@/assets/guides/hero-bg.webp'
 import heroImg from '@/assets/guides/hero-image.webp'
-import iconDownload from '@/icons/guias-download.svg'
 import { categoryLabels, guides } from '@/data/guides'
+import iconDownload from '@/icons/guias-download.svg'
 
 const featuredGuides = guides.filter(guia => guia.featured)
 ---
@@ -48,7 +48,7 @@ const featuredGuides = guides.filter(guia => guia.featured)
         Contenidos más consultados por nuestros usuarios
       </h2>
       <div id="guias-featured-grid" class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredGuides.map((guia) => (
+        {featuredGuides.map(guia => (
           <div class="featured-card flex flex-col">
             <Image
               src={guia.image}
@@ -59,14 +59,14 @@ const featuredGuides = guides.filter(guia => guia.featured)
             <h3 class="mt-2 font-heading text-[18px] font-bold leading-[26px] text-white">
               {guia.title}
             </h3>
-            <a
-              href={guia.pdf}
-              download
-              class="dl-btn mt-4 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+            <button
+              type="button"
+              data-guia-slug={guia.slug}
+              class="dl-btn guia-download-btn mt-4 inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
             >
               <img src={iconDownload.src} alt="" class="h-4 w-4" />
               DESCARGAR GUÍA
-            </a>
+            </button>
           </div>
         ))}
       </div>
@@ -86,15 +86,28 @@ registerMotion(() => {
   const featuredCards = document.querySelectorAll('#guias-featured-grid .featured-card')
   const { gsap } = ensureGsap()
 
-  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+  if (text && !prefersReducedMotion())
+    gsap.set(text, { opacity: 0, y: 10 })
 
   if (headline) {
     splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+      if (text)
+        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
     } })
   }
-  if (heroImg) revealCircle(heroImg, { delay: 0.35 })
-  if (featuredHeadline) splitHeadline(featuredHeadline, { by: 'words' })
+  if (heroImg)
+    revealCircle(heroImg, { delay: 0.35 })
+  if (featuredHeadline)
+    splitHeadline(featuredHeadline, { by: 'words' })
   staggerGrid(featuredCards, { variant: 'organic' })
+
+  document.querySelectorAll<HTMLButtonElement>('#guias-featured-grid .guia-download-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.guiaSlug
+      if (!slug)
+        return
+      document.dispatchEvent(new CustomEvent('open-guia-lead-modal', { detail: { slug } }))
+    })
+  })
 })
 </script>

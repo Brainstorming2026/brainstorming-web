@@ -1,0 +1,55 @@
+---
+import type { ArticleSection } from '@/data/articles'
+import { Image } from 'astro:assets'
+
+interface Props {
+  sections: ArticleSection[]
+}
+
+const { sections } = Astro.props
+---
+
+<div class="mx-auto max-w-[720px] px-6 py-14 lg:px-0">
+  <div class="flex flex-col gap-10">
+    {sections.map(section => (
+      <section>
+        <h2 class="font-heading text-xl font-bold text-dark sm:text-2xl">{section.heading}</h2>
+
+        <div class="mt-4 flex flex-col gap-4">
+          {section.blocks.map((block) => {
+            if (block.type === 'paragraph') {
+              return <p class="font-body text-[15px] leading-relaxed text-dark/80">{block.text}</p>
+            }
+
+            if (block.type === 'subheading') {
+              return <h3 class="font-heading text-base font-bold text-dark">{block.text}</h3>
+            }
+
+            if (block.type === 'list') {
+              return (
+                <ul class="flex flex-col gap-3 border-l-2 border-mist-200 pl-5">
+                  {block.items.map(item => (
+                    <li class="font-body text-[15px] leading-relaxed text-dark/80">
+                      {item.label && <span class="font-heading font-bold text-dark">{item.label}:</span>} {item.text}
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+
+            return (
+              <Image
+                src={block.image}
+                alt=""
+                class="aspect-[16/10] w-full rounded-[12px] object-cover"
+                widths={[480, 720]}
+                sizes="720px"
+                loading="lazy"
+              />
+            )
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+</div>

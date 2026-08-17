@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import logo from '@/assets/brainstorming/logo.png'
+import { redes } from '@/data/footer'
 import { getLang, localizePath, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
@@ -9,12 +10,6 @@ const t = useTranslations(lang, 'footer')
 const year = new Date().getFullYear()
 
 const quickLinks = t.quickLinks
-
-const redes = [
-  { name: 'footer-linkedln', href: 'https://www.linkedin.com/company/brainstorming-marketing-%26-communications/?originalSubdomain=pe', label: 'LinkedIn' },
-  { name: 'footer-facebook', href: 'https://www.facebook.com/BrainstormingLa/', label: 'Facebook' },
-  { name: 'footer-ig', href: 'https://www.instagram.com/brainstormingmkt/', label: 'Instagram' },
-]
 ---
 
 <footer class="relative text-white">
@@ -75,8 +70,8 @@ const redes = [
     </div>
 
     <div class="border-t border-white/10">
-      <p class="py-5 text-center font-body text-xs text-white/60 sm:py-6 sm:text-sm">
-        {t.copyright.replace('{year}', String(year))}
+      <p class="flex flex-col items-center justify-center gap-2 py-5 text-center font-body text-xs text-white/60 sm:flex-row sm:gap-3 sm:py-6 sm:text-sm">
+        <span>{t.copyright.replace('{year}', String(year))}</span>
       </p>
     </div>
   </div>

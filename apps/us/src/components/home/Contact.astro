@@ -1,7 +1,9 @@
 ---
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { Image } from 'astro:assets'
 import illustration from '@/assets/contact/hero-contact.png'
 import arrow from '@/assets/contact/right.png'
+import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
@@ -60,12 +62,28 @@ const investmentRanges = t.investmentRanges
         </h3>
         <p class="mt-1 text-center font-body text-sm italic text-dark/60">{t.requiredNote}</p>
 
-        <form class="mt-6 flex flex-col gap-4">
+        <form
+          id="contact-form"
+          class="mt-6 flex flex-col gap-4"
+          data-sending-title={t.sendingTitle}
+          data-success-title={t.successTitle}
+          data-success-message={t.successMessage}
+          data-error-title={t.errorTitle}
+          data-error-message={t.errorMessage}
+          data-privacy-consent-error={t.privacyConsentError}
+        >
+          <input type="hidden" name="lang" value={lang} />
+          <label class="hidden" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+
           <input
             type="text"
             name="firstName"
             placeholder={t.firstName}
             required
+            minlength="1"
+            maxlength="100"
             class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
           />
           <input
@@ -73,6 +91,8 @@ const investmentRanges = t.investmentRanges
             name="lastName"
             placeholder={t.lastName}
             required
+            minlength="1"
+            maxlength="100"
             class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
           />
           <input
@@ -80,6 +100,7 @@ const investmentRanges = t.investmentRanges
             name="companyEmail"
             placeholder={t.companyEmail}
             required
+            maxlength="150"
             class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
           />
           <input
@@ -87,6 +108,8 @@ const investmentRanges = t.investmentRanges
             name="phone"
             placeholder={t.phone}
             required
+            minlength="6"
+            maxlength="30"
             class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
           />
 
@@ -109,14 +132,32 @@ const investmentRanges = t.investmentRanges
             {t.messageLabel}
             <textarea
               name="message"
+              maxlength="2000"
               rows="3"
               class="mt-2 w-full rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
             ></textarea>
           </label>
 
+          <label class="flex items-start gap-2 font-body text-xs text-dark/70">
+            <input
+              type="checkbox"
+              name="privacyConsent"
+              required
+              class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+            />
+            <span>
+              {t.privacyConsentPrefix}
+              {' '}
+              <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">{t.privacyConsentLink}</a>.
+            </span>
+          </label>
+
+          <div id="contact-turnstile" class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-action="contact-us"></div>
+
           <button
             type="submit"
-            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600"
+            id="contact-form-submit"
+            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {t.submit}
           </button>
@@ -125,6 +166,8 @@ const investmentRanges = t.investmentRanges
     </div>
   </section>
 </div>
+
+<FormStatusModal />
 
 <script>
 import { ensureGsap, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
@@ -149,6 +192,94 @@ registerMotion(() => {
     }
   }
 })
+</script>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+  declare global {
+    interface Window {
+      turnstile?: { reset: (widget?: string | HTMLElement) => void }
+    }
+  }
+
+  const form = document.querySelector<HTMLFormElement>('#contact-form')
+  const submitBtn = document.querySelector<HTMLButtonElement>('#contact-form-submit')
+  const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+
+  privacyCheckbox?.addEventListener('change', () => {
+    privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : (form?.dataset.privacyConsentError ?? ''))
+  })
+  privacyCheckbox?.addEventListener('invalid', () => {
+    privacyCheckbox.setCustomValidity(form?.dataset.privacyConsentError ?? '')
+  })
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!submitBtn || !form)
+      return
+
+    // Verificacion explicita de campos: no depender solo del `required` nativo,
+    // que un submit programatico o un boton mal tipado podria saltarse.
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+
+    const data = new FormData(form)
+    const turnstileToken = data.get('cf-turnstile-response')
+    if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: form.dataset.errorTitle, message: 'Please wait a moment and try again.' },
+      }))
+      return
+    }
+
+    submitBtn.disabled = true
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'loading', title: form.dataset.sendingTitle },
+    }))
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          firstName: data.get('firstName'),
+          lastName: data.get('lastName'),
+          companyEmail: data.get('companyEmail'),
+          phone: data.get('phone'),
+          investment: data.get('investment'),
+          message: data.get('message'),
+          lang: data.get('lang'),
+          turnstileToken,
+          privacyConsent: data.get('privacyConsent') === 'on',
+          website: data.get('website'),
+        }),
+      })
+
+      if (!res.ok) {
+        document.dispatchEvent(new CustomEvent('form-status', {
+          detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
+        }))
+        return
+      }
+
+      form.reset()
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'success', title: form.dataset.successTitle, message: form.dataset.successMessage },
+      }))
+    }
+    catch {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
+      }))
+    }
+    finally {
+      submitBtn.disabled = false
+      window.turnstile?.reset('contact-turnstile')
+    }
+  })
 </script>
 
 <style>

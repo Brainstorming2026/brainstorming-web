@@ -1,0 +1,250 @@
+---
+import { Image } from 'astro:assets'
+import guidesContact from '@/assets/guides/guides-contact.png'
+import iconClose from '@/icons/close.svg'
+---
+
+<div id="guia-lead-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/60 px-4">
+  <div id="guia-lead-modal" class="relative w-full max-w-[420px] overflow-hidden rounded-[24px] bg-white shadow-xl">
+    <button
+      type="button"
+      id="guia-lead-close"
+      aria-label="Cerrar"
+      class="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+    >
+      <img src={iconClose.src} alt="" class="h-3.5 w-3.5" />
+    </button>
+
+    <div class="relative bg-mist-100">
+      <Image src={guidesContact} alt="" class="h-auto w-full object-cover" loading="lazy" />
+      <div class="absolute inset-x-0 -bottom-px h-10 rounded-t-[24px] bg-white"></div>
+    </div>
+
+    <div class="-mt-2 px-8 pb-8 pt-4 text-center">
+      <h3 class="font-heading text-[24px] font-bold text-ink">¡Estás a un paso!</h3>
+      <p class="mt-2 text-[15px] leading-6 text-gray-body">
+        Llena tus datos y pulsa para Reclamar la Guía
+      </p>
+
+      <form id="guia-lead-form" class="mt-6 flex flex-col gap-5 text-left">
+        <label class="flex flex-col gap-1">
+          <span class="sr-only">Nombre</span>
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre"
+            required
+            class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
+          />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="sr-only">Correo electrónico</span>
+          <input
+            type="email"
+            name="email"
+            placeholder="Correo electrónico"
+            required
+            class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
+          />
+        </label>
+
+        <label class="hidden" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+
+        <label class="flex items-start gap-2 text-left text-xs text-dark/70">
+          <input
+            type="checkbox"
+            name="privacyConsent"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+          />
+          <span>
+            Acepto la <a href="/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          id="guia-lead-submit"
+          class="mx-auto mt-1 rounded-full bg-primary px-10 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Reclamar Guía
+        </button>
+
+        <div id="guia-lead-result" class="hidden flex-col items-center gap-2">
+          <div id="guia-lead-badge" class="flex h-14 w-14 scale-0 items-center justify-center rounded-full opacity-0">
+            <svg id="guia-lead-check" viewBox="0 0 24 24" fill="none" class="h-7 w-7">
+              <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+            <svg id="guia-lead-x" viewBox="0 0 24 24" fill="none" class="hidden h-7 w-7">
+              <path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+          </div>
+          <p id="guia-lead-result-text" class="text-center text-sm font-semibold text-gray-body"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+import { ensureGsap } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+const overlay = document.querySelector<HTMLDivElement>('#guia-lead-overlay')
+const modal = document.querySelector<HTMLDivElement>('#guia-lead-modal')
+const closeBtn = document.querySelector<HTMLButtonElement>('#guia-lead-close')
+const form = document.querySelector<HTMLFormElement>('#guia-lead-form')
+const submitBtn = document.querySelector<HTMLButtonElement>('#guia-lead-submit')
+const resultBox = document.querySelector<HTMLDivElement>('#guia-lead-result')
+const badge = document.querySelector<HTMLDivElement>('#guia-lead-badge')
+const checkSvg = document.querySelector<SVGSVGElement>('#guia-lead-check')
+const checkPath = document.querySelector<SVGPathElement>('#guia-lead-check path')
+const xSvg = document.querySelector<SVGSVGElement>('#guia-lead-x')
+const xPath = document.querySelector<SVGPathElement>('#guia-lead-x path')
+const resultText = document.querySelector<HTMLParagraphElement>('#guia-lead-result-text')
+const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+
+privacyCheckbox?.addEventListener('change', () => {
+  privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
+})
+privacyCheckbox?.addEventListener('invalid', () => {
+  privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+})
+
+let pendingSlug: string | null = null
+
+function resetResult() {
+  resultBox?.classList.add('hidden')
+  resultBox?.classList.remove('flex')
+  badge?.classList.add('scale-0', 'opacity-0')
+  badge?.classList.remove('bg-green-500', 'bg-accent-500')
+  checkSvg?.classList.remove('hidden')
+  xSvg?.classList.add('hidden')
+  checkPath?.setAttribute('stroke-dashoffset', '1')
+  xPath?.setAttribute('stroke-dashoffset', '1')
+}
+
+function showResult(ok: boolean, message: string) {
+  if (!resultBox || !badge)
+    return
+  resultBox.classList.remove('hidden')
+  resultBox.classList.add('flex')
+  resultText!.textContent = message
+
+  if (ok) {
+    checkSvg?.classList.remove('hidden')
+    xSvg?.classList.add('hidden')
+    badge.classList.add('bg-green-500')
+  }
+  else {
+    xSvg?.classList.remove('hidden')
+    checkSvg?.classList.add('hidden')
+    badge.classList.add('bg-accent-500')
+  }
+
+  const path = ok ? checkPath : xPath
+
+  if (prefersReducedMotion()) {
+    badge.classList.remove('scale-0', 'opacity-0')
+    path?.setAttribute('stroke-dashoffset', '0')
+    return
+  }
+
+  const { gsap } = ensureGsap()
+  const tl = gsap.timeline()
+  tl.to(badge, { opacity: 1, scale: 1, duration: 0.5, ease: ease.back })
+  tl.to(path, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+  if (!ok) {
+    tl.to(modal, { x: -8, duration: 0.06 })
+    tl.to(modal, { x: 8, duration: 0.06 })
+    tl.to(modal, { x: -6, duration: 0.06 })
+    tl.to(modal, { x: 0, duration: 0.06 })
+  }
+}
+
+function openModal(slug: string) {
+  pendingSlug = slug
+  resetResult()
+  if (!overlay || !modal)
+    return
+  overlay.classList.remove('hidden')
+  overlay.classList.add('flex')
+
+  if (prefersReducedMotion()) {
+    return
+  }
+
+  const { gsap } = ensureGsap()
+  gsap.set(overlay, { opacity: 0 })
+  gsap.set(modal, { opacity: 0, y: 24, scale: 0.96 })
+  gsap.to(overlay, { opacity: 1, duration: 0.25, ease: 'power2.out' })
+  gsap.to(modal, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' })
+}
+
+function closeModal() {
+  if (!overlay)
+    return
+  overlay.classList.add('hidden')
+  overlay.classList.remove('flex')
+  pendingSlug = null
+  form?.reset()
+}
+
+document.addEventListener('open-guia-lead-modal', ((event: CustomEvent<{ slug: string }>) => {
+  openModal(event.detail.slug)
+}) as EventListener)
+
+closeBtn?.addEventListener('click', closeModal)
+overlay?.addEventListener('click', (event) => {
+  if (event.target === overlay)
+    closeModal()
+})
+
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!pendingSlug || !form || !submitBtn)
+    return
+
+  // Verificacion explicita de campos: no depender solo del `required` nativo,
+  // que un submit programatico o un boton mal tipado podria saltarse.
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+
+  const data = new FormData(form)
+  resetResult()
+  submitBtn.disabled = true
+
+  try {
+    const res = await fetch('/api/guide-lead', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        nombre: data.get('nombre'),
+        email: data.get('email'),
+        slug: pendingSlug,
+        privacyConsent: data.get('privacyConsent') === 'on',
+        website: data.get('website'),
+      }),
+    })
+
+    if (!res.ok) {
+      showResult(false, 'No se pudo procesar tu solicitud. Intenta de nuevo.')
+      return
+    }
+
+    showResult(true, 'Te la enviamos a tu correo, revisa tu bandeja de entrada.')
+    setTimeout(closeModal, 2200)
+  }
+  catch {
+    showResult(false, 'Revisa tu conexión e intenta de nuevo.')
+  }
+  finally {
+    submitBtn.disabled = false
+  }
+})
+</script>

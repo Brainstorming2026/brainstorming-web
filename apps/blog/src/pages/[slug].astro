@@ -1,0 +1,39 @@
+---
+import ArticleBody from '@/components/blog/article/ArticleBody.astro'
+import ArticleHero from '@/components/blog/article/ArticleHero.astro'
+import ArticleLeadMagnet from '@/components/blog/article/ArticleLeadMagnet.astro'
+import ArticleRelated from '@/components/blog/article/ArticleRelated.astro'
+import ArticleSecondaryCta from '@/components/blog/article/ArticleSecondaryCta.astro'
+import ArticleShare from '@/components/blog/article/ArticleShare.astro'
+import ArticleSummary from '@/components/blog/article/ArticleSummary.astro'
+import { articles, getArticleBySlug } from '@/data/articles'
+import { allPosts } from '@/data/posts'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+
+export function getStaticPaths() {
+  return articles.map(article => ({ params: { slug: article.slug } }))
+}
+
+const { slug } = Astro.params
+const article = getArticleBySlug(slug)
+
+if (!article) {
+  return Astro.redirect('/404')
+}
+
+const relatedPosts = allPosts
+  .filter(post => post.category === article.category && post.slug !== article.slug)
+  .slice(0, 3)
+---
+
+<Layout title={`${article.title} — Brainstorming Blog`} description={article.intro.join(' ')}>
+  <ArticleHero article={article} />
+  <ArticleBody sections={article.sections} />
+  <ArticleSummary article={article} />
+  {article.leadMagnet && <ArticleLeadMagnet leadMagnet={article.leadMagnet} />}
+  {article.secondaryCta && <ArticleSecondaryCta cta={article.secondaryCta} />}
+  <ArticleShare article={article} />
+  <ArticleRelated posts={relatedPosts} />
+</Layout>

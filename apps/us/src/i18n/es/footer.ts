@@ -6,5 +6,5 @@ export default {
     { label: 'Agenda una llamada', href: '#contact' },
   ],
   contactTitle: 'Contacto',
-  copyright: 'Copyright © {year} Brainstorming',
+  copyright: 'Copyright © {year} Brainstorming'
 } as const

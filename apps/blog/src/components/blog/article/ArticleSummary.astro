@@ -1,0 +1,32 @@
+---
+import type { Article } from '@/data/articles'
+
+interface Props {
+  article: Article
+}
+
+const { article } = Astro.props
+---
+
+<section class="bg-mist-100 py-16">
+  <div class="mx-auto max-w-[720px] px-6 text-left lg:px-0">
+    <h2 class="font-heading text-2xl font-bold text-dark">{article.summaryTitle}</h2>
+    <div class="mt-4 flex flex-col gap-4">
+      {article.summaryParagraphs.map(paragraph => (
+        <p class="font-body text-[15px] leading-relaxed text-dark/80">{paragraph}</p>
+      ))}
+    </div>
+
+    {article.summaryTagline && (
+      <div class="mt-8 text-center">
+        <p class="font-heading text-base font-bold text-dark">{article.summaryTagline}</p>
+        <a
+          href="https://brainstorming.la/contacto"
+          class="mt-6 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        >
+          Contáctanos
+        </a>
+      </div>
+    )}
+  </div>
+</section>

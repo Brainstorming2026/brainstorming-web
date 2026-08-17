@@ -1,4 +1,5 @@
 ---
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
@@ -17,6 +18,8 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             name="nombre"
             placeholder="Nombre y Apellido"
             required
+            minlength="2"
+            maxlength="100"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -28,6 +31,8 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             name="telefono"
             placeholder="Teléfono"
             required
+            minlength="6"
+            maxlength="30"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -39,6 +44,7 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             name="email"
             placeholder="Email"
             required
+            maxlength="150"
             class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           />
         </label>
@@ -49,6 +55,8 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             name="mensaje"
             placeholder="Mensaje"
             required
+            minlength="10"
+            maxlength="2000"
             rows="2"
             class="resize-none border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           ></textarea>
@@ -57,6 +65,20 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
         <label class="hidden" aria-hidden="true">
           <input type="text" name="website" tabindex="-1" autocomplete="off" />
         </label>
+
+        <label class="flex items-start gap-2 text-xs text-dark/70">
+          <input
+            type="checkbox"
+            name="privacyConsent"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+          />
+          <span>
+            Acepto la <a href="/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+          </span>
+        </label>
+
+        <div id="contacto-turnstile" class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-action="contacto"></div>
       </div>
 
       <button
@@ -72,16 +94,47 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
 
 <FormStatusModal />
 
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <script>
+declare global {
+  interface Window {
+    turnstile?: { reset: (widget?: string | HTMLElement) => void }
+  }
+}
+
 const form = document.querySelector<HTMLFormElement>('#contacto-form')
 const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
+const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+
+privacyCheckbox?.addEventListener('change', () => {
+  privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
+})
+privacyCheckbox?.addEventListener('invalid', () => {
+  privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+})
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault()
   if (!submitBtn)
     return
 
+  // Verificacion explicita de campos: no depender solo del `required` nativo,
+  // que un submit programatico o un boton mal tipado podria saltarse.
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+
   const data = new FormData(form)
+  const turnstileToken = data.get('cf-turnstile-response')
+  if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'error', title: 'Verificación pendiente', message: 'Espera unos segundos y vuelve a intentar.' },
+    }))
+    return
+  }
+
   submitBtn.disabled = true
   document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
 
@@ -94,6 +147,8 @@ form?.addEventListener('submit', async (event) => {
         telefono: data.get('telefono'),
         email: data.get('email'),
         mensaje: data.get('mensaje'),
+        turnstileToken,
+        privacyConsent: data.get('privacyConsent') === 'on',
         website: data.get('website'),
       }),
     })
@@ -117,6 +172,7 @@ form?.addEventListener('submit', async (event) => {
   }
   finally {
     submitBtn.disabled = false
+    window.turnstile?.reset('contacto-turnstile')
   }
 })
 </script>

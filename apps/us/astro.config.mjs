@@ -35,13 +35,13 @@ export default defineConfig({
 
   env: {
     schema: {
-      // Mismo portal de HubSpot y dominio de Resend que apps/web — una sola
-      // cuenta de agencia, ver decision en PRODUCT.md / conversacion.
-      HUBSPOT_ACCESS_TOKEN: envField.string({ context: 'server', access: 'secret' }),
-      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
-      CORREO_TIPO: envField.string({ context: 'server', access: 'secret' }),
-      CORREO_FROM: envField.string({ context: 'server', access: 'secret' }),
-      CORREO_REPLY_TO: envField.string({ context: 'server', access: 'secret' }),
+      HUBSPOT_ACCESS_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true}),
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CORREO_TIPO: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CORREO_FROM: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CORREO_REPLY_TO: envField.string({ context: 'server', access: 'secret', optional: true }),
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
+      TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
 

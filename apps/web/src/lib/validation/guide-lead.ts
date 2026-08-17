@@ -19,6 +19,7 @@ export function makeGuideLeadSchema(m: GuideLeadMessages = DEFAULT_GUIDE_LEAD_ME
     // El cliente manda el slug, nunca la URL del PDF — el servidor resuelve
     // el PDF real desde `data/guides.ts` (single source of truth, ver lib/guide-lead.ts).
     slug: z.string().trim().min(1, m.slug).max(200, m.slug),
+    privacyConsent: z.literal(true, { error: 'Debes aceptar la Política de Privacidad' }),
     website: z.string().optional(), // honeypot
   })
 }

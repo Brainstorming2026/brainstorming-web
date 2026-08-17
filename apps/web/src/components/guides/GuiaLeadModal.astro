@@ -52,6 +52,18 @@ import iconClose from '@/icons/close.svg'
           <input type="text" name="website" tabindex="-1" autocomplete="off" />
         </label>
 
+        <label class="flex items-start gap-2 text-left text-xs text-dark/70">
+          <input
+            type="checkbox"
+            name="privacyConsent"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+          />
+          <span>
+            Acepto la <a href="/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+          </span>
+        </label>
+
         <button
           type="submit"
           id="guia-lead-submit"
@@ -93,6 +105,14 @@ const checkPath = document.querySelector<SVGPathElement>('#guia-lead-check path'
 const xSvg = document.querySelector<SVGSVGElement>('#guia-lead-x')
 const xPath = document.querySelector<SVGPathElement>('#guia-lead-x path')
 const resultText = document.querySelector<HTMLParagraphElement>('#guia-lead-result-text')
+const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+
+privacyCheckbox?.addEventListener('change', () => {
+  privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
+})
+privacyCheckbox?.addEventListener('invalid', () => {
+  privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+})
 
 let pendingSlug: string | null = null
 
@@ -188,6 +208,13 @@ form?.addEventListener('submit', async (event) => {
   if (!pendingSlug || !form || !submitBtn)
     return
 
+  // Verificacion explicita de campos: no depender solo del `required` nativo,
+  // que un submit programatico o un boton mal tipado podria saltarse.
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+
   const data = new FormData(form)
   resetResult()
   submitBtn.disabled = true
@@ -200,6 +227,7 @@ form?.addEventListener('submit', async (event) => {
         nombre: data.get('nombre'),
         email: data.get('email'),
         slug: pendingSlug,
+        privacyConsent: data.get('privacyConsent') === 'on',
         website: data.get('website'),
       }),
     })

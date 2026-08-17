@@ -7,11 +7,12 @@ import { upsertContact } from '@/lib/hubspot'
 import { captureError } from '@/lib/observability'
 import { EMAIL_INTERNAL_TO } from '@/lib/resend'
 import { fail, ok } from '@/lib/responses'
+import { verifyTurnstileToken } from '@/lib/turnstile'
 import { makeContactSchema } from '@/lib/validation/contact'
 
 export const prerender = false
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   let body: unknown
   try {
     body = await request.json()
@@ -31,7 +32,12 @@ export const POST: APIRoute = async ({ request }) => {
     return fail(400, 'Invalid data')
   }
 
-  const { firstName, lastName, companyEmail, phone, investment, message, lang } = parsed.data
+  const { firstName, lastName, companyEmail, phone, investment, message, lang, turnstileToken } = parsed.data
+
+  const isHuman = await verifyTurnstileToken(turnstileToken, clientAddress)
+  if (!isHuman) {
+    return fail(403, 'Verification failed. Please try again.')
+  }
   const fullName = `${firstName} ${lastName}`.trim()
 
   // HubSpot es el registro del lead — critico, si falla el request falla

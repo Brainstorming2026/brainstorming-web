@@ -25,6 +25,8 @@ export function makeContactSchema(m: ContactMessages = DEFAULT_CONTACT_MESSAGES)
     investment: z.string().trim().min(1, m.investment).max(60, m.investment),
     message: z.string().trim().max(2000).optional(),
     lang: z.enum(['en', 'es']).default('en'),
+    turnstileToken: z.string().min(1, 'Verification required').max(2048),
+    privacyConsent: z.literal(true, { error: 'You must accept the Privacy Policy' }),
     website: z.string().optional(), // honeypot
   })
 }

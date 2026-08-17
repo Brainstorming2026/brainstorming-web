@@ -43,8 +43,6 @@ export function revealClip(el: HTMLElement, options: RevealOptions = {}) {
     vars.scrollTrigger = {
       trigger: el,
       start: 'top 90%',
-      // Atado al TOP del elemento, no al bottom: así el reveal termina apenas
-      // entra a la vista, sin importar qué tan alta sea la imagen.
       end: 'top 10%',
       scrub: 0.6,
       ...options.scrollTrigger,

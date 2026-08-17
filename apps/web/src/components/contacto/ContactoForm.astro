@@ -52,11 +52,16 @@
             class="resize-none border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
           ></textarea>
         </label>
+
+        <label class="hidden" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
       </div>
 
       <button
         type="submit"
-        class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+        id="contacto-form-submit"
+        class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
       >
         ENVIAR
       </button>
@@ -64,17 +69,55 @@
       <p id="contacto-form-success" class="mt-4 hidden text-sm font-semibold text-primary" role="status">
         ¡Gracias! Te contactaremos pronto.
       </p>
+      <p id="contacto-form-error" class="mt-4 hidden text-sm font-semibold text-accent-500" role="alert">
+        No se pudo enviar tu mensaje. Intenta de nuevo.
+      </p>
     </form>
   </div>
 </section>
 
 <script>
-  const form = document.querySelector<HTMLFormElement>('#contacto-form')
-  const success = document.querySelector<HTMLParagraphElement>('#contacto-form-success')
+const form = document.querySelector<HTMLFormElement>('#contacto-form')
+const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
+const success = document.querySelector<HTMLParagraphElement>('#contacto-form-success')
+const error = document.querySelector<HTMLParagraphElement>('#contacto-form-error')
 
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault()
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!submitBtn)
+    return
+
+  const data = new FormData(form)
+  success?.classList.add('hidden')
+  error?.classList.add('hidden')
+  submitBtn.disabled = true
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        nombre: data.get('nombre'),
+        telefono: data.get('telefono'),
+        email: data.get('email'),
+        mensaje: data.get('mensaje'),
+        website: data.get('website'),
+      }),
+    })
+
+    if (!res.ok) {
+      error?.classList.remove('hidden')
+      return
+    }
+
     form.reset()
     success?.classList.remove('hidden')
-  })
+  }
+  catch {
+    error?.classList.remove('hidden')
+  }
+  finally {
+    submitBtn.disabled = false
+  }
+})
 </script>

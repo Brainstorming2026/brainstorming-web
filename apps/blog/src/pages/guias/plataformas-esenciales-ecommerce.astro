@@ -1,0 +1,166 @@
+---
+import { Image } from 'astro:assets'
+import guideCover from '@/assets/guides/plataformas-esenciales-ecommerce.webp'
+import logo from '@/assets/logos/brainstorming-logo.webp'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+
+const title = '¡4 plataformas esenciales para la creación de tu Ecommerce, que necesitas conocer para empezar a vender AHORA!'
+
+const benefits = [
+  'Conoce 4 herramientas perfectas para empezar a crear tu tienda virtual o Ecommerce.',
+  'Distingue aquellas plataformas gratuitas y que cuentan con plantillas listas para empezar a crear tu tienda online.',
+  'Compara sus principales características y elige la que más se adapte a las necesidades de tu negocio.',
+  'Descubre qué plataforma cuenta con más de 70 monedas para facilitar la venta internacional.',
+]
+
+const faqs = [
+  {
+    question: '¿Por qué debo completar mis datos personales?',
+    answer: '¡La respuesta es muy simple! En Brainstorming actuamos para lograr tus objetivos de negocio y lo hacemos de distintas maneras. Gracias a tus datos, podemos enviarte información de interés, contenidos útiles y personalizar nuestro blog para mejorar tu experiencia de navegación. Conoce más acerca de nuestra Política de Privacidad aquí.',
+  },
+  {
+    question: '¿La descarga es 100% gratuita?',
+    answer: '¡Absolutamente sí! Nos encanta compartir conocimientos y recursos que esperamos te sean de gran ayuda en el planteamiento de tus estrategias de negocio. Recuerda que estamos preparados para acompañarte en el camino hacia el logro de tus metas.',
+  },
+]
+---
+
+<Layout title={`${title} — Brainstorming`} description="Infografía gratuita con 4 plataformas esenciales para crear tu Ecommerce." showChrome={false}>
+  <div class="bg-white">
+    <div class="mx-auto max-w-[880px] px-6 pt-10 pb-16 lg:px-0">
+      <a href="https://brainstorming.la/" class="flex justify-center" aria-label="Brainstorming — inicio">
+        <Image src={logo} alt="Brainstorming" class="h-7 w-auto" />
+      </a>
+
+      <div class="mt-10 grid gap-6 rounded-[16px] bg-mist-100 p-4 sm:grid-cols-2 sm:items-center sm:gap-8 sm:p-6">
+        <Image src={guideCover} alt="" class="h-auto w-full rounded-[12px] object-cover" />
+        <div>
+          <p class="font-heading text-lg font-bold leading-snug text-dark sm:text-xl">{title}</p>
+          <a
+            href="#formulario"
+            class="mt-5 inline-block rounded-[8px] bg-primary px-5 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+          >
+            Descarga la guía gratuita
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <h2 class="font-heading text-xl font-bold text-dark sm:text-2xl">¿No sabes cómo empezar a crear tu Ecommerce?</h2>
+        <p class="mt-3 max-w-[680px] font-body text-[15px] leading-relaxed text-dark/70">
+          Si estás pensando en incursionar en el amplio mundo del Ecommerce, pero no sabes por dónde empezar, ¡llegaste al lugar correcto! Sabemos que existen muchas alternativas y, probablemente, hayas buscado por tu cuenta cómo hacerlo. Sin embargo, es mejor empezar con una base. Compartimos contigo esta infografía gratuita, donde podrás conocer 4 herramientas útiles para la creación de tu tienda online. ¿Te animas a empezar tu negocio propio?
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-mist-100 py-14">
+      <div class="mx-auto max-w-[960px] px-6 lg:px-0">
+        <h2 class="text-center font-heading text-lg font-bold text-dark sm:text-xl">¡Empieza a añadir valor a tu negocio con esta infografía!</h2>
+        <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {benefits.map(text => (
+            <div class="flex gap-3">
+              <svg viewBox="0 0 20 20" fill="none" class="mt-0.5 h-4 w-4 shrink-0 text-primary">
+                <path d="M4 10.5l4 4L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <p class="font-body text-sm leading-relaxed text-dark/70">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-[880px] px-6 py-14 lg:px-0">
+      <h2 class="font-heading text-lg font-bold text-dark sm:text-xl">Si te estás preguntando…</h2>
+      <div class="mt-6 grid gap-8 sm:grid-cols-2">
+        {faqs.map(faq => (
+          <div>
+            <p class="font-heading text-sm font-bold text-dark">{faq.question}</p>
+            <p class="mt-2 font-body text-sm leading-relaxed text-dark/70">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div id="formulario" class="bg-ink py-16">
+      <div class="mx-auto max-w-[720px] px-6 lg:px-0">
+        <h2 class="text-center font-heading text-xl font-bold text-white sm:text-2xl">Descarga nuestro recurso gratuito</h2>
+        <p class="mx-auto mt-3 max-w-[560px] text-center font-body text-sm leading-relaxed text-white/70">
+          ¡Estás a punto de agregar valor a tu marca! Completa los siguientes datos y suscríbete a nuestro Brainstorming Blog. Recuerda que al registrarte, autorizas nuestro contacto para brindarte mayor información.
+        </p>
+
+        <form class="mt-10 flex flex-col gap-6">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <label class="flex flex-col gap-1">
+              <span class="sr-only">Nombre y Apellido</span>
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre y Apellido"
+                required
+                class="rounded-[8px] border border-white/20 bg-transparent px-3 py-2.5 font-body text-sm text-white placeholder:text-white/50 focus:border-primary focus:outline-none"
+              />
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="sr-only">Correo Electrónico</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="Correo Electrónico"
+                required
+                class="rounded-[8px] border border-white/20 bg-transparent px-3 py-2.5 font-body text-sm text-white placeholder:text-white/50 focus:border-primary focus:outline-none"
+              />
+            </label>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-3">
+            <label class="flex flex-col gap-1">
+              <span class="sr-only">Código de área</span>
+              <select
+                name="codigoArea"
+                class="rounded-[8px] border border-white/20 bg-ink px-3 py-2.5 font-body text-sm text-white focus:border-primary focus:outline-none"
+              >
+                <option value="+51">Perú (+51)</option>
+              </select>
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="sr-only">Teléfono</span>
+              <input
+                type="tel"
+                name="telefono"
+                placeholder="Teléfono"
+                class="rounded-[8px] border border-white/20 bg-transparent px-3 py-2.5 font-body text-sm text-white placeholder:text-white/50 focus:border-primary focus:outline-none"
+              />
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="sr-only">Empresa</span>
+              <input
+                type="text"
+                name="empresa"
+                placeholder="Empresa"
+                class="rounded-[8px] border border-white/20 bg-transparent px-3 py-2.5 font-body text-sm text-white placeholder:text-white/50 focus:border-primary focus:outline-none"
+              />
+            </label>
+          </div>
+
+          <label class="flex items-start gap-2 text-xs text-white/70">
+            <input type="checkbox" name="suscribirse" class="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+            <span>Suscribirse al blog de Brainstorming</span>
+          </label>
+
+          <p class="font-body text-xs leading-relaxed text-white/50">
+            En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Política de Privacidad</a>.
+          </p>
+
+          <button
+            type="submit"
+            class="mx-auto mt-2 rounded-full bg-primary px-10 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+          >
+            Descargar ahora
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</Layout>

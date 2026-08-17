@@ -24,7 +24,7 @@ const { article } = Astro.props
         <Image
           src={article.heroImage}
           alt={article.title}
-          class="aspect-[16/10] w-full rounded-[16px] object-cover shadow-lg"
+          class="w-full rounded-[16px] object-cover shadow-lg"
           widths={[480, 720, 960]}
           sizes="(min-width: 1024px) 520px, 90vw"
           loading="eager"

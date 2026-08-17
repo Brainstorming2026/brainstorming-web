@@ -31,7 +31,7 @@ const relatedPosts = allPosts
 <Layout title={`${article.title} — Brainstorming Blog`} description={article.intro.join(' ')}>
   <ArticleHero article={article} />
   <ArticleBody sections={article.sections} />
-  <ArticleSummary article={article} />
+  {article.summaryTitle && <ArticleSummary article={article} />}
   {article.leadMagnet && <ArticleLeadMagnet leadMagnet={article.leadMagnet} />}
   {article.secondaryCta && <ArticleSecondaryCta cta={article.secondaryCta} />}
   <ArticleShare article={article} />

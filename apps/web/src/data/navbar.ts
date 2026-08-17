@@ -25,7 +25,7 @@ export const navLinks: NavLink[] = [
     href: '#',
     dropdown: true,
     children: [
-      { label: 'Blog', href: '/blog' },
+      { label: 'Blog', href: 'https://blog.brainstorming.la/' },
       { label: 'Guías Prácticas', href: '/guias' },
     ],
   },

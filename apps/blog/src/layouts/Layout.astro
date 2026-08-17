@@ -6,9 +6,10 @@ import '@/styles/global.css'
 interface Props {
   title: string
   description?: string
+  showChrome?: boolean
 }
 
-const { title, description = 'Brainstorming Blog — Marketing digital, branding y crecimiento' } = Astro.props
+const { title, description = 'Brainstorming Blog — Marketing digital, branding y crecimiento', showChrome = true } = Astro.props
 ---
 
 <!doctype html>
@@ -29,10 +30,10 @@ const { title, description = 'Brainstorming Blog — Marketing digital, branding
     <meta property="og:type" content="website" />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
-    <Navbar />
+    {showChrome && <Navbar />}
     <main>
       <slot />
     </main>
-    <Footer />
+    {showChrome && <Footer />}
   </body>
 </html>

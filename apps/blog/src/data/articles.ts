@@ -4,6 +4,9 @@ import card2 from '@/assets/images/hero/card2.png'
 import card3 from '@/assets/images/hero/card3.png'
 import card4 from '@/assets/images/hero/card4.png'
 import card6 from '@/assets/images/hero/card6.png'
+import card7 from '@/assets/images/hero/card7.png'
+import card1 from '@/assets/images/hero/card1.png'
+import card8 from '@/assets/images/hero/card8.png'
 import turismoHiker from '@/assets/images/marketing-turismo-peru/hiker.png'
 import cmInstagramPost from '@/assets/images/que-es-community-manager/img-1.png'
 import cmLaptopFacebook from '@/assets/images/que-es-community-manager/img-2.png'
@@ -12,6 +15,22 @@ import influencerMailTime from '@/assets/images/que-es-un-influencer/img-2.png'
 import influencerCrowdPhones from '@/assets/images/que-es-un-influencer/img-3.png'
 import landingRocket from '@/assets/images/que-es-una-landing-page/img-1.png'
 import landingMockup from '@/assets/images/que-es-una-landing-page/img-2.png'
+import desafiosInvestigacionMercado from '@/assets/images/desafios-investigacion-de-mercado/img-1.png'
+import chatbotsMarketingIa from '@/assets/images/chatbots-marketing-ia/img-1.png'
+import paginaWebLeadMagnet from '@/assets/guides/construir-pagina-web-5-pasos.webp'
+import paginaWebDisponibilidad from '@/assets/images/necesito-una-pagina-web/img-1.png'
+import paginaWebFidelizar from '@/assets/images/necesito-una-pagina-web/img-2.png'
+import paginaWebAdwords from '@/assets/images/necesito-una-pagina-web/img-3.png'
+import paginaWebHero from '@/assets/images/necesito-una-pagina-web/img-4.png'
+import card10 from '@/assets/images/hero/card10.png'
+import posicionarMarcaGoogleLeadMagnet from '@/assets/guides/posicionar-marca-google.webp'
+import consejosPaginaWebMovil from '@/assets/images/consejos-pagina-web-efectiva/img-1.png'
+import consejosPaginaWebNavegacion from '@/assets/images/consejos-pagina-web-efectiva/img-2.png'
+import consejosPaginaWebContenidos from '@/assets/images/consejos-pagina-web-efectiva/img-3.png'
+import card11 from '@/assets/images/hero/card11.png'
+import plataformasEcommerceLeadMagnet from '@/assets/guides/plataformas-esenciales-ecommerce.webp'
+import ecommerceClasificacion from '@/assets/images/que-es-un-ecommerce/img-1.png'
+import ecommercePasos from '@/assets/images/que-es-un-ecommerce/img-2.png'
 
 // Placeholder mientras se conecta Sanity (CMS). Cada articulo completo vive
 // aca hasta que el CMS resuelva el body real via GROQ — el template en
@@ -62,8 +81,9 @@ export interface Article {
   readTime: string
   intro: string[]
   sections: ArticleSection[]
-  summaryTitle: string
-  summaryParagraphs: string[]
+  /** No todos los articulos cierran con un bloque de resumen. */
+  summaryTitle?: string
+  summaryParagraphs?: string[]
   /** No todos los articulos cierran el resumen con tagline + CTA. */
   summaryTagline?: string
   leadMagnet?: ArticleLeadMagnet
@@ -186,7 +206,7 @@ export const articles: Article[] = [
       ctaLabel: 'Descargar',
       // Abre el modal de captura de lead real en brainstorming.la/guias — no
       // duplicamos el flujo de HubSpot + email aca, reusamos el existente.
-      ctaHref: 'https://brainstorming.la/guias?abrir=mandamientos-community-manager',
+      ctaHref: '/guias/mandamientos-community-manager',
       image: mandamientosCommunityManager,
     },
     publishedDate: '11 noviembre 2021',
@@ -326,6 +346,340 @@ export const articles: Article[] = [
       ctaHref: 'https://brainstorming.la/soluciones',
     },
     publishedDate: '5 noviembre 2021',
+  },
+  {
+    slug: 'desafios-investigacion-de-mercado',
+    kicker: 'Investigación de Mercado',
+    title: 'DESCIFRANDO LOS DESAFÍOS DE LA INVESTIGACIÓN DE MERCADO',
+    category: 'Procesos',
+    heroImage: card8,
+    readTime: 'Léelo en 15 min.',
+    intro: [
+      'Los misterios de la investigación de mercado pueden resultar desalentadores para los profesionales del marketing. Requiere un conocimiento profundo del consumidor, del sector y de la competencia, todos ellos elementos basados en datos que deben recopilarse, analizarse e interpretarse para desarrollar un plan de marketing de éxito. Pero hay retos comunes a los que se enfrentan muchos profesionales del marketing cuando llevan a cabo sus investigaciones. Para garantizar que se recogen datos precisos y se utilizan para crear estrategias eficaces, es esencial comprender estos posibles escollos antes de embarcarse en una investigación de mercado.',
+    ],
+    sections: [
+      {
+        heading: 'Nivel 1: Definición de objetivos y preguntas de investigación',
+        blocks: [
+          { type: 'paragraph', text: 'El primer desafío radica en la definición clara de los objetivos y las preguntas de investigación. Es fundamental tener en cuenta los aspectos clave que deseamos analizar y formular preguntas específicas para obtener los datos necesarios. Sin una estructura bien definida, los resultados de la investigación pueden ser vagos o poco útiles para nuestras estrategias de marketing.' },
+        ],
+      },
+      {
+        heading: 'Nivel 2: La selección de la muestra adecuada para la investigación de mercado',
+        blocks: [
+          { type: 'paragraph', text: 'El tamaño y la composición de la muestra son cruciales para obtener resultados representativos. Sin embargo, seleccionar una muestra adecuada puede resultar complicado. Es esencial identificar el grupo objetivo con precisión y utilizar métodos de muestreo adecuados para evitar sesgos y obtener datos confiables.' },
+          { type: 'image', image: desafiosInvestigacionMercado },
+        ],
+      },
+      {
+        heading: 'Nivel 3: Recopilación y análisis de datos para la investigación de mercado',
+        blocks: [
+          { type: 'paragraph', text: 'La recopilación y el análisis de datos son procesos fundamentales en la investigación de mercado. Sin embargo, pueden surgir desafíos en términos de la precisión de la información recopilada, la calidad de los datos y la interpretación correcta de los resultados. Es importante utilizar métodos adecuados de recopilación de datos y contar con herramientas de análisis confiables para obtener insights significativos.' },
+        ],
+      },
+      {
+        heading: 'Nivel final: La interpretación y aplicación de los resultados',
+        blocks: [
+          { type: 'paragraph', text: 'Una vez obtenidos los resultados, el desafío reside en interpretarlos de manera correcta y relevante para nuestras estrategias de marketing. La información puede ser compleja y requiere una comprensión profunda de los datos y del contexto en el que se aplicarán. Es esencial utilizar un enfoque analítico y crítico para extraer los insights adecuados y tomar decisiones informadas.' },
+        ],
+      },
+    ],
+    summaryTitle: 'En resumen',
+    summaryParagraphs: [
+      'La investigación de mercado en el área de marketing presenta desafíos que deben ser abordados de manera efectiva para obtener resultados de calidad. Desde la definición de objetivos y preguntas de investigación, hasta la selección de muestras adecuadas y el análisis e interpretación correcta de los datos, cada etapa requiere atención y cuidado. Al superar estos desafíos, los profesionales del marketing podrán aprovechar al máximo la investigación de mercado y utilizarla como una herramienta poderosa para impulsar sus estrategias y obtener una ventaja competitiva.',
+      'Desvelar los secretos de la investigación de mercado es la clave del éxito de una estrategia de marketing. Desde la determinación de los objetivos de la investigación y la formulación de preguntas pertinentes, hasta la selección de muestras representativas y la realización de análisis de datos precisos, cada paso es fundamental. Supera estos obstáculos y obtén información valiosísima que guiará tus campañas de marketing.',
+    ],
+    summaryTagline: '¿Deseas superar los desafíos de investigación de mercado con los profesionales?',
+    publishedDate: '22 junio 2023',
+  },
+  {
+    slug: 'chatbots-marketing-ia',
+    kicker: 'Inteligencia Artificial',
+    title: 'AHORRA RECURSOS CON INTELIGENCIA ARTIFICIAL EN EL MARKETING: Cómo los chatbots y asistentes virtuales con IA están transformando las empresas',
+    category: 'Inbound Marketing',
+    heroImage: card1,
+    readTime: 'Léelo en 8 min.',
+    intro: [
+      'En la era digital actual, las empresas están buscando constantemente nuevas formas de interactuar con sus clientes y brindarles una experiencia excepcional. En este sentido, los chatbots y los asistentes virtuales con inteligencia artificial (IA) se han convertido en herramientas indispensables para el marketing y las empresas. En este artículo, explicaremos cómo estos avances tecnológicos están revolucionando la forma en que las empresas se comunican con sus clientes, mejoran la satisfacción del cliente y optimizan sus estrategias de marketing.',
+    ],
+    sections: [
+      {
+        heading: 'La evolución de los chatbots y asistentes virtuales con inteligencia artificial',
+        blocks: [
+          { type: 'paragraph', text: 'Los chatbots y los asistentes virtuales con inteligencia artificial han recorrido un largo camino en los últimos años. Gracias a los avances en la tecnología de IA, estos sistemas son capaces de comprender y responder de manera efectiva a las consultas de los usuarios, incluso en lenguaje natural. Esto ha permitido que las empresas los utilicen en una variedad de aplicaciones, desde atención al cliente hasta generación de leads y ventas.' },
+          { type: 'subheading', text: 'Beneficios de la IA: Su uso y productividad' },
+          { type: 'paragraph', text: 'Estas herramientas de inteligencia artificial han demostrado ser altamente beneficiosas en diversos aspectos, como la reducción del tiempo de espera de respuesta, el rastreo de pedidos en las compras y la mejora de la atención al cliente.' },
+          { type: 'paragraph', text: 'Uno de los principales beneficios de los chatbots es la rapidez en la atención al cliente. Los usuarios ya no tienen que esperar largos periodos de tiempo en una línea telefónica o en una sala de espera virtual para obtener respuestas a sus preguntas. Los chatbots pueden proporcionar respuestas instantáneas las 24 horas del día, los 7 días de la semana, lo que mejora la satisfacción del cliente y agiliza el proceso de atención.' },
+          { type: 'image', image: chatbotsMarketingIa },
+          { type: 'paragraph', text: 'Otro beneficio clave es la capacidad de los chatbots para rastrear pedidos en las compras. Los clientes pueden obtener actualizaciones rápidas y precisas sobre el estado de sus pedidos simplemente interactuando con un chatbot. Esto evita la necesidad de llamar o enviar correos electrónicos al servicio de atención al cliente y permite a los usuarios obtener información en tiempo real sobre la ubicación y el progreso de sus productos.' },
+        ],
+      },
+      {
+        heading: '¿Cómo logramos las mejores experiencias con inteligencia artificial?',
+        blocks: [
+          { type: 'paragraph', text: 'Uno de los principales beneficios de los chatbots y asistentes virtuales es su capacidad para proporcionar una experiencia personalizada y eficiente a los clientes. Estos sistemas pueden ofrecer respuestas rápidas a consultas comunes, guiar a los clientes a través de procesos de compra y brindar recomendaciones basadas en las preferencias del usuario. Al mejorar la experiencia del cliente, las empresas pueden aumentar la satisfacción y fidelidad de sus clientes.' },
+          { type: 'paragraph', text: 'Además, los chatbots y asistentes virtuales pueden ser utilizados como herramientas de autogestión. Los clientes pueden resolver problemas y obtener información sin la intervención de un agente humano. Esto no solo reduce el costo operativo para las empresas, sino que también brinda a los clientes la autonomía de resolver sus propios problemas de manera rápida y eficiente.' },
+          { type: 'paragraph', text: 'Otro aspecto importante es la capacidad de los chatbots para recopilar datos y analizar el comportamiento de los clientes. Al interactuar con los usuarios, los chatbots pueden recopilar información relevante que puede ser utilizada para mejorar la personalización de los servicios y ofrecer recomendaciones más precisas. Esto permite a las empresas comprender mejor a sus clientes y adaptar sus estrategias de marketing y ventas de acuerdo con las necesidades y preferencias individuales.' },
+          { type: 'subheading', text: 'La automatización de tareas y optimización del tiempo' },
+          { type: 'paragraph', text: 'Los chatbots y asistentes virtuales pueden ayudar a las empresas a automatizar tareas rutinarias y repetitivas, liberando tiempo y recursos para que el personal se enfoque en actividades de mayor valor. Estos sistemas pueden realizar tareas como la programación de citas, la recopilación de información del cliente y el seguimiento de solicitudes, todo de forma automatizada y eficiente. Esta automatización no solo ahorra tiempo, sino que también reduce los errores humanos y mejora la productividad.' },
+          { type: 'subheading', text: 'Nutrición de Leads y mejora de las estrategias de marketing' },
+          { type: 'paragraph', text: 'Los chatbots y asistentes virtuales con IA también son poderosas herramientas para la nutrición de Leads y la optimización de las estrategias de marketing. Estos sistemas pueden interactuar con los visitantes del sitio web, brindar información relevante sobre productos o servicios, y así ir nutriendo la conversación y alimentando el interés del prospecto frío hasta llevarlo a un punto donde un ejecutivo comercial (humano) pueda tomar esa conversación y buscar el cierre de la venta.' },
+          { type: 'paragraph', text: '¿Te imaginas cuánto tiempo y recursos podrás ahorrar al hacer que un chatbot con IA haga el trabajo sucio y tus ejecutivos sólo atiendan a los Leads más calificados? Además, al analizar los datos recopilados, el tipo de información que más interesa, el tiempo de cualificación y demás, las empresas pueden obtener información valiosa sobre los intereses y comportamientos de los clientes, lo que les permite personalizar y perfeccionar sus estrategias de marketing.' },
+        ],
+      },
+    ],
+    summaryTitle: 'En resumen',
+    summaryParagraphs: [
+      'Los chatbots y asistentes virtuales con inteligencia artificial están transformando el marketing y las empresas. Estas innovadoras herramientas mejoran la experiencia del cliente, automatizan tareas y optimizan el tiempo. Además, son eficaces para la generación de leads y la personalización de estrategias de marketing.',
+    ],
+    summaryTagline: '¡Revoluciona tu negocio y aprende mucho más del marketing y la IA!',
+    publishedDate: '11 julio 2024',
+  },
+  {
+    slug: 'necesito-pagina-web-para-mi-empresa',
+    kicker: 'Desarrollo Web',
+    title: '¿Necesito una página web para mi empresa? Sí, te explicamos por qué',
+    category: 'Desarrollo Web',
+    heroImage: paginaWebHero,
+    readTime: 'Léelo en 5 min.',
+    intro: [
+      'Hoy en día es frecuente recurrir a Internet para conocer las diferentes opciones del mercado. Así, podemos obtener un panorama más amplio antes de adquirir un producto. ¡Eso es exactamente lo que harán tus clientes potenciales!',
+      'Cuando utilizamos Google esperamos encontrar la respuesta que buscamos y, si bien es frecuente recurrir a las redes sociales, en general, las páginas webs ofrecen una mayor información, mucho más completa e integral.',
+      'Es por eso que si una empresa busca visibilidad y con ella aumentar sus ventas, necesita de una página web. Esta plataforma es el medio ideal donde se manifestará la esencia misma de la empresa y sus productos. Y bien, ¿por qué crear una?',
+    ],
+    sections: [
+      {
+        heading: '8 Razones por las que necesitas una página web',
+        blocks: [
+          { type: 'paragraph', text: 'Si todavía tienes dudas sobre los beneficios que brindaría una página web a tu empresa, estas razones te convencerán para que tengas la tuya:' },
+          { type: 'subheading', text: '1. VISIBILIDAD:' },
+          { type: 'paragraph', text: 'Esta es la más importante. La página web es la vitrina de tu empresa y allí estás presente todo el tiempo. En ella, los clientes potenciales y los actuales tienen la posibilidad de encontrar toda la información actualizada, enterarse de promociones y ver los productos. Además, una página web bien diseñada pone en jerarquía a la empresa. La gran influencia visual que recibe el usuario (cliente potencial) es a veces determinante para decidirse por una u otra marca.' },
+          { type: 'subheading', text: '2. DISPONIBILIDAD LAS 24 HORAS:' },
+          { type: 'paragraph', text: 'Con una página web, la empresa está presente las 24 horas del día, todo el año. Puede ser consultada por el usuario en cualquier horario sin que sea necesario que alguien de la empresa esté conectado. El cliente potencial podrá revisar los productos, visualizar la información de la empresa y decidir cuándo ponerse en contacto. ¡Manténla actualizada!' },
+          { type: 'image', image: paginaWebDisponibilidad },
+          { type: 'subheading', text: '3. AMPLÍA EL ABANICO DE POSIBILIDADES:' },
+          { type: 'paragraph', text: 'Gracias a una página web tu marca puede tener presencia en todo el mundo. Y, por tanto, las posibilidades comerciales de tu empresa crecen. Además, podrás interactuar con los clientes potenciales, conociendo sus expectativas, percepciones y dudas. En definitiva, contar con un sitio web te brindará una nueva perspectiva desde donde mejorar tu empresa o hacer innovaciones.' },
+          { type: 'subheading', text: '4. ATRAER NUEVOS CLIENTES:' },
+          { type: 'paragraph', text: 'La página web da la posibilidad de que la empresa sea encontrada en los motores de búsqueda. Así, lograrás captar nuevos prospectos que se interesen en tus productos o servicios. ¡Ponle énfasis al diseño web y optimiza tus contenidos para atraerlos!' },
+          { type: 'subheading', text: '5. INCREMENTO EN LAS VENTAS:' },
+          { type: 'paragraph', text: 'Al atraer nuevas miradas sobre tus productos, las posibilidades de incrementar las ventas se multiplican. La página web te permite interactuar con clientes potenciales, quienes pueden conocerte y establecer una relación de antemano. Además, podrás facilitar el proceso de compra y recompra.' },
+          { type: 'subheading', text: '6. FIDELIZAR A LOS CLIENTES EXISTENTES:' },
+          { type: 'paragraph', text: 'Si tus técnicas de marketing y branding de marca son ingeniosas, no solamente conseguirás más clientes sino que tus clientes actuales te seguirán siendo "fieles" a lo que les ofreces. ¡Potencia la experiencia que tendrán con tu marca!' },
+          { type: 'image', image: paginaWebFidelizar },
+          { type: 'subheading', text: '7. OBTENER DATOS DE CONTACTO:' },
+          { type: 'paragraph', text: 'Toda página web (bien implementada) tiene un lugar donde contactarse a través de mails. Al recibir estos correos, estarás también recopilando los datos de tus posibles clientes. Si eres astuto, los utilizarás para enviarles novedades, descuentos y promociones vigentes. Lo mismo sucede si los clientes potenciales dejan sus datos en el formulario de contacto que incluyas en tu web.' },
+          { type: 'subheading', text: '8. REFUERZA TU CAMPAÑA PUBLICITARIA:' },
+          { type: 'paragraph', text: 'La campaña publicitaria te permite llegar al público que realmente está interesado o necesita tus productos. Gracias a ella incrementarás tu visibilidad de marca y posibilidades de venta. ¿Cómo? A través de los motores de búsqueda, como Google. Por ejemplo, puedes aprovechar la herramienta de "Google Adwords" y utilizar técnicas de SEO. Esas prácticas harán que te posiciones en los primeros lugares de los buscadores. ¡También puedes incluir el uso de redes sociales!' },
+          { type: 'image', image: paginaWebAdwords },
+        ],
+      },
+    ],
+    summaryTitle: 'Conclusión',
+    summaryParagraphs: [
+      'Las estadísticas dicen que se crean 600 páginas webs por minuto. Esto demuestra la gran incidencia que tiene internet en la vida de las personas. Hoy en día, es totalmente habitual buscar en Google todo aquello que no conocemos o necesitamos adquirir. ¡Tus clientes potenciales lo están haciendo ahora mismo!',
+      'Esta actitud frente a lo digital representa una nueva filosofía de vida. Demuestra que una página web es fundamental para que las empresas crezcan desde el punto de vista comercial y se proyecten en otros niveles. ¡Conecta con tu audiencia de la forma que necesitas!',
+    ],
+    leadMagnet: {
+      eyebrow: '¡Aprende a navegar la gran ola de datos! Compartimos una guía gratuita.',
+      title: '¡Finalmente! Cómo construir tu página web en 5 simples pasos... que hasta un niño podría aplicar',
+      ctaLabel: 'Descargar',
+      ctaHref: '/guias/construir-pagina-web-5-pasos',
+      image: paginaWebLeadMagnet,
+    },
+    publishedDate: '15 enero 2021',
+  },
+  {
+    slug: 'consejos-pagina-web-efectiva',
+    kicker: 'Desarrollo Web',
+    title: '10 Consejos para construir una página web efectiva',
+    category: 'Desarrollo Web',
+    heroImage: card10,
+    readTime: 'Léelo en 4 min.',
+    intro: [
+      'Si bien es necesario contar con una página web, no debemos obviar los detalles que la hacen efectiva. Por ejemplo, que tenga un diseño atractivo y funcional. Además, es necesario que se posicione en los primeros lugares de los motores de búsqueda. ¿Sabes qué otros aspectos debes tener en cuenta? ¡Te contamos!',
+    ],
+    sections: [
+      {
+        heading: '1. Tu página web debe ser visible en móviles',
+        blocks: [
+          { type: 'paragraph', text: 'Está demostrado que la mayoría de las personas hacen sus búsquedas desde sus móviles. Por ello, toda página web debe tener un diseño y una interface que se adapte a las características de un dispositivo móvil. Cerca del 90% de compradores acude a sus móviles para buscar los productos que necesitan. Por eso, no dejes de analizar cómo funciona tu web y cómo se ve en un celular.' },
+          { type: 'image', image: consejosPaginaWebMovil },
+        ],
+      },
+      {
+        heading: '2. Elige un dominio simple de recordar',
+        blocks: [
+          { type: 'paragraph', text: 'El nombre que le des será la identidad de la página web, por tanto, si es sencillo, fácil de recordar y relacionado con la marca, se posicionará con mayor facilidad en los buscadores.' },
+        ],
+      },
+      {
+        heading: '3. Otorga una pestaña visible para "contacto"',
+        blocks: [
+          { type: 'paragraph', text: 'Toda página web, que sea efectiva, tiene un enlace o formulario que conduce a contactar a la empresa. Ya sea por mail, por teléfono o videollamada. Un formulario de contacto debe ubicarse estratégicamente entre el contenido de tu web. Procura que sea visible y de acceso inmediato.' },
+        ],
+      },
+      {
+        heading: '4. Simplifica la navegación',
+        blocks: [
+          { type: 'paragraph', text: 'Los especialistas en el tema aseguran que una navegación lógica y simple le permitirá al usuario encontrar con facilidad lo que busca. Aconsejan 5 pestañas superiores con sus correspondientes etiquetas y cada una de ellas con un regreso a la página de inicio (home). El hecho de que sea fácil de navegar hace que el usuario permanezca mucho más tiempo en la página web.' },
+          { type: 'image', image: consejosPaginaWebNavegacion },
+        ],
+      },
+      {
+        heading: '5. Utiliza fotos reales y de buena calidad',
+        blocks: [
+          { type: 'paragraph', text: 'Las imágenes son fundamentales porque transmiten mucha información sobre la empresa. Pueden ser utilizadas para dar confianza, para guiar al usuario en su recorrido por la página web o para que conozcan al personal que hace posible que la empresa exista.' },
+        ],
+      },
+      {
+        heading: '6. Busca un diseño estético',
+        blocks: [
+          { type: 'paragraph', text: 'Todo debe complementarse: contenidos de calidad, usabilidad y un diseño que mantenga una estética atractiva con jerarquías visuales que brinden organización. Cuando la estética es recargada, la página web se vuelve confusa y es muy probable que el usuario no permanezca mucho tiempo en ella.' },
+        ],
+      },
+      {
+        heading: '7. Aporta valor a la página web con contenidos',
+        blocks: [
+          { type: 'paragraph', text: 'Es fundamental que la página web contenga un blog con contenidos valiosos y actualizados que permitan a los visitantes interactuar con comentarios. También es aconsejable socializar dichos contenidos en redes sociales.' },
+          { type: 'image', image: consejosPaginaWebContenidos },
+        ],
+      },
+      {
+        heading: '8. CALL TO ACTION',
+        blocks: [
+          { type: 'paragraph', text: 'Conocida como CTA y traducida como "llamada a la acción", es un enlace que atrae clientes potenciales, llevándolos a concretar la compra de tus productos. En ese enlace, el cliente encontrará una landing page que lo persuada de interactuar con la empresa y lograr una conversión.' },
+        ],
+      },
+      {
+        heading: '9. No descuides la velocidad de carga de la página web',
+        blocks: [
+          { type: 'paragraph', text: 'Un estudio realizado por SOASTA (subsidiaria estadounidense de Akamai Technologies, especializada en brindar servicios para probar webs y sus aplicaciones) demostró que cerca del 90% de los usuarios dijo tener una asociación negativa con las webs que presentaban demoras de cargas o links fallidos. Por eso, cuida estos aspectos en tu web.' },
+        ],
+      },
+      {
+        heading: '10. Logra testimonios',
+        blocks: [
+          { type: 'paragraph', text: 'Pide a tus clientes que manifiesten los motivos por los cuales te eligieron, su experiencia con tu empresa y solicita su permiso para publicarlos en la página web. Generalmente, los clientes potenciales leen estos testimonios que les garantizan la calidad de tus productos.' },
+        ],
+      },
+    ],
+    summaryTitle: 'Conclusión',
+    summaryParagraphs: [
+      'En suma, si esperas que tu página web sea efectiva y genere rentabilidad a tu empresa, aprende a "invitar a la acción". ¡Conecta con tus usuarios y clientes potenciales! Perfecciona el arte del convencimiento a través de estos consejos y logra convertir tus leads en clientes satisfechos. Demuéstrales que pueden confiar en ti.',
+    ],
+    leadMagnet: {
+      eyebrow: '¡Aprende a navegar la gran ola de datos! Compartimos una guía gratuita.',
+      title: '¡Revelado! Cómo colocar tu marca en los primeros lugares de Google… y competir con los más grandes',
+      ctaLabel: 'Descargar',
+      ctaHref: '/guias/posicionar-marca-google',
+      image: posicionarMarcaGoogleLeadMagnet,
+    },
+    publishedDate: '15 enero 2021',
+  },
+  {
+    slug: 'que-es-un-ecommerce',
+    kicker: 'Desarrollo Web',
+    title: '¿Qué es un ecommerce? Aprende lo básico',
+    category: 'Desarrollo Web',
+    heroImage: card11,
+    readTime: 'Léelo en 4 min.',
+    intro: [
+      'El ecommerce, o "comercio electrónico", se refiere a los negocios o ventas que se realizan a través de Internet. Por ello, resulta útil contar con una plataforma de este tipo como parte de nuestras estrategias de marketing.',
+      'Así, podremos concretar actividades de manera práctica y rápida. Por ejemplo, promocionar y vender nuestros productos o servicios. Además, se pueden incorporar distintos medios de pago.',
+      'Actualmente, el ecommerce es uno de los medios predilectos de compra a nivel mundial.',
+    ],
+    sections: [
+      {
+        heading: '¿Cómo se clasifican los ecommerce?',
+        blocks: [
+          { type: 'paragraph', text: 'Este intercambio que permite el ecommerce de bienes y servicios se clasifica según el destinatario al que está dirigido:' },
+          {
+            type: 'list',
+            items: [
+              { label: 'B2C', text: 'es la forma más tradicional de e-commerce que va desde la empresa al usuario. El intercambio incluye productos o servicios como en "Amazon". B2C es la sigla de Business to Consumer.' },
+              { label: 'B2B', text: 'se concreta entre empresas y conlleva un nivel muy competitivo de transacción. Suele darse cuando se externaliza algún sector de la empresa. B2B es la sigla de Business to Business.' },
+              { label: 'C2C', text: 'se establece entre consumidores, donde uno vende y el otro compra originando una venta directa o una subasta. C2C es la sigla de Consumer to Consumer.' },
+              { label: 'C2B', text: 'cuando el consumidor le vende a la empresa, como sucede en una casa de empeños o compra de valores como oro, plata, etc. C2B es la sigla de Consumer to Business.' },
+            ],
+          },
+          { type: 'image', image: ecommerceClasificacion },
+        ],
+      },
+      {
+        heading: '¿Qué beneficios ofrece un ecommerce?',
+        blocks: [
+          { type: 'paragraph', text: 'Son muchas las ventajas que ofrece un ecommerce. La más destacada es la eliminación de las limitaciones de tiempo y distancia. ¡Conoce más!' },
+          {
+            type: 'list',
+            items: [
+              { text: 'Comodidad al hacer transacciones de compra y venta desde un smartphone, laptop o cualquier dispositivo móvil.' },
+              { text: 'Reducción de costos en logística. Puedes contar con una tienda física o solo una virtual, de todas manera, un e-commerce atrae clientes potenciales.' },
+              { text: 'Reducción de costos para el cliente. Ofrece la posibilidad de adquirir promociones y descuentos que muchas empresas otorgan solamente de forma online. Además, los usuarios pueden consultar vía internet los precios en diferentes comercios, sin la necesidad de salir de casa.' },
+              { text: '¡Puedes comenzar una empresa desde cero! Solo necesitas habilitar tu plataforma e-commerce para empezar a ofertar tus productos y conectar con miles de clientes potenciales. Además, podrás trabajar en tu negocio desde cualquier lugar mientras tengas conexión a Internet.' },
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Cuáles son los pasos necesarios para tener mi ecommerce',
+        blocks: [
+          { type: 'paragraph', text: 'Si ya tienes tu idea de negocio online o si eres dueño de una empresa y quieres ampliarla con un Ecommerce, lo que necesitas para concretarlo es:' },
+          {
+            type: 'list',
+            items: [
+              { text: 'Página web con un buen servidor para su alojamiento: este es un punto fundamental para que tengas un buen funcionamiento del carrito de compras.' },
+              { text: 'Interfaz sencilla para el ecommerce: es la herramienta propia de la tienda online y cuanto más simple mejor.' },
+              { text: 'Un catálogo con tus productos: es lo que los clientes utilizarán para realizar sus compras, por tanto, debe ser visualmente atractivo y muy funcional.' },
+              { text: 'Procesamiento de pagos: es la forma en que los usuarios realizarán sus pagos, por tanto tiene que ser seguro para que ambas partes salgan beneficiadas con la transacción. Existen diferentes plataformas para ello.' },
+              { text: 'Envío de productos: este tema también tiene que ser considerado dentro de la plataforma para informarles de antemano a los clientes potenciales.' },
+            ],
+          },
+          { type: 'image', image: ecommercePasos },
+        ],
+      },
+    ],
+    summaryTitle: 'Conclusión',
+    summaryParagraphs: [
+      'Como puedes ver, contar con un e-commerce es muy necesario para incrementar tus oportunidades de venta. Anímate a crear el tuyo y disfruta de los beneficios que tendrás en poco tiempo. ¿Te interesó el tema?',
+    ],
+    leadMagnet: {
+      eyebrow: '¡Aprende a navegar la gran ola de datos! Compartimos una infografía.',
+      title: '¡4 plataformas esenciales para la creación de tu Ecommerce, que necesitas conocer para empezar a vender AHORA!',
+      ctaLabel: 'Descargar',
+      ctaHref: '/guias/plataformas-esenciales-ecommerce',
+      image: plataformasEcommerceLeadMagnet,
+    },
+    publishedDate: '15 enero 2021',
+  },
+  {
+    slug: 'estrategia-de-marca-confianza',
+    kicker: 'Branding, Estrategia',
+    title: '¿La estrategia de tu marca no genera la confianza que esperabas?',
+    category: 'Branding',
+    heroImage: card7,
+    readTime: 'Léelo en 5 min.',
+    intro: [
+      'Piensa en la relación entre marca y usuario como si fuera una relación amorosa.',
+    ],
+    sections: [
+      {
+        heading: 'Luego de una larga y productiva conversación, llegamos a la conclusión que debemos tomar en cuenta 5 puntos bastante relevantes:',
+        blocks: [
+          {
+            type: 'list',
+            items: [
+              { label: 'Conoce a tu audiencia', text: 'La manera más fácil que yo encuentro de entender lo que significa «conocer a tu audiencia» es pensar en la relación entre marca y usuario como si fuera una relación amorosa, en todas sus etapas. El primer cruce de miradas es el inicio. Luego tengo que saber qué le gusta, que le emociona, lo que ama hacer y lo que odia. Sólo así podré generar conversaciones que le interesen, que resuenen en un plano emocional y no transaccional. Luego, podremos tender puentes para estrechar esos lazos. Sólo así crearás una «relación» sólida que haga que esa persona te compre y se vuelva fiel a ti. Mejor aún, luego te recomendará porque ama tu marca y quiere que sus amigos también disfruten con su marca favorita.' },
+              { label: 'Sé coherente', text: 'Conocer a tu audiencia es importante, pero también lo es conocerte a ti mismo. Saber qué aporte brindas como marca al mundo de los demás. Tu personalidad, tu corazón, tu ADN, tu voz y tu propósito, no se pueden fingir. Y, nuevamente, para tener una relación sana (en tu vida personal con tu esposa o en tu trabajo con tus consumidores), debes ser honesto y fiel a quien eres y a tu propósito. Toda esta cultura empieza en las cabezas y se debe contagiar hacia abajo a toda la organización. Pero ojo que no se contagia con un memorandum o un email. Es un trabajo constante para realmente enamorar primero a tus colaboradores y cuando todos tengan clara su razón de existir en la organización, podrán recién convencer a los consumidores a que se casen con la marca.' },
+              { label: 'Sé transparente', text: 'La honestidad no es una virtud, es una obligación. En cualquier tipo de relación, la comunicación transparente, clara y directa evitará conflictos, y creará credibilidad porque tu interlocutor sabrá desde el inicio qué puedes aportar a la relación y qué no. ¿Nos vamos a equivocar? Seguramente sí, porque en toda relación nos equivocamos. Somos humanos. Pero cuando te equivoques, admite y resuelve. Es bueno aplaudir los logros, pero es más valioso trabajar para corregir los errores y levantarse juntos, marca y usuario; pareja de esposos; padres e hijos; trabajando codo a codo para siempre mejorar, para siempre crecer. Un paso a la vez, pero siempre para adelante. recuerda: una crítica es un regalo.' },
+              { label: 'Sé humano', text: 'La mayoría de las ventas se dan porque el consumidor siente una relación de confianza con la marca. En mi opinión, la mejor manera de generar una relación es mostrando el lado humano de nuestra empresa. Darle cara a los colaboradores que trabajan en ella. Apareciendo en los distintos canales y dando consejos y recomendaciones. Pero también, haciendo que tus clientes aparezcan y opinen sobre ti y cómo los haces sentir (no sólo sobre el servicio o producto). Cuando un cliente conoce tu marca y el nombre de al menos un colaborador que trabaja dentro y lo considera alguien cercano (porque lo ayudó más allá del plano transaccional), has ganado la batalla más difícil para lograr la Lealtad de ese cliente.' },
+              { label: 'Sé valioso', text: 'Sabías que hay un estudio de Havas Media que se llama «Meaningful Brands» que dice que el día de mañana 75% de las marcas en el mundo podrían desaparecer y a nadie le importaría? Entonces, ¿qué debemos hacer para que nuestra marca se vuelva valiosa para las personas? Tu marca debe poner foco en entregar valor en cada punto de contacto con sus usuarios. Desde la experiencia del usuario, enfocarse en ayudar y no vender, entregar contenidos de valor y tener una extraordinaria atención a los clientes. El Geek Squad de Best Buy te ayudaba a instalar en tu casa los aparatos de tecnología los hayas comprado o no en Best Buy. Eso es aportar un valor adicional en la mente de los consumidores. Ayuda primero y serás percibido como valioso.' },
+            ],
+          },
+          { type: 'paragraph', text: '#Ubuntu' },
+        ],
+      },
+    ],
+    publishedDate: '18 marzo 2024',
   },
 ]
 

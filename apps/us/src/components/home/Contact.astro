@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import illustration from '@/assets/contact/hero-contact.png'
 import arrow from '@/assets/contact/right.png'
+import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
@@ -60,7 +61,20 @@ const investmentRanges = t.investmentRanges
         </h3>
         <p class="mt-1 text-center font-body text-sm italic text-dark/60">{t.requiredNote}</p>
 
-        <form class="mt-6 flex flex-col gap-4">
+        <form
+          id="contact-form"
+          class="mt-6 flex flex-col gap-4"
+          data-sending-title={t.sendingTitle}
+          data-success-title={t.successTitle}
+          data-success-message={t.successMessage}
+          data-error-title={t.errorTitle}
+          data-error-message={t.errorMessage}
+        >
+          <input type="hidden" name="lang" value={lang} />
+          <label class="hidden" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+
           <input
             type="text"
             name="firstName"
@@ -116,7 +130,8 @@ const investmentRanges = t.investmentRanges
 
           <button
             type="submit"
-            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600"
+            id="contact-form-submit"
+            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {t.submit}
           </button>
@@ -125,6 +140,8 @@ const investmentRanges = t.investmentRanges
     </div>
   </section>
 </div>
+
+<FormStatusModal />
 
 <script>
 import { ensureGsap, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
@@ -149,6 +166,60 @@ registerMotion(() => {
     }
   }
 })
+</script>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form')
+  const submitBtn = document.querySelector<HTMLButtonElement>('#contact-form-submit')
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!submitBtn || !form)
+      return
+
+    const data = new FormData(form)
+    submitBtn.disabled = true
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'loading', title: form.dataset.sendingTitle },
+    }))
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          firstName: data.get('firstName'),
+          lastName: data.get('lastName'),
+          companyEmail: data.get('companyEmail'),
+          phone: data.get('phone'),
+          investment: data.get('investment'),
+          message: data.get('message'),
+          lang: data.get('lang'),
+          website: data.get('website'),
+        }),
+      })
+
+      if (!res.ok) {
+        document.dispatchEvent(new CustomEvent('form-status', {
+          detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
+        }))
+        return
+      }
+
+      form.reset()
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'success', title: form.dataset.successTitle, message: form.dataset.successMessage },
+      }))
+    }
+    catch {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
+      }))
+    }
+    finally {
+      submitBtn.disabled = false
+    }
+  })
 </script>
 
 <style>

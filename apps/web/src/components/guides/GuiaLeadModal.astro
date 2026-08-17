@@ -60,9 +60,17 @@ import iconClose from '@/icons/close.svg'
           Reclamar Guía
         </button>
 
-        <p id="guia-lead-error" class="hidden text-center text-sm font-semibold text-accent-500" role="alert">
-          No se pudo procesar tu solicitud. Intenta de nuevo.
-        </p>
+        <div id="guia-lead-result" class="hidden flex-col items-center gap-2">
+          <div id="guia-lead-badge" class="flex h-14 w-14 scale-0 items-center justify-center rounded-full opacity-0">
+            <svg id="guia-lead-check" viewBox="0 0 24 24" fill="none" class="h-7 w-7">
+              <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+            <svg id="guia-lead-x" viewBox="0 0 24 24" fill="none" class="hidden h-7 w-7">
+              <path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+          </div>
+          <p id="guia-lead-result-text" class="text-center text-sm font-semibold text-gray-body"></p>
+        </div>
       </form>
     </div>
   </div>
@@ -70,6 +78,7 @@ import iconClose from '@/icons/close.svg'
 
 <script>
 import { ensureGsap } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 const overlay = document.querySelector<HTMLDivElement>('#guia-lead-overlay')
@@ -77,15 +86,68 @@ const modal = document.querySelector<HTMLDivElement>('#guia-lead-modal')
 const closeBtn = document.querySelector<HTMLButtonElement>('#guia-lead-close')
 const form = document.querySelector<HTMLFormElement>('#guia-lead-form')
 const submitBtn = document.querySelector<HTMLButtonElement>('#guia-lead-submit')
-const errorMsg = document.querySelector<HTMLParagraphElement>('#guia-lead-error')
+const resultBox = document.querySelector<HTMLDivElement>('#guia-lead-result')
+const badge = document.querySelector<HTMLDivElement>('#guia-lead-badge')
+const checkSvg = document.querySelector<SVGSVGElement>('#guia-lead-check')
+const checkPath = document.querySelector<SVGPathElement>('#guia-lead-check path')
+const xSvg = document.querySelector<SVGSVGElement>('#guia-lead-x')
+const xPath = document.querySelector<SVGPathElement>('#guia-lead-x path')
+const resultText = document.querySelector<HTMLParagraphElement>('#guia-lead-result-text')
 
-let pendingPdf: string | null = null
 let pendingSlug: string | null = null
 
-function openModal(pdf: string, slug: string) {
-  pendingPdf = pdf
+function resetResult() {
+  resultBox?.classList.add('hidden')
+  resultBox?.classList.remove('flex')
+  badge?.classList.add('scale-0', 'opacity-0')
+  badge?.classList.remove('bg-green-500', 'bg-accent-500')
+  checkSvg?.classList.remove('hidden')
+  xSvg?.classList.add('hidden')
+  checkPath?.setAttribute('stroke-dashoffset', '1')
+  xPath?.setAttribute('stroke-dashoffset', '1')
+}
+
+function showResult(ok: boolean, message: string) {
+  if (!resultBox || !badge)
+    return
+  resultBox.classList.remove('hidden')
+  resultBox.classList.add('flex')
+  resultText!.textContent = message
+
+  if (ok) {
+    checkSvg?.classList.remove('hidden')
+    xSvg?.classList.add('hidden')
+    badge.classList.add('bg-green-500')
+  }
+  else {
+    xSvg?.classList.remove('hidden')
+    checkSvg?.classList.add('hidden')
+    badge.classList.add('bg-accent-500')
+  }
+
+  const path = ok ? checkPath : xPath
+
+  if (prefersReducedMotion()) {
+    badge.classList.remove('scale-0', 'opacity-0')
+    path?.setAttribute('stroke-dashoffset', '0')
+    return
+  }
+
+  const { gsap } = ensureGsap()
+  const tl = gsap.timeline()
+  tl.to(badge, { opacity: 1, scale: 1, duration: 0.5, ease: ease.back })
+  tl.to(path, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+  if (!ok) {
+    tl.to(modal, { x: -8, duration: 0.06 })
+    tl.to(modal, { x: 8, duration: 0.06 })
+    tl.to(modal, { x: -6, duration: 0.06 })
+    tl.to(modal, { x: 0, duration: 0.06 })
+  }
+}
+
+function openModal(slug: string) {
   pendingSlug = slug
-  errorMsg?.classList.add('hidden')
+  resetResult()
   if (!overlay || !modal)
     return
   overlay.classList.remove('hidden')
@@ -107,13 +169,12 @@ function closeModal() {
     return
   overlay.classList.add('hidden')
   overlay.classList.remove('flex')
-  pendingPdf = null
   pendingSlug = null
   form?.reset()
 }
 
-document.addEventListener('open-guia-lead-modal', ((event: CustomEvent<{ pdf: string, slug: string }>) => {
-  openModal(event.detail.pdf, event.detail.slug)
+document.addEventListener('open-guia-lead-modal', ((event: CustomEvent<{ slug: string }>) => {
+  openModal(event.detail.slug)
 }) as EventListener)
 
 closeBtn?.addEventListener('click', closeModal)
@@ -124,11 +185,11 @@ overlay?.addEventListener('click', (event) => {
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault()
-  if (!pendingPdf || !pendingSlug || !form || !submitBtn)
+  if (!pendingSlug || !form || !submitBtn)
     return
 
   const data = new FormData(form)
-  errorMsg?.classList.add('hidden')
+  resetResult()
   submitBtn.disabled = true
 
   try {
@@ -144,21 +205,15 @@ form?.addEventListener('submit', async (event) => {
     })
 
     if (!res.ok) {
-      errorMsg?.classList.remove('hidden')
+      showResult(false, 'No se pudo procesar tu solicitud. Intenta de nuevo.')
       return
     }
 
-    const link = document.createElement('a')
-    link.href = pendingPdf
-    link.download = ''
-    document.body.append(link)
-    link.click()
-    link.remove()
-
-    closeModal()
+    showResult(true, 'Te la enviamos a tu correo, revisa tu bandeja de entrada.')
+    setTimeout(closeModal, 2200)
   }
   catch {
-    errorMsg?.classList.remove('hidden')
+    showResult(false, 'Revisa tu conexión e intenta de nuevo.')
   }
   finally {
     submitBtn.disabled = false

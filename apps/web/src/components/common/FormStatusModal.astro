@@ -1,0 +1,186 @@
+---
+import iconClose from '@/icons/close.svg'
+---
+
+<div id="form-status-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 px-4">
+  <div id="form-status-modal" class="relative w-full max-w-[360px] rounded-[24px] bg-white px-8 py-10 text-center shadow-xl">
+    <button
+      type="button"
+      id="form-status-close"
+      aria-label="Cerrar"
+      class="absolute right-4 top-4 hidden h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-mist-100"
+    >
+      <img src={iconClose.src} alt="" class="h-3.5 w-3.5" />
+    </button>
+
+    <div id="form-status-icon" class="relative mx-auto flex h-20 w-20 items-center justify-center">
+      <div id="form-status-spinner" class="absolute inset-0 animate-spin rounded-full border-[3px] border-primary/15 border-t-primary"></div>
+
+      <div id="form-status-badge" class="absolute inset-0 flex scale-0 items-center justify-center rounded-full opacity-0">
+        <svg id="form-status-check" viewBox="0 0 24 24" fill="none" class="h-9 w-9">
+          <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+        </svg>
+        <svg id="form-status-x" viewBox="0 0 24 24" fill="none" class="hidden h-9 w-9">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+        </svg>
+      </div>
+    </div>
+
+    <p id="form-status-title" class="mt-6 font-heading text-lg font-bold text-ink"></p>
+    <p id="form-status-message" class="mt-2 text-sm leading-6 text-gray-body"></p>
+
+    <button
+      type="button"
+      id="form-status-retry"
+      class="mt-6 hidden rounded-full bg-primary px-8 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+    >
+      Cerrar
+    </button>
+  </div>
+</div>
+
+<script>
+import { ensureGsap } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+export type FormStatusState = 'loading' | 'success' | 'error'
+
+interface FormStatusDetail {
+  state: FormStatusState
+  title?: string
+  message?: string
+}
+
+const overlay = document.querySelector<HTMLDivElement>('#form-status-overlay')
+const modal = document.querySelector<HTMLDivElement>('#form-status-modal')
+const spinner = document.querySelector<HTMLDivElement>('#form-status-spinner')
+const badge = document.querySelector<HTMLDivElement>('#form-status-badge')
+const checkPath = document.querySelector<SVGPathElement>('#form-status-check path')
+const checkSvg = document.querySelector<SVGSVGElement>('#form-status-check')
+const xPath = document.querySelector<SVGPathElement>('#form-status-x path')
+const xSvg = document.querySelector<SVGSVGElement>('#form-status-x')
+const titleEl = document.querySelector<HTMLParagraphElement>('#form-status-title')
+const messageEl = document.querySelector<HTMLParagraphElement>('#form-status-message')
+const closeBtn = document.querySelector<HTMLButtonElement>('#form-status-close')
+const retryBtn = document.querySelector<HTMLButtonElement>('#form-status-retry')
+
+let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
+
+function resetIcon() {
+  spinner?.classList.remove('hidden')
+  badge?.classList.add('opacity-0', 'scale-0')
+  badge?.classList.remove('bg-green-500', 'bg-accent-500')
+  checkSvg?.classList.remove('hidden')
+  xSvg?.classList.add('hidden')
+  checkPath?.setAttribute('stroke-dashoffset', '1')
+  xPath?.setAttribute('stroke-dashoffset', '1')
+  closeBtn?.classList.add('hidden')
+  retryBtn?.classList.add('hidden')
+}
+
+function close() {
+  if (!overlay)
+    return
+  overlay.classList.add('hidden')
+  overlay.classList.remove('flex')
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+}
+
+function render({ state, title, message }: FormStatusDetail) {
+  if (!overlay || !modal || !badge)
+    return
+
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+
+  if (overlay.classList.contains('hidden')) {
+    resetIcon()
+    overlay.classList.remove('hidden')
+    overlay.classList.add('flex')
+
+    if (!prefersReducedMotion()) {
+      const { gsap } = ensureGsap()
+      gsap.set(overlay, { opacity: 0 })
+      gsap.set(modal, { opacity: 0, y: 24, scale: 0.96 })
+      gsap.to(overlay, { opacity: 1, duration: 0.25, ease: 'power2.out' })
+      gsap.to(modal, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' })
+    }
+  }
+
+  if (state === 'loading') {
+    titleEl!.textContent = title ?? 'Enviando…'
+    messageEl!.textContent = message ?? ''
+    return
+  }
+
+  // loading -> success/error: morph del spinner al badge de color
+  const isSuccess = state === 'success'
+  titleEl!.textContent = title ?? (isSuccess ? '¡Enviado!' : 'Algo salió mal')
+  messageEl!.textContent = message ?? ''
+  closeBtn?.classList.remove('hidden')
+
+  const { gsap } = ensureGsap()
+  const iconEl = isSuccess ? checkSvg : xSvg
+  const path = isSuccess ? checkPath : xPath
+
+  if (isSuccess) {
+    checkSvg?.classList.remove('hidden')
+    xSvg?.classList.add('hidden')
+    badge.classList.add('bg-green-500')
+  }
+  else {
+    xSvg?.classList.remove('hidden')
+    checkSvg?.classList.add('hidden')
+    badge.classList.add('bg-accent-500')
+    retryBtn?.classList.remove('hidden')
+  }
+
+  if (prefersReducedMotion()) {
+    spinner?.classList.add('hidden')
+    badge.classList.remove('opacity-0', 'scale-0')
+    path?.setAttribute('stroke-dashoffset', '0')
+    return
+  }
+
+  const tl = gsap.timeline()
+  tl.to(spinner, { opacity: 0, scale: 0.6, duration: 0.2, ease: 'power1.in' })
+  tl.set(spinner, { display: 'none' })
+  tl.to(badge, { opacity: 1, scale: 1, duration: 0.5, ease: ease.back }, '<')
+  tl.to(path, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+
+  if (!isSuccess && iconEl) {
+    tl.to(modal, { x: -8, duration: 0.06, ease: 'power1.inOut' })
+    tl.to(modal, { x: 8, duration: 0.06, ease: 'power1.inOut' })
+    tl.to(modal, { x: -6, duration: 0.06, ease: 'power1.inOut' })
+    tl.to(modal, { x: 0, duration: 0.06, ease: 'power1.inOut' })
+  }
+
+  if (isSuccess) {
+    autoCloseTimer = setTimeout(() => {
+      if (!prefersReducedMotion()) {
+        gsap.to(overlay, { opacity: 0, duration: 0.25, ease: 'power1.in', onComplete: close })
+      }
+      else {
+        close()
+      }
+    }, 2200)
+  }
+}
+
+document.addEventListener('form-status', ((event: CustomEvent<FormStatusDetail>) => {
+  render(event.detail)
+}) as EventListener)
+
+closeBtn?.addEventListener('click', close)
+retryBtn?.addEventListener('click', close)
+overlay?.addEventListener('click', (event) => {
+  if (event.target === overlay)
+    close()
+})
+</script>

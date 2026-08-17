@@ -1,4 +1,5 @@
 ---
+import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
 <section class="bg-white py-16 sm:py-20">
@@ -65,22 +66,15 @@
       >
         ENVIAR
       </button>
-
-      <p id="contacto-form-success" class="mt-4 hidden text-sm font-semibold text-primary" role="status">
-        ¡Gracias! Te contactaremos pronto.
-      </p>
-      <p id="contacto-form-error" class="mt-4 hidden text-sm font-semibold text-accent-500" role="alert">
-        No se pudo enviar tu mensaje. Intenta de nuevo.
-      </p>
     </form>
   </div>
 </section>
 
+<FormStatusModal />
+
 <script>
 const form = document.querySelector<HTMLFormElement>('#contacto-form')
 const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
-const success = document.querySelector<HTMLParagraphElement>('#contacto-form-success')
-const error = document.querySelector<HTMLParagraphElement>('#contacto-form-error')
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault()
@@ -88,9 +82,8 @@ form?.addEventListener('submit', async (event) => {
     return
 
   const data = new FormData(form)
-  success?.classList.add('hidden')
-  error?.classList.add('hidden')
   submitBtn.disabled = true
+  document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
 
   try {
     const res = await fetch('/api/contact', {
@@ -106,15 +99,21 @@ form?.addEventListener('submit', async (event) => {
     })
 
     if (!res.ok) {
-      error?.classList.remove('hidden')
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: 'No se pudo enviar', message: 'Intenta de nuevo en unos minutos.' },
+      }))
       return
     }
 
     form.reset()
-    success?.classList.remove('hidden')
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'success', title: '¡Mensaje enviado!', message: 'Te contactaremos pronto.' },
+    }))
   }
   catch {
-    error?.classList.remove('hidden')
+    document.dispatchEvent(new CustomEvent('form-status', {
+      detail: { state: 'error', title: 'No se pudo enviar', message: 'Revisa tu conexión e intenta de nuevo.' },
+    }))
   }
   finally {
     submitBtn.disabled = false

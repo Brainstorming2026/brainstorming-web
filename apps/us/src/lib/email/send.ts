@@ -7,6 +7,7 @@ export interface SendEmailInput {
   to: string
   subject: string
   template: ReactElement
+  /** Para responder directo al lead con un click desde el email interno. */
   replyTo?: string
 }
 

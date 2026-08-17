@@ -13,4 +13,9 @@ export default {
   investmentNote: 'Esta información nos ayuda a diseñar un plan que maximice tu ROI.',
   messageLabel: 'Cuéntanos algo que nos ayude a preparar nuestra reunión',
   submit: 'ENVIAR',
+  successMessage: '¡Gracias! Te contactaremos pronto.',
+  errorMessage: 'No se pudo enviar tu mensaje. Intenta de nuevo.',
+  sendingTitle: 'Enviando…',
+  successTitle: '¡Mensaje enviado!',
+  errorTitle: 'Algo salió mal',
 } as const

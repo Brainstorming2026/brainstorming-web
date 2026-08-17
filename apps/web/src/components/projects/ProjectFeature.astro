@@ -12,7 +12,7 @@ const imagenPrimero = (feature.imagenLado ?? 'izquierda') === 'izquierda'
 const textoClaro = feature.textoClaro ?? false
 ---
 
-<section class="relative overflow-hidden bg-white lg:py-20">
+<section class="relative overflow-hidden bg-white lg:py-10">
   <Image
     src={feature.bgImagen}
     alt=""
@@ -47,7 +47,7 @@ const textoClaro = feature.textoClaro ?? false
       </h2>
       {
         feature.parrafos.map((parrafo, i) => (
-          <p class:list={['max-w-[440px] text-[14px] leading-6 text-dark-500', i === 0 ? 'mt-6' : 'mt-4']}>
+          <p class:list={['max-w-[440px] mb-10 text-[14px] leading-6 text-dark-500', i === 0 ? 'md:mt-40' : 'mt-4']}>
             {parrafo}
           </p>
         ))

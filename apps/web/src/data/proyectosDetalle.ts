@@ -205,9 +205,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
         Amazónica y equilibrada con sensualidad y elegancia.`,
       colorFondo: '#c2b49a',
       imagenes: [
-        { src: ig1Aguaclara, alt: 'Publicación de Instagram Aguaclara 1', maxWidth: 420 },
-        { src: ig2Aguaclara, alt: 'Publicación de Instagram Aguaclara 2', maxWidth: 420 },
-        { src: ig3Aguaclara, alt: 'Publicación de Instagram Aguaclara 3', maxWidth: 420 },
+        { src: ig1Aguaclara, alt: 'Publicación de Instagram Aguaclara 1', maxWidth: 400 },
+        { src: ig2Aguaclara, alt: 'Publicación de Instagram Aguaclara 2', maxWidth: 400 },
+        { src: ig3Aguaclara, alt: 'Publicación de Instagram Aguaclara 3', maxWidth: 400 },
       ],
     },
     features: [
@@ -304,16 +304,16 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#d1d3d4',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Atsa, alt: 'Publicación de Instagram Atsa Airlines: Aterriza en Punta Sal', maxWidth: 300 },
-        { src: ig2Atsa, alt: 'Publicación de Instagram Atsa Airlines: El Norte te espera', maxWidth: 300 },
-        { src: ig3Atsa, alt: 'Publicación de Instagram Atsa Airlines: Razones para viajar con Atsa Airlines', maxWidth: 300 },
+        { src: ig1Atsa, alt: 'Publicación de Instagram Atsa Airlines: Aterriza en Punta Sal', maxWidth: 400 },
+        { src: ig2Atsa, alt: 'Publicación de Instagram Atsa Airlines: El Norte te espera', maxWidth: 400 },
+        { src: ig3Atsa, alt: 'Publicación de Instagram Atsa Airlines: Razones para viajar con Atsa Airlines', maxWidth: 400 },
       ],
     },
     features: [
       {
         icon: 'expert-window',
         label: 'Desarrollo web',
-        heading: 'Desarrollo de Pillar Page para su página web',
+        heading: 'Desarrollo de Pillar Page',
         parrafos: [
           `Propusimos la creación de un pillar page por cada uno de sus destinos, empezando con
           Huánuco, uno de sus destinos con mayor potencial comercial. Este pillar page cubre todos
@@ -341,9 +341,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#E75225',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Decker, alt: 'Publicación de Black+Decker: Esmeril Angular + 5 Discos', maxWidth: 300 },
-        { src: ig2Decker, alt: 'Publicación de Black+Decker: Caladora 420W + Martillo Madera', maxWidth: 300 },
-        { src: ig3Decker, alt: 'Publicación de Black+Decker: Cyber Day - Llegan promociones', maxWidth: 300 },
+        { src: ig1Decker, alt: 'Publicación de Black+Decker: Esmeril Angular + 5 Discos', maxWidth: 400 },
+        { src: ig2Decker, alt: 'Publicación de Black+Decker: Caladora 420W + Martillo Madera', maxWidth: 400 },
+        { src: ig3Decker, alt: 'Publicación de Black+Decker: Cyber Day - Llegan promociones', maxWidth: 400 },
       ],
     },
   },
@@ -421,9 +421,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#8B6914',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Helena, alt: 'Publicación de Helena Chocolatier: Delivery Gratis', maxWidth: 300 },
-        { src: ig2Helena, alt: 'Publicación de Helena Chocolatier: Marca peruana', maxWidth: 300 },
-        { src: ig3Helena, alt: 'Publicación de Helena Chocolatier: Chocotejas de Pecanas', maxWidth: 300 },
+        { src: ig1Helena, alt: 'Publicación de Helena Chocolatier: Delivery Gratis', maxWidth: 400 },
+        { src: ig2Helena, alt: 'Publicación de Helena Chocolatier: Marca peruana', maxWidth: 400 },
+        { src: ig3Helena, alt: 'Publicación de Helena Chocolatier: Chocotejas de Pecanas', maxWidth: 400 },
       ],
     },
     features: [
@@ -454,9 +454,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#003366',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Irwin, alt: 'Publicación de IRWIN: Herramientas y Promociones Exclusivas', maxWidth: 300 },
-        { src: ig2Irwin, alt: 'Publicación de IRWIN: Alicates de Bloqueo de Refrigeración', maxWidth: 300 },
-        { src: ig3Irwin, alt: 'Publicación de IRWIN: Alicates Morada Recta', maxWidth: 300 },
+        { src: ig1Irwin, alt: 'Publicación de IRWIN: Herramientas y Promociones Exclusivas', maxWidth: 400 },
+        { src: ig2Irwin, alt: 'Publicación de IRWIN: Alicates de Bloqueo de Refrigeración', maxWidth: 400 },
+        { src: ig3Irwin, alt: 'Publicación de IRWIN: Alicates Morada Recta', maxWidth: 400 },
       ],
     },
   },
@@ -525,9 +525,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#009ADE',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Llévame a Mikio, por favor', maxWidth: 300 },
-        { src: ig2Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Te quiero', maxWidth: 300 },
-        { src: ig3Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Obtén un encerado de carnauba gratis', maxWidth: 300 },
+        { src: ig1Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Llévame a Mikio, por favor', maxWidth: 400 },
+        { src: ig2Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Te quiero', maxWidth: 400 },
+        { src: ig3Mikio, alt: 'Publicación de Instagram de Mikio Car Wash: Obtén un encerado de carnauba gratis', maxWidth: 400 },
       ],
     },
     features: [
@@ -649,9 +649,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       waveIcon: 'aruma-up',
       video: {},
       imagenes: [
-        { src: ig1Renace, alt: 'Publicación de campaña de Renace Fest 1', maxWidth: 300 },
-        { src: ig2Renace, alt: 'Publicación de campaña de Renace Fest 2', maxWidth: 300 },
-        { src: ig3Renace, alt: 'Publicación de campaña de Renace Fest 3', maxWidth: 300 },
+        { src: ig1Renace, alt: 'Publicación de campaña de Renace Fest 1', maxWidth: 400 },
+        { src: ig2Renace, alt: 'Publicación de campaña de Renace Fest 2', maxWidth: 400 },
+        { src: ig3Renace, alt: 'Publicación de campaña de Renace Fest 3', maxWidth: 400 },
       ],
     },
   },
@@ -709,9 +709,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: 'var(--color-highlight)',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Stanley, alt: 'Publicación de Stanley: Especial Carpintería', maxWidth: 300 },
-        { src: ig2Stanley, alt: 'Publicación de Stanley: Más Soluciones', maxWidth: 300 },
-        { src: ig3Stanley, alt: 'Publicación de Stanley: herramientas', maxWidth: 300 },
+        { src: ig1Stanley, alt: 'Publicación de Stanley: Especial Carpintería', maxWidth: 400 },
+        { src: ig2Stanley, alt: 'Publicación de Stanley: Más Soluciones', maxWidth: 400 },
+        { src: ig3Stanley, alt: 'Publicación de Stanley: herramientas', maxWidth: 400 },
       ],
     },
   },
@@ -735,9 +735,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#6d7289',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Styla, alt: 'Publicación de campaña de Styla 1', maxWidth: 300 },
-        { src: ig2Styla, alt: 'Publicación de campaña de Styla 2', maxWidth: 300 },
-        { src: ig3Styla, alt: 'Publicación de campaña de Styla 3', maxWidth: 300 },
+        { src: ig1Styla, alt: 'Publicación de campaña de Styla 1', maxWidth: 400 },
+        { src: ig2Styla, alt: 'Publicación de campaña de Styla 2', maxWidth: 400 },
+        { src: ig3Styla, alt: 'Publicación de campaña de Styla 3', maxWidth: 400 },
       ],
     },
     features: [
@@ -822,9 +822,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       colorFondo: '#2b2b2b',
       waveIcon: 'aruma-up',
       imagenes: [
-        { src: ig1Walon, alt: 'Publicación de Walon Sport: zapatillas de fútbol', maxWidth: 300 },
-        { src: ig2Walon, alt: 'Publicación de Walon Sport: Entrenamiento madrugador, buen lunes', maxWidth: 300 },
-        { src: ig3Walon, alt: 'Publicación de Walon Sport: Los mejores propósitos son los que se mantienen', maxWidth: 300 },
+        { src: ig1Walon, alt: 'Publicación de Walon Sport: zapatillas de fútbol', maxWidth: 400 },
+        { src: ig2Walon, alt: 'Publicación de Walon Sport: Entrenamiento madrugador, buen lunes', maxWidth: 400 },
+        { src: ig3Walon, alt: 'Publicación de Walon Sport: Los mejores propósitos son los que se mantienen', maxWidth: 400 },
       ],
     },
   },
@@ -833,7 +833,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     logo: logoSubasta,
     heroBg: heroBgSubasta,
     heroImgAlt: 'Manual de identidad de marca de Subasta tus Facturas',
-    descripcion: `Subasta tus Facturas es una Fintech (tecnología financiera) especializada en el CrowdFactoring.
+    descripcion: `Subasta tus Facturas es una Fintech (tecnología financiera) specializada en el CrowdFactoring.
       Las empresas deudoras subastan sus facturas a inversionistas y los dos se benefician: por un
       lado, las empresas obtienen ingresos en corto plazo para su flujo de operaciones y los
       inversionistas reciben las ganancias cuando los deudores pagan su deuda eventualmente.

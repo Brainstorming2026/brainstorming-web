@@ -17,20 +17,24 @@ const { campania } = Astro.props
         <Icon name="expert-iman" class="h-6 w-6 text-dark-300" />
         <span>Inbound Marketing</span>
       </div>
+
       <h2 class="mt-4 max-w-[380px] font-heading text-3xl font-bold leading-tight text-dark sm:text-5xl">
         {campania.heading}
       </h2>
     </div>
-    <p class="campaign-block text-[14px] leading-6 text-dark-500 lg:mt-1">
-      {campania.parrafo}
-    </p>
+
+    <div class="campaign-block flex flex-col lg:h-full lg:justify-end">
+      <p class="text-[14px] leading-6 text-dark-500">
+        {campania.parrafo}
+      </p>
+    </div>
   </div>
 
   {
     campania.waveIcon && (
       <Icon
         name={campania.waveIcon}
-        class="block w-full h-full"
+        class="block w-full h-full xl:scale-140 xl:mb-6"
         style={{ color: campania.colorFondo }}
       />
     )

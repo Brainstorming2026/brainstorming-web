@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import logo from '@/assets/logos/brainstorming-logo.webp'
+
+const currentPath = Astro.url.pathname
+
+const navLinks = [
+  { label: 'Blog', href: '/' },
+  { label: 'Branding', href: 'https://brainstorming.la/soluciones/branding' },
+  { label: 'Desarrollo Web', href: 'https://brainstorming.la/soluciones/desarrollo-web' },
+  { label: 'Inbound Marketing', href: 'https://brainstorming.la/soluciones/inbound-marketing' },
+  { label: 'Proceso', href: 'https://brainstorming.la/soluciones/optimizacion-procesos' },
+]
+---
+
+<header class="sticky top-0 z-50 border-b border-black/10 bg-white">
+  <nav
+    class="mx-auto flex h-20 max-w-[1512px] items-center justify-between gap-6 px-6 lg:px-16"
+    aria-label="Principal"
+  >
+    <a href="https://brainstorming.la/" class="shrink-0" aria-label="Brainstorming — inicio">
+      <Image src={logo} alt="Brainstorming" class="h-8 w-auto" />
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        navLinks.map((link) => {
+          const isActive = link.href === '/' && currentPath === '/'
+          const isExternal = link.href.startsWith('http')
+          return (
+            <li>
+              <a
+                href={link.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                class:list={[
+                  'block px-4 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
+                  isActive ? 'text-primary' : 'text-ink',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+
+    <div class="ml-auto flex items-center gap-4">
+      <form action="/" method="get" class="hidden items-center overflow-hidden rounded-full border border-navy/40 lg:flex">
+        <input
+          type="search"
+          name="q"
+          placeholder="¿Buscas algo en específico?"
+          class="w-64 bg-transparent px-4 py-2 font-body text-sm text-ink placeholder:text-dark-400 focus:outline-none"
+        />
+        <button type="submit" aria-label="Buscar" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-white transition-colors hover:bg-navy-600">
+          <Icon name="search" class="h-4 w-4" />
+        </button>
+      </form>
+
+      <a
+        href="#suscribirse"
+        class="hidden rounded-[10px] bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-600 lg:inline-block"
+      >
+        Suscribirme
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="text-ink lg:hidden"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" class="h-7 w-7" />
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-black/10 bg-white px-6 py-4 lg:hidden">
+    <ul class="flex flex-col gap-1">
+      {
+        navLinks.map((link) => {
+          const isExternal = link.href.startsWith('http')
+          return (
+            <li>
+              <a
+                href={link.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                class="block py-2 font-heading text-base font-bold text-ink hover:text-primary"
+              >
+                {link.label}
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+    <a
+      href="#suscribirse"
+      class="mt-3 block rounded-[10px] bg-primary px-6 py-3 text-center text-sm font-semibold text-white hover:bg-primary-600"
+    >
+      Suscribirme
+    </a>
+  </div>
+</header>
+
+<script>
+document.addEventListener('astro:page-load', () => {
+  const toggle = document.getElementById('nav-toggle')
+  const menu = document.getElementById('mobile-menu')
+
+  menu?.classList.add('hidden')
+  toggle?.setAttribute('aria-expanded', 'false')
+  toggle?.setAttribute('aria-label', 'Abrir menú')
+
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false
+    toggle.setAttribute('aria-expanded', String(open))
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú')
+  })
+})
+</script>

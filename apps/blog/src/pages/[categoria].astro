@@ -1,0 +1,127 @@
+---
+import ArticleLeadMagnet from '@/components/blog/article/ArticleLeadMagnet.astro'
+import PostCard from '@/components/blog/PostCard.astro'
+import PostRow from '@/components/blog/PostRow.astro'
+import { getArticleBySlug } from '@/data/articles'
+import { allPosts, categories, getCategoryBySlug, popularPosts } from '@/data/posts'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+
+export function getStaticPaths() {
+  return categories.map(category => ({ params: { categoria: category.slug } }))
+}
+
+const { categoria } = Astro.params
+const category = getCategoryBySlug(categoria)
+
+if (!category) {
+  return Astro.redirect('/404')
+}
+
+const categoryPosts = allPosts.filter(post => post.category === category.label)
+
+// Banner: la guia descargable propia de la categoria, si algun articulo de
+// esta categoria ya trae una (ver ArticleLeadMagnet) — evita inventar una
+// guia que no existe. Si no hay ninguna, cae al CTA generico de soluciones.
+const featuredLeadMagnet = categoryPosts
+  .map(post => getArticleBySlug(post.slug)?.leadMagnet)
+  .find(leadMagnet => leadMagnet !== undefined)
+
+const solucionesSlugs: Record<string, string> = {
+  'branding': 'branding',
+  'desarrollo-web': 'desarrollo-web',
+  'inbound-marketing': 'inbound-marketing',
+  'procesos': 'optimizacion-procesos',
+}
+---
+
+<Layout title={`${category.label} — Brainstorming Blog`} description={category.description}>
+  <div class="bg-mist-100 py-12 lg:py-16">
+    <div class="mx-auto max-w-[1140px] px-6 lg:px-16">
+      <p class="font-heading text-sm font-bold text-primary">Categoría</p>
+      <h1 class="mt-2 font-heading text-3xl font-bold text-dark sm:text-4xl">{category.label}</h1>
+      <p class="mt-3 max-w-[560px] font-body text-[15px] leading-relaxed text-dark/70">{category.description}</p>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-[1140px] px-6 py-12 lg:px-16">
+    <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
+      <div>
+        {categoryPosts.length > 0
+          ? (
+              <div class="grid gap-8 sm:grid-cols-2">
+                {categoryPosts.map(post => <PostCard post={post} />)}
+              </div>
+            )
+          : (
+              <p class="font-body text-sm text-dark/60">Todavía no hay artículos publicados en esta categoría.</p>
+            )}
+
+        {featuredLeadMagnet
+          ? (
+              <div class="mt-10">
+                <ArticleLeadMagnet leadMagnet={featuredLeadMagnet} />
+              </div>
+            )
+          : (
+              <a
+                href={`https://brainstorming.la/soluciones/${solucionesSlugs[category.slug]}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-10 flex flex-col items-center justify-center rounded-[16px] bg-gradient-to-b from-primary to-navy px-8 py-12 text-center text-white transition-opacity hover:opacity-95"
+              >
+                <p class="font-heading text-xl font-bold leading-snug">Actuamos para lograr tus objetivos de negocio</p>
+                <span class="mt-6 rounded-[10px] bg-accent px-6 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-accent-600">
+                  Conoce nuestras soluciones de {category.label}
+                </span>
+              </a>
+            )}
+      </div>
+
+      <aside class="flex flex-col gap-10">
+        <div>
+          <h2 class="font-heading text-lg font-bold text-dark">Contenidos más populares</h2>
+          <div class="mt-6 flex flex-col gap-6">
+            {popularPosts.slice(0, 3).map(post => <PostRow post={post} />)}
+          </div>
+        </div>
+
+        <form id="category-newsletter-form" class="rounded-[16px] border border-dark-200 p-6">
+          <h2 class="font-heading text-base font-bold text-dark">Suscríbete al Brainstorming Blog</h2>
+          <div class="mt-4 border-t border-dark-200 pt-4">
+            <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+              {categories.map(cat => (
+                <label class="flex items-center gap-2 font-body text-xs text-dark/80">
+                  <input type="checkbox" name="topics" value={cat.label} class="h-3.5 w-3.5 accent-primary" checked={cat.slug === category.slug} />
+                  {cat.label}
+                </label>
+              ))}
+            </div>
+
+            <label class="mt-4 flex flex-col gap-1">
+              <span class="font-body text-xs text-dark">Dirección de correo electrónico</span>
+              <input
+                type="email"
+                name="email"
+                required
+                class="mt-1 rounded-[8px] border border-dark-300 bg-white px-3 py-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
+              />
+            </label>
+
+            <p class="mt-4 font-body text-xs leading-relaxed text-dark/50">
+              En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
+            </p>
+
+            <button
+              type="submit"
+              class="mt-4 w-full rounded-[10px] bg-primary px-6 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+            >
+              Suscribirme
+            </button>
+          </div>
+        </form>
+      </aside>
+    </div>
+  </div>
+</Layout>

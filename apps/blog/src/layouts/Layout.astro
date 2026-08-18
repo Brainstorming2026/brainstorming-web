@@ -1,6 +1,7 @@
 ---
 import Footer from '@/components/common/Footer.astro'
 import Navbar from '@/components/common/Navbar.astro'
+import SubscribeModal from '@/components/common/SubscribeModal.astro'
 import '@/styles/global.css'
 
 interface Props {
@@ -35,5 +36,6 @@ const { title, description = 'Brainstorming Blog — Marketing digital, branding
       <slot />
     </main>
     {showChrome && <Footer />}
+    {showChrome && <SubscribeModal />}
   </body>
 </html>

@@ -10,7 +10,7 @@ import { categories } from '@/data/posts'
     <div class="mx-auto mt-6 grid max-w-[720px] gap-4 sm:grid-cols-2">
       {categories.map(category => (
         <a
-          href={`/?categoria=${category.label.toLowerCase().replace(/\s+/g, '-')}`}
+          href={`/${category.slug}`}
           class="flex items-center gap-4 rounded-[10px] bg-primary px-6 py-4 text-white transition-colors hover:bg-primary-600"
         >
           <Icon name={category.icon} class="h-7 w-7 shrink-0" />

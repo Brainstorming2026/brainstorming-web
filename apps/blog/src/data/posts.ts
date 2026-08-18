@@ -118,13 +118,20 @@ export const allPosts: Post[] = [featuredPost, ...quickPosts, ...popularPosts, .
   .filter((post, index, list) => list.findIndex(p => p.slug === post.slug) === index)
 
 export interface Category {
+  slug: string
   label: string
   icon: string
+  /** Copy de una linea para el header de la pagina de categoria. */
+  description: string
 }
 
 export const categories: Category[] = [
-  { label: 'Branding', icon: 'expert-huella' },
-  { label: 'Desarrollo Web', icon: 'expert-window' },
-  { label: 'Inbound Marketing', icon: 'expert-iman' },
-  { label: 'Procesos', icon: 'category-procesos' },
+  { slug: 'branding', label: 'Branding', icon: 'expert-huella', description: 'Estrategias de marca, identidad y confianza para diferenciarte en el mercado.' },
+  { slug: 'desarrollo-web', label: 'Desarrollo Web', icon: 'expert-window', description: 'Páginas web, ecommerce y las bases técnicas para crecer online.' },
+  { slug: 'inbound-marketing', label: 'Inbound Marketing', icon: 'expert-iman', description: 'Contenidos, redes y estrategias para atraer y fidelizar a tu audiencia.' },
+  { slug: 'procesos', label: 'Procesos', icon: 'category-procesos', description: 'Investigación de mercado y optimización de procesos para decisiones más certeras.' },
 ]
+
+export function getCategoryBySlug(slug: string): Category | undefined {
+  return categories.find(category => category.slug === slug)
+}

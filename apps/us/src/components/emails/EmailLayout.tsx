@@ -66,8 +66,8 @@ export function EmailLayout({ preview, footerTagline, children }: EmailLayoutPro
                       <Img
                         src={SOCIAL_ICON_URLS[r.name]}
                         alt={r.label}
-                        width="20"
-                        height="20"
+                        width="40"
+                        height="40"
                         style={{ display: 'block', margin: '0 auto' }}
                       />
                     </Link>

@@ -90,7 +90,7 @@ const faqs = [
           ¡Estás a punto de agregar valor a tu marca! Completa los siguientes datos y suscríbete a nuestro Brainstorming Blog. Recuerda que al registrarte, autorizas nuestro contacto para brindarte mayor información.
         </p>
 
-        <form class="mt-10 flex flex-col gap-6">
+        <form id="guide-lead-form" class="mt-10 flex flex-col gap-6">
           <div class="grid gap-6 sm:grid-cols-2">
             <label class="flex flex-col gap-1">
               <span class="sr-only">Nombre y Apellido</span>
@@ -153,9 +153,14 @@ const faqs = [
             En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Política de Privacidad</a>.
           </p>
 
+          <label class="hidden" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+
           <button
             type="submit"
-            class="mx-auto mt-2 rounded-full bg-primary px-10 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+            id="guide-lead-submit"
+            class="mx-auto mt-2 rounded-full bg-primary px-10 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Descargar ahora
           </button>
@@ -164,3 +169,58 @@ const faqs = [
     </div>
   </div>
 </Layout>
+
+<script>
+const form = document.querySelector<HTMLFormElement>('#guide-lead-form')
+const submitBtn = document.querySelector<HTMLButtonElement>('#guide-lead-submit')
+const originalLabel = submitBtn?.textContent ?? 'Descargar ahora'
+
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+  if (!submitBtn)
+    return
+
+  const data = new FormData(form)
+  submitBtn.disabled = true
+  submitBtn.textContent = 'Enviando...'
+
+  try {
+    const res = await fetch('/api/guide-lead', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        nombre: data.get('nombre'),
+        email: data.get('email'),
+        telefono: [data.get('codigoArea'), data.get('telefono')].filter(Boolean).join(' ') || undefined,
+        empresa: data.get('empresa') || undefined,
+        slug: 'plataformas-esenciales-ecommerce',
+        suscribirse: data.get('suscribirse') === 'on',
+        website: data.get('website'),
+      }),
+    })
+
+    if (res.ok) {
+      submitBtn.textContent = '¡Enviado! Revisa tu correo'
+      form.reset()
+    }
+    else {
+      submitBtn.textContent = 'Error, reintenta'
+    }
+  }
+  catch {
+    submitBtn.textContent = 'Revisa tu conexión'
+  }
+  finally {
+    setTimeout(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false
+        submitBtn.textContent = originalLabel
+      }
+    }, 2600)
+  }
+})
+</script>

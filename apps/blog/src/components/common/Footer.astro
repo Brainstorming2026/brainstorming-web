@@ -1,8 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { redes } from '@/data/footer'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
+import { redes } from '@/data/footer'
 
 const SITE_URL = 'https://brainstorming.la'
 
@@ -62,7 +62,7 @@ const oficinas = [
 
         <div>
           <h3 class="font-heading text-lg font-bold">Únete a nuestro Brainstorming Blog</h3>
-          <form class="mt-4">
+          <form id="footer-newsletter-form" class="mt-4">
             <span class="font-body text-sm text-white/70">¡Suscríbete ya!</span>
             <div class="mt-2 flex gap-2">
               <input
@@ -78,6 +78,9 @@ const oficinas = [
                 Suscribirme
               </button>
             </div>
+            <label class="hidden" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </label>
           </form>
 
           <ul class="mt-5 flex items-center gap-2">
@@ -114,3 +117,9 @@ const oficinas = [
     </div>
   </div>
 </footer>
+
+<script>
+import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
+
+wireSubscribeForm(document.querySelector('#footer-newsletter-form'), 'Footer')
+</script>

@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro'
 import { GuideDeliveryEmail } from '@/components/emails/GuideDeliveryEmail'
 import { InternalLeadEmail } from '@/components/emails/InternalLeadEmail'
 import { sendEmail } from '@/lib/email/send'
+import { guideCoverEmailUrl } from '@/lib/email/assets'
 import { resolveGuideBySlug } from '@/lib/guide-lead'
 import { isHoneypotTriggered } from '@/lib/honeypot'
 import { EMAIL_INTERNAL_TO } from '@/lib/resend'
@@ -50,7 +51,7 @@ export const POST: APIRoute = async ({ request, site }) => {
     sendEmail({
       to: email,
       subject: `Tu guía "${guide.title}" está lista`,
-      template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl }),
+      template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl, guideImageUrl: guideCoverEmailUrl(guide.slug) }),
     }),
   ])
 

@@ -49,6 +49,16 @@ import { categories } from '@/data/posts'
         Obtén más información acerca de la protección de tus datos en nuestra
         <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
       </p>
+
+      <label class="hidden" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </label>
     </form>
   </div>
 </section>
+
+<script>
+import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
+
+wireSubscribeForm(document.querySelector('#blog-newsletter-form'), 'Newsletter home')
+</script>

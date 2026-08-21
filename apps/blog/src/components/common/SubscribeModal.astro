@@ -56,6 +56,10 @@ import { categories } from '@/data/posts'
         <p class="font-body text-xs leading-relaxed text-dark/50">
           En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
         </p>
+
+        <label class="hidden" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
       </form>
     </div>
   </div>
@@ -90,10 +94,55 @@ document.addEventListener('keydown', (event) => {
     closeModal()
 })
 
-form?.addEventListener('submit', (event) => {
+const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
+const originalLabel = submitBtn?.textContent ?? 'Suscribirme'
+
+form?.addEventListener('submit', async (event) => {
   event.preventDefault()
-  // TODO: conectar a backend de suscripcion cuando exista.
-  closeModal()
-  form.reset()
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+  if (!submitBtn)
+    return
+
+  const data = new FormData(form)
+  const topics = data.getAll('topics').map(String)
+
+  submitBtn.disabled = true
+  submitBtn.textContent = 'Enviando...'
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        email: data.get('email'),
+        topics: topics.length > 0 ? topics : undefined,
+        website: data.get('website'),
+        source: 'Modal',
+      }),
+    })
+
+    if (res.ok) {
+      form.reset()
+      closeModal()
+    }
+    else {
+      submitBtn.textContent = 'Error, reintenta'
+      setTimeout(() => {
+        submitBtn.textContent = originalLabel
+      }, 2200)
+    }
+  }
+  catch {
+    submitBtn.textContent = 'Error, reintenta'
+    setTimeout(() => {
+      submitBtn.textContent = originalLabel
+    }, 2200)
+  }
+  finally {
+    submitBtn.disabled = false
+  }
 })
 </script>

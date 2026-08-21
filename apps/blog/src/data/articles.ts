@@ -204,8 +204,6 @@ export const articles: Article[] = [
       eyebrow: '¡Aprende a navegar la gran ola de datos! Compartimos una guía gratuita.',
       title: '16 mandamientos para ser un buen Community Manager',
       ctaLabel: 'Descargar',
-      // Abre el modal de captura de lead real en brainstorming.la/guias — no
-      // duplicamos el flujo de HubSpot + email aca, reusamos el existente.
       ctaHref: '/guias/mandamientos-community-manager',
       image: mandamientosCommunityManager,
     },

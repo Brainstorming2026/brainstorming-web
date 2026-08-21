@@ -1,7 +1,5 @@
 import type { ImageMetadata } from 'astro'
 import card1 from '@/assets/images/hero/card1.png'
-import card10 from '@/assets/images/hero/card10.png'
-import card11 from '@/assets/images/hero/card11.png'
 import card2 from '@/assets/images/hero/card2.png'
 import card3 from '@/assets/images/hero/card3.png'
 import card4 from '@/assets/images/hero/card4.png'
@@ -10,6 +8,8 @@ import card6 from '@/assets/images/hero/card6.png'
 import card7 from '@/assets/images/hero/card7.png'
 import card8 from '@/assets/images/hero/card8.png'
 import card9 from '@/assets/images/hero/card9.png'
+import card10 from '@/assets/images/hero/card10.png'
+import card11 from '@/assets/images/hero/card11.png'
 
 // Placeholder mientras se conecta Sanity (CMS). Misma forma que tendran los
 // posts reales — cuando se conecte el CMS, cada seccion de la home pasa a

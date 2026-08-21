@@ -113,6 +113,10 @@ const solucionesSlugs: Record<string, string> = {
               En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
             </p>
 
+            <label class="hidden" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </label>
+
             <button
               type="submit"
               class="mt-4 w-full rounded-[10px] bg-primary px-6 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
@@ -125,3 +129,9 @@ const solucionesSlugs: Record<string, string> = {
     </div>
   </div>
 </Layout>
+
+<script>
+import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
+
+wireSubscribeForm(document.querySelector('#category-newsletter-form'), 'Newsletter categoría')
+</script>

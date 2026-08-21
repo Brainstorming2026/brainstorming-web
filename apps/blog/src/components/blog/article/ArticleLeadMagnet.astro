@@ -11,7 +11,7 @@ const isExternal = leadMagnet.ctaHref.startsWith('http')
 ---
 
 <section class="mx-auto max-w-[720px] px-6 pt-12 lg:px-0">
-  <div class="flex items-center gap-6 rounded-[16px] bg-mist-100 p-6">
+  <div id="article-lead-magnet" class="flex items-center gap-6 rounded-[16px] bg-mist-100 p-6">
     <div class="flex-1">
       <p class="font-body text-xs text-dark/60">{leadMagnet.eyebrow}</p>
       <p class="mt-2 font-heading text-base font-bold text-dark">{leadMagnet.title}</p>
@@ -39,3 +39,13 @@ const isExternal = leadMagnet.ctaHref.startsWith('http')
     </div>
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip } from '@/lib/motion'
+
+registerMotion(() => {
+  const el = document.querySelector<HTMLElement>('#article-lead-magnet')
+  if (el)
+    revealClip(el, { direction: 'up' })
+})
+</script>

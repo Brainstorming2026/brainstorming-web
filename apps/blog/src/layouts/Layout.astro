@@ -1,5 +1,7 @@
 ---
+import { ClientRouter, fade } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
+import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import Navbar from '@/components/common/Navbar.astro'
 import SubscribeModal from '@/components/common/SubscribeModal.astro'
 import '@/styles/global.css'
@@ -29,13 +31,18 @@ const { title, description = 'Brainstorming Blog — Marketing digital, branding
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+
+    <!-- Navegación suave entre páginas, sin recarga completa -->
+    <ClientRouter />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
     {showChrome && <Navbar />}
-    <main>
+    <main transition:animate={fade({ duration: '0.4s' })}>
       <slot />
     </main>
     {showChrome && <Footer />}
     {showChrome && <SubscribeModal />}
+    <FormStatusModal />
+    {showChrome && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
   </body>
 </html>

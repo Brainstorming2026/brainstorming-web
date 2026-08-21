@@ -1,0 +1,172 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<div id="form-status-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 px-4 opacity-0 transition-opacity duration-300">
+  <div id="form-status-modal" class="relative w-full max-w-[360px] scale-95 rounded-[24px] bg-white px-8 py-10 text-center opacity-0 shadow-xl transition-all duration-300">
+    <button
+      type="button"
+      id="form-status-close"
+      aria-label="Cerrar"
+      class="absolute right-4 top-4 hidden h-8 w-8 items-center justify-center rounded-full text-dark/60 transition-colors hover:bg-mist-100"
+    >
+      <Icon name="close" class="h-3.5 w-3.5" />
+    </button>
+
+    <div class="relative mx-auto flex h-20 w-20 items-center justify-center">
+      <div id="form-status-spinner" class="absolute inset-0 animate-spin rounded-full border-[3px] border-primary/15 border-t-primary"></div>
+
+      <div id="form-status-badge" class="absolute inset-0 flex scale-0 items-center justify-center rounded-full opacity-0 transition-all duration-300">
+        <svg id="form-status-check" viewBox="0 0 24 24" fill="none" class="h-9 w-9">
+          <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="transition: stroke-dashoffset 0.4s ease-out 0.1s" />
+        </svg>
+        <svg id="form-status-x" viewBox="0 0 24 24" fill="none" class="hidden h-9 w-9">
+          <path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="transition: stroke-dashoffset 0.4s ease-out 0.1s" />
+        </svg>
+      </div>
+    </div>
+
+    <p id="form-status-title" class="mt-6 font-heading text-lg font-bold text-dark"></p>
+    <p id="form-status-message" class="mt-2 text-sm leading-6 text-dark/70"></p>
+
+    <button
+      type="button"
+      id="form-status-retry"
+      class="mt-6 hidden rounded-full bg-primary px-8 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+    >
+      Cerrar
+    </button>
+  </div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    #form-status-overlay,
+    #form-status-modal,
+    #form-status-badge,
+    #form-status-check path,
+    #form-status-x path {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<script>
+export type FormStatusState = 'loading' | 'success' | 'error'
+
+interface FormStatusDetail {
+  state: FormStatusState
+  title?: string
+  message?: string
+}
+
+const overlay = document.querySelector<HTMLDivElement>('#form-status-overlay')
+const modal = document.querySelector<HTMLDivElement>('#form-status-modal')
+const spinner = document.querySelector<HTMLDivElement>('#form-status-spinner')
+const badge = document.querySelector<HTMLDivElement>('#form-status-badge')
+const checkSvg = document.querySelector<SVGSVGElement>('#form-status-check')
+const checkPath = document.querySelector<SVGPathElement>('#form-status-check path')
+const xSvg = document.querySelector<SVGSVGElement>('#form-status-x')
+const xPath = document.querySelector<SVGPathElement>('#form-status-x path')
+const titleEl = document.querySelector<HTMLParagraphElement>('#form-status-title')
+const messageEl = document.querySelector<HTMLParagraphElement>('#form-status-message')
+const closeBtn = document.querySelector<HTMLButtonElement>('#form-status-close')
+const retryBtn = document.querySelector<HTMLButtonElement>('#form-status-retry')
+
+let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
+
+function resetIcon() {
+  spinner?.classList.remove('hidden')
+  badge?.classList.add('opacity-0', 'scale-0')
+  badge?.classList.remove('bg-green-500', 'bg-accent-500')
+  checkSvg?.classList.remove('hidden')
+  xSvg?.classList.add('hidden')
+  checkPath?.setAttribute('stroke-dashoffset', '1')
+  xPath?.setAttribute('stroke-dashoffset', '1')
+  closeBtn?.classList.add('hidden')
+  retryBtn?.classList.add('hidden')
+}
+
+function close() {
+  if (!overlay || !modal)
+    return
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+  overlay.classList.add('opacity-0')
+  modal.classList.add('opacity-0', 'scale-95')
+  setTimeout(() => {
+    overlay.classList.add('hidden')
+    overlay.classList.remove('flex')
+  }, 250)
+}
+
+function render({ state, title, message }: FormStatusDetail) {
+  if (!overlay || !modal || !badge)
+    return
+
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+
+  if (overlay.classList.contains('hidden')) {
+    resetIcon()
+    overlay.classList.remove('hidden')
+    overlay.classList.add('flex')
+    // Force reflow para que la transicion de entrada corra (si no, el
+    // navegador colapsa el cambio de "hidden" + opacity en un solo frame).
+    void overlay.offsetHeight
+    requestAnimationFrame(() => {
+      overlay.classList.remove('opacity-0')
+      modal.classList.remove('opacity-0', 'scale-95')
+    })
+  }
+
+  if (state === 'loading') {
+    titleEl!.textContent = title ?? 'Enviando…'
+    messageEl!.textContent = message ?? ''
+    return
+  }
+
+  const isSuccess = state === 'success'
+  titleEl!.textContent = title ?? (isSuccess ? '¡Enviado!' : 'Algo salió mal')
+  messageEl!.textContent = message ?? ''
+  closeBtn?.classList.remove('hidden')
+  spinner?.classList.add('hidden')
+
+  if (isSuccess) {
+    checkSvg?.classList.remove('hidden')
+    xSvg?.classList.add('hidden')
+    badge.classList.add('bg-green-500')
+  }
+  else {
+    xSvg?.classList.remove('hidden')
+    checkSvg?.classList.add('hidden')
+    badge.classList.add('bg-accent-500')
+    retryBtn?.classList.remove('hidden')
+  }
+
+  requestAnimationFrame(() => {
+    badge.classList.remove('opacity-0', 'scale-0')
+    const path = isSuccess ? checkPath : xPath
+    path?.setAttribute('stroke-dashoffset', '0')
+  })
+
+  if (isSuccess) {
+    autoCloseTimer = setTimeout(close, 2400)
+  }
+}
+
+document.addEventListener('form-status', ((event: CustomEvent<FormStatusDetail>) => {
+  render(event.detail)
+}) as EventListener)
+
+closeBtn?.addEventListener('click', close)
+retryBtn?.addEventListener('click', close)
+overlay?.addEventListener('click', (event) => {
+  if (event.target === overlay)
+    close()
+})
+</script>

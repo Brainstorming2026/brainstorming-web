@@ -8,7 +8,7 @@ interface Props {
 const { article } = Astro.props
 ---
 
-<section class="bg-mist-100 py-16">
+<section id="article-summary" class="bg-mist-100 py-16">
   <div class="mx-auto max-w-[720px] px-6 text-left lg:px-0">
     <h2 class="font-heading text-2xl font-bold text-dark">{article.summaryTitle}</h2>
     <div class="mt-4 flex flex-col gap-4">
@@ -30,3 +30,13 @@ const { article } = Astro.props
     )}
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip } from '@/lib/motion'
+
+registerMotion(() => {
+  const el = document.querySelector<HTMLElement>('#article-summary')
+  if (el)
+    revealClip(el, { direction: 'up' })
+})
+</script>

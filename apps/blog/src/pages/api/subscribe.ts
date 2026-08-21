@@ -7,6 +7,7 @@ import { isHoneypotTriggered } from '@/lib/honeypot'
 import { captureError } from '@/lib/observability'
 import { EMAIL_INTERNAL_TO, resend } from '@/lib/resend'
 import { fail, ok } from '@/lib/responses'
+import { verifyTurnstileToken } from '@/lib/turnstile'
 import { makeSubscribeSchema } from '@/lib/validation/subscribe'
 
 export const prerender = false
@@ -14,7 +15,7 @@ export const prerender = false
 // Endpoint compartido por los 4 forms de suscripcion del blog (footer, modal,
 // newsletter de home, newsletter de categoria) — todos piden email (+ topics
 // opcional), asi que un solo schema/handler cubre los 4 sin duplicar logica.
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   let body: unknown
   try {
     body = await request.json()
@@ -31,6 +32,11 @@ export const POST: APIRoute = async ({ request }) => {
   if (!parsed.success) {
     console.warn('[subscribe] validation failed:', parsed.error.issues)
     return fail(400, 'Invalid data')
+  }
+
+  const isHuman = await verifyTurnstileToken(parsed.data.turnstileToken, clientAddress)
+  if (!isHuman) {
+    return fail(403, 'Verificación fallida. Intenta de nuevo.')
   }
 
   const { email, topics } = parsed.data

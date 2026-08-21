@@ -7,11 +7,12 @@ import { popularPosts } from '@/data/posts'
   <h2 class="font-heading text-lg font-bold text-dark">CONTENIDOS MÁS POPULARES</h2>
 
   <div class="mt-6 grid gap-10 lg:grid-cols-[1fr_320px]">
-    <div class="flex flex-col gap-8">
+    <div id="popular-posts-list" class="flex flex-col gap-8">
       {popularPosts.map(post => <PostRow post={post} />)}
     </div>
 
     <a
+      id="popular-posts-cta"
       href="https://brainstorming.la/contacto"
       class="flex flex-col items-center justify-center rounded-[16px] bg-gradient-to-b from-primary to-navy px-8 py-12 text-center text-white transition-opacity hover:opacity-95"
     >
@@ -22,3 +23,15 @@ import { popularPosts } from '@/data/posts'
     </a>
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  staggerGrid(document.querySelectorAll('#popular-posts-list > *'), { variant: 'organic' })
+
+  const cta = document.querySelector<HTMLElement>('#popular-posts-cta')
+  if (cta)
+    revealClip(cta, { direction: 'right' })
+})
+</script>

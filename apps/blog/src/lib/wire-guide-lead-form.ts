@@ -1,10 +1,4 @@
-declare global {
-  interface Window {
-    turnstile?: { reset: (widget?: string | HTMLElement) => void }
-  }
-}
-
-export function wireSubscribeForm(form: HTMLFormElement | null, source: string): void {
+export function wireGuideLeadForm(form: HTMLFormElement | null, slug: string): void {
   if (!form)
     return
 
@@ -21,34 +15,34 @@ export function wireSubscribeForm(form: HTMLFormElement | null, source: string):
       return
 
     const data = new FormData(form)
-    const topics = data.getAll('topics').map(String)
-    const turnstileToken = data.get('cf-turnstile-response')
 
     submitBtn.disabled = true
     document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading' } }))
 
     try {
-      const res = await fetch('/api/subscribe', {
+      const res = await fetch('/api/guide-lead', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
+          nombre: data.get('nombre'),
           email: data.get('email'),
-          topics: topics.length > 0 ? topics : undefined,
+          telefono: [data.get('codigoArea'), data.get('telefono')].filter(Boolean).join(' ') || undefined,
+          empresa: data.get('empresa') || undefined,
+          slug,
+          suscribirse: data.get('suscribirse') === 'on',
           website: data.get('website'),
-          turnstileToken,
-          source,
         }),
       })
 
       if (res.ok) {
         form.reset()
         document.dispatchEvent(new CustomEvent('form-status', {
-          detail: { state: 'success', title: '¡Listo!', message: 'Revisa tu correo, te acabamos de escribir.' },
+          detail: { state: 'success', title: '¡Enviado!', message: 'Revisa tu correo, ahí te mandamos la guía.' },
         }))
       }
       else {
         document.dispatchEvent(new CustomEvent('form-status', {
-          detail: { state: 'error', title: 'No se pudo suscribir', message: 'Intenta de nuevo en unos minutos.' },
+          detail: { state: 'error', title: 'No se pudo procesar', message: 'Intenta de nuevo en unos minutos.' },
         }))
       }
     }
@@ -59,7 +53,6 @@ export function wireSubscribeForm(form: HTMLFormElement | null, source: string):
     }
     finally {
       submitBtn.disabled = false
-      window.turnstile?.reset()
     }
   })
 }

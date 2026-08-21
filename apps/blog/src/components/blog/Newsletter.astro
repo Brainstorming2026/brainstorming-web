@@ -1,10 +1,11 @@
 ---
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { categories } from '@/data/posts'
 ---
 
 <section class="bg-mist-100 py-16">
   <div class="mx-auto grid max-w-[1140px] gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-16">
-    <div>
+    <div id="newsletter-copy">
       <h2 class="font-heading text-2xl font-bold text-dark sm:text-3xl">SUSCRÍBETE A NUESTRO BRAINSTORMING</h2>
       <p class="mt-3 max-w-md font-body text-sm text-dark/70">
         ¡Empieza a añadir valor a tu marca! Sigue nuestras publicaciones y descubre contenidos y recursos gratuitos para optimizar tus estrategias de negocio.
@@ -42,6 +43,10 @@ import { categories } from '@/data/posts'
         </div>
       </label>
 
+      {TURNSTILE_SITE_KEY && (
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
+      )}
+
       <p class="font-body text-xs leading-relaxed text-dark/50">
         En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada
         únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de
@@ -58,7 +63,15 @@ import { categories } from '@/data/posts'
 </section>
 
 <script>
+import { registerMotion, staggerGrid } from '@/lib/motion'
 import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
 
 wireSubscribeForm(document.querySelector('#blog-newsletter-form'), 'Newsletter home')
+
+registerMotion(() => {
+  staggerGrid([
+    document.querySelector('#newsletter-copy'),
+    document.querySelector('#blog-newsletter-form'),
+  ].filter((el): el is Element => el !== null), { variant: 'organic', itemStagger: 0.22 })
+})
 </script>

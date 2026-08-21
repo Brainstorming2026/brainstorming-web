@@ -1,4 +1,5 @@
 ---
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import ArticleLeadMagnet from '@/components/blog/article/ArticleLeadMagnet.astro'
 import PostCard from '@/components/blog/PostCard.astro'
 import PostRow from '@/components/blog/PostRow.astro'
@@ -38,7 +39,7 @@ const solucionesSlugs: Record<string, string> = {
 
 <Layout title={`${category.label} — Brainstorming Blog`} description={category.description}>
   <div class="bg-mist-100 py-12 lg:py-16">
-    <div class="mx-auto max-w-[1140px] px-6 lg:px-16">
+    <div id="category-header" class="mx-auto max-w-[1140px] px-6 lg:px-16">
       <p class="font-heading text-sm font-bold text-primary">Categoría</p>
       <h1 class="mt-2 font-heading text-3xl font-bold text-dark sm:text-4xl">{category.label}</h1>
       <p class="mt-3 max-w-[560px] font-body text-[15px] leading-relaxed text-dark/70">{category.description}</p>
@@ -50,7 +51,7 @@ const solucionesSlugs: Record<string, string> = {
       <div>
         {categoryPosts.length > 0
           ? (
-              <div class="grid gap-8 sm:grid-cols-2">
+              <div id="category-posts-grid" class="grid gap-8 sm:grid-cols-2">
                 {categoryPosts.map(post => <PostCard post={post} />)}
               </div>
             )
@@ -60,12 +61,13 @@ const solucionesSlugs: Record<string, string> = {
 
         {featuredLeadMagnet
           ? (
-              <div class="mt-10">
+              <div id="category-lead-magnet" class="mt-10">
                 <ArticleLeadMagnet leadMagnet={featuredLeadMagnet} />
               </div>
             )
           : (
               <a
+                id="category-lead-magnet"
                 href={`https://brainstorming.la/soluciones/${solucionesSlugs[category.slug]}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -82,7 +84,7 @@ const solucionesSlugs: Record<string, string> = {
       <aside class="flex flex-col gap-10">
         <div>
           <h2 class="font-heading text-lg font-bold text-dark">Contenidos más populares</h2>
-          <div class="mt-6 flex flex-col gap-6">
+          <div id="category-popular-list" class="mt-6 flex flex-col gap-6">
             {popularPosts.slice(0, 3).map(post => <PostRow post={post} />)}
           </div>
         </div>
@@ -117,6 +119,10 @@ const solucionesSlugs: Record<string, string> = {
               <input type="text" name="website" tabindex="-1" autocomplete="off" />
             </label>
 
+            {TURNSTILE_SITE_KEY && (
+              <div class="mt-4 cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
+            )}
+
             <button
               type="submit"
               class="mt-4 w-full rounded-[10px] bg-primary px-6 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
@@ -131,7 +137,25 @@ const solucionesSlugs: Record<string, string> = {
 </Layout>
 
 <script>
+import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
 import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
 
 wireSubscribeForm(document.querySelector('#category-newsletter-form'), 'Newsletter categoría')
+
+registerMotion(() => {
+  const header = document.querySelector<HTMLElement>('#category-header')
+  if (header)
+    revealClip(header, { direction: 'up', scrollTrigger: false })
+
+  staggerGrid(document.querySelectorAll('#category-posts-grid > *'))
+  staggerGrid(document.querySelectorAll('#category-popular-list > *'), { variant: 'organic' })
+
+  const leadMagnet = document.querySelector<HTMLElement>('#category-lead-magnet')
+  if (leadMagnet)
+    revealClip(leadMagnet, { direction: 'up' })
+
+  const form = document.querySelector<HTMLElement>('#category-newsletter-form')
+  if (form)
+    revealClip(form, { direction: 'right' })
+})
 </script>

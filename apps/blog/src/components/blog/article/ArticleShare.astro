@@ -24,7 +24,7 @@ const shareLinks = [
   <p class="font-body text-sm text-dark/50">Publicado el {article.publishedDate}</p>
   <h2 class="mt-2 font-heading text-xl font-bold text-dark">Compartir es seguir aprendiendo</h2>
 
-  <ul class="mt-5 flex items-center justify-center gap-3">
+  <ul id="article-share-links" class="mt-5 flex items-center justify-center gap-3">
     {shareLinks.map(link => (
       <li>
         <a
@@ -42,3 +42,11 @@ const shareLinks = [
 
   <div class="mt-10 border-t border-dark-100"></div>
 </section>
+
+<script>
+import { registerMotion, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  staggerGrid(document.querySelectorAll('#article-share-links > *'), { variant: 'organic', itemStagger: 0.08 })
+})
+</script>

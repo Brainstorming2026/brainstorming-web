@@ -6,7 +6,15 @@ import { relatedPosts } from '@/data/posts'
 <section class="mx-auto max-w-[1140px] px-6 py-16 lg:px-16">
   <h2 class="text-center font-heading text-lg font-bold text-dark">SIGUE EXPLORANDO CONTENIDOS DE INTERÉS</h2>
 
-  <div class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  <div id="related-posts-grid" class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {relatedPosts.map(post => <PostCard post={post} showCategory />)}
   </div>
 </section>
+
+<script>
+import { registerMotion, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  staggerGrid(document.querySelectorAll('#related-posts-grid > *'))
+})
+</script>

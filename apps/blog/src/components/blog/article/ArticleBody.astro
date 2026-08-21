@@ -10,7 +10,7 @@ const { sections } = Astro.props
 ---
 
 <div class="mx-auto max-w-[720px] px-6 py-14 lg:px-0">
-  <div class="flex flex-col gap-10">
+  <div id="article-body-sections" class="flex flex-col gap-10">
     {sections.map(section => (
       <section>
         <h2 class="font-heading text-xl font-bold text-dark sm:text-2xl">{section.heading}</h2>
@@ -53,3 +53,11 @@ const { sections } = Astro.props
     ))}
   </div>
 </div>
+
+<script>
+import { registerMotion, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  staggerGrid(document.querySelectorAll('#article-body-sections > *'), { variant: 'organic', itemStagger: 0.1 })
+})
+</script>

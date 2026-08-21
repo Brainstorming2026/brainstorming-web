@@ -171,56 +171,7 @@ const faqs = [
 </Layout>
 
 <script>
-const form = document.querySelector<HTMLFormElement>('#guide-lead-form')
-const submitBtn = document.querySelector<HTMLButtonElement>('#guide-lead-submit')
-const originalLabel = submitBtn?.textContent ?? 'Descargar ahora'
+import { wireGuideLeadForm } from '@/lib/wire-guide-lead-form'
 
-form?.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  if (!form.checkValidity()) {
-    form.reportValidity()
-    return
-  }
-  if (!submitBtn)
-    return
-
-  const data = new FormData(form)
-  submitBtn.disabled = true
-  submitBtn.textContent = 'Enviando...'
-
-  try {
-    const res = await fetch('/api/guide-lead', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        nombre: data.get('nombre'),
-        email: data.get('email'),
-        telefono: [data.get('codigoArea'), data.get('telefono')].filter(Boolean).join(' ') || undefined,
-        empresa: data.get('empresa') || undefined,
-        slug: 'construir-pagina-web-5-pasos',
-        suscribirse: data.get('suscribirse') === 'on',
-        website: data.get('website'),
-      }),
-    })
-
-    if (res.ok) {
-      submitBtn.textContent = '¡Enviado! Revisa tu correo'
-      form.reset()
-    }
-    else {
-      submitBtn.textContent = 'Error, reintenta'
-    }
-  }
-  catch {
-    submitBtn.textContent = 'Revisa tu conexión'
-  }
-  finally {
-    setTimeout(() => {
-      if (submitBtn) {
-        submitBtn.disabled = false
-        submitBtn.textContent = originalLabel
-      }
-    }, 2600)
-  }
-})
+wireGuideLeadForm(document.querySelector('#guide-lead-form'), 'construir-pagina-web-5-pasos')
 </script>

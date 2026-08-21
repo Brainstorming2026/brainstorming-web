@@ -1,5 +1,5 @@
 ---
-import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client'
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
@@ -78,7 +78,7 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
           </span>
         </label>
 
-        <div id="contacto-turnstile" class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-action="contacto"></div>
+        <div id="contacto-turnstile" class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action="contacto"></div>
       </div>
 
       <button

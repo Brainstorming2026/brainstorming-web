@@ -1,5 +1,5 @@
 ---
-import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client'
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { Image } from 'astro:assets'
 import illustration from '@/assets/contact/hero-contact.png'
 import arrow from '@/assets/contact/right.png'
@@ -152,7 +152,7 @@ const investmentRanges = t.investmentRanges
             </span>
           </label>
 
-          <div id="contact-turnstile" class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-action="contact-us"></div>
+          <div id="contact-turnstile" class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action="contact-us"></div>
 
           <button
             type="submit"

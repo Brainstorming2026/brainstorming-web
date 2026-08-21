@@ -4,8 +4,6 @@ import { InternalLeadEmail } from '@/components/emails/InternalLeadEmail'
 import { sendEmail } from '@/lib/email/send'
 import { resolveGuideBySlug } from '@/lib/guide-lead'
 import { isHoneypotTriggered } from '@/lib/honeypot'
-import { upsertContact } from '@/lib/hubspot'
-import { captureError } from '@/lib/observability'
 import { EMAIL_INTERNAL_TO } from '@/lib/resend'
 import { fail, ok } from '@/lib/responses'
 import { makeGuideLeadSchema } from '@/lib/validation/guide-lead'
@@ -40,21 +38,8 @@ export const POST: APIRoute = async ({ request, site }) => {
     return fail(400, 'Invalid data')
   }
 
-  const saved = await upsertContact({
-    email,
-    firstname: nombre,
-    lead_source: 'guia-practica',
-    guide_title: guide.title,
-  })
-  if (!saved) {
-    captureError(new Error('HubSpot upsert failed'), { scope: 'guide-lead', extra: { email, slug } })
-    return fail(502, 'No se pudo procesar tu solicitud. Intenta de nuevo.')
-  }
-
   const guideUrl = new URL(guide.pdf, site ?? 'https://brainstorming.la').toString()
 
-  // Best-effort: el usuario ya descarga el PDF directo en el cliente, y
-  // HubSpot ya es el registro critico del lead (arriba).
   await Promise.all([
     sendEmail({
       to: EMAIL_INTERNAL_TO,

@@ -3,8 +3,6 @@ import { ContactAckEmail } from '@/components/emails/ContactAckEmail'
 import { InternalLeadEmail } from '@/components/emails/InternalLeadEmail'
 import { sendEmail } from '@/lib/email/send'
 import { isHoneypotTriggered } from '@/lib/honeypot'
-import { upsertContact } from '@/lib/hubspot'
-import { captureError } from '@/lib/observability'
 import { EMAIL_INTERNAL_TO } from '@/lib/resend'
 import { fail, ok } from '@/lib/responses'
 import { verifyTurnstileToken } from '@/lib/turnstile'
@@ -40,24 +38,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
   const fullName = `${firstName} ${lastName}`.trim()
 
-  // HubSpot es el registro del lead — critico, si falla el request falla
-  // (no queremos perder el lead silenciosamente).
-  const saved = await upsertContact({
-    email: companyEmail,
-    firstname: firstName,
-    lastname: lastName,
-    phone,
-    lead_source: 'contact-us',
-    investment_range: investment,
-    message,
-  })
-  if (!saved) {
-    captureError(new Error('HubSpot upsert failed'), { scope: 'contact', extra: { email: companyEmail } })
-    return fail(502, 'We could not process your message. Please try again.')
-  }
-
-  // Ambos correos son best-effort: HubSpot ya es el registro critico del
-  // lead (arriba), estos son notificaciones, no la unica copia del dato.
   await Promise.all([
     sendEmail({
       to: EMAIL_INTERNAL_TO,

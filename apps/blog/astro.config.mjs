@@ -32,10 +32,9 @@ export default defineConfig({
       CORREO_TIPO: envField.string({ context: 'server', access: 'secret', optional: true }),
       CORREO_FROM: envField.string({ context: 'server', access: 'secret', optional: true }),
       CORREO_REPLY_TO: envField.string({ context: 'server', access: 'secret', optional: true }),
-      // Opcional: si se define, los suscriptores se agregan a esa Audience de
-      // Resend (lista con dedupe + unsubscribe). Sin ella, el form sigue
-      // funcionando (solo se pierde el registro en la audiencia).
       RESEND_SUBSCRIBE_AUDIENCE_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
+      TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
+      TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
 

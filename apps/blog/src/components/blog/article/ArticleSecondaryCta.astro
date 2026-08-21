@@ -8,7 +8,7 @@ interface Props {
 const { cta } = Astro.props
 ---
 
-<section class="mx-auto max-w-[720px] px-6 pt-12 text-center lg:px-0">
+<section id="article-secondary-cta" class="mx-auto max-w-[720px] px-6 pt-12 text-center lg:px-0">
   <h2 class="font-heading text-lg font-bold text-dark">{cta.title}</h2>
   <a
     href={cta.ctaHref}
@@ -17,3 +17,13 @@ const { cta } = Astro.props
     {cta.ctaLabel}
   </a>
 </section>
+
+<script>
+import { registerMotion, revealClip } from '@/lib/motion'
+
+registerMotion(() => {
+  const el = document.querySelector<HTMLElement>('#article-secondary-cta')
+  if (el)
+    revealClip(el, { direction: 'up' })
+})
+</script>

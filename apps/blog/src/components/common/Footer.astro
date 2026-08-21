@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 import { redes } from '@/data/footer'
 
@@ -81,6 +82,10 @@ const oficinas = [
             <label class="hidden" aria-hidden="true">
               <input type="text" name="website" tabindex="-1" autocomplete="off" />
             </label>
+
+            {TURNSTILE_SITE_KEY && (
+              <div class="mt-2 cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" data-theme="dark" />
+            )}
           </form>
 
           <ul class="mt-5 flex items-center gap-2">

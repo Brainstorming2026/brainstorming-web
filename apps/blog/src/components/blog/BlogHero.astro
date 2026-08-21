@@ -8,6 +8,7 @@ import { featuredPost, quickPosts } from '@/data/posts'
   <h1 class="font-heading text-2xl font-bold text-dark sm:text-3xl">BLOG</h1>
 
   <a
+    id="blog-hero-featured"
     href={`/${featuredPost.slug}`}
     class="relative mt-8 flex min-h-[320px] flex-col justify-end overflow-hidden rounded-[16px] p-8 text-white sm:min-h-[420px] lg:p-12"
   >
@@ -29,7 +30,19 @@ import { featuredPost, quickPosts } from '@/data/posts'
     <span class="mt-4 text-xs text-white/60">{featuredPost.date}</span>
   </a>
 
-  <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div id="blog-hero-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {quickPosts.map(post => <PostCard post={post} showCategory />)}
   </div>
 </section>
+
+<script>
+import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const featured = document.querySelector<HTMLElement>('#blog-hero-featured')
+  if (featured)
+    revealClip(featured, { direction: 'up', scrollTrigger: false })
+
+  staggerGrid(document.querySelectorAll('#blog-hero-grid > *'))
+})
+</script>

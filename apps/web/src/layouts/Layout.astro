@@ -2,12 +2,12 @@
 import { ClientRouter, fade } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
 import Navbar from '@/components/common/Navbar.astro'
+import SplashScreen from '@/components/common/SplashScreen.astro'
 import '@/styles/global.css'
 
 interface Props {
   title: string
   description?: string
-  /** Tailwind bg-color class matching the last section before the footer. */
   footerCurveBg?: string
   showNavbar?: boolean
 }
@@ -37,6 +37,7 @@ const { title, description = 'Brainstorming — Agencia de Marketing', footerCur
     <ClientRouter />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
+    <SplashScreen />
     {showNavbar && <Navbar />}
     <main transition:animate={fade({ duration: '0.4s' })}>
       <slot />

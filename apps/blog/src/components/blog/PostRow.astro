@@ -4,20 +4,27 @@ import { Image } from 'astro:assets'
 
 interface Props {
   post: Post
+  layout?: 'row' | 'stacked'
 }
 
-const { post } = Astro.props
+const { post, layout = 'row' } = Astro.props
+const stacked = layout === 'stacked'
 ---
 
-<article class="flex gap-4 sm:gap-6">
-  <a href={`/${post.slug}`} class="block aspect-[4/3] w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:w-44">
+<article class={stacked ? 'flex flex-col gap-3' : 'flex gap-4 sm:gap-6'}>
+  <a
+    href={`/${post.slug}`}
+    class={stacked
+      ? 'block aspect-[16/9] w-full shrink-0 overflow-hidden rounded-[10px] bg-mist-200'
+      : 'block aspect-[4/3] w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:w-44'}
+  >
     {post.image && (
       <Image
         src={post.image}
         alt=""
         class="h-full w-full object-cover"
-        widths={[176, 320]}
-        sizes="176px"
+        widths={stacked ? [320, 480] : [176, 320]}
+        sizes={stacked ? '320px' : '176px'}
         loading="lazy"
       />
     )}

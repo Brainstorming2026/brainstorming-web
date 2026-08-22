@@ -3,6 +3,7 @@ import { ClientRouter, fade } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import Navbar from '@/components/common/Navbar.astro'
+import SplashScreen from '@/components/common/SplashScreen.astro'
 import SubscribeModal from '@/components/common/SubscribeModal.astro'
 import '@/styles/global.css'
 
@@ -36,6 +37,7 @@ const { title, description = 'Brainstorming Blog — Marketing digital, branding
     <ClientRouter />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
+    <SplashScreen />
     {showChrome && <Navbar />}
     <main transition:animate={fade({ duration: '0.4s' })}>
       <slot />

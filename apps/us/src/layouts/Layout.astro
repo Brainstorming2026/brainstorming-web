@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css'
+import SplashScreen from '@/components/common/SplashScreen.astro'
 import WhatsAppButton from '@/components/common/WhatsAppButton.astro'
 import { getLang, localizePath, useTranslations } from '@/i18n/utils'
 
@@ -32,6 +33,7 @@ const canonicalEs = new URL(localizePath(path, 'es'), Astro.site)
     <title>{title}</title>
   </head>
   <body class="font-body text-dark">
+    <SplashScreen />
     <slot />
     <WhatsAppButton message={whatsapp.message} />
   </body>

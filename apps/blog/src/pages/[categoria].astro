@@ -85,7 +85,7 @@ const solucionesSlugs: Record<string, string> = {
         <div>
           <h2 class="font-heading text-lg font-bold text-dark">Contenidos más populares</h2>
           <div id="category-popular-list" class="mt-6 flex flex-col gap-6">
-            {popularPosts.slice(0, 3).map(post => <PostRow post={post} />)}
+            {popularPosts.slice(0, 3).map(post => <PostRow post={post} layout="stacked" />)}
           </div>
         </div>
 

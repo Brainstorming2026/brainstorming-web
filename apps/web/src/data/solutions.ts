@@ -45,5 +45,6 @@ export const solutions: Solution[] = [
     desc: 'Basa toda tu estrategia comercial en el usuario y mejora la performance de tu equipo de ventas.',
     colorClass: 'text-primary',
     glowClass: 'bg-primary',
+    href: '/soluciones/inbound-sales',
   },
 ]

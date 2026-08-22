@@ -34,16 +34,22 @@ const SEEN_KEY = 'bs-splash-seen'
 </div>
 
 <script>
+  import { ease } from '@/lib/motion/config'
   import { ensureGsap } from '@/lib/motion/gsap-client'
   import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
   const SEEN_KEY = 'bs-splash-seen'
-  const HOLD_MS = 2200
-  const FADE_S = 0.5
+  /** Duración real de cada gif (81/71 frames @ 25fps) — el hold coincide con
+   * el frame final en vez de cortar el loop a mitad de animación. */
+  const HOLD_DESKTOP_MS = 3240
+  const HOLD_MOBILE_MS = 2840
+  const FADE_S = 0.6
 
   const splash = document.getElementById('splash-screen')
   if (splash && !sessionStorage.getItem(SEEN_KEY)) {
     document.body.style.overflow = 'hidden'
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches
+    const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
 
     const dismiss = () => {
       sessionStorage.setItem(SEEN_KEY, '1')
@@ -58,16 +64,18 @@ const SEEN_KEY = 'bs-splash-seen'
         return
       }
       const { gsap } = ensureGsap()
+      gsap.set(splash, { transformOrigin: '50% 50%' })
       gsap.to(splash, {
         opacity: 0,
+        scale: 1.04,
         duration: FADE_S,
-        ease: 'power2.out',
+        ease: ease.out,
         onComplete: () => {
           splash.style.display = 'none'
           dismiss()
         },
       })
-    }, HOLD_MS)
+    }, holdMs)
   } else if (splash) {
     splash.style.display = 'none'
   }

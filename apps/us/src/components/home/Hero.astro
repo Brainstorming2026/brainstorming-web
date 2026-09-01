@@ -23,7 +23,7 @@ const t = useTranslations(lang, 'hero')
   <div class="relative z-10">
     <Navbar />
 
-    <div class="max-w-7xl px-6 pt-4 lg:px-16">
+    <div class="mx-auto flex max-w-4xl flex-col items-center px-6 pt-16 text-center lg:pt-24">
       <h1 id="hero-headline" class="font-heading text-4xl leading-[1.15] font-bold text-white sm:text-5xl lg:text-[56px]">
         {t.headline} <span class="text-gold">{t.headlineAccent}</span>
       </h1>
@@ -34,13 +34,22 @@ const t = useTranslations(lang, 'hero')
       <button
         type="button"
         aria-label="Scroll to learn more"
-        class="mt-30 hidden animate-bounce lg:inline-flex"
+        class="mt-24 hidden animate-bounce lg:inline-flex"
         onclick="document.getElementById('why-oakrs')?.scrollIntoView({ behavior: 'smooth' })"
       >
         <Image src={down} alt="" class="h-auto w-70" />
       </button>
     </div>
   </div>
+
+  <svg
+    class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] w-full"
+    viewBox="0 0 1512 120"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M0,120 H1512 V44 C1134,104 378,104 0,44 Z" fill="#fff"></path>
+  </svg>
 </section>
 
 <script>

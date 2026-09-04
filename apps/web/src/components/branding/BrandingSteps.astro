@@ -1,38 +1,238 @@
 ---
 import { Image } from 'astro:assets'
-import processImg from '@/assets/branding/branding-process.webp'
+import analyticsReporting from '@/assets/branding/icons/analytics-reporting.png'
+import buyerPersona from '@/assets/branding/icons/buyer-persona.png'
+import contentImplementation from '@/assets/branding/icons/content-implementation.png'
+import contentStrategy from '@/assets/branding/icons/content-strategy.png'
+import customerJourney from '@/assets/branding/icons/customer-journey.png'
+import organicTraffic from '@/assets/branding/icons/organic-traffic.png'
+import resultsAnalysis from '@/assets/branding/icons/results-analysis.png'
+import trafficAttraction from '@/assets/branding/icons/traffic-attraction.png'
+import userAnalysis from '@/assets/branding/icons/user-analysis.png'
+
+const steps = [
+  {
+    number: '01',
+    icon: userAnalysis,
+    title: 'Análisis de Usuarios y Objetivos',
+    description:
+      'Recogemos información de tu empresa mediante un briefing, el cual analizamos para crear una estrategia de comunicación que esté alineada con tus objetivos.',
+  },
+  {
+    number: '02',
+    icon: buyerPersona,
+    title: 'Buyer Persona y Mapa de Empatía',
+    description:
+      'Utilizamos distintas herramientas y técnicas que permiten que nuestro equipo interdisciplinario entienda mejor a tu consumidor, lo que necesita y lo que valora.',
+  },
+  {
+    number: '03',
+    icon: customerJourney,
+    title: 'Customer Journey',
+    description:
+      'Esta técnica permite que identifiquemos los puntos de contacto con tu cliente, de forma que podemos siempre ofrecerle soporte o estar para ayudarlo.',
+  },
+  {
+    number: '04',
+    icon: contentStrategy,
+    title: 'Estrategia de Contenidos',
+    description:
+      'Con base en las herramientas anteriores, creamos una estrategia de contenidos que esté alineada con tu público objetivo y con los objetivos de tu empresa.',
+  },
+  {
+    number: '05',
+    icon: contentImplementation,
+    title: 'Creación e Implementación de Contenido',
+    description:
+      'Ideamos y creamos el contenido que nos indica la estrategia. Luego lo implementamos de tal forma que podemos medir todos los costos de las acciones que toma el usuario en su recorrido y, por ende, el retorno de tu inversión.',
+  },
+  {
+    number: '06',
+    icon: trafficAttraction,
+    title: 'Tracción de Tráfico',
+    description:
+      'Empleamos herramientas y estrategias de Search Engine Marketing (SEM) para aumentar la visibilidad de tu negocio en buscadores.',
+  },
+  {
+    number: '07',
+    icon: organicTraffic,
+    title: 'Atracción de Tráfico orgánico',
+    description:
+      'Ya sea mediante backlinks, redacción de artículos con palabras clave u otras técnicas de SEO, buscamos constantemente mejorar la autoridad de tu dominio.',
+  },
+  {
+    number: '08',
+    icon: analyticsReporting,
+    title: 'Analítica y Reporting',
+    description:
+      'Por medio de herramientas de análisis y medición de KPIs, hacemos tangibles los resultados de tus campañas digitales. En el mundo digital, todo es medible.',
+  },
+  {
+    number: '09',
+    icon: resultsAnalysis,
+    title: 'Análisis de Resultados y Estrategia',
+    description:
+      'Analizamos los resultados de tu campaña para ajustar nuestra estrategia sobre decisiones tomadas con base en data.',
+  },
+]
 ---
 
-<section class="bg-white">
-  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
-    <h2 id="branding-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      ¿Suena fácil cierto?
-    </h2>
-    <p class="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-6 text-dark-500">
-      Es más complejo de lo que crees. Para hacer nuestro mundo más entendible para ti,
-      vamos a resumir algunas de las herramientas y técnicas que utilizamos para brindar
-      a tu público la mejor experiencia:
-    </p>
+<section class="relative overflow-hidden bg-gradient-to-b from-white via-highlight-50/35 to-white">
+  <div
+    class="pointer-events-none absolute -left-24 top-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute -right-24 bottom-24 h-96 w-96 rounded-full bg-highlight/10 blur-3xl"
+    aria-hidden="true"
+  ></div>
 
-    <Image
-      id="branding-steps-img"
-      src={processImg}
-      alt="9 herramientas y técnicas de Branding: Análisis de Usuarios y Objetivos, Buyer Persona y Mapa de Empatía, Customer Journey, Estrategia de Contenidos, Creación e Implementación de Contenido, Tracción de Tráfico, Atracción de Tráfico orgánico, Analítica y Reporting, Análisis de Resultados y Estrategia"
-      class="mx-auto mt-12 h-auto w-full"
-      widths={[560, 1120]}
-      sizes="(min-width: 1140px) 1120px, 100vw"
-      loading="lazy"
-    />
+  <div class="relative mx-auto max-w-[1380px] px-6 py-20 lg:px-24 lg:py-28">
+    <div id="branding-steps-intro" class="mx-auto max-w-3xl text-center">
+      <p class="font-heading text-xs font-bold uppercase tracking-[0.24em] text-primary">
+        Nuestro proceso
+      </p>
+      <h2
+        id="branding-steps-headline"
+        class="mt-4 font-heading text-3xl font-bold leading-tight text-dark sm:text-[40px]"
+      >
+        ¿Suena fácil cierto?
+      </h2>
+      <p class="mt-5 text-[15px] leading-7 text-dark-500 sm:text-base">
+        Es más complejo de lo que crees. Para hacer nuestro mundo más entendible para ti,
+        vamos a resumir algunas de las herramientas y técnicas que utilizamos para brindar
+        a tu público la mejor experiencia:
+      </p>
+    </div>
+
+    <div id="branding-steps-grid" class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {steps.map(step => (
+        <article class="branding-step-card group relative min-h-[310px] overflow-hidden rounded-[24px] border border-dark/8 bg-white p-6 shadow-[0_18px_55px_rgba(33,34,34,0.07)] md:p-7">
+          <div
+            class="branding-step-glow pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-highlight/20 opacity-60 blur-3xl"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="absolute inset-x-7 top-0 h-[3px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-highlight via-highlight-300 to-primary opacity-0 transition duration-500 group-hover:scale-x-100 group-hover:opacity-100"
+            aria-hidden="true"
+          ></div>
+
+          <div class="relative flex items-center gap-4">
+            <span class="branding-step-number font-heading text-[38px] font-bold leading-none text-highlight sm:text-[44px]">
+              {step.number}
+            </span>
+            <div class="h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+              <Image
+                src={step.icon}
+                alt=""
+                aria-hidden="true"
+                class="branding-step-icon h-full w-full object-contain"
+                widths={[96, 192]}
+                sizes="96px"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="relative mt-6">
+            <h3 class="max-w-[290px] font-heading text-xl font-bold leading-snug text-dark">
+              {step.title}
+            </h3>
+            <p class="mt-3 text-[15px] leading-6 text-dark-500">
+              {step.description}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline } from '@/lib/motion'
+import { ensureGsap, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
+  const intro = document.getElementById('branding-steps-intro')
   const headline = document.getElementById('branding-steps-headline')
-  const img = document.getElementById('branding-steps-img')
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (img) revealClip(img, { direction: 'up', mode: 'scrub' })
+  const cards = document.querySelectorAll<HTMLElement>('#branding-steps-grid .branding-step-card')
+
+  if (headline)
+    splitHeadline(headline, { by: 'words' })
+
+  if (intro) {
+    const introCopy = intro.querySelectorAll(':scope > p')
+    const { gsap } = ensureGsap()
+    gsap.fromTo(
+      introCopy,
+      { opacity: 0, y: 14 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: ease.out,
+        scrollTrigger: { trigger: intro, start: 'top 84%' },
+      },
+    )
+  }
+
+  staggerGrid(cards, { variant: 'organic', itemDuration: 1.25, itemStagger: 0.12 })
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+  const numbers = document.querySelectorAll('#branding-steps-grid .branding-step-number')
+  const icons = document.querySelectorAll('#branding-steps-grid .branding-step-icon')
+
+  gsap.fromTo(
+    numbers,
+    { opacity: 0, x: -14 },
+    {
+      opacity: 1,
+      x: 0,
+      duration: 0.75,
+      stagger: 0.1,
+      ease: ease.out,
+      scrollTrigger: { trigger: '#branding-steps-grid', start: 'top 82%', once: true },
+    },
+  )
+
+  gsap.fromTo(
+    icons,
+    { opacity: 0, scale: 0.72, rotate: -7 },
+    {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      duration: 0.9,
+      stagger: 0.1,
+      ease: ease.back,
+      scrollTrigger: { trigger: '#branding-steps-grid', start: 'top 82%', once: true },
+    },
+  )
+
+  cards.forEach((card) => {
+    const icon = card.querySelector('.branding-step-icon')
+    const glow = card.querySelector('.branding-step-glow')
+
+    card.addEventListener('pointerenter', () => {
+      gsap.to(card, { y: -8, scale: 1.012, duration: 0.45, ease: ease.out, overwrite: true })
+      if (icon)
+        gsap.to(icon, { scale: 1.07, rotate: 2, duration: 0.45, ease: ease.out, overwrite: true })
+      if (glow)
+        gsap.to(glow, { opacity: 1, scale: 1.18, duration: 0.55, ease: ease.out, overwrite: true })
+    })
+
+    card.addEventListener('pointerleave', () => {
+      gsap.to(card, { y: 0, scale: 1, duration: 0.55, ease: ease.out, overwrite: true })
+      if (icon)
+        gsap.to(icon, { scale: 1, rotate: 0, duration: 0.55, ease: ease.out, overwrite: true })
+      if (glow)
+        gsap.to(glow, { opacity: 0.6, scale: 1, duration: 0.55, ease: ease.out, overwrite: true })
+    })
+  })
 })
 </script>

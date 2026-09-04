@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import bg from '@/assets/hero/bg.png'
+import bg from '@/assets/hero/bg-us-hd.png'
 import down from '@/assets/hero/down.png'
 import Navbar from '@/components/common/Navbar.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
@@ -16,14 +16,14 @@ const t = useTranslations(lang, 'hero')
     alt=""
     class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
     loading="eager"
-    widths={[758, 1512]}
+    widths={[758, 1512, 3024]}
     sizes="100vw"
   />
 
   <div class="relative z-10">
     <Navbar />
 
-    <div class="mx-auto flex max-w-4xl flex-col items-center px-6 pt-16 text-center lg:pt-24">
+    <div class="max-w-7xl px-6 pt-4 lg:px-16">
       <h1 id="hero-headline" class="font-heading text-4xl leading-[1.15] font-bold text-white sm:text-5xl lg:text-[56px]">
         {t.headline} <span class="text-gold">{t.headlineAccent}</span>
       </h1>
@@ -34,7 +34,7 @@ const t = useTranslations(lang, 'hero')
       <button
         type="button"
         aria-label="Scroll to learn more"
-        class="mt-24 hidden animate-bounce lg:inline-flex"
+        class="mt-30 hidden animate-bounce lg:inline-flex"
         onclick="document.getElementById('why-oakrs')?.scrollIntoView({ behavior: 'smooth' })"
       >
         <Image src={down} alt="" class="h-auto w-70" />

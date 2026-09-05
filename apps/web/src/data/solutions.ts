@@ -48,13 +48,13 @@ export const solutions: Solution[] = [
     href: '/soluciones/inbound-marketing',
   },
   {
-    slug: 'inbound-sales',
+    slug: 'smart-selling',
     icon: 'expert-money',
-    title: 'Inbound Sales',
-    desc: 'Basa toda tu estrategia comercial en el usuario y mejora la performance de tu equipo de ventas.',
+    title: 'Smart Selling',
+    desc: 'Diseña un sistema comercial que genere oportunidades, priorice prospectos y cierre de forma consistente.',
     colorClass: 'text-primary',
     glowClass: 'bg-primary',
-    href: '/soluciones/inbound-sales',
+    href: '/soluciones/smart-selling',
   },
   {
     slug: 'optimizacion-procesos',

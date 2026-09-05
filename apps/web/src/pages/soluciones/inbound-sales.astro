@@ -1,14 +1,5 @@
 ---
-import SalesCta from '@/components/sales/SalesCta.astro'
-import SalesHero from '@/components/sales/SalesHero.astro'
-import SalesSteps from '@/components/sales/SalesSteps.astro'
-import Layout from '@/layouts/Layout.astro'
+export const prerender = true
 
-export const prerender = true;
+return Astro.redirect('/soluciones/smart-selling', 301)
 ---
-
-<Layout title="Inbound Sales — Brainstorming">
-  <SalesHero />
-  <SalesSteps />
-  <SalesCta />
-</Layout>

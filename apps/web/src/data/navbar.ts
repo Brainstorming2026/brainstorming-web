@@ -16,7 +16,7 @@ export const navLinks: NavLink[] = [
       { label: 'Branding', href: '/soluciones/branding' },
       { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
       { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
-      { label: 'Inbound Sales', href: '/soluciones/inbound-sales' },
+      { label: 'Smart Selling', href: '/soluciones/smart-selling' },
       { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
     ],
   },

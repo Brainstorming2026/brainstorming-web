@@ -6,43 +6,99 @@ interface Props {
   image: ImageMetadata
   title: string
   description: string
+  eyebrow?: string
+  secondaryDescription?: string
+  compactTitle?: boolean
+  imageFit?: 'cover' | 'contain'
+  layeredIllustration?: boolean
 }
 
-const { image, title, description } = Astro.props
+const {
+  image,
+  title,
+  description,
+  eyebrow,
+  secondaryDescription,
+  compactTitle = false,
+  imageFit = 'cover',
+  layeredIllustration = false,
+} = Astro.props
 ---
 
-<section data-split-hero class="relative overflow-hidden bg-white lg:min-h-[702px]">
+<section data-split-hero class:list={['relative overflow-hidden bg-white', layeredIllustration ? 'lg:min-h-[720px]' : 'lg:min-h-[702px]']}>
+  {layeredIllustration && (
+    <div
+      data-split-hero-wave
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-[36%] bg-[#eef3fd] [clip-path:polygon(0_36%,23%_18%,47%_37%,72%_12%,100%_28%,100%_100%,0_100%)] sm:h-[34%] lg:h-[31%]"
+      aria-hidden="true"
+    ></div>
+  )}
+
   <Image
     data-split-hero-bg
     src={image}
     alt=""
-    class="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-bottom lg:block"
+    class:list={[
+      'pointer-events-none absolute hidden lg:block',
+      layeredIllustration
+        ? 'bottom-12 right-10 h-[94%] w-auto max-w-none object-contain object-right-bottom'
+        : 'inset-0 h-full w-full object-bottom',
+      !layeredIllustration && (imageFit === 'contain' ? 'object-contain object-right' : 'object-cover'),
+    ]}
     loading="eager"
     fetchpriority="high"
     widths={[1512, 3024]}
     sizes="100vw"
   />
 
-  <div class="relative z-10 mx-auto flex max-w-[1512px] items-center px-6 pb-3 pt-16 lg:min-h-[702px] lg:px-24 lg:py-16">
-    <div class="max-w-[600px]">
-      <h1 data-split-hero-headline class="font-heading text-[clamp(2.35rem,10vw,3.25rem)] font-bold leading-[1.08] text-dark lg:text-[52px] lg:leading-[60px]">
+  <div
+    class:list={[
+      'relative z-10 mx-auto flex max-w-[1512px] items-center px-6 pb-3 pt-16 lg:px-24 lg:py-10',
+      layeredIllustration ? 'lg:min-h-[720px] lg:-translate-y-12' : 'lg:min-h-[702px]',
+    ]}
+  >
+    <div class:list={['max-w-[600px]', layeredIllustration && 'lg:max-w-[570px]']}>
+      {eyebrow && (
+        <p data-split-hero-eyebrow class="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
+          {eyebrow}
+        </p>
+      )}
+      <h1
+        data-split-hero-headline
+        class:list={[
+          'font-heading font-bold leading-[1.08] text-dark',
+          compactTitle
+            ? 'text-[clamp(2.25rem,9vw,3rem)] lg:text-[46px] lg:leading-[1.12]'
+            : 'text-[clamp(2.35rem,10vw,3.25rem)] lg:text-[52px] lg:leading-[60px]',
+        ]}
+      >
         {title}
       </h1>
       <p data-split-hero-text class="mt-6 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
         {description}
       </p>
+      {secondaryDescription && (
+        <p data-split-hero-text class="mt-3 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
+          {secondaryDescription}
+        </p>
+      )}
     </div>
   </div>
 
-  <div class="relative h-[320px] overflow-hidden sm:h-[380px] lg:hidden" aria-hidden="true">
+  <div class:list={['relative overflow-hidden lg:hidden', layeredIllustration ? 'h-[350px] sm:h-[410px]' : 'h-[320px] sm:h-[380px]']} aria-hidden="true">
     <Image
       data-split-hero-bg
       src={image}
       alt=""
-      class="pointer-events-none absolute bottom-0 right-[-10%] h-auto w-[190%] max-w-none sm:right-[-4%] sm:w-[165%]"
+      class:list={[
+        'pointer-events-none absolute bottom-0 max-w-none',
+        layeredIllustration
+          ? 'right-0 h-full w-auto sm:right-0 sm:h-[104%]'
+          : 'right-[-10%] h-auto w-[190%] sm:right-[-4%] sm:w-[165%]',
+      ]}
       loading="eager"
       widths={[758, 1120]}
-      sizes="(max-width: 639px) 190vw, 165vw"
+      sizes={layeredIllustration ? '(max-width: 639px) 670px, 760px' : '(max-width: 639px) 190vw, 165vw'}
     />
   </div>
 </section>
@@ -54,24 +110,29 @@ registerMotion(() => {
   document.querySelectorAll<HTMLElement>('[data-split-hero]').forEach((hero) => {
     const backgrounds = hero.querySelectorAll('[data-split-hero-bg]')
     const headline = hero.querySelector('[data-split-hero-headline]')
-    const text = hero.querySelector('[data-split-hero-text]')
+    const texts = hero.querySelectorAll('[data-split-hero-text]')
+    const eyebrow = hero.querySelector('[data-split-hero-eyebrow]')
     const { gsap } = ensureGsap()
 
-    if (text && !prefersReducedMotion())
-      gsap.set(text, { opacity: 0, y: 10 })
+    if (!prefersReducedMotion()) {
+      gsap.set(texts, { opacity: 0, y: 10 })
+      if (eyebrow)
+        gsap.set(eyebrow, { opacity: 0, y: 8 })
+    }
 
     if (headline) {
       splitHeadline(headline, {
         by: 'words',
         scrollTrigger: false,
         onComplete: () => {
-          if (text)
-            gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+          gsap.to(texts, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 })
         },
       })
     }
 
     if (!prefersReducedMotion()) {
+      if (eyebrow)
+        gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
       backgrounds.forEach(background =>
         gsap.fromTo(background, { scale: 1 }, { scale: 1.025, duration: 8, ease: 'none' }))
     }

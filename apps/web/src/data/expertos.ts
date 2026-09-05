@@ -22,7 +22,7 @@ export const experts: Expert[] = [
   },
   {
     icon: 'expert-money',
-    title: 'Inbound Sales',
-    desc: 'Implementación de CRM y automatizaciones',
+    title: 'Smart Selling',
+    desc: 'Arquitectura comercial, CRM y automatización',
   },
 ]

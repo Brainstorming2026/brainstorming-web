@@ -1,72 +1,245 @@
 ---
-import { Icon } from 'astro-icon/components'
-import SolutionProcessCards from '@/components/solutions/SolutionProcessCards.astro'
-import { salesBenefits, salesSteps } from '@/data'
+import { Image } from 'astro:assets'
+import { salesBenefits, salesCaseStudies, salesSteps } from '@/data'
 ---
 
-<section class="bg-gradient-to-b from-mist from-0% via-white via-35% to-white">
-  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
-    <h2 id="sales-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      ¿Cómo funciona el proceso de Inbound Sales?
-    </h2>
-    <p class="mx-auto mt-4 max-w-[700px] text-center text-[15px] leading-6 text-dark-500">
-      Conoce los 6 pasos que seguimos para lograr que la experiencia de compra esté siempre
-      alineada al contexto de tus usuarios.
-    </p>
+<section id="proceso-smart-selling" data-sales-process class="bg-white py-20 sm:py-24 lg:py-28">
+  <div class="mx-auto grid max-w-[1240px] gap-12 px-6 lg:grid-cols-[0.78fr_1.42fr] lg:gap-20 lg:px-12">
+    <aside class="self-start lg:sticky lg:top-28">
+      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Metodología Smart Selling</p>
+      <h2 id="sales-steps-headline" class="mt-4 max-w-[500px] font-heading text-[clamp(2rem,5vw,3.35rem)] font-bold leading-[1.06] text-dark">
+        El sistema antes que la herramienta.
+      </h2>
+      <p class="mt-5 max-w-[480px] text-[16px] leading-7 text-dark-500 sm:text-[17px]">
+        Primero entendemos cómo vendes. Después diseñamos, conectamos y dejamos funcionando un proceso que tu equipo pueda repetir.
+      </p>
 
-    <SolutionProcessCards
-      steps={salesSteps}
-      accent="#48267f"
-      softAccent="#f2eef9"
-      label="Etapas del proceso de Inbound Sales"
-    />
+      <nav class="mt-9 hidden max-w-[440px] border-y border-black/10 py-2 lg:block" aria-label="Fases de Smart Selling">
+        {
+          [
+            ['01–02', 'Diagnosticar'],
+            ['03', 'Diseñar'],
+            ['04–05', 'Activar'],
+            ['06', 'Adoptar'],
+          ].map(([range, label]) => (
+            <div class="flex items-center justify-between border-b border-black/[0.07] px-1 py-3.5 last:border-0">
+              <span class="text-sm font-semibold text-dark">{label}</span>
+              <span class="text-[10px] font-bold tracking-[0.18em] text-primary">{range}</span>
+            </div>
+          ))
+        }
+      </nav>
+    </aside>
 
+    <ol class="divide-y divide-black/[0.08] border-y border-black/10" aria-label="Proceso Smart Selling en seis etapas">
+      {
+        salesSteps.map(step => (
+          <li data-sales-step class="group relative py-7 sm:py-8">
+            <article class="grid gap-5 sm:grid-cols-[112px_1fr] sm:items-start sm:gap-7">
+              <div
+                data-sales-icon
+                class="flex h-[92px] w-[92px] items-center justify-center rounded-[22px] bg-[#f3f1f8] p-2.5 transition-transform duration-300 group-hover:-translate-y-1 sm:h-28 sm:w-28"
+              >
+                <Image
+                  src={step.icon}
+                  alt=""
+                  class="h-full w-full object-contain"
+                  widths={[184, 224]}
+                  sizes="(max-width: 639px) 92px, 112px"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="min-w-0 pr-12 sm:pr-16">
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Etapa {step.number}</span>
+                <h3 class="mt-2 font-heading text-[22px] font-bold leading-[1.2] text-dark sm:text-[26px]">
+                  {step.title}
+                </h3>
+                <p class="mt-3 text-[15px] leading-[1.7] text-dark-500 sm:text-[16px]">
+                  {step.description}
+                </p>
+              </div>
+
+              <span class="pointer-events-none absolute right-0 top-7 font-heading text-[42px] font-bold leading-none text-[#dfe2ea] sm:top-8 sm:text-[50px]" aria-hidden="true">
+                {step.number}
+              </span>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
-<section class="bg-white py-16">
-  <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
-    <h2 id="sales-benefits-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      ¿En qué puede esto ayudar a tu negocio?
-    </h2>
+<section data-sales-benefits class="bg-[#f2f5fa] py-20 sm:py-24 lg:py-28">
+  <div class="mx-auto grid max-w-[1240px] gap-10 px-6 lg:grid-cols-[0.88fr_1.12fr] lg:gap-20 lg:px-12">
+    <header class="max-w-[520px]">
+      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-[#315bc7] sm:text-xs">Lo que cambia en el negocio</p>
+      <h2 id="sales-benefits-headline" class="mt-4 font-heading text-[clamp(2rem,5vw,3.25rem)] font-bold leading-[1.08] text-dark">
+        Más control comercial. Menos dependencia del esfuerzo heroico.
+      </h2>
+      <p class="mt-5 text-[16px] leading-7 text-dark-500">
+        El valor no está en tener más software, sino en lograr que cada oportunidad tenga contexto, responsable y siguiente paso.
+      </p>
+    </header>
 
-    <div id="sales-benefits" class="mt-10 grid gap-8 sm:grid-cols-2">
-      <ul class="space-y-4">
-        {
-          salesBenefits.left.map(text => (
-            <li class="benefit-item flex items-start gap-3">
-              <Icon name="sales-check" class="mt-1 h-3 w-auto text-[#48267F] flex-shrink-0" />
-              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <ul class="space-y-4">
-        {
-          salesBenefits.right.map(text => (
-            <li class="benefit-item flex items-start gap-3">
-              <Icon name="sales-check" class="mt-1 h-3 w-auto text-[#48267F] flex-shrink-0" />
-              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
-            </li>
-          ))
-        }
-      </ul>
+    <ol id="sales-benefits" class="border-t border-[#cfd6e3]">
+      {
+        salesBenefits.map((benefit, index) => (
+          <li class="benefit-item grid grid-cols-[42px_1fr] gap-4 border-b border-[#cfd6e3] py-5 sm:grid-cols-[54px_1fr] sm:py-6">
+            <span class="pt-1 text-[11px] font-bold tracking-[0.16em] text-[#315bc7]">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="font-heading text-[18px] font-bold leading-tight text-dark sm:text-[20px]">{benefit.title}</h3>
+              <p class="mt-2 text-[14px] leading-6 text-dark-500 sm:text-[15px]">{benefit.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section id="casos-smart-selling" data-sales-cases class="bg-[#faf9f6] py-20 sm:py-24 lg:py-28">
+  <div class="mx-auto max-w-[1240px] px-6 lg:px-12">
+    <header class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-16">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Casos de éxito</p>
+        <h2 id="sales-cases-headline" class="mt-4 font-heading text-[clamp(2rem,5vw,3.25rem)] font-bold leading-[1.08] text-dark">
+          El proceso se demuestra en los números.
+        </h2>
+      </div>
+      <p class="max-w-[610px] text-[16px] leading-7 text-dark-500 sm:text-[17px] lg:justify-self-end">
+        Dos contextos distintos. En ambos, ordenar el sistema comercial permitió convertir más oportunidades con el equipo y los activos existentes.
+      </p>
+    </header>
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-12">
+      {
+        salesCaseStudies.map((caseStudy, caseIndex) => (
+          <article
+            data-sales-case
+            class:list={[
+              'relative overflow-hidden rounded-[24px] border border-black/[0.09] bg-white shadow-[0_18px_55px_rgba(28,34,55,0.07)]',
+              caseIndex === 0 ? 'lg:col-span-7' : 'lg:col-span-5',
+            ]}
+          >
+            <div class:list={['h-1.5 w-full', caseStudy.accent === 'ait' ? 'bg-[#f47721]' : 'bg-[#0969a8]']} aria-hidden="true"></div>
+
+            <div class="p-6 sm:p-8">
+              <div class="flex min-h-[58px] items-center justify-between gap-5">
+                <Image
+                  src={caseStudy.logo}
+                  alt={caseStudy.logoAlt}
+                  class:list={[
+                    'w-auto object-contain object-left',
+                    caseStudy.accent === 'ait' ? 'h-11 max-w-[220px]' : 'h-12 max-w-[190px]',
+                  ]}
+                  widths={[220, 440]}
+                  sizes="220px"
+                  loading="lazy"
+                />
+                <span class="shrink-0 rounded-full border border-black/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em] text-dark-500">
+                  Caso de éxito
+                </span>
+              </div>
+
+              <h3 class="sr-only">{caseStudy.client}</h3>
+              <p class="mt-7 max-w-[590px] text-[15px] leading-6 text-dark-500 sm:text-[16px]">
+                {caseStudy.context}
+              </p>
+
+              <dl class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.08] sm:grid-cols-3">
+                {
+                  caseStudy.metrics.map(metric => (
+                    <div class="min-w-0 bg-[#f7f8fa] px-4 py-5 sm:min-h-[132px] sm:px-5">
+                      <dt class="text-[11px] leading-4 text-dark-500">{metric.label}</dt>
+                      <dd class:list={[
+                        'mt-3 font-heading text-[clamp(1.3rem,2.35vw,1.75rem)] font-bold leading-tight',
+                        caseStudy.accent === 'ait' ? 'text-[#0b1f69]' : 'text-[#0969a8]',
+                      ]}
+                      >
+                        {metric.value}
+                      </dd>
+                    </div>
+                  ))
+                }
+              </dl>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
 
 <script>
-import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
-  const stepsHeadline = document.getElementById('sales-steps-headline')
-  const benefitsHeadline = document.getElementById('sales-benefits-headline')
-  const benefits = document.querySelectorAll('#sales-benefits .benefit-item')
+  const process = document.querySelector<HTMLElement>('[data-sales-process]')
+  const benefitsSection = document.querySelector<HTMLElement>('[data-sales-benefits]')
+  const casesSection = document.querySelector<HTMLElement>('[data-sales-cases]')
+  const headlines = [
+    document.getElementById('sales-steps-headline'),
+    document.getElementById('sales-benefits-headline'),
+    document.getElementById('sales-cases-headline'),
+  ]
 
-  if (stepsHeadline)
-    splitHeadline(stepsHeadline, { by: 'lines' })
-  if (benefitsHeadline)
-    splitHeadline(benefitsHeadline, { by: 'lines' })
-  staggerGrid(benefits, { variant: 'organic' })
+  headlines.forEach((headline) => {
+    if (headline)
+      splitHeadline(headline, { by: 'lines' })
+  })
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+
+  if (process) {
+    const steps = process.querySelectorAll('[data-sales-step]')
+    const icons = process.querySelectorAll('[data-sales-icon]')
+    if (steps.length > 0) {
+      gsap.from(steps, {
+        opacity: 0,
+        x: 18,
+        duration: 0.42,
+        stagger: 0.065,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: steps[0], start: 'top 86%', once: true },
+      })
+      gsap.from(icons, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.36,
+        stagger: 0.065,
+        ease: 'back.out(1.3)',
+        scrollTrigger: { trigger: steps[0], start: 'top 86%', once: true },
+      })
+    }
+  }
+
+  if (benefitsSection) {
+    const benefits = benefitsSection.querySelectorAll('.benefit-item')
+    gsap.from(benefits, {
+      opacity: 0,
+      y: 12,
+      duration: 0.38,
+      stagger: 0.06,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: benefitsSection, start: 'top 82%', once: true },
+    })
+  }
+
+  if (casesSection) {
+    const cases = casesSection.querySelectorAll('[data-sales-case]')
+    gsap.from(cases, {
+      opacity: 0,
+      y: 18,
+      duration: 0.46,
+      stagger: 0.1,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: casesSection, start: 'top 78%', once: true },
+    })
+  }
 })
 </script>

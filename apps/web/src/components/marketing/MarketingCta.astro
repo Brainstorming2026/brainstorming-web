@@ -4,11 +4,14 @@
 <section class="bg-white py-16 text-center">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
     <h2 id="marketing-cta-headline" class="font-heading text-[28px] font-bold text-dark sm:text-[35px]">
-      ¿Te ayudamos a crear y personalizar tu marca?
+      ¿Listo para convertir atención en demanda real?
     </h2>
+    <p class="mx-auto mt-4 max-w-[620px] text-[16px] leading-7 text-dark-500">
+      Diseñemos un sistema de contenido, automatización y adquisición que atraiga prospectos incluso cuando tu equipo no está vendiendo.
+    </p>
     <div id="marketing-cta-buttons" class="mt-8 flex flex-wrap items-center justify-center gap-4">
       <a
-        href="https://wa.me/51992528363?text=Hola,%20me%20interesa%20crear%20mi%20marca"
+        href="https://wa.me/51992528363?text=Hola,%20me%20interesa%20implementar%20Inbound%20Marketing"
         target="_blank"
         rel="noopener noreferrer"
         class="cta-btn inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
@@ -26,16 +29,18 @@
 </section>
 
 <script>
+import { registerMotion, splitHeadline } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
-import { registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   const headline = document.getElementById('marketing-cta-headline')
   const buttons = document.querySelectorAll('#marketing-cta-buttons .cta-btn')
-  if (headline) splitHeadline(headline, { by: 'words' })
-  if (buttons.length === 0) return
+  if (headline)
+    splitHeadline(headline, { by: 'words' })
+  if (buttons.length === 0)
+    return
 
   const { gsap } = ensureGsap()
   if (prefersReducedMotion()) {

@@ -49,7 +49,7 @@ export const categoryLabels: Record<GuideCategory, string> = {
   'desarrollo-web': 'Desarrollo web',
   'inbound-marketing': 'Inbound Marketing',
   'optimizacion': 'Optimización de Procesos y CX',
-  'inbound-sales': 'Inbound Sales',
+  'inbound-sales': 'Smart Selling',
 }
 
 // TODO: plantilla-publico-objetivo, plantilla-campanas-busqueda-google y

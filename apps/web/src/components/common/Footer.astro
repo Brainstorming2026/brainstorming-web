@@ -14,7 +14,7 @@ const { curveBg = 'bg-white' } = Astro.props
 ---
 
 <footer class="text-white">
-  <div class={curveBg}>
+  <div class:list={[curveBg, 'overflow-hidden leading-none']}>
     <Icon
       name="footer-up"
       aria-hidden="true"
@@ -22,7 +22,11 @@ const { curveBg = 'bg-white' } = Astro.props
     />
   </div>
 
-  <div class="bg-dark">
+  <!--
+    Solapamos 2 px con la curva. Evita la costura clara que algunos DPR/zooms
+    producen al rasterizar dos bloques contiguos, sin alterar la altura visual.
+  -->
+  <div class="relative z-10 -mt-[2px] bg-dark pt-[2px]">
   <!-- Mapa de ubicación -->
   <div class="mx-auto max-w-[1512px] px-6 pt-8 sm:pt-12 lg:px-24">
     <div class="h-[250px] overflow-hidden rounded-xl sm:h-[300px]">

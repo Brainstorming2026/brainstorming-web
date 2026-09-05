@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets'
+import { growthStages } from '@/data/growth-planning'
+---
+
+<section id="proceso-growth" class="relative overflow-hidden bg-mist-50 py-20 sm:py-24 lg:py-32">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -right-48 top-28 h-[560px] w-[560px] rounded-full bg-primary/10 blur-[120px]"></div>
+  </div>
+  <div class="relative mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
+    <div class="max-w-[780px]">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">El proceso · 7 etapas</p>
+      <h2 data-process-title class="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl lg:text-6xl">
+        De las preguntas difíciles a un plan que sí se ejecuta.
+      </h2>
+      <p class="mt-6 max-w-[680px] text-base leading-7 text-dark-500 sm:text-lg">Cada etapa reduce incertidumbre. Nada entra al roadmap sin evidencia, contexto y una razón clara para priorizarlo.</p>
+    </div>
+
+    <div data-growth-process class="mt-14 grid gap-10 lg:grid-cols-[250px_1fr] lg:gap-14">
+      <nav class="hidden lg:block" aria-label="Etapas de Growth Planning">
+        <div class="sticky top-28 overflow-hidden rounded-2xl border border-black/8 bg-white p-2 shadow-[0_14px_45px_rgba(34,59,121,0.08)]">
+          <div class="absolute bottom-3 left-[27px] top-3 w-px bg-black/8" aria-hidden="true"></div>
+          <div data-process-progress class="absolute left-[26px] top-3 h-[calc(100%-24px)] w-[3px] origin-top rounded-full bg-primary" aria-hidden="true"></div>
+          {growthStages.map(stage => (
+            <button type="button" data-stage-link={stage.number} class="relative flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-dark-500 transition-colors hover:bg-primary-50 hover:text-primary" aria-label={`Ir a ${stage.title}`}>
+              <span class="stage-dot relative z-10 h-3 w-3 shrink-0 rounded-full border-[3px] border-white bg-dark-200 shadow-sm transition-colors"></span>
+              <span>
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-primary">{stage.number}</span>
+                <span class="block text-sm font-bold">{stage.shortLabel}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <ol class="space-y-5">
+        {growthStages.map(stage => (
+          <li id={`growth-stage-${stage.number}`} data-stage-card={stage.number} class="scroll-mt-28">
+            <article class="group relative grid gap-5 overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[0_14px_45px_rgba(34,59,121,0.07)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_24px_65px_rgba(34,59,121,0.13)] sm:grid-cols-[112px_1fr] sm:gap-7 sm:p-8 lg:p-10">
+              <span class="pointer-events-none absolute right-5 top-0 font-heading text-[88px] font-bold leading-none text-dark/[0.035] sm:text-[120px]" aria-hidden="true">{stage.number}</span>
+              <div class="relative flex h-[88px] w-[88px] items-center justify-center rounded-2xl border border-primary/10 bg-[linear-gradient(145deg,#ffffff,#f4eefe)] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] transition-transform duration-300 group-hover:rotate-[-2deg] group-hover:scale-[1.04] sm:h-[112px] sm:w-[112px]">
+                <Image src={stage.icon} alt="" class="h-full w-full object-contain" widths={[176, 224]} sizes="(min-width: 640px) 112px, 88px" loading="lazy" quality={90} />
+              </div>
+              <div class="relative min-w-0">
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Fase {stage.number}</p>
+                <h3 class="mt-2 font-heading text-2xl font-bold leading-tight text-dark sm:text-[28px]">{stage.title}</h3>
+                <p class="mt-4 max-w-[760px] text-[15px] leading-7 text-dark-500 sm:text-base">{stage.description}</p>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const section = document.querySelector<HTMLElement>('[data-growth-process]')
+  const title = document.querySelector<HTMLElement>('[data-process-title]')
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  if (!section)
+    return
+
+  const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-stage-card]'))
+  const links = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-stage-link]'))
+  const progress = section.querySelector<HTMLElement>('[data-process-progress]')
+
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      document.getElementById(`growth-stage-${link.dataset.stageLink}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  })
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap, ScrollTrigger } = ensureGsap()
+  gsap.set(progress, { scaleY: 0 })
+  gsap.to(progress, {
+    scaleY: 1,
+    ease: 'none',
+    scrollTrigger: { trigger: section, start: 'top 42%', end: 'bottom 68%', scrub: 0.35 },
+  })
+
+  ScrollTrigger.batch(cards, {
+    start: 'top 88%',
+    once: true,
+    onEnter: batch => gsap.fromTo(batch, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, stagger: 0.07, ease: 'power2.out' }),
+  })
+
+  cards.forEach((card) => {
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top center',
+      end: 'bottom center',
+      onToggle: ({ isActive }) => {
+        if (!isActive)
+          return
+        links.forEach((link) => {
+          const active = link.dataset.stageLink === card.dataset.stageCard
+          link.classList.toggle('bg-primary-50', active)
+          link.classList.toggle('text-primary', active)
+          link.querySelector('.stage-dot')?.classList.toggle('bg-primary', active)
+        })
+      },
+    })
+  })
+})
+</script>

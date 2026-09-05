@@ -1,25 +1,10 @@
 ---
-import { Image } from 'astro:assets'
-import bgH from '@/assets/desarrollo/desarrollo-bg-h.webp'
-import desarrollo1 from '@/assets/desarrollo/desarrollo-1.webp'
-import desarrollo2 from '@/assets/desarrollo/desarrollo-2.webp'
-import desarrollo3 from '@/assets/desarrollo/desarrollo-3.webp'
 import { Icon } from 'astro-icon/components'
-import { desarrolloBenefits } from '@/data'
-
-const rowImages = [desarrollo1, desarrollo2, desarrollo3]
+import SolutionProcessCards from '@/components/solutions/SolutionProcessCards.astro'
+import { desarrolloBenefits, desarrolloSteps } from '@/data'
 ---
 
-<section class="relative overflow-hidden">
-  <Image
-    src={bgH}
-    alt=""
-    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
-    loading="lazy"
-    widths={[758, 1512]}
-    sizes="100vw"
-  />
-  <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-mist to-transparent" />
+<section class="relative overflow-hidden bg-gradient-to-b from-mist to-white">
   <div class="relative z-10 mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
     <h2 id="desarrollo-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
       Nuestro proceso de trabajo nos ayuda a obtener un producto
@@ -27,32 +12,13 @@ const rowImages = [desarrollo1, desarrollo2, desarrollo3]
       que superará tus expectativas.
     </h2>
 
-    <div id="desarrollo-steps-imgs" class="mt-12 space-y-6">
-      <Image
-        class="desarrollo-step-img mx-auto h-auto w-full"
-        src={rowImages[0]}
-        alt="Proceso paso 1-3"
-        widths={[560, 1120]}
-        sizes="(min-width: 1140px) 1120px, 100vw"
-        loading="lazy"
-      />
-      <Image
-        class="desarrollo-step-img mx-auto h-auto w-full"
-        src={rowImages[1]}
-        alt="Proceso paso 4-6"
-        widths={[560, 1120]}
-        sizes="(min-width: 1140px) 1120px, 100vw"
-        loading="lazy"
-      />
-      <Image
-        class="desarrollo-step-img mx-auto h-auto w-full"
-        src={rowImages[2]}
-        alt="Proceso paso 7-9"
-        widths={[560, 1120]}
-        sizes="(min-width: 1140px) 1120px, 100vw"
-        loading="lazy"
-      />
-    </div>
+    <SolutionProcessCards
+      steps={desarrolloSteps}
+      accent="#ed174c"
+      softAccent="#fff0f4"
+      label="Etapas del desarrollo web"
+    />
+
   </div>
 </section>
 
@@ -65,7 +31,7 @@ const rowImages = [desarrollo1, desarrollo2, desarrollo3]
     <div id="desarrollo-benefits" class="mt-10 grid gap-8 sm:grid-cols-2">
       <ul class="space-y-4">
         {
-          desarrolloBenefits.left.map((text) => (
+          desarrolloBenefits.left.map(text => (
             <li class="benefit-item flex items-start gap-3">
               <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
@@ -75,7 +41,7 @@ const rowImages = [desarrollo1, desarrollo2, desarrollo3]
       </ul>
       <ul class="space-y-4">
         {
-          desarrolloBenefits.right.map((text) => (
+          desarrolloBenefits.right.map(text => (
             <li class="benefit-item flex items-start gap-3">
               <Icon name="desarrollo-check" class="mt-1 h-3 w-auto flex-shrink-0" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
@@ -88,17 +54,17 @@ const rowImages = [desarrollo1, desarrollo2, desarrollo3]
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const headline = document.getElementById('desarrollo-steps-headline')
-  const imgs = document.querySelectorAll<HTMLElement>('#desarrollo-steps-imgs .desarrollo-step-img')
   const benefitsHeadline = document.getElementById('desarrollo-benefits-headline')
   const benefits = document.querySelectorAll('#desarrollo-benefits .benefit-item')
 
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  imgs.forEach(img => revealClip(img, { direction: 'up', mode: 'scrub' }))
-  if (benefitsHeadline) splitHeadline(benefitsHeadline, { by: 'lines' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (benefitsHeadline)
+    splitHeadline(benefitsHeadline, { by: 'lines' })
   staggerGrid(benefits, { variant: 'organic' })
 })
 </script>

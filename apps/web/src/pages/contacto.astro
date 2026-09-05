@@ -3,10 +3,13 @@ import ContactoForm from '@/components/contacto/ContactoForm.astro'
 import ContactoHero from '@/components/contacto/ContactoHero.astro'
 import Layout from '@/layouts/Layout.astro'
 
-export const prerender = true;
+export const prerender = true
 ---
 
-<Layout title="Contacto — Brainstorming">
+<Layout
+  title="Contacto — Brainstorming"
+  description="Conversemos sobre los retos y objetivos de tu negocio. Te ayudamos a definir el siguiente paso con claridad."
+>
   <ContactoHero />
   <ContactoForm />
 </Layout>

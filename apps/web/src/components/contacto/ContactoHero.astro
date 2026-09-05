@@ -2,28 +2,78 @@
 import { Icon } from 'astro-icon/components'
 ---
 
-<section class="bg-mist py-16 sm:py-20">
-  <div class="mx-auto max-w-[1512px] px-6 text-center lg:px-24">
-    <h1 class="font-heading text-[36px] font-bold text-dark sm:text-[44px]">
-      CONTACTO
-    </h1>
-    <div class="mt-6 flex flex-col items-center justify-center gap-4 text-sm text-dark-600 sm:flex-row sm:gap-8 sm:text-base">
-      <a
-        href="mailto:conversemos@brainstorming.la"
-        class="flex items-center gap-2 transition-colors hover:text-primary"
-      >
-        <Icon name="footer-mail" class="h-5 w-5 shrink-0" />
-        <span>conversemos@brainstorming.la</span>
-      </a>
-      <a
-        href="https://wa.me/51992528363"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex items-center gap-2 transition-colors hover:text-primary"
-      >
-        <Icon name="footer-phone" class="h-5 w-5 shrink-0" />
-        <span>+51 992 528 363</span>
-      </a>
+<section class="relative isolate overflow-hidden bg-dark pb-28 pt-16 text-white sm:pb-32 sm:pt-20 lg:pb-36 lg:pt-24">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -left-36 -top-48 h-[520px] w-[520px] rounded-full bg-primary/25 blur-[130px]"></div>
+    <div class="contact-grid absolute inset-0 opacity-20"></div>
+    <div class="absolute right-[8%] top-14 hidden h-44 w-44 rounded-full border border-white/10 lg:block"></div>
+    <div class="absolute right-[11%] top-24 hidden h-28 w-28 rounded-full border border-primary/35 lg:block"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
+    <div class="max-w-[840px]">
+      <p data-contact-eyebrow class="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-primary-300 sm:text-xs">
+        <span class="h-px w-8 bg-highlight"></span>
+        Hablemos de crecimiento
+      </p>
+      <h1 data-contact-title class="mt-6 font-heading text-[clamp(2.8rem,5.5vw,5.5rem)] font-bold leading-[0.98] tracking-[-0.045em]">
+        Las grandes ideas empiezan con una buena conversación.
+      </h1>
+      <p data-contact-copy class="mt-6 max-w-[670px] text-base leading-7 text-white/65 sm:text-lg sm:leading-8">
+        Cuéntanos dónde estás, qué quieres lograr y qué te está deteniendo. Nosotros te ayudamos a convertirlo en un siguiente paso claro.
+      </p>
+
+      <div data-contact-links class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a href="mailto:conversemos@brainstorming.la" class="group inline-flex min-h-12 items-center gap-3 rounded-xl border border-white/12 bg-white/[0.05] px-4 py-3 text-sm font-semibold text-white/85 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/20 text-primary-200 transition-colors group-hover:bg-primary group-hover:text-white">
+            <Icon name="footer-mail" class="h-4 w-4" />
+          </span>
+          conversemos@brainstorming.la
+        </a>
+        <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="group inline-flex min-h-12 items-center gap-3 rounded-xl border border-white/12 bg-white/[0.05] px-4 py-3 text-sm font-semibold text-white/85 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/20 text-primary-200 transition-colors group-hover:bg-primary group-hover:text-white">
+            <Icon name="footer-phone" class="h-4 w-4" />
+          </span>
+          +51 992 528 363
+        </a>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .contact-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(to right, black, transparent 80%);
+  }
+</style>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const title = document.querySelector<HTMLElement>('[data-contact-title]')
+  const eyebrow = document.querySelector<HTMLElement>('[data-contact-eyebrow]')
+  const copy = document.querySelector<HTMLElement>('[data-contact-copy]')
+  const links = document.querySelector<HTMLElement>('[data-contact-links]')
+
+  if (title)
+    splitHeadline(title, { by: 'lines', scrollTrigger: false })
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+  gsap.from([eyebrow, copy, links], {
+    y: 18,
+    opacity: 0,
+    duration: 0.55,
+    stagger: 0.07,
+    delay: 0.15,
+    ease: 'power2.out',
+  })
+})
+</script>

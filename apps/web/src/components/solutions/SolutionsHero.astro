@@ -9,7 +9,7 @@ import { solutions } from '@/data/solutions'
       A través de nuestras soluciones, podrás cumplir tus objetivos.
     </h1>
 
-    <div id="solutions-hero-grid" class="mx-auto mt-14 grid max-w-[1140px] gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div id="solutions-hero-grid" class="mx-auto mt-14 grid max-w-[1140px] gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {solutions.map(solution => (
         <div id={solution.slug} class="solution-card relative scroll-mt-24 pb-6">
           <div class={`absolute inset-x-6 bottom-0 h-16 rounded-full opacity-40 blur-2xl ${solution.glowClass}`} aria-hidden="true" />
@@ -47,9 +47,9 @@ import { solutions } from '@/data/solutions'
 </section>
 
 <script>
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
-import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
@@ -58,9 +58,11 @@ registerMotion(() => {
   const ctaHeadline = document.getElementById('solutions-cta-headline')
   const ctaBtn = document.getElementById('solutions-cta-btn')
 
-  if (headline) splitHeadline(headline, { by: 'words', scrollTrigger: false })
+  if (headline)
+    splitHeadline(headline, { by: 'words', scrollTrigger: false })
   staggerGrid(cards, { variant: 'organic' })
-  if (ctaHeadline) splitHeadline(ctaHeadline, { by: 'words' })
+  if (ctaHeadline)
+    splitHeadline(ctaHeadline, { by: 'words' })
 
   if (ctaBtn && !prefersReducedMotion()) {
     const { gsap } = ensureGsap()

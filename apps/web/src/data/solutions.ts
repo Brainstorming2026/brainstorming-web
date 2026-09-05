@@ -12,6 +12,15 @@ export interface Solution {
 
 export const solutions: Solution[] = [
   {
+    slug: 'growth-planning',
+    icon: 'expert-growth-planning',
+    title: 'Growth Planning',
+    desc: 'Identifica qué frena tu crecimiento y conviértelo en un roadmap priorizado y ejecutable.',
+    colorClass: 'text-primary',
+    glowClass: 'bg-primary',
+    href: '/soluciones/growth-planning',
+  },
+  {
     slug: 'branding',
     icon: 'expert-huella',
     title: 'Branding',
@@ -46,5 +55,14 @@ export const solutions: Solution[] = [
     colorClass: 'text-primary',
     glowClass: 'bg-primary',
     href: '/soluciones/inbound-sales',
+  },
+  {
+    slug: 'optimizacion-procesos',
+    icon: 'expert-process-cx',
+    title: 'Optimización de Procesos y CX',
+    desc: 'Ordena tus procesos y diseña experiencias que eleven la eficiencia y el valor para el cliente.',
+    colorClass: 'text-orange',
+    glowClass: 'bg-orange',
+    href: '/soluciones/optimizacion-procesos',
   },
 ]

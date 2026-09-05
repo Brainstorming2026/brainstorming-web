@@ -1,0 +1,80 @@
+---
+import { growthBenefits } from '@/data/growth-planning'
+---
+
+<section class="bg-white py-20 sm:py-24 lg:py-32">
+  <div class="mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
+    <div class="mx-auto max-w-[760px] text-center">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Lo que cambia</p>
+      <h2 data-benefits-title class="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl">Claridad que se convierte en movimiento.</h2>
+      <p class="mx-auto mt-6 max-w-[640px] text-base leading-7 text-dark-500 sm:text-lg">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
+    </div>
+
+    <div data-benefits-grid class="mt-14 grid gap-5 md:grid-cols-6">
+      {growthBenefits.map((benefit, index) => (
+        <article
+          data-benefit-card
+          class:list={[
+          'group relative min-h-[255px] overflow-hidden rounded-3xl border border-black/8 p-7 shadow-[0_12px_40px_rgba(34,59,121,0.06)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(34,59,121,0.12)] lg:p-8',
+          index < 3 ? 'md:col-span-2' : 'md:col-span-3',
+          index === 0 ? 'bg-dark text-white' : index === 4 ? 'bg-primary text-white' : 'bg-mist-50 text-dark',
+        ]}
+        >
+          <div class="flex items-center gap-2.5">
+            <span class:list={['h-2 w-2 rounded-full', index === 0 || index === 4 ? 'bg-highlight' : 'bg-primary']}></span>
+            <span class:list={['text-[10px] font-bold uppercase tracking-[0.18em]', index === 0 || index === 4 ? 'text-white/55' : 'text-dark-400']}>Resultado {benefit.metric}</span>
+          </div>
+          <span class:list={['absolute right-6 top-5 font-heading text-5xl font-bold', index === 0 || index === 4 ? 'text-white/8' : 'text-dark/5']} aria-hidden="true">{benefit.metric}</span>
+          <h3 class="mt-10 font-heading text-2xl font-bold">{benefit.title}</h3>
+          <p class:list={['mt-3 max-w-md leading-7', index === 0 || index === 4 ? 'text-white/70' : 'text-dark-500']}>{benefit.description}</p>
+        </article>
+      ))}
+    </div>
+
+    <div data-roadmap-output class="relative mt-20 overflow-hidden rounded-[32px] bg-dark px-6 py-10 text-white sm:px-10 lg:px-14 lg:py-14">
+      <div class="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-primary/30 blur-[90px]" aria-hidden="true"></div>
+      <div class="relative grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300">El entregable</p>
+          <h3 class="mt-4 font-heading text-3xl font-bold leading-tight sm:text-4xl">Un sistema de decisiones para los próximos 6 meses.</h3>
+          <p class="mt-5 max-w-lg leading-7 text-white/65">No termina en una presentación: termina con orden, ownership y una secuencia de ejecución entendible por todo el equipo.</p>
+        </div>
+        <ol class="grid gap-3 sm:grid-cols-3">
+          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
+            <span class="font-heading text-3xl font-bold text-highlight">30</span>
+            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
+            <p class="mt-5 text-sm font-bold text-white">Quick wins</p>
+            <p class="mt-2 text-sm leading-6 text-white/55">Primeras acciones activadas.</p>
+          </li>
+          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
+            <span class="font-heading text-3xl font-bold text-primary-300">90</span>
+            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
+            <p class="mt-5 text-sm font-bold text-white">Hitos críticos</p>
+            <p class="mt-2 text-sm leading-6 text-white/55">Prioridades en ejecución.</p>
+          </li>
+          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
+            <span class="font-heading text-3xl font-bold text-white">180</span>
+            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
+            <p class="mt-5 text-sm font-bold text-white">Roadmap completo</p>
+            <p class="mt-2 text-sm leading-6 text-white/55">Crecimiento con dirección.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const title = document.querySelector<HTMLElement>('[data-benefits-title]')
+  const cards = document.querySelectorAll('[data-benefit-card]')
+  const output = document.querySelector<HTMLElement>('[data-roadmap-output]')
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  staggerGrid(cards, { variant: 'organic', itemStagger: 0.09 })
+  if (output)
+    revealClip(output, { direction: 'up' })
+})
+</script>

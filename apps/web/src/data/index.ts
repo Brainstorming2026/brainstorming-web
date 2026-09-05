@@ -1,6 +1,6 @@
 export { clientes } from './clientes'
 
-export { desarrolloBenefits } from './desarrollo'
+export { desarrolloBenefits, desarrolloSteps } from './desarrollo'
 
 export { embudoPasos } from './embudo'
 export type { EmbudoPaso } from './embudo'
@@ -24,7 +24,7 @@ export type { OfficeLocation } from './office'
 
 export { problemaCards } from './problemas'
 
-export { procesosBenefits } from './procesos'
+export { procesosBenefits, procesosSteps } from './procesos'
 export type { ProblemaCard } from './problemas'
 
 export { categoriaLabels, proyectos } from './proyectos'

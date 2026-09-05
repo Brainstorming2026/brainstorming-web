@@ -1,0 +1,22 @@
+---
+import GrowthBenefits from '@/components/growth-planning/GrowthBenefits.astro'
+import GrowthCta from '@/components/growth-planning/GrowthCta.astro'
+import GrowthHero from '@/components/growth-planning/GrowthHero.astro'
+import GrowthOverview from '@/components/growth-planning/GrowthOverview.astro'
+import GrowthProcess from '@/components/growth-planning/GrowthProcess.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+---
+
+<Layout
+  title="Growth Planning — Brainstorming"
+  description="Diagnóstico estratégico de tres semanas para identificar qué frena el crecimiento y convertirlo en un roadmap priorizado de 90 a 180 días."
+  footerCurveBg="bg-mist"
+>
+  <GrowthHero />
+  <GrowthOverview />
+  <GrowthProcess />
+  <GrowthBenefits />
+  <GrowthCta />
+</Layout>

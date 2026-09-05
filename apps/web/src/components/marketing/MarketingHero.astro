@@ -1,51 +1,10 @@
 ---
-import { Image } from 'astro:assets'
-import heroBg from '@/assets/marketing/marketing-hero-bg.png'
+import heroBg from '@/assets/marketing/marketing-hero-bg-hd.webp'
+import SolutionSplitHero from '@/components/solutions/SolutionSplitHero.astro'
 ---
 
-<section class="relative min-h-[600px] overflow-hidden bg-white lg:min-h-[702px]">
-  <Image
-    id="marketing-hero-bg"
-    src={heroBg}
-    alt=""
-    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom"
-    loading="eager"
-    fetchpriority="high"
-    widths={[758, 1512]}
-    sizes="100vw"
-  />
-  <div class="relative z-10 mx-auto flex min-h-[600px] max-w-[1512px] items-center px-6 py-16 lg:min-h-[702px] lg:px-24">
-    <div class="max-w-[600px]">
-      <h1 id="marketing-hero-headline" class="font-heading text-[40px] font-bold leading-[50px] text-dark sm:text-[52px] sm:leading-[60px]">
-        No solo creamos marcas, también historias y experiencias.
-      </h1>
-      <p id="marketing-hero-text" class="mt-6 text-[16px] leading-6 text-dark-500">
-        Sabemos lo importante que es para ti proyectar una visión de tu negocio al mundo.
-        En Brainstorming, trabajamos en definir la personalidad y valores de tu marca, con
-        el objetivo de alcanzar el posicionamiento que deseas, conquistando la mente y
-        corazón de los consumidores.
-      </p>
-    </div>
-  </div>
-</section>
-
-<script>
-import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
-import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
-
-registerMotion(() => {
-  const bg = document.getElementById('marketing-hero-bg')
-  const headline = document.getElementById('marketing-hero-headline')
-  const text = document.getElementById('marketing-hero-text')
-  const { gsap } = ensureGsap()
-
-  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
-
-  if (headline) {
-    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
-    } })
-  }
-  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
-})
-</script>
+<SolutionSplitHero
+  image={heroBg}
+  title="No solo creamos marcas, también historias y experiencias."
+  description="Sabemos lo importante que es para ti proyectar una visión de tu negocio al mundo. En Brainstorming, trabajamos en definir la personalidad y valores de tu marca, con el objetivo de alcanzar el posicionamiento que deseas, conquistando la mente y corazón de los consumidores."
+/>

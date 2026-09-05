@@ -2,7 +2,7 @@ export interface NavLink {
   label: string
   href: string
   dropdown?: boolean
-  children?: { label: string; href: string }[]
+  children?: { label: string, href: string }[]
 }
 
 export const navLinks: NavLink[] = [
@@ -12,6 +12,7 @@ export const navLinks: NavLink[] = [
     href: '/soluciones',
     dropdown: true,
     children: [
+      { label: 'Growth Planning', href: '/soluciones/growth-planning' },
       { label: 'Branding', href: '/soluciones/branding' },
       { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
       { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },

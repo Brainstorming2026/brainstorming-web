@@ -115,3 +115,41 @@ export function revealCircle(el: HTMLElement, { delay = 0, scrollTrigger = false
     },
   )
 }
+
+interface DrawSVGOptions {
+  /** Ata el trazo 1:1 al scroll (progreso de una sección). Si es false, se dibuja una vez al entrar. */
+  scrub?: boolean | number
+  /** Trigger alternativo (por defecto el propio elemento). */
+  trigger?: Element
+  start?: string
+  end?: string
+  /** Solo para el modo no-scrub. */
+  duration?: number
+}
+
+/**
+ * Dibuja un trazo SVG (`<path>` / `<line>`) de 0% → 100% con DrawSVGPlugin.
+ * Ideal para líneas conectoras de un timeline o un rail de progreso. Con
+ * prefers-reduced-motion deja el trazo completo, sin animar.
+ */
+export function drawSVG(el: SVGElement, options: DrawSVGOptions = {}) {
+  const { scrub = false, trigger = el, start = 'top 80%', end = 'bottom 65%', duration: dur = 1 } = options
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.set(el, { drawSVG: '100%' })
+    return
+  }
+
+  // Pre-oculta el trazo en la carga, no al cruzar el trigger.
+  gsap.set(el, { drawSVG: '0%' })
+
+  gsap.to(el, {
+    drawSVG: '100%',
+    ease: scrub ? 'none' : ease.out,
+    duration: scrub ? 1 : dur,
+    scrollTrigger: scrub
+      ? { trigger, start, end, scrub: scrub === true ? 0.6 : scrub }
+      : { trigger, start, once: true },
+  })
+}

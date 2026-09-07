@@ -1,117 +1,321 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
-<section class="bg-white py-16 sm:py-20">
-  <div class="mx-auto max-w-[506px] px-6">
-    <h2 class="whitespace-nowrap font-heading text-[26px] font-bold text-dark sm:text-[32px]">
-      CONOCE MÁS DE NOSOTROS
-    </h2>
+<section data-contact-experience class="contact-studio relative overflow-hidden py-12 sm:py-16 lg:py-18">
 
-    <form id="contacto-form" class="mt-10">
-      <div class="flex flex-col gap-6">
-        <label class="flex flex-col gap-1">
-          <span class="sr-only">Nombre y Apellido</span>
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre y Apellido"
-            required
-            minlength="2"
-            maxlength="100"
-            class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
-          />
-        </label>
+  <div class="relative mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-12 xl:px-16">
+    <div data-contact-panel class="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-14">
+      <header class="pt-1 lg:sticky lg:top-28 lg:pt-5">
+        <p class="studio-label">
+          Contacto directo
+        </p>
+        <h2 class="studio-title">Hablemos de<br />tu negocio.</h2>
+        <p class="mt-6 max-w-[560px] text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">
+          Cuéntanos dónde estás, qué quieres lograr y qué te está deteniendo. Convertiremos ese contexto en un siguiente paso claro.
+        </p>
 
-        <label class="flex flex-col gap-1">
-          <span class="sr-only">Teléfono</span>
-          <input
-            type="tel"
-            name="telefono"
-            placeholder="Teléfono"
-            required
-            minlength="6"
-            maxlength="30"
-            class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
-          />
-        </label>
+        <div class="studio-contacts mt-8 grid gap-3">
+          <a href="mailto:conversemos@brainstorming.la" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">
+              <Icon name="footer-mail" class="h-4 w-4" />
+            </span>
+            <span class="min-w-0 break-all">conversemos@brainstorming.la</span>
+          </a>
+          <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">
+              <Icon name="footer-phone" class="h-4 w-4" />
+            </span>
+            +51 992 528 363
+          </a>
+        </div>
 
-        <label class="flex flex-col gap-1">
-          <span class="sr-only">Email</span>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            maxlength="150"
-            class="border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
-          />
-        </label>
-
-        <label class="flex flex-col gap-1">
-          <span class="sr-only">Mensaje</span>
-          <textarea
-            name="mensaje"
-            placeholder="Mensaje"
-            required
-            minlength="10"
-            maxlength="2000"
-            rows="2"
-            class="resize-none border-b border-dark-300 bg-transparent pb-2 font-body text-sm text-dark placeholder:text-dark-400 focus:border-primary focus:outline-none"
-          ></textarea>
-        </label>
-
-        <label class="hidden" aria-hidden="true">
-          <input type="text" name="website" tabindex="-1" autocomplete="off" />
-        </label>
-
-        <label class="flex items-start gap-2 text-xs text-dark/70">
-          <input
-            type="checkbox"
-            name="privacyConsent"
-            required
-            class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
-          />
-          <span>
-            Acepto la <a href="/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+        <div class="mt-7 flex items-center gap-3 border-t border-primary/10 pt-5 text-sm text-dark-500">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-primary shadow-sm">
+            <Icon name="growth-positioning" class="h-4 w-4" />
           </span>
-        </label>
+          <span><strong class="text-dark">Estrategia antes que soluciones.</strong> Sin presión comercial.</span>
+        </div>
+      </header>
 
-        <div id="contacto-turnstile" class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action="contacto"></div>
+      <div class="studio-form">
+        <div class="flex flex-col gap-3 border-b border-black/8 pb-7 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Tu contexto</p>
+            <h2 class="mt-2 font-heading text-3xl font-bold leading-tight text-dark">¿Qué tienes en mente?</h2>
+          </div>
+          <p class="text-xs text-dark-400"><span class="text-primary">*</span> Campos obligatorios</p>
+        </div>
+
+        <form id="contacto-form" class="mt-8" novalidate>
+          <div class="grid gap-x-5 gap-y-5 sm:grid-cols-2">
+            <div class="form-field">
+              <label for="contacto-nombre" class="form-label">Nombre y apellido <span aria-hidden="true">*</span></label>
+              <input
+                id="contacto-nombre"
+                type="text"
+                name="nombre"
+                placeholder="Ej. Andrea Ramírez"
+                autocomplete="name"
+                required
+                minlength="2"
+                maxlength="100"
+                aria-describedby="contacto-nombre-error"
+                class="form-control"
+              />
+              <p id="contacto-nombre-error" data-field-error class="form-error" aria-live="polite"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="contacto-telefono" class="form-label">Teléfono <span aria-hidden="true">*</span></label>
+              <input
+                id="contacto-telefono"
+                type="tel"
+                name="telefono"
+                placeholder="Ej. +51 999 999 999"
+                autocomplete="tel"
+                inputmode="tel"
+                required
+                minlength="6"
+                maxlength="30"
+                aria-describedby="contacto-telefono-error"
+                class="form-control"
+              />
+              <p id="contacto-telefono-error" data-field-error class="form-error" aria-live="polite"></p>
+            </div>
+
+            <div class="form-field sm:col-span-2">
+              <label for="contacto-email" class="form-label">Correo corporativo <span aria-hidden="true">*</span></label>
+              <input
+                id="contacto-email"
+                type="email"
+                name="email"
+                placeholder="nombre@empresa.com"
+                autocomplete="email"
+                inputmode="email"
+                required
+                maxlength="150"
+                aria-describedby="contacto-email-error"
+                class="form-control"
+              />
+              <p id="contacto-email-error" data-field-error class="form-error" aria-live="polite"></p>
+            </div>
+
+            <div class="form-field sm:col-span-2">
+              <label for="contacto-mensaje" class="form-label">¿Qué quieres lograr? <span aria-hidden="true">*</span></label>
+              <textarea
+                id="contacto-mensaje"
+                name="mensaje"
+                placeholder="Cuéntanos brevemente sobre tu negocio, el reto y el resultado que buscas."
+                required
+                minlength="10"
+                maxlength="2000"
+                rows="4"
+                aria-describedby="contacto-mensaje-hint contacto-mensaje-error"
+                class="form-control resize-none"
+              ></textarea>
+              <div class="mt-1.5 flex min-h-5 items-start justify-between gap-3">
+                <p id="contacto-mensaje-error" data-field-error class="form-error m-0" aria-live="polite"></p>
+                <p id="contacto-mensaje-hint" class="ml-auto shrink-0 text-[11px] text-dark-400"><span data-message-count>0</span>/2000</p>
+              </div>
+            </div>
+
+            <label class="hidden" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </label>
+
+            <div class="sm:col-span-2">
+              <label class="group flex cursor-pointer items-start gap-3 rounded-xl border border-[#e7e2eb] bg-[#faf9fc] p-4 transition-colors hover:border-primary/20">
+                <input
+                  type="checkbox"
+                  name="privacyConsent"
+                  required
+                  aria-describedby="contacto-privacy-error"
+                  class="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                />
+                <span class="text-sm leading-6 text-dark-500">
+                  Acepto el tratamiento de mis datos según la <a href="/politica-de-privacidad" target="_blank" class="font-semibold text-dark underline decoration-primary/35 underline-offset-4 transition-colors hover:text-primary">Política de Privacidad</a>.
+                </span>
+              </label>
+              <p id="contacto-privacy-error" data-field-error class="form-error" aria-live="polite"></p>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div id="contacto-turnstile" class="cf-turnstile min-h-[65px]" data-sitekey={TURNSTILE_SITE_KEY} data-action="contacto"></div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="contacto-form-submit"
+            class="group mt-7 inline-flex min-h-13 w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-primary px-8 py-4 font-heading text-sm font-bold text-white shadow-[0_14px_32px_rgba(125,68,228,0.25)] transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-primary-600 hover:shadow-[0_18px_38px_rgba(125,68,228,0.32)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-60"
+          >
+            <span id="contacto-submit-label">ENVIAR MENSAJE</span>
+            <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
+          <p class="mt-4 text-center text-xs leading-5 text-dark-400">Tu información está protegida. No enviamos spam ni compartimos tus datos.</p>
+        </form>
       </div>
+    </div>
 
-      <button
-        type="submit"
-        id="contacto-form-submit"
-        class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        ENVIAR
-      </button>
-    </form>
+    <ol data-contact-steps class="relative mt-12 grid gap-0 overflow-hidden rounded-[24px] border border-[#e2ddea] bg-white shadow-[0_16px_45px_rgba(59,39,92,0.05)] sm:grid-cols-3">
+      {[
+        ['01', 'Revisamos tu contexto', 'Objetivos, retos y momento del negocio.'],
+        ['02', 'Te contactamos', 'Normalmente dentro de 1 día hábil.'],
+        ['03', 'Definimos el siguiente paso', 'Sin reuniones ni propuestas innecesarias.'],
+      ].map(([number, title, description], index) => (
+        <li class:list={['grid grid-cols-[44px_1fr] gap-3 p-5 sm:block sm:p-6', index < 2 && 'border-b border-[#ece8f0] sm:border-b-0 sm:border-r']}>
+          <span class="font-heading text-2xl font-bold text-primary/35">{number}</span>
+          <div class="sm:mt-5">
+            <h3 class="text-sm font-bold text-dark">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-dark-500">{description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
 
 <FormStatusModal />
 
+<style>
+  .contact-studio {
+    --studio-purple: #713cce;
+    background: #fff;
+    color: #26222c;
+  }
+  .studio-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #655e6e; }
+  .studio-title { margin-top: 20px; font-size: clamp(30px, 3vw, 42px); font-weight: 650; line-height: 1.12; letter-spacing: -0.04em; }
+  #contacto-form { scroll-margin-top: 130px; }
+  .studio-contacts > a { border-radius: 0; border: 0; border-bottom: 1px solid #e3dfe8; box-shadow: none; padding: 12px 0; background: transparent; }
+  .studio-contacts > a:hover { transform: translateX(4px); }
+  .studio-contacts > a > span:first-child { background: transparent; }
+  .studio-form { min-width: 0; padding: 26px 0 0; border-top: 2px solid var(--studio-purple); }
+  .form-field { transition: transform 220ms ease; }
+  .form-field:focus-within { transform: translateY(-2px); }
+  .form-field:focus-within .form-label { color: var(--studio-purple); }
+  [data-contact-steps] { border-radius: 0; box-shadow: none; border-left: 0; border-right: 0; }
+  @media (min-width: 1024px) {
+    .studio-form { padding: 28px 0 0 36px; border-top: 0; border-left: 1px solid #ded7e8; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .form-field, .studio-contacts > a { transition: none; transform: none; }
+  }
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333434;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .form-label span { color: #7d44e4; }
+
+  .form-control {
+    min-height: 3.25rem;
+    width: 100%;
+    border: 1px solid #e4dfe9;
+    border-radius: 4px;
+    background: #faf9fc;
+    padding: 0.875rem 1rem;
+    color: #212222;
+    font-size: 1rem;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+
+  textarea.form-control { min-height: 8.75rem; }
+  .form-control::placeholder { color: #a0a0a0; }
+  .form-control:hover { border-color: rgba(125, 68, 228, 0.35); }
+
+  .form-control:focus {
+    border-color: #7d44e4;
+    box-shadow: 0 0 0 4px rgba(125, 68, 228, 0.1);
+  }
+
+  .form-control[aria-invalid='true'] {
+    border-color: #d41839;
+    background: #fefafb;
+    box-shadow: 0 0 0 3px rgba(212, 24, 57, 0.08);
+  }
+
+  .form-error {
+    min-height: 1.125rem;
+    margin-top: 0.375rem;
+    color: #b20f2d;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+  }
+</style>
+
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
+import { ensureGsap, prefersReducedMotion, registerMotion } from '@/lib/motion'
+
 declare global {
   interface Window {
     turnstile?: { reset: (widget?: string | HTMLElement) => void }
   }
 }
 
+registerMotion(() => {
+  const panel = document.querySelector<HTMLElement>('[data-contact-panel]')
+  if (!panel || prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+  gsap.from(panel, { y: 28, opacity: 0, duration: 0.65, ease: 'power2.out' })
+})
+
 const form = document.querySelector<HTMLFormElement>('#contacto-form')
 const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
+const submitLabel = document.querySelector<HTMLElement>('#contacto-submit-label')
 const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+const messageField = form?.querySelector<HTMLTextAreaElement>('textarea[name="mensaje"]')
+const messageCount = document.querySelector<HTMLElement>('[data-message-count]')
+
+function getValidationMessage(field: HTMLInputElement | HTMLTextAreaElement) {
+  if (field.validity.valueMissing)
+    return 'Este campo es obligatorio.'
+  if (field.validity.typeMismatch)
+    return 'Ingresa un correo válido.'
+  if (field.validity.tooShort)
+    return `Escribe al menos ${field.minLength} caracteres.`
+  return ''
+}
+
+function validateField(field: HTMLInputElement | HTMLTextAreaElement) {
+  const message = getValidationMessage(field)
+  const errorId = field.getAttribute('aria-describedby')?.split(' ').find(id => id.endsWith('-error'))
+  const error = errorId ? document.getElementById(errorId) : null
+  field.setAttribute('aria-invalid', String(Boolean(message)))
+  if (error)
+    error.textContent = message
+  return !message
+}
+
+form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control').forEach((field) => {
+  field.addEventListener('blur', () => validateField(field))
+  field.addEventListener('input', () => {
+    if (field.getAttribute('aria-invalid') === 'true')
+      validateField(field)
+  })
+})
+
+messageField?.addEventListener('input', () => {
+  if (messageCount)
+    messageCount.textContent = String(messageField.value.length)
+})
 
 privacyCheckbox?.addEventListener('change', () => {
   privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
-})
-privacyCheckbox?.addEventListener('invalid', () => {
-  privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+  const error = document.getElementById('contacto-privacy-error')
+  if (error)
+    error.textContent = privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.'
 })
 
 form?.addEventListener('submit', async (event) => {
@@ -119,10 +323,17 @@ form?.addEventListener('submit', async (event) => {
   if (!submitBtn)
     return
 
-  // Verificacion explicita de campos: no depender solo del `required` nativo,
-  // que un submit programatico o un boton mal tipado podria saltarse.
-  if (!form.checkValidity()) {
-    form.reportValidity()
+  const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control'))
+  const fieldsValid = fields.every(validateField)
+  if (privacyCheckbox && !privacyCheckbox.checked) {
+    privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+    const privacyError = document.getElementById('contacto-privacy-error')
+    if (privacyError)
+      privacyError.textContent = 'Debes aceptar la Política de Privacidad para continuar.'
+  }
+
+  if (!fieldsValid || !form.checkValidity()) {
+    form.querySelector<HTMLElement>('[aria-invalid="true"], input:invalid')?.focus()
     return
   }
 
@@ -136,6 +347,8 @@ form?.addEventListener('submit', async (event) => {
   }
 
   submitBtn.disabled = true
+  if (submitLabel)
+    submitLabel.textContent = 'ENVIANDO…'
   document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
 
   try {
@@ -161,6 +374,10 @@ form?.addEventListener('submit', async (event) => {
     }
 
     form.reset()
+    fields.forEach(field => field.removeAttribute('aria-invalid'))
+    form.querySelectorAll<HTMLElement>('[data-field-error]').forEach(error => error.textContent = '')
+    if (messageCount)
+      messageCount.textContent = '0'
     document.dispatchEvent(new CustomEvent('form-status', {
       detail: { state: 'success', title: '¡Mensaje enviado!', message: 'Te contactaremos pronto.' },
     }))
@@ -172,6 +389,8 @@ form?.addEventListener('submit', async (event) => {
   }
   finally {
     submitBtn.disabled = false
+    if (submitLabel)
+      submitLabel.textContent = 'ENVIAR MENSAJE'
     window.turnstile?.reset('contacto-turnstile')
   }
 })

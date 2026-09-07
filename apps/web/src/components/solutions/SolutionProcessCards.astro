@@ -1,0 +1,93 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+
+export interface ProcessCardStep {
+  icon: string | ImageMetadata
+  text: string
+}
+
+interface Props {
+  steps: ProcessCardStep[]
+  accent: string
+  softAccent: string
+  label?: string
+}
+
+const { steps, accent, softAccent, label = 'Proceso de trabajo' } = Astro.props
+---
+
+<div
+  data-process-cards
+  class="relative mt-10 md:mt-12"
+  style={`--process-accent:${accent};--process-soft:${softAccent}`}
+>
+  <div
+    data-process-line
+    class="absolute bottom-10 left-[27px] top-8 w-1 origin-top rounded-full bg-[var(--process-accent)] opacity-30 md:hidden"
+    aria-hidden="true"
+  ></div>
+  <ol class="relative space-y-4 md:grid md:auto-rows-fr md:grid-cols-2 md:gap-6 md:space-y-0 lg:grid-cols-3" aria-label={label}>
+    {steps.map((step, index) => (
+      <li data-process-card class="relative h-full pl-[54px] md:pl-0">
+        <span class="absolute left-0 top-5 z-10 flex h-14 w-14 items-center justify-center rounded-full border-[5px] border-white bg-[var(--process-accent)] text-[14px] font-bold text-white shadow-md md:left-5 md:h-11 md:w-11 md:border-[3px]">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <article class="flex h-full min-h-[128px] items-center gap-4 rounded-2xl border border-black/8 bg-white p-5 shadow-[0_12px_32px_rgba(34,59,121,0.1)] md:min-h-[210px] md:items-start md:p-6 md:pt-[88px]">
+          <div data-process-icon class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[var(--process-soft)] p-2.5 md:absolute md:right-5 md:top-5">
+            {typeof step.icon === 'string'
+              ? <Icon name={step.icon} class="h-full w-full text-[var(--process-accent)]" />
+              : <Image src={step.icon} alt="" class="h-full w-full object-contain" loading="lazy" />}
+          </div>
+          <div class="min-w-0 md:w-full">
+            <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--process-accent)]">Paso {index + 1}</p>
+            <h3 class="mt-1 font-heading text-[17px] font-bold leading-[1.35] text-dark">{step.text}</h3>
+          </div>
+        </article>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  document.querySelectorAll<HTMLElement>('[data-process-cards]').forEach((process) => {
+    const cards = process.querySelectorAll('[data-process-card]')
+    const icons = process.querySelectorAll('[data-process-icon]')
+    const line = process.querySelector('[data-process-line]')
+    staggerGrid(cards, { variant: 'wipe', itemStagger: 0.08 })
+
+    if (prefersReducedMotion())
+      return
+
+    const { gsap, ScrollTrigger } = ensureGsap()
+    gsap.fromTo(
+      icons,
+      { scale: 0.72, rotate: -7, opacity: 0 },
+      {
+        scale: 1,
+        rotate: 0,
+        opacity: 1,
+        duration: 0.55,
+        stagger: 0.08,
+        ease: 'back.out(1.7)',
+        scrollTrigger: { trigger: process, start: 'top 82%', once: true },
+      },
+    )
+
+    if (!line)
+      return
+
+    gsap.set(line, { scaleY: 0 })
+    ScrollTrigger.create({
+      trigger: process,
+      start: 'top 82%',
+      once: true,
+      onEnter: () => gsap.to(line, { scaleY: 1, duration: 1.35, ease: 'power2.out' }),
+    })
+  })
+})
+</script>

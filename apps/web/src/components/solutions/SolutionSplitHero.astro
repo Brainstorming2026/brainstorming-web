@@ -1,0 +1,173 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+interface Props {
+  image: ImageMetadata
+  title: string
+  description: string
+  eyebrow?: string
+  secondaryDescription?: string
+  compactTitle?: boolean
+  imageFit?: 'cover' | 'contain'
+  layeredIllustration?: boolean
+}
+
+const {
+  image,
+  title,
+  description,
+  eyebrow,
+  secondaryDescription,
+  compactTitle = false,
+  imageFit = 'cover',
+  layeredIllustration = false,
+} = Astro.props
+---
+
+<section data-split-hero class:list={['relative overflow-hidden bg-white', layeredIllustration ? 'lg:min-h-[720px]' : 'lg:min-h-[702px]']}>
+  {layeredIllustration && (
+    <div
+      data-split-hero-wave
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-[36%] bg-[#eef3fd] [clip-path:polygon(0_36%,23%_18%,47%_37%,72%_12%,100%_28%,100%_100%,0_100%)] sm:h-[34%] lg:h-[31%]"
+      aria-hidden="true"
+    ></div>
+  )}
+
+  <Image
+    data-split-hero-bg
+    src={image}
+    alt=""
+    class:list={[
+      'pointer-events-none absolute hidden lg:block',
+      layeredIllustration
+        ? 'bottom-12 right-10 h-[94%] w-auto max-w-none object-contain object-right-bottom'
+        : 'inset-0 h-full w-full object-bottom',
+      !layeredIllustration && (imageFit === 'contain' ? 'object-contain object-right' : 'object-cover'),
+    ]}
+    loading="eager"
+    fetchpriority="high"
+    widths={[1512, 3024]}
+    sizes="100vw"
+  />
+
+  <div
+    class:list={[
+      'relative z-10 mx-auto flex max-w-[1512px] items-center px-6 pb-3 pt-16 lg:px-24 lg:py-10',
+      layeredIllustration ? 'lg:min-h-[720px] lg:-translate-y-12' : 'lg:min-h-[702px]',
+    ]}
+  >
+    <div class:list={['max-w-[600px]', layeredIllustration && 'lg:max-w-[570px]']}>
+      {eyebrow && (
+        <p data-split-hero-eyebrow class="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
+          {eyebrow}
+        </p>
+      )}
+      {eyebrow && (
+        <span data-split-hero-rule aria-hidden="true" class="mb-5 block h-px w-16 origin-left bg-primary/45"></span>
+      )}
+      <h1
+        data-split-hero-headline
+        class:list={[
+          'font-heading font-bold leading-[1.08] text-dark',
+          compactTitle
+            ? 'text-[clamp(2.25rem,9vw,3rem)] lg:text-[46px] lg:leading-[1.12]'
+            : 'text-[clamp(2.35rem,10vw,3.25rem)] lg:text-[52px] lg:leading-[60px]',
+        ]}
+      >
+        {title}
+      </h1>
+      <p data-split-hero-text class="mt-6 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
+        {description}
+      </p>
+      {secondaryDescription && (
+        <p data-split-hero-text class="mt-3 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
+          {secondaryDescription}
+        </p>
+      )}
+    </div>
+  </div>
+
+  <div class:list={['relative overflow-hidden lg:hidden', layeredIllustration ? 'h-[350px] sm:h-[410px]' : 'h-[320px] sm:h-[380px]']} aria-hidden="true">
+    <Image
+      data-split-hero-bg
+      src={image}
+      alt=""
+      class:list={[
+        'pointer-events-none absolute bottom-0 max-w-none',
+        layeredIllustration
+          ? 'right-0 h-full w-auto sm:right-0 sm:h-[104%]'
+          : 'right-[-10%] h-auto w-[190%] sm:right-[-4%] sm:w-[165%]',
+      ]}
+      loading="eager"
+      widths={[758, 1120]}
+      sizes={layeredIllustration ? '(max-width: 639px) 670px, 760px' : '(max-width: 639px) 190vw, 165vw'}
+    />
+  </div>
+</section>
+
+<script>
+import { drawLine, ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+  const reduced = prefersReducedMotion()
+
+  document.querySelectorAll<HTMLElement>('[data-split-hero]').forEach((hero) => {
+    const backgrounds = hero.querySelectorAll<HTMLElement>('[data-split-hero-bg]')
+    const headline = hero.querySelector<HTMLElement>('[data-split-hero-headline]')
+    const texts = hero.querySelectorAll<HTMLElement>('[data-split-hero-text]')
+    const eyebrow = hero.querySelector<HTMLElement>('[data-split-hero-eyebrow]')
+    const rule = hero.querySelector<HTMLElement>('[data-split-hero-rule]')
+    const wave = hero.querySelector<HTMLElement>('[data-split-hero-wave]')
+
+    if (!reduced) {
+      gsap.set(texts, { opacity: 0, y: 10 })
+      if (eyebrow)
+        gsap.set(eyebrow, { opacity: 0, y: 8 })
+    }
+
+    if (headline) {
+      splitHeadline(headline, {
+        by: 'lines',
+        scrollTrigger: false,
+        onComplete: () => {
+          gsap.to(texts, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'expo.out' })
+        },
+      })
+    }
+
+    if (reduced)
+      return
+
+    if (eyebrow)
+      gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
+    if (rule)
+      drawLine(rule, { delay: 0.15 })
+
+    // La ola sube a su sitio, lento — sin tocar su clip-path de polígono.
+    if (wave)
+      gsap.fromTo(wave, { yPercent: 42, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'expo.out', delay: 0.1 })
+
+    backgrounds.forEach((bg) => {
+      // Entrada: la ilustración se revela desde la izquierda, sale de foco y se asienta.
+      gsap.fromTo(
+        bg,
+        { clipPath: 'inset(0 0 0 12%)', xPercent: 4, autoAlpha: 0, filter: 'blur(10px)' },
+        { clipPath: 'inset(0 0 0 0%)', xPercent: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1.6, ease: 'expo.out' },
+      )
+      // Parallax + zoom lentos atados al scroll (reemplaza el zoom fijo de 8s).
+      gsap.fromTo(
+        bg,
+        { yPercent: -4, scale: 1 },
+        {
+          yPercent: 9,
+          scale: 1.06,
+          ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.8 },
+        },
+      )
+    })
+  })
+})
+</script>

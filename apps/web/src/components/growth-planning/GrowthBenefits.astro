@@ -1,0 +1,124 @@
+---
+import { growthBenefits } from '@/data/growth-planning'
+---
+
+<section class="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+
+  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
+    <div data-benefits-panel class="benefits-layout">
+      <header>
+        <p class="relative text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Lo que cambia</p>
+        <h2 data-benefits-title class="relative mt-4 max-w-[480px] font-heading text-[clamp(2.15rem,8vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
+          Menos suposiciones.<br />Más dirección.
+        </h2>
+        <p class="relative mt-6 max-w-[480px] text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
+      </header>
+
+      <ol data-benefits-grid role="list">
+        {growthBenefits.map(benefit => (
+          <li data-benefit-card class="grid grid-cols-[32px_minmax(0,1fr)] gap-3 border-b border-[#e4e5e8] py-6 first:pt-0 last:border-b-0 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-5">
+            <span class="pt-1 font-heading text-sm font-semibold tabular-nums text-primary sm:text-base" aria-hidden="true">{benefit.metric}</span>
+            <div>
+              <h3 class="font-heading text-xl font-bold leading-tight text-dark sm:text-2xl">{benefit.title}</h3>
+              <p class="mt-2 max-w-[560px] text-[15px] leading-7 text-dark-500 sm:text-base">{benefit.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div data-roadmap-output class="relative mt-14 overflow-hidden rounded-lg bg-[#edf1f6] px-6 py-9 sm:px-9 sm:py-11 lg:mt-20 lg:px-12 lg:py-12">
+      <div class="relative grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-14">
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">El entregable</p>
+          <h3 class="mt-4 max-w-[480px] font-heading text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-dark sm:text-[40px]">Un sistema de decisiones para los próximos 6 meses.</h3>
+          <p class="mt-5 max-w-[500px] text-[15px] leading-7 text-dark-500 sm:text-base">No termina en una presentación. Termina con orden, responsables y una secuencia de ejecución entendible por todo el equipo.</p>
+        </div>
+
+        <ol data-roadmap-timeline class="relative grid gap-0 sm:grid-cols-3">
+          <span data-roadmap-line aria-hidden="true"></span>
+          {[
+            ['30', 'Quick wins', 'Primeras acciones activadas.'],
+            ['90', 'Hitos críticos', 'Prioridades en ejecución.'],
+            ['180', 'Roadmap completo', 'Crecimiento con dirección.'],
+          ].map(([days, title, description]) => (
+            <li class="relative grid grid-cols-[38px_1fr] gap-3 py-4 sm:block sm:px-3 sm:py-0 sm:text-center">
+              <span data-roadmap-dot class="relative z-10 mt-1 block h-3 w-3 rounded-full border-[3px] border-white bg-primary shadow-[0_0_0_1px_rgba(125,68,228,0.22)] sm:mx-auto sm:mt-[25px]"></span>
+              <div class="sm:mt-7">
+                <p class="font-heading text-[32px] font-bold leading-none tracking-[-0.04em] text-primary">
+                  <span data-count-days>{days}</span><span class="ml-1 text-[10px] uppercase tracking-[0.14em] text-dark-400">días</span>
+                </p>
+                <h4 class="mt-3 text-sm font-bold text-dark sm:text-base">{title}</h4>
+                <p class="mt-1 text-sm leading-6 text-dark-500">{description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .benefits-layout { display: grid; gap: 36px; }
+  [data-benefits-title] { font-size: clamp(32px, 4vw, 48px); line-height: 1.12; }
+  [data-roadmap-line] { content: ''; position: absolute; left: 5px; top: 25px; bottom: 70px; width: 1px; background: #c8bfd8; transform: scaleY(0); transform-origin: 50% 0; }
+  @media (min-width: 640px) {
+    [data-roadmap-line] { left: 16.66%; right: 16.66%; top: 31px; bottom: auto; width: auto; height: 1px; transform: scaleX(0); transform-origin: 0 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-roadmap-line] { transform: none; }
+  }
+  @media (min-width: 1024px) {
+    .benefits-layout { grid-template-columns: 1fr 1.15fr; gap: 9%; align-items: start; }
+  }
+</style>
+
+<script>
+import { countUp, ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const title = document.querySelector<HTMLElement>('[data-benefits-title]')
+  const cards = document.querySelectorAll('[data-benefit-card]')
+  const output = document.querySelector<HTMLElement>('[data-roadmap-output]')
+  const timeline = document.querySelector<HTMLElement>('[data-roadmap-timeline]')
+  const line = document.querySelector<HTMLElement>('[data-roadmap-line]')
+  const dots = document.querySelectorAll<HTMLElement>('[data-roadmap-dot]')
+  const dayCounters = document.querySelectorAll<HTMLElement>('[data-count-days]')
+
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  staggerGrid(cards, { variant: 'organic', itemStagger: 0.07 })
+  if (output)
+    revealClip(output, { direction: 'up' })
+
+  dayCounters.forEach(n => countUp(n, { duration: 1.6, start: 'top 90%' }))
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+
+  if (dots.length) {
+    gsap.from(dots, {
+      scale: 0,
+      opacity: 0,
+      transformOrigin: '50% 50%',
+      duration: 0.5,
+      stagger: 0.14,
+      ease: 'back.out(1.7)',
+      scrollTrigger: { trigger: timeline, start: 'top 80%', once: true },
+    })
+  }
+
+  if (line && timeline) {
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 640px)', () => {
+      gsap.to(line, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 78%', end: 'bottom 62%', scrub: 0.6 } })
+    })
+    mm.add('(max-width: 639px)', () => {
+      gsap.to(line, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 82%', end: 'bottom 60%', scrub: 0.6 } })
+    })
+  }
+})
+</script>

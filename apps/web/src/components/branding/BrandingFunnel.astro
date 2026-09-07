@@ -1,6 +1,37 @@
 ---
 import { Image } from 'astro:assets'
 import funnelImg from '@/assets/branding/branding-funnel.webp'
+
+const funnelStages = [
+  {
+    number: '01',
+    title: 'Atraer',
+    from: 'Clientes potenciales',
+    to: 'Visitas a la web',
+    actions: ['Blog', 'Palabras clave', 'Redes sociales', 'Contenidos', 'SEO'],
+  },
+  {
+    number: '02',
+    title: 'Convertir',
+    from: 'Visitas a la web',
+    to: 'Oportunidades y leads',
+    actions: ['Llamadas a la acción', 'Formularios', 'Landing pages'],
+  },
+  {
+    number: '03',
+    title: 'Cerrar',
+    from: 'Oportunidades y leads',
+    to: 'Clientes',
+    actions: ['Email marketing', 'Automatizaciones', 'Workflows', 'Contenidos premium'],
+  },
+  {
+    number: '04',
+    title: 'Deleitar',
+    from: 'Clientes',
+    to: 'Promotores de marca',
+    actions: ['Email marketing', 'Social media', 'Encuestas', 'Smart content'],
+  },
+]
 ---
 
 <section class="bg-gradient-to-b from-mist to-white">
@@ -16,21 +47,75 @@ import funnelImg from '@/assets/branding/branding-funnel.webp'
       id="branding-funnel-img"
       src={funnelImg}
       alt="Metodología Inbound: Atraer, Convertir, Cerrar y Deleitar"
-      class="mx-auto mt-12 h-auto w-full"
+      class="mx-auto mt-12 hidden h-auto w-full md:block"
       widths={[560, 1120]}
       sizes="(min-width: 1140px) 1120px, 100vw"
       loading="lazy"
     />
+
+    <div id="branding-funnel-mobile" class="relative mt-10 md:hidden">
+      <div
+        id="branding-funnel-line"
+        class="absolute bottom-12 left-[27px] top-8 w-1 origin-top rounded-full bg-highlight"
+        aria-hidden="true"
+      ></div>
+      <ol class="relative space-y-5" aria-label="Etapas de la metodología Inbound">
+        {funnelStages.map(stage => (
+          <li class="branding-funnel-stage relative pl-[54px]">
+            <div class="absolute left-0 top-5 z-10 flex h-14 w-14 items-center justify-center rounded-full border-[5px] border-mist bg-[#212222] text-[13px] font-bold text-white shadow-md">
+              {stage.number}
+            </div>
+            <article class="overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_12px_32px_rgba(34,59,121,0.1)]">
+              <div class="flex items-center justify-between gap-4 bg-[#212222] px-5 py-4 text-white">
+                <h3 class="font-heading text-[22px] font-bold">{stage.title}</h3>
+                <span class="rounded-full bg-highlight px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-[#212222]">Etapa {stage.number}</span>
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-2 text-[14px] font-semibold text-dark-500">
+                  <span>{stage.from}</span>
+                  <svg class="h-4 w-5 shrink-0 text-primary" viewBox="0 0 20 16" fill="none" aria-hidden="true">
+                    <path d="M1 8h16M12 2l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="text-ink">{stage.to}</span>
+                </div>
+                <ul class="mt-4 flex flex-wrap gap-2" aria-label={`Acciones para ${stage.title}`}>
+                  {stage.actions.map(action => (
+                    <li class="rounded-full bg-mist-100 px-3 py-1.5 text-[12px] font-medium text-navy">{action}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline } from '@/lib/motion'
+import { ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const headline = document.getElementById('branding-funnel-headline')
   const img = document.getElementById('branding-funnel-img')
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (img) revealClip(img, { direction: 'left', mode: 'scrub' })
+  const mobileFunnel = document.getElementById('branding-funnel-mobile')
+  const mobileLine = document.getElementById('branding-funnel-line')
+  const mobileStages = document.querySelectorAll('.branding-funnel-stage')
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (img)
+    revealClip(img, { direction: 'left', mode: 'scrub' })
+  staggerGrid(mobileStages, { variant: 'organic', itemStagger: 0.1 })
+
+  if (mobileLine && !prefersReducedMotion()) {
+    const { gsap, ScrollTrigger } = ensureGsap()
+    gsap.set(mobileLine, { scaleY: 0 })
+    ScrollTrigger.create({
+      trigger: mobileFunnel,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => gsap.to(mobileLine, { scaleY: 1, duration: 1.5, ease: 'power2.out' }),
+    })
+  }
 })
 </script>

@@ -1,85 +1,218 @@
 ---
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
-import { marketingBenefits } from '@/data'
-import marketing1 from '@/assets/marketing/marketing-1.png'
-import marketing2 from '@/assets/marketing/marketing-2.png'
-
-const rowImages = [marketing1, marketing2]
+import { Image } from 'astro:assets'
+import { marketingBenefits, marketingSteps } from '@/data'
 ---
 
-<section class="bg-gradient-to-b from-mist from-0% via-white via-35% to-white">
-  <div class="mx-auto max-w-[1140px] px-6 py-20 lg:px-24">
-    <h2 id="marketing-steps-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      Nuestro proceso de trabajo nos ayuda a crear y comunicar
-      <br class="hidden sm:block" />
-      estratégicamente tu marca.
-    </h2>
+<section id="proceso-inbound" data-marketing-process class="relative overflow-hidden bg-[#f5f7fb] py-20 sm:py-24 lg:py-28">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div data-marketing-glow class="absolute -left-40 top-24 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[110px]"></div>
+    <div data-marketing-glow class="absolute -right-44 bottom-16 h-[460px] w-[460px] rounded-full bg-[#3063ae]/10 blur-[120px]"></div>
+  </div>
 
-    <div id="marketing-steps-imgs" class="mt-12 space-y-6">
-      <Image
-        class="marketing-step-img mx-auto h-auto w-full"
-        src={rowImages[0]}
-        alt="Proceso paso 1-3"
-        widths={[560, 1120]}
-        sizes="(min-width: 1140px) 1120px, 100vw"
-        loading="lazy"
-      />
-      <Image
-        class="marketing-step-img mx-auto h-auto w-full"
-        src={rowImages[1]}
-        alt="Proceso paso 4-6"
-        widths={[560, 1120]}
-        sizes="(min-width: 1140px) 1120px, 100vw"
-        loading="lazy"
-      />
+  <div class="relative mx-auto max-w-[1240px] px-6 lg:px-12">
+    <header class="mx-auto max-w-[760px] text-center">
+      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-[#3063ae] sm:text-xs">Metodología Inbound</p>
+      <h2 id="marketing-steps-headline" class="mt-4 font-heading text-[clamp(2rem,5vw,3.25rem)] font-bold leading-[1.08] text-dark">
+        Un sistema conectado para atraer, nutrir y convertir.
+      </h2>
+      <p class="mx-auto mt-5 max-w-[680px] text-[16px] leading-7 text-dark-500 sm:text-[17px]">
+        Diez etapas que transforman atención en demanda y demanda en relaciones comerciales sostenibles.
+      </p>
+    </header>
+
+    <div data-phase-nav class="mx-auto mt-10 grid max-w-[880px] grid-cols-2 overflow-hidden rounded-2xl border border-[#dce3ef] bg-white shadow-[0_14px_38px_rgba(34,59,121,0.06)] sm:mt-12 sm:grid-cols-4">
+      {
+        [
+          ['01–03', 'Entender'],
+          ['04–05', 'Crear y nutrir'],
+          ['06–07', 'Atraer'],
+          ['08–10', 'Medir y escalar'],
+        ].map(([range, label], index) => (
+          <div
+            data-phase={index}
+            class:list={[
+              'relative border-[#e5e9f1] px-4 py-4 text-center',
+              index < 2 ? 'border-b' : '',
+              index % 2 === 0 ? 'border-r' : '',
+              'sm:border-b-0 sm:border-r',
+              index === 3 ? 'sm:border-r-0' : '',
+            ]}
+          >
+            <span class="block text-[10px] font-bold tracking-[0.18em] text-[#3063ae]">{range}</span>
+            <span class="phase-label mt-1 block text-sm font-semibold text-dark">{label}</span>
+          </div>
+        ))
+      }
     </div>
+
+    <ol class="mt-8 grid gap-5 md:grid-cols-2 lg:gap-6" aria-label="Proceso de Inbound Marketing en diez etapas">
+      {
+        marketingSteps.map(step => (
+          <li
+            data-marketing-card
+            data-step={step.number}
+            class:list={[
+            'group relative min-w-0 overflow-hidden rounded-[24px] border bg-white p-6 shadow-[0_18px_50px_rgba(34,59,121,0.07)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-[#3063ae]/30 hover:shadow-[0_24px_65px_rgba(34,59,121,0.13)] sm:p-7',
+            'border-black/[0.07]',
+          ]}
+          >
+            <span class="pointer-events-none absolute right-6 top-5 font-heading text-[80px] font-bold leading-none text-[#3063ae]/[0.04] sm:right-7 sm:top-6 sm:text-[88px]" aria-hidden="true">
+              {step.number}
+            </span>
+
+            <article class="relative grid h-full grid-cols-[84px_1fr] gap-x-4 sm:grid-cols-[96px_1fr] sm:gap-x-6">
+              <div data-marketing-icon class="flex h-[84px] w-[84px] items-center justify-center rounded-[20px] border border-[#3063ae]/10 bg-[#edf3fc] p-1.5 sm:h-24 sm:w-24">
+                <Image
+                  src={step.icon}
+                  alt=""
+                  class="h-full w-full object-contain"
+                  widths={[168, 192]}
+                  sizes="(max-width: 639px) 84px, 96px"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="min-w-0">
+                <div class="flex min-h-6 flex-wrap items-center gap-2">
+                  <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#3063ae]">Etapa {step.number}</span>
+                </div>
+                <h3 class="mt-2 max-w-[420px] font-heading text-[20px] font-bold leading-[1.25] text-dark sm:text-[22px]">
+                  {step.title}
+                </h3>
+              </div>
+
+              <p class="col-span-2 mt-5 text-[15px] leading-[1.7] text-dark-500 sm:ml-[120px] sm:mt-3 sm:text-[16px]">
+                {step.description}
+              </p>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
-<section class="bg-white py-16">
-  <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
-    <h2 id="marketing-benefits-headline" class="text-center font-heading text-2xl font-bold text-dark sm:text-3xl">
-      ¿En qué puede ayudar esto a tu marca?
-    </h2>
+<section data-marketing-benefits class="relative overflow-hidden bg-white py-20 sm:py-24 lg:py-28">
+  <div class="mx-auto max-w-[1240px] px-6 lg:px-12">
+    <header class="max-w-[720px]">
+      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Impacto en el negocio</p>
+      <h2 id="marketing-benefits-headline" class="mt-4 font-heading text-[clamp(2rem,5vw,3.25rem)] font-bold leading-[1.08] text-dark">
+        Un motor de crecimiento que sigue trabajando.
+      </h2>
+    </header>
 
-    <div id="marketing-benefits" class="mt-10 grid gap-8 sm:grid-cols-2">
-      <ul class="space-y-4">
-        {
-          marketingBenefits.left.map((text) => (
-            <li class="benefit-item flex items-start gap-3">
-              <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <ul class="space-y-4">
-        {
-          marketingBenefits.right.map((text) => (
-            <li class="benefit-item flex items-start gap-3">
-              <Icon name="marketing-check" class="mt-1 h-3 w-auto flex-shrink-0" />
-              <span class="text-[15px] leading-6 text-dark-500">{text}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <ol id="marketing-benefits" class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
+      {
+        marketingBenefits.map((benefit, index) => (
+          <li class="benefit-item group relative overflow-hidden rounded-[22px] border border-black/[0.07] bg-[#f8f9fc] p-6 transition-[transform,background-color,border-color] duration-300 hover:-translate-y-1 hover:border-[#3063ae]/25 hover:bg-white">
+            <span class="text-[10px] font-bold tracking-[0.18em] text-[#3063ae]">{String(index + 1).padStart(2, '0')}</span>
+            <div class="mt-7 flex h-10 w-10 items-center justify-center rounded-full bg-[#edf3fc] text-[#3063ae] transition-transform duration-300 group-hover:scale-110" aria-hidden="true">
+              <Icon name="marketing-check" class="h-3 w-auto" />
+            </div>
+            <h3 class="mt-5 font-heading text-[18px] font-bold leading-tight text-dark">{benefit.title}</h3>
+            <p class="mt-3 text-[14px] leading-6 text-dark-500">{benefit.description}</p>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
+
+<style>
+  [data-phase-nav] > [data-phase] { transition: background-color .4s cubic-bezier(0.23, 1, 0.32, 1); }
+  [data-phase-nav] > [data-phase][data-active] { background: #eef3fc; }
+  [data-phase-nav] > [data-phase] .phase-label { transition: color .4s cubic-bezier(0.23, 1, 0.32, 1); }
+  [data-phase-nav] > [data-phase][data-active] .phase-label { color: #3063ae; }
+  [data-phase-nav] > [data-phase]::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: #3063ae; transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform .45s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  [data-phase-nav] > [data-phase][data-active]::after { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-phase-nav] > [data-phase],
+    [data-phase-nav] > [data-phase]::after,
+    [data-phase-nav] > [data-phase] .phase-label { transition: none; }
+  }
+</style>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+
+const phaseOf = (n: number) => (n <= 3 ? 0 : n <= 5 ? 1 : n <= 7 ? 2 : 3)
 
 registerMotion(() => {
+  const process = document.querySelector<HTMLElement>('[data-marketing-process]')
+  const benefitsSection = document.querySelector<HTMLElement>('[data-marketing-benefits]')
   const stepsHeadline = document.getElementById('marketing-steps-headline')
-  const imgs = document.querySelectorAll<HTMLElement>('#marketing-steps-imgs .marketing-step-img')
   const benefitsHeadline = document.getElementById('marketing-benefits-headline')
-  const benefits = document.querySelectorAll('#marketing-benefits .benefit-item')
+  const phaseCells = Array.from(document.querySelectorAll<HTMLElement>('[data-phase-nav] > [data-phase]'))
 
-  if (stepsHeadline) splitHeadline(stepsHeadline, { by: 'lines' })
-  imgs.forEach(img => revealClip(img, { direction: 'up', mode: 'scrub' }))
-  if (benefitsHeadline) splitHeadline(benefitsHeadline, { by: 'lines' })
-  staggerGrid(benefits, { variant: 'organic' })
+  if (stepsHeadline)
+    splitHeadline(stepsHeadline, { by: 'lines' })
+  if (benefitsHeadline)
+    splitHeadline(benefitsHeadline, { by: 'lines' })
+
+  const { ScrollTrigger, gsap } = ensureGsap()
+  const reduced = prefersReducedMotion()
+
+  const setActivePhase = (i: number) => {
+    phaseCells.forEach((cell, idx) => {
+      if (idx === i)
+        cell.dataset.active = ''
+      else
+        cell.removeAttribute('data-active')
+    })
+  }
+
+  if (process) {
+    const cards = Array.from(process.querySelectorAll<HTMLElement>('[data-marketing-card]'))
+    const icons = process.querySelectorAll<HTMLElement>('[data-marketing-icon]')
+    const glows = process.querySelectorAll<HTMLElement>('[data-marketing-glow]')
+
+    cards.forEach((card) => {
+      const n = Number.parseInt(card.dataset.step ?? '0', 10)
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 70%',
+        end: 'bottom 45%',
+        onEnter: () => setActivePhase(phaseOf(n)),
+        onEnterBack: () => setActivePhase(phaseOf(n)),
+      })
+    })
+
+    // staggerGrid respeta prefers-reduced-motion por dentro (cae a fade).
+    // Lento y fluido: agencia de marketing, no dashboard.
+    staggerGrid(cards, { variant: 'wipe', itemStagger: 0.14, itemDuration: 1.5 })
+
+    if (!reduced && cards.length) {
+      gsap.from(icons, {
+        opacity: 0,
+        scale: 0.88,
+        duration: 0.7,
+        stagger: 0.09,
+        ease: 'back.out(1.5)',
+        scrollTrigger: { trigger: cards[0], start: 'top 84%', once: true },
+      })
+      glows.forEach((glow, i) => {
+        gsap.fromTo(
+          glow,
+          { scale: 0.85, opacity: 0.6 },
+          {
+            scale: 1.15,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: { trigger: process, start: 'top bottom', end: 'bottom top', scrub: i === 0 ? 1 : 1.4 },
+          },
+        )
+      })
+    }
+  }
+
+  if (benefitsSection) {
+    const benefits = benefitsSection.querySelectorAll<HTMLElement>('.benefit-item')
+    staggerGrid(benefits, { variant: 'organic', itemStagger: 0.1, itemDuration: 1.4 })
+  }
 })
 </script>

@@ -1,0 +1,64 @@
+<section class="bg-white py-20 sm:py-24 lg:py-32">
+  <div class="mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
+    <div class="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">El punto de partida</p>
+        <h2 data-overview-title class="mt-4 max-w-md font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl">
+          Antes de crecer más, hay que saber dónde empujar.
+        </h2>
+      </div>
+      <div class="max-w-[760px]">
+        <p data-overview-copy class="text-lg leading-8 text-dark-500 sm:text-xl sm:leading-9">
+          Growth Planning es un diagnóstico estratégico ágil donde trabajamos junto al equipo directivo para entender a fondo el negocio, identificar con precisión qué está frenando el crecimiento y definir exactamente qué hacer primero.
+        </p>
+        <p data-overview-copy class="mt-6 text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">
+          No es una consultoría tradicional de meses. No es un informe de 200 páginas que nadie lee. Es un proceso estructurado de tres semanas que combina entrevistas profundas, investigación de mercado, análisis interno y una metodología propia de priorización.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-14 grid overflow-hidden rounded-3xl border border-black/8 bg-mist-50 shadow-[0_18px_55px_rgba(34,59,121,0.08)] md:grid-cols-2 lg:mt-20">
+      <article data-overview-card class="border-b border-black/8 p-7 md:border-b-0 md:border-r lg:p-10">
+        <span class="inline-flex rounded-full bg-dark px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white">No entregamos ruido</span>
+        <h3 class="mt-5 font-heading text-2xl font-bold text-dark">Sin documentos eternos.</h3>
+        <p class="mt-3 max-w-lg leading-7 text-dark-500">Quitamos la complejidad que paraliza decisiones y enfocamos la conversación en evidencia, impacto y capacidad real de ejecución.</p>
+      </article>
+      <article data-overview-card class="relative overflow-hidden bg-primary p-7 text-white lg:p-10">
+        <div data-overview-ring class="absolute -right-16 -top-16 h-44 w-44 rounded-full border-[28px] border-white/10" aria-hidden="true"></div>
+        <span class="inline-flex rounded-full bg-highlight px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-dark">Resultado concreto</span>
+        <h3 class="mt-5 font-heading text-2xl font-bold">Un roadmap que empieza el día uno.</h3>
+        <p class="mt-3 max-w-lg leading-7 text-white/75">Acciones ordenadas por impacto, responsables, hitos y quick wins. El equipo termina alineado y listo para avanzar.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  const title = document.querySelector<HTMLElement>('[data-overview-title]')
+  const copies = document.querySelectorAll('[data-overview-copy]')
+  const cards = document.querySelectorAll('[data-overview-card]')
+  const ring = document.querySelector<HTMLElement>('[data-overview-ring]')
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  staggerGrid(copies, { variant: 'organic', itemStagger: 0.08 })
+  staggerGrid(cards, { variant: 'wipe', itemStagger: 0.12 })
+
+  if (ring && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    // Deriva lenta atada al scroll: la sección "respira" sin loop en main thread.
+    gsap.fromTo(
+      ring,
+      { yPercent: -14, xPercent: 8 },
+      {
+        yPercent: 14,
+        xPercent: -8,
+        ease: 'none',
+        scrollTrigger: { trigger: ring.closest('article'), start: 'top bottom', end: 'bottom top', scrub: 0.8 },
+      },
+    )
+  }
+})
+</script>

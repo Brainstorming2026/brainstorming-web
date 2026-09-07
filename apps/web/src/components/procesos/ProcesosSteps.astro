@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
-import stepsImg from '@/assets/procesos/procesor-steps.png'
-import { procesosBenefits } from '@/data'
+import SolutionProcessCards from '@/components/solutions/SolutionProcessCards.astro'
+import { procesosBenefits, procesosSteps } from '@/data'
 ---
 
 <section class="bg-mist py-16">
@@ -19,14 +18,11 @@ import { procesosBenefits } from '@/data'
 
 <section class="bg-white py-20">
   <div class="mx-auto max-w-[1140px] px-6 lg:px-24">
-    <Image
-      id="procesos-steps-img"
-      src={stepsImg}
-      alt="Las 9 etapas del proceso: evaluar viabilidad, empatizar con el cliente, empatizar con el equipo, analizar procesos, identificar herramientas digitales, implementar herramientas, mejorar experiencia, probar oportunidades de mejora e implementar mejoras"
-      class="mx-auto h-auto w-full"
-      widths={[560, 1140]}
-      sizes="(min-width: 1140px) 1140px, 100vw"
-      loading="lazy"
+    <SolutionProcessCards
+      steps={procesosSteps}
+      accent="#f17900"
+      softAccent="#fff4e8"
+      label="Etapas de optimización de procesos"
     />
   </div>
 </section>
@@ -40,7 +36,7 @@ import { procesosBenefits } from '@/data'
     <div id="procesos-benefits" class="mt-10 grid gap-8 sm:grid-cols-2">
       <ul class="space-y-4">
         {
-          procesosBenefits.left.map((text) => (
+          procesosBenefits.left.map(text => (
             <li class="benefit-item flex items-start gap-3">
               <Icon name="sales-check" class="mt-1 h-3 w-auto flex-shrink-0 text-orange" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
@@ -50,7 +46,7 @@ import { procesosBenefits } from '@/data'
       </ul>
       <ul class="space-y-4">
         {
-          procesosBenefits.right.map((text) => (
+          procesosBenefits.right.map(text => (
             <li class="benefit-item flex items-start gap-3">
               <Icon name="sales-check" class="mt-1 h-3 w-auto flex-shrink-0 text-orange" />
               <span class="text-[15px] leading-6 text-dark-500">{text}</span>
@@ -63,17 +59,17 @@ import { procesosBenefits } from '@/data'
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const headline = document.getElementById('procesos-steps-headline')
-  const img = document.getElementById('procesos-steps-img')
   const benefitsHeadline = document.getElementById('procesos-benefits-headline')
   const benefits = document.querySelectorAll('#procesos-benefits .benefit-item')
 
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (img) revealClip(img, { direction: 'up', mode: 'scrub' })
-  if (benefitsHeadline) splitHeadline(benefitsHeadline, { by: 'lines' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (benefitsHeadline)
+    splitHeadline(benefitsHeadline, { by: 'lines' })
   staggerGrid(benefits, { variant: 'organic' })
 })
 </script>

@@ -1,0 +1,44 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<section class="relative overflow-hidden bg-mist py-20 sm:py-24 lg:py-28">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div data-cta-glow class="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[90px]"></div>
+  </div>
+  <div class="relative mx-auto max-w-[920px] px-6 text-center">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Tu siguiente decisión</p>
+    <h2 data-growth-cta-title class="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl lg:text-6xl">¿Listo para dejar de adivinar qué hacer después?</h2>
+    <p class="mx-auto mt-6 max-w-2xl text-base leading-7 text-dark-500 sm:text-lg">En tres semanas puedes tener claridad, prioridades y un plan compartido por todo tu equipo directivo.</p>
+    <a data-growth-cta data-pressable href="/contacto" class="group mt-9 inline-flex min-h-13 items-center justify-center gap-3 rounded-xl bg-primary px-7 py-4 text-sm font-bold text-white shadow-[0_16px_42px_rgba(125,68,228,0.3)] transition-[transform,background-color] hover:-translate-y-1 hover:bg-primary-600">
+      CONVERSEMOS
+      <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </a>
+  </div>
+</section>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+
+registerMotion(() => {
+  const title = document.querySelector<HTMLElement>('[data-growth-cta-title]')
+  const button = document.querySelector<HTMLElement>('[data-growth-cta]')
+  const glow = document.querySelector<HTMLElement>('[data-cta-glow]')
+  const section = button?.closest('section')
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  if (prefersReducedMotion())
+    return
+  const { gsap } = ensureGsap()
+  if (button)
+    gsap.fromTo(button, { y: 24, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)', scrollTrigger: { trigger: button, start: 'top 90%', once: true } })
+  if (glow && section) {
+    // Respiración lenta del halo atada al scroll — nada de loops en main thread.
+    gsap.fromTo(
+      glow,
+      { scale: 0.82, opacity: 0.55, xPercent: -50, yPercent: -50 },
+      { scale: 1.16, opacity: 1, xPercent: -50, yPercent: -50, ease: 'none', scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1 } },
+    )
+  }
+})
+</script>

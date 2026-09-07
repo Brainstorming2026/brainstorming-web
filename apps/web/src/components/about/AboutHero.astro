@@ -1,25 +1,40 @@
 ---
-import { Image } from 'astro:assets'
-import heroBg from '@/assets/nosotros/nosotros-hero.png'
+import { getImage, Image } from 'astro:assets'
+import heroBg from '@/assets/nosotros/nosotros-hero-desktop-hd.png'
+import heroMobileBg from '@/assets/nosotros/nosotros-hero-mobile.png'
+
+const heroMobileWebp = await getImage({
+  src: heroMobileBg,
+  width: 1080,
+  height: 1920,
+  format: 'webp',
+  quality: 92,
+})
 ---
 
-<section class="relative h-screen overflow-hidden bg-indigo">
-  <Image
-    id="about-hero-bg"
-    src={heroBg}
-    alt=""
-    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
-    loading="eager"
-  />
+<section
+  class="relative h-[calc(100svh-5rem)] min-h-[620px] max-h-[900px] overflow-hidden bg-indigo lg:h-[calc(100vh-5rem)] lg:max-h-none"
+>
+  <picture>
+    <source media="(max-width: 1023px)" srcset={heroMobileWebp.src} type="image/webp" />
+    <Image
+      id="about-hero-bg"
+      src={heroBg}
+      alt=""
+      class="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </picture>
   <div
-    class="relative z-10 mx-auto flex h-full max-w-[1512px] items-center justify-end px-6 lg:px-24"
+    class="relative z-10 mx-auto flex h-full max-w-[1512px] items-end px-6 pb-12 pt-24 sm:px-10 sm:pb-16 lg:items-center lg:justify-end lg:px-24 lg:py-0"
   >
-    <div class="max-w-[480px]">
-      <h1 id="about-hero-headline" class="font-heading text-[40px] font-bold leading-tight text-white sm:text-[55px]">
+    <div class="w-full max-w-[560px] lg:max-w-[480px]">
+      <h1 id="about-hero-headline" class="font-heading text-[clamp(2.75rem,12vw,4rem)] font-bold leading-[0.98] text-white lg:text-[55px] lg:leading-tight">
         ¿Quiénes<br />Somos?
       </h1>
-      <div id="about-hero-line" class="mt-4 h-[3px] w-12 bg-white"></div>
-      <p id="about-hero-text" class="mt-6 text-[16px] leading-relaxed text-white/90">
+      <div id="about-hero-line" class="mt-5 h-[3px] w-12 bg-white"></div>
+      <p id="about-hero-text" class="mt-5 max-w-[34rem] text-[16px] leading-[1.65] text-white sm:text-[18px] lg:mt-6 lg:max-w-none lg:text-[16px] lg:leading-relaxed lg:text-white/90">
         Somos una consultora de servicio completo en constante innovación, que
         diseña soluciones digitales centradas en el consumidor para optimizar
         pequeñas y grandes empresas.

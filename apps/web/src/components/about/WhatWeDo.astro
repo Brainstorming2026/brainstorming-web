@@ -1,9 +1,16 @@
 ---
 import { Image } from 'astro:assets'
 import doing from '@/assets/nosotros/nosotros-doing.png'
+
+const stages = [
+  { number: '01', name: 'Discover', description: 'Entendemos al usuario y detectamos oportunidades.' },
+  { number: '02', name: 'Define', description: 'Priorizamos el problema que genera más valor.' },
+  { number: '03', name: 'Develop', description: 'Diseñamos y probamos una solución funcional.' },
+  { number: '04', name: 'Deliver', description: 'Lanzamos el MVP y medimos resultados reales.' },
+]
 ---
 
-<section class="bg-white py-20">
+<section class="bg-white py-14 sm:py-20">
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
     <h2 id="whatwedo-headline" class="font-heading text-[40px] font-bold text-ink sm:text-[50px]">
       ¿Qué hacemos?
@@ -14,9 +21,65 @@ import doing from '@/assets/nosotros/nosotros-doing.png'
     id="whatwedo-diagram"
     src={doing}
     alt="Metodología doble diamante y mejora constante"
-    class="w-full"
+    class="hidden w-full md:block"
     loading="lazy"
   />
+
+  <div
+    id="whatwedo-mobile"
+    class="mx-6 mt-10 overflow-hidden rounded-[28px] border border-[#c5cee0] bg-[#d7dfee] shadow-[0_20px_55px_rgba(34,59,121,0.14)] md:hidden"
+  >
+    <div class="relative overflow-hidden bg-[#212222] px-6 py-7 text-white">
+      <div class="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-primary/70 blur-2xl" aria-hidden="true"></div>
+      <p class="relative text-[12px] font-bold uppercase tracking-[0.2em] text-white/65">Metodología</p>
+      <h3 class="relative mt-2 font-heading text-[28px] font-bold leading-tight">Doble Diamante + MVP</h3>
+      <p class="relative mt-3 max-w-[30rem] text-[15px] leading-relaxed text-white/75">
+        De una necesidad clara a una solución validada.
+      </p>
+    </div>
+
+    <div class="relative px-5 py-7">
+      <div
+        id="whatwedo-mobile-line"
+        class="absolute bottom-10 left-[42px] top-10 w-[3px] origin-top rounded-full bg-primary/35"
+        aria-hidden="true"
+      ></div>
+
+      <ol class="relative space-y-4" aria-label="Etapas del proceso de diseño">
+        {stages.map((stage) => (
+          <li class="whatwedo-mobile-step relative flex gap-4 rounded-2xl border border-white/80 bg-white/90 p-4 shadow-[0_8px_25px_rgba(34,59,121,0.08)] backdrop-blur-sm">
+            <div class="relative z-10 flex h-11 w-11 shrink-0 rotate-45 items-center justify-center rounded-[12px] bg-[#212222] shadow-[0_6px_14px_rgba(33,34,34,0.2)]">
+              <span class="-rotate-45 text-[12px] font-bold text-white">{stage.number}</span>
+            </div>
+            <div class="min-w-0 pt-0.5">
+              <h4 class="font-heading text-[19px] font-bold text-ink">{stage.name}</h4>
+              <p class="mt-1 text-[14px] leading-[1.5] text-gray-body">{stage.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="whatwedo-mobile-step mx-5 mb-5 rounded-2xl bg-[#423c90] p-5 text-white shadow-[0_12px_28px_rgba(66,60,144,0.24)]">
+      <div class="flex items-start gap-4">
+        <svg class="h-11 w-11 shrink-0 text-primary-300" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path d="M38 17a16 16 0 1 0 1.1 11" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+          <path d="m31 10 8 7 5-9" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div>
+          <p class="text-[12px] font-bold uppercase tracking-[0.18em] text-white/60">Iteración continua</p>
+          <h4 class="mt-1 font-heading text-[20px] font-bold">Medir, aprender y mejorar</h4>
+          <p class="mt-2 text-[14px] leading-[1.55] text-white/78">
+            Evaluamos resultados, recogemos feedback y refinamos la solución en cada ciclo.
+          </p>
+        </div>
+      </div>
+      <div class="mt-4 flex items-center gap-3 border-t border-white/15 pt-4">
+        <span class="inline-flex h-7 items-center rounded-full bg-highlight px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-[#212222]">Salida</span>
+        <p class="text-[13px] leading-snug text-white/80">Avanzamos cuando resultados cumplen objetivos.</p>
+      </div>
+    </div>
+  </div>
 
   <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
     <div id="whatwedo-cols" class="mt-16 grid gap-12 md:grid-cols-2">
@@ -45,15 +108,31 @@ import doing from '@/assets/nosotros/nosotros-doing.png'
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const headline = document.getElementById('whatwedo-headline')
   const diagram = document.getElementById('whatwedo-diagram')
+  const mobileDiagram = document.getElementById('whatwedo-mobile')
+  const mobileLine = document.getElementById('whatwedo-mobile-line')
+  const mobileSteps = document.querySelectorAll('#whatwedo-mobile .whatwedo-mobile-step')
   const cols = document.querySelectorAll('#whatwedo-cols .whatwedo-col')
 
   if (headline) splitHeadline(headline, { by: 'lines' })
   if (diagram) revealClip(diagram, { direction: 'up', mode: 'scrub' })
+  if (mobileDiagram) revealClip(mobileDiagram, { direction: 'up' })
+  staggerGrid(mobileSteps, { variant: 'organic', itemStagger: 0.1 })
+
+  if (mobileLine && !prefersReducedMotion()) {
+    const { gsap, ScrollTrigger } = ensureGsap()
+    gsap.set(mobileLine, { scaleY: 0 })
+    ScrollTrigger.create({
+      trigger: mobileDiagram,
+      start: 'top 78%',
+      once: true,
+      onEnter: () => gsap.to(mobileLine, { scaleY: 1, duration: 1.4, ease: 'power2.out' }),
+    })
+  }
   staggerGrid(cols, { variant: 'organic' })
 })
 </script>

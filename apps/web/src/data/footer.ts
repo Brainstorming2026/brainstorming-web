@@ -10,10 +10,11 @@ export interface FooterRed {
 }
 
 export const soluciones: FooterLink[] = [
+  { label: 'Growth Planning', href: '/soluciones/growth-planning' },
   { label: 'Branding', href: '/soluciones/branding' },
   { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
   { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
-  { label: 'Inbound Sales', href: '/soluciones/inbound-sales' },
+  { label: 'Smart Selling', href: '/soluciones/smart-selling' },
   { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
 ]
 

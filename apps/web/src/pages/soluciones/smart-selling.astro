@@ -1,0 +1,17 @@
+---
+import SalesCta from '@/components/sales/SalesCta.astro'
+import SalesHero from '@/components/sales/SalesHero.astro'
+import SalesSteps from '@/components/sales/SalesSteps.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+---
+
+<Layout
+  title="Smart Selling — Brainstorming"
+  description="Transforma tu proceso comercial con una metodología que conecta diagnóstico, CRM, automatización con IA, playbooks y adopción para vender de forma predecible."
+>
+  <SalesHero />
+  <SalesSteps />
+  <SalesCta />
+</Layout>

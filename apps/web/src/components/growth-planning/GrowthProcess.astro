@@ -1,0 +1,172 @@
+---
+import { Image } from 'astro:assets'
+import { growthStages } from '@/data/growth-planning'
+
+const phases = [
+  ['00–01', 'Entender'],
+  ['02–03', 'Investigar'],
+  ['04–05', 'Decidir'],
+  ['06', 'Ejecutar'],
+]
+---
+
+<section id="proceso-growth" class="relative overflow-hidden bg-[#f3f5f7] py-16 sm:py-20 lg:py-24">
+
+  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
+    <div class="lg:grid lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <header class="max-w-[790px]">
+          <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">El proceso · 7 etapas</p>
+          <h2 data-process-title class="mt-4 font-heading text-[clamp(2.15rem,8.5vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
+            Primero entender.<br />Después, decidir.
+          </h2>
+          <p class="mt-5 max-w-[680px] text-base leading-7 text-dark-500 sm:text-lg">Siete etapas para mirar tu negocio desde dentro y desde fuera. Cada conversación y cada análisis alimentan una decisión.</p>
+        </header>
+
+        <ol
+          data-phase-nav
+          class="mx-auto mt-8 grid max-w-[880px] grid-cols-2 divide-x divide-y divide-[#ebe7f0] overflow-hidden rounded-2xl border border-[#ded8e8] bg-white shadow-[0_14px_38px_rgba(59,39,92,0.05)] sm:mt-10 sm:grid-cols-4 sm:divide-y-0 lg:max-w-none lg:grid-cols-1 lg:divide-x-0 lg:divide-y"
+        >
+          {phases.map(([range, label], index) => (
+            <li data-phase={index} class="px-3 py-4 text-center sm:px-4 lg:px-5 lg:text-left">
+              <span class="block text-[10px] font-bold tracking-[0.18em] text-primary">{range}</span>
+              <span class="phase-label mt-1 block text-sm font-semibold text-dark">{label}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <ol data-growth-process class="process-sequence">
+        {growthStages.map((stage, index) => (
+          <li
+            id={`growth-stage-${stage.number}`}
+            data-stage-card={stage.number}
+            class="scroll-mt-28"
+          >
+            <article class="process-chapter group">
+              <div class="chapter-photo">
+                <Image
+                  src={stage.image}
+                  alt={`Etapa ${stage.number}: ${stage.title}`}
+                  class="h-full w-full object-cover transition-transform duration-700 [@media(hover:hover)]:group-hover:scale-[1.025]"
+                  widths={[480, 720, 960, 1280]}
+                  sizes={index === growthStages.length - 1 ? '(max-width: 767px) calc(100vw - 40px), 44vw' : '(max-width: 767px) calc(100vw - 40px), 48vw'}
+                  loading="lazy"
+                  quality={90}
+                />
+              </div>
+
+              <div class="chapter-copy">
+                <p class="chapter-label"><span>Etapa {stage.number}</span> {stage.shortLabel}</p>
+                <h3 data-chapter-title class="relative mt-2 max-w-[520px] font-heading text-[22px] font-bold leading-[1.2] text-dark sm:text-[26px]">{stage.title}</h3>
+                <p data-chapter-copy class="relative mt-4 max-w-[700px] text-[15px] leading-7 text-dark-500 sm:text-base">{stage.description}</p>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-sequence { display: grid; gap: 48px; margin-top: 56px; }
+  .process-chapter { display: grid; gap: 24px; align-items: center; }
+  .chapter-photo { aspect-ratio: 16/10; overflow: hidden; border-radius: 6px; }
+  .chapter-label { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; color: #6742ac; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .chapter-label span { padding: 5px 9px; border: 1px solid #c9c5d2; border-radius: 3px; color: #525260; }
+  .chapter-copy h3 { margin-top: 18px; }
+
+  [data-phase-nav] > li { position: relative; transition: background-color .4s cubic-bezier(0.23, 1, 0.32, 1); }
+  [data-phase-nav] > li[data-active] { background: #f4eefe; }
+  [data-phase-nav] > li .phase-label { transition: color .4s cubic-bezier(0.23, 1, 0.32, 1); }
+  [data-phase-nav] > li[data-active] .phase-label { color: #7d44e4; }
+
+  @media (min-width: 768px) {
+    .process-sequence { gap: 64px; }
+    .process-chapter { grid-template-columns: 1fr 1fr; gap: 7%; }
+    .process-sequence > li:nth-child(even) .chapter-photo { order: 2; }
+  }
+  @media (min-width: 1024px) {
+    .process-sequence { margin-top: 0; }
+    [data-phase-nav] > li::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: #7d44e4; transform: scaleY(0); transform-origin: 50% 0;
+      transition: transform .45s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    [data-phase-nav] > li[data-active]::before { transform: scaleY(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-phase-nav] > li, [data-phase-nav] > li::before, [data-phase-nav] > li .phase-label { transition: none; }
+  }
+</style>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
+
+const phaseOf = (n: number) => (n <= 1 ? 0 : n <= 3 ? 1 : n <= 5 ? 2 : 3)
+
+registerMotion(() => {
+  const section = document.querySelector<HTMLElement>('[data-growth-process]')
+  const title = document.querySelector<HTMLElement>('[data-process-title]')
+  const phaseCells = Array.from(document.querySelectorAll<HTMLElement>('[data-phase-nav] > li'))
+
+  if (title)
+    splitHeadline(title, { by: 'lines' })
+  if (!section)
+    return
+
+  const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-stage-card]'))
+  const { ScrollTrigger, gsap } = ensureGsap()
+  const reduced = prefersReducedMotion()
+
+  const setActivePhase = (i: number) => {
+    phaseCells.forEach((cell, idx) => {
+      if (idx === i)
+        cell.dataset.active = ''
+      else
+        cell.removeAttribute('data-active')
+    })
+  }
+
+  cards.forEach((card, index) => {
+    const stageNumber = Number.parseInt(card.dataset.stageCard ?? '0', 10)
+    const photo = card.querySelector<HTMLElement>('.chapter-photo')
+    const heading = card.querySelector<HTMLElement>('[data-chapter-title]')
+    const copy = card.querySelector<HTMLElement>('[data-chapter-copy]')
+
+    // Rastreo de fase: barato, orienta al lector — se mantiene incluso con
+    // reduced-motion (solo cambia color de fondo, sin movimiento).
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 65%',
+      end: 'bottom 45%',
+      onEnter: () => setActivePhase(phaseOf(stageNumber)),
+      onEnterBack: () => setActivePhase(phaseOf(stageNumber)),
+    })
+
+    if (reduced) {
+      if (heading)
+        gsap.fromTo(heading, { opacity: 0 }, { opacity: 1, duration: 0.4, scrollTrigger: { trigger: card, start: 'top 85%', once: true } })
+      if (copy)
+        gsap.fromTo(copy, { opacity: 0 }, { opacity: 1, duration: 0.4, scrollTrigger: { trigger: card, start: 'top 85%', once: true } })
+      return
+    }
+
+    if (photo)
+      revealClip(photo, { direction: index % 2 === 0 ? 'left' : 'right', parallax: true })
+    if (heading)
+      splitHeadline(heading, { by: 'words' })
+    if (copy) {
+      gsap.from(copy, {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: copy, start: 'top 85%', once: true },
+      })
+    }
+  })
+})
+</script>

@@ -4,57 +4,47 @@ import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
 ---
 
-<section class="relative bg-[linear-gradient(to_bottom,#f7f9fc,#ffffff)] pb-24 sm:pb-28 lg:pb-32">
-  <div class="mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
-    <div data-contact-panel class="relative -top-14 grid overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_30px_90px_rgba(20,20,40,0.14)] lg:grid-cols-[0.72fr_1.28fr]">
-      <aside class="relative overflow-hidden bg-primary p-7 text-white sm:p-9 lg:p-12">
-        <div class="pointer-events-none absolute -bottom-24 -right-20 h-72 w-72 rounded-full border-[42px] border-white/[0.07]" aria-hidden="true"></div>
-        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">Qué puedes esperar</p>
-        <h2 class="mt-4 max-w-sm font-heading text-3xl font-bold leading-tight sm:text-4xl">Una primera conversación concreta.</h2>
-        <p class="mt-5 max-w-md text-[15px] leading-7 text-white/72">No necesitas tener todo resuelto. Solo danos el contexto suficiente para preparar una conversación útil desde el inicio.</p>
+<section data-contact-experience class="contact-studio relative overflow-hidden py-12 sm:py-16 lg:py-18">
 
-        <ol class="relative mt-9 space-y-6">
-          <li class="flex gap-4">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xs font-bold">01</span>
-            <div>
-              <h3 class="text-sm font-bold">Revisamos tu contexto</h3>
-              <p class="mt-1 text-sm leading-6 text-white/62">Objetivos, retos y momento del negocio.</p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xs font-bold">02</span>
-            <div>
-              <h3 class="text-sm font-bold">Te contactamos</h3>
-              <p class="mt-1 text-sm leading-6 text-white/62">Respondemos normalmente dentro de 1 día hábil.</p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-xs font-bold">03</span>
-            <div>
-              <h3 class="text-sm font-bold">Definimos el siguiente paso</h3>
-              <p class="mt-1 text-sm leading-6 text-white/62">Sin presión comercial ni reuniones innecesarias.</p>
-            </div>
-          </li>
-        </ol>
+  <div class="relative mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-12 xl:px-16">
+    <div data-contact-panel class="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-14">
+      <header class="pt-1 lg:sticky lg:top-28 lg:pt-5">
+        <p class="studio-label">
+          Contacto directo
+        </p>
+        <h2 class="studio-title">Hablemos de<br />tu negocio.</h2>
+        <p class="mt-6 max-w-[560px] text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">
+          Cuéntanos dónde estás, qué quieres lograr y qué te está deteniendo. Convertiremos ese contexto en un siguiente paso claro.
+        </p>
 
-        <div class="relative mt-10 border-t border-white/15 pt-6">
-          <div class="flex items-center gap-3">
-            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-highlight text-dark">
-              <Icon name="growth-positioning" class="h-5 w-5" />
+        <div class="studio-contacts mt-8 grid gap-3">
+          <a href="mailto:conversemos@brainstorming.la" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">
+              <Icon name="footer-mail" class="h-4 w-4" />
             </span>
-            <div>
-              <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">Enfoque</p>
-              <p class="mt-0.5 text-sm font-bold">Estrategia antes que soluciones.</p>
-            </div>
-          </div>
+            <span class="min-w-0 break-all">conversemos@brainstorming.la</span>
+          </a>
+          <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">
+              <Icon name="footer-phone" class="h-4 w-4" />
+            </span>
+            +51 992 528 363
+          </a>
         </div>
-      </aside>
 
-      <div class="p-6 sm:p-9 lg:p-12 xl:p-14">
+        <div class="mt-7 flex items-center gap-3 border-t border-primary/10 pt-5 text-sm text-dark-500">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-primary shadow-sm">
+            <Icon name="growth-positioning" class="h-4 w-4" />
+          </span>
+          <span><strong class="text-dark">Estrategia antes que soluciones.</strong> Sin presión comercial.</span>
+        </div>
+      </header>
+
+      <div class="studio-form">
         <div class="flex flex-col gap-3 border-b border-black/8 pb-7 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Cuéntanos sobre ti</p>
-            <h2 class="mt-2 font-heading text-3xl font-bold leading-tight text-dark sm:text-4xl">Empecemos.</h2>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Tu contexto</p>
+            <h2 class="mt-2 font-heading text-3xl font-bold leading-tight text-dark">¿Qué tienes en mente?</h2>
           </div>
           <p class="text-xs text-dark-400"><span class="text-primary">*</span> Campos obligatorios</p>
         </div>
@@ -122,7 +112,7 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
                 required
                 minlength="10"
                 maxlength="2000"
-                rows="5"
+                rows="4"
                 aria-describedby="contacto-mensaje-hint contacto-mensaje-error"
                 class="form-control resize-none"
               ></textarea>
@@ -137,7 +127,7 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             </label>
 
             <div class="sm:col-span-2">
-              <label class="group flex cursor-pointer items-start gap-3 rounded-xl border border-black/8 bg-mist-50 p-4 transition-colors hover:border-primary/20">
+              <label class="group flex cursor-pointer items-start gap-3 rounded-xl border border-[#e7e2eb] bg-[#faf9fc] p-4 transition-colors hover:border-primary/20">
                 <input
                   type="checkbox"
                   name="privacyConsent"
@@ -169,12 +159,50 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
         </form>
       </div>
     </div>
+
+    <ol data-contact-steps class="relative mt-12 grid gap-0 overflow-hidden rounded-[24px] border border-[#e2ddea] bg-white shadow-[0_16px_45px_rgba(59,39,92,0.05)] sm:grid-cols-3">
+      {[
+        ['01', 'Revisamos tu contexto', 'Objetivos, retos y momento del negocio.'],
+        ['02', 'Te contactamos', 'Normalmente dentro de 1 día hábil.'],
+        ['03', 'Definimos el siguiente paso', 'Sin reuniones ni propuestas innecesarias.'],
+      ].map(([number, title, description], index) => (
+        <li class:list={['grid grid-cols-[44px_1fr] gap-3 p-5 sm:block sm:p-6', index < 2 && 'border-b border-[#ece8f0] sm:border-b-0 sm:border-r']}>
+          <span class="font-heading text-2xl font-bold text-primary/35">{number}</span>
+          <div class="sm:mt-5">
+            <h3 class="text-sm font-bold text-dark">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-dark-500">{description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
 
 <FormStatusModal />
 
 <style>
+  .contact-studio {
+    --studio-purple: #713cce;
+    background: #fff;
+    color: #26222c;
+  }
+  .studio-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #655e6e; }
+  .studio-title { margin-top: 20px; font-size: clamp(30px, 3vw, 42px); font-weight: 650; line-height: 1.12; letter-spacing: -0.04em; }
+  #contacto-form { scroll-margin-top: 130px; }
+  .studio-contacts > a { border-radius: 0; border: 0; border-bottom: 1px solid #e3dfe8; box-shadow: none; padding: 12px 0; background: transparent; }
+  .studio-contacts > a:hover { transform: translateX(4px); }
+  .studio-contacts > a > span:first-child { background: transparent; }
+  .studio-form { min-width: 0; padding: 26px 0 0; border-top: 2px solid var(--studio-purple); }
+  .form-field { transition: transform 220ms ease; }
+  .form-field:focus-within { transform: translateY(-2px); }
+  .form-field:focus-within .form-label { color: var(--studio-purple); }
+  [data-contact-steps] { border-radius: 0; box-shadow: none; border-left: 0; border-right: 0; }
+  @media (min-width: 1024px) {
+    .studio-form { padding: 28px 0 0 36px; border-top: 0; border-left: 1px solid #ded7e8; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .form-field, .studio-contacts > a { transition: none; transform: none; }
+  }
   .form-label {
     display: block;
     margin-bottom: 0.5rem;
@@ -188,12 +216,12 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
   .form-control {
     min-height: 3.25rem;
     width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.75rem;
-    background: #fff;
+    border: 1px solid #e4dfe9;
+    border-radius: 4px;
+    background: #faf9fc;
     padding: 0.875rem 1rem;
     color: #212222;
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1.5;
     outline: none;
     transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;

@@ -2,67 +2,73 @@
 import { growthBenefits } from '@/data/growth-planning'
 ---
 
-<section class="bg-white py-20 sm:py-24 lg:py-32">
-  <div class="mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
-    <div class="mx-auto max-w-[760px] text-center">
-      <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Lo que cambia</p>
-      <h2 data-benefits-title class="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl">Claridad que se convierte en movimiento.</h2>
-      <p class="mx-auto mt-6 max-w-[640px] text-base leading-7 text-dark-500 sm:text-lg">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
+<section class="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
+
+  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
+    <div data-benefits-panel class="benefits-layout">
+      <header>
+        <p class="relative text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Lo que cambia</p>
+        <h2 data-benefits-title class="relative mt-4 max-w-[480px] font-heading text-[clamp(2.15rem,8vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
+          Menos suposiciones.<br />Más dirección.
+        </h2>
+        <p class="relative mt-6 max-w-[480px] text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
+      </header>
+
+      <ol data-benefits-grid role="list">
+        {growthBenefits.map(benefit => (
+          <li data-benefit-card class="grid grid-cols-[32px_minmax(0,1fr)] gap-3 border-b border-[#e4e5e8] py-6 first:pt-0 last:border-b-0 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-5">
+            <span class="pt-1 font-heading text-sm font-semibold tabular-nums text-primary sm:text-base" aria-hidden="true">{benefit.metric}</span>
+            <div>
+              <h3 class="font-heading text-xl font-bold leading-tight text-dark sm:text-2xl">{benefit.title}</h3>
+              <p class="mt-2 max-w-[560px] text-[15px] leading-7 text-dark-500 sm:text-base">{benefit.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
 
-    <div data-benefits-grid class="mt-14 grid gap-5 md:grid-cols-6">
-      {growthBenefits.map((benefit, index) => (
-        <article
-          data-benefit-card
-          class:list={[
-          'group relative min-h-[255px] overflow-hidden rounded-3xl border border-black/8 p-7 shadow-[0_12px_40px_rgba(34,59,121,0.06)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(34,59,121,0.12)] lg:p-8',
-          index < 3 ? 'md:col-span-2' : 'md:col-span-3',
-          index === 0 ? 'bg-dark text-white' : index === 4 ? 'bg-primary text-white' : 'bg-mist-50 text-dark',
-        ]}
-        >
-          <div class="flex items-center gap-2.5">
-            <span class:list={['h-2 w-2 rounded-full', index === 0 || index === 4 ? 'bg-highlight' : 'bg-primary']}></span>
-            <span class:list={['text-[10px] font-bold uppercase tracking-[0.18em]', index === 0 || index === 4 ? 'text-white/55' : 'text-dark-400']}>Resultado {benefit.metric}</span>
-          </div>
-          <span class:list={['absolute right-6 top-5 font-heading text-5xl font-bold', index === 0 || index === 4 ? 'text-white/8' : 'text-dark/5']} aria-hidden="true">{benefit.metric}</span>
-          <h3 class="mt-10 font-heading text-2xl font-bold">{benefit.title}</h3>
-          <p class:list={['mt-3 max-w-md leading-7', index === 0 || index === 4 ? 'text-white/70' : 'text-dark-500']}>{benefit.description}</p>
-        </article>
-      ))}
-    </div>
-
-    <div data-roadmap-output class="relative mt-20 overflow-hidden rounded-[32px] bg-dark px-6 py-10 text-white sm:px-10 lg:px-14 lg:py-14">
-      <div class="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-primary/30 blur-[90px]" aria-hidden="true"></div>
-      <div class="relative grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+    <div data-roadmap-output class="relative mt-14 overflow-hidden rounded-lg bg-[#edf1f6] px-6 py-9 sm:px-9 sm:py-11 lg:mt-20 lg:px-12 lg:py-12">
+      <div class="relative grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-14">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300">El entregable</p>
-          <h3 class="mt-4 font-heading text-3xl font-bold leading-tight sm:text-4xl">Un sistema de decisiones para los próximos 6 meses.</h3>
-          <p class="mt-5 max-w-lg leading-7 text-white/65">No termina en una presentación: termina con orden, ownership y una secuencia de ejecución entendible por todo el equipo.</p>
+          <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">El entregable</p>
+          <h3 class="mt-4 max-w-[480px] font-heading text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-dark sm:text-[40px]">Un sistema de decisiones para los próximos 6 meses.</h3>
+          <p class="mt-5 max-w-[500px] text-[15px] leading-7 text-dark-500 sm:text-base">No termina en una presentación. Termina con orden, responsables y una secuencia de ejecución entendible por todo el equipo.</p>
         </div>
-        <ol class="grid gap-3 sm:grid-cols-3">
-          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
-            <span class="font-heading text-3xl font-bold text-highlight">30</span>
-            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
-            <p class="mt-5 text-sm font-bold text-white">Quick wins</p>
-            <p class="mt-2 text-sm leading-6 text-white/55">Primeras acciones activadas.</p>
-          </li>
-          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
-            <span class="font-heading text-3xl font-bold text-primary-300">90</span>
-            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
-            <p class="mt-5 text-sm font-bold text-white">Hitos críticos</p>
-            <p class="mt-2 text-sm leading-6 text-white/55">Prioridades en ejecución.</p>
-          </li>
-          <li class="rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm">
-            <span class="font-heading text-3xl font-bold text-white">180</span>
-            <span class="ml-1 text-xs font-bold uppercase tracking-[0.14em] text-white/50">días</span>
-            <p class="mt-5 text-sm font-bold text-white">Roadmap completo</p>
-            <p class="mt-2 text-sm leading-6 text-white/55">Crecimiento con dirección.</p>
-          </li>
+
+        <ol data-roadmap-timeline class="relative grid gap-0 sm:grid-cols-3">
+          {[
+            ['30', 'Quick wins', 'Primeras acciones activadas.'],
+            ['90', 'Hitos críticos', 'Prioridades en ejecución.'],
+            ['180', 'Roadmap completo', 'Crecimiento con dirección.'],
+          ].map(([days, title, description]) => (
+            <li class="relative grid grid-cols-[38px_1fr] gap-3 py-4 sm:block sm:px-3 sm:py-0 sm:text-center">
+              <span class="relative z-10 mt-1 block h-3 w-3 rounded-full border-[3px] border-white bg-primary shadow-[0_0_0_1px_rgba(125,68,228,0.22)] sm:mx-auto sm:mt-[25px]"></span>
+              <div class="sm:mt-7">
+                <p class="font-heading text-[32px] font-bold leading-none tracking-[-0.04em] text-primary">
+                  {days}<span class="ml-1 text-[10px] uppercase tracking-[0.14em] text-dark-400">días</span>
+                </p>
+                <h4 class="mt-3 text-sm font-bold text-dark sm:text-base">{title}</h4>
+                <p class="mt-1 text-sm leading-6 text-dark-500">{description}</p>
+              </div>
+            </li>
+          ))}
         </ol>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .benefits-layout { display: grid; gap: 36px; }
+  [data-benefits-title] { font-size: clamp(32px, 4vw, 48px); line-height: 1.12; }
+  [data-roadmap-timeline]::before { content: ''; position: absolute; left: 5px; top: 25px; bottom: 70px; width: 1px; background: #c8bfd8; }
+  @media (min-width: 640px) {
+    [data-roadmap-timeline]::before { left: 16.66%; right: 16.66%; top: 31px; bottom: auto; width: auto; height: 1px; }
+  }
+  @media (min-width: 1024px) {
+    .benefits-layout { grid-template-columns: 1fr 1.15fr; gap: 9%; align-items: start; }
+  }
+</style>
 
 <script>
 import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
@@ -73,7 +79,7 @@ registerMotion(() => {
   const output = document.querySelector<HTMLElement>('[data-roadmap-output]')
   if (title)
     splitHeadline(title, { by: 'lines' })
-  staggerGrid(cards, { variant: 'organic', itemStagger: 0.09 })
+  staggerGrid(cards, { variant: 'organic', itemStagger: 0.07 })
   if (output)
     revealClip(output, { direction: 'up' })
 })

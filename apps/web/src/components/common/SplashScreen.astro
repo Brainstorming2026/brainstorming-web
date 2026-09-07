@@ -3,9 +3,11 @@ const SEEN_KEY = 'bs-splash-seen'
 ---
 
 <script is:inline define:vars={{ SEEN_KEY }}>
-  if (sessionStorage.getItem(SEEN_KEY)) {
-    document.documentElement.classList.add('bs-splash-seen')
-  }
+  try {
+    if (localStorage.getItem(SEEN_KEY)) {
+      document.documentElement.classList.add('bs-splash-seen')
+    }
+  } catch (e) {}
 </script>
 
 <style>
@@ -39,20 +41,31 @@ const SEEN_KEY = 'bs-splash-seen'
   import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
   const SEEN_KEY = 'bs-splash-seen'
-  /** Duración real de cada gif (81/71 frames @ 25fps) — el hold coincide con
-   * el frame final en vez de cortar el loop a mitad de animación. */
-  const HOLD_DESKTOP_MS = 3240
-  const HOLD_MOBILE_MS = 2840
+  /** Los gifs están re-encodeados a una sola reproducción (sin loop), así que
+   * congelan en su frame final. El hold es corto porque ya no hay riesgo de
+   * ver el reinicio del loop. */
+  const HOLD_DESKTOP_MS = 1800
+  const HOLD_MOBILE_MS = 1600
   const FADE_S = 0.6
 
+  const seen = () => {
+    try {
+      return localStorage.getItem(SEEN_KEY)
+    } catch (e) {
+      return null
+    }
+  }
+
   const splash = document.getElementById('splash-screen')
-  if (splash && !sessionStorage.getItem(SEEN_KEY)) {
+  if (splash && !seen()) {
     document.body.style.overflow = 'hidden'
     const isDesktop = window.matchMedia('(min-width: 768px)').matches
     const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
 
     const dismiss = () => {
-      sessionStorage.setItem(SEEN_KEY, '1')
+      try {
+        localStorage.setItem(SEEN_KEY, '1')
+      } catch (e) {}
       document.body.style.overflow = ''
       splash.style.pointerEvents = 'none'
     }

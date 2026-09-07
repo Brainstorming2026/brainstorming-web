@@ -3,56 +3,83 @@ import { Image } from 'astro:assets'
 import { growthStages } from '@/data/growth-planning'
 ---
 
-<section id="proceso-growth" class="relative overflow-hidden bg-mist-50 py-20 sm:py-24 lg:py-32">
-  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-    <div class="absolute -right-48 top-28 h-[560px] w-[560px] rounded-full bg-primary/10 blur-[120px]"></div>
-  </div>
-  <div class="relative mx-auto max-w-[1280px] px-6 lg:px-16 xl:px-24">
-    <div class="max-w-[780px]">
-      <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary">El proceso · 7 etapas</p>
-      <h2 data-process-title class="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-dark sm:text-5xl lg:text-6xl">
-        De las preguntas difíciles a un plan que sí se ejecuta.
+<section id="proceso-growth" class="relative overflow-hidden bg-[#f3f5f7] py-16 sm:py-20 lg:py-24">
+
+  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
+    <header class="max-w-[790px]">
+      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">El proceso · 7 etapas</p>
+      <h2 data-process-title class="mt-4 font-heading text-[clamp(2.15rem,8.5vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
+        Primero entender.<br />Después, decidir.
       </h2>
-      <p class="mt-6 max-w-[680px] text-base leading-7 text-dark-500 sm:text-lg">Cada etapa reduce incertidumbre. Nada entra al roadmap sin evidencia, contexto y una razón clara para priorizarlo.</p>
-    </div>
+      <p class="mt-5 max-w-[680px] text-base leading-7 text-dark-500 sm:text-lg">Siete etapas para mirar tu negocio desde dentro y desde fuera. Cada conversación y cada análisis alimentan una decisión.</p>
+    </header>
 
-    <div data-growth-process class="mt-14 grid gap-10 lg:grid-cols-[250px_1fr] lg:gap-14">
-      <nav class="hidden lg:block" aria-label="Etapas de Growth Planning">
-        <div class="sticky top-28 overflow-hidden rounded-2xl border border-black/8 bg-white p-2 shadow-[0_14px_45px_rgba(34,59,121,0.08)]">
-          <div class="absolute bottom-3 left-[27px] top-3 w-px bg-black/8" aria-hidden="true"></div>
-          <div data-process-progress class="absolute left-[26px] top-3 h-[calc(100%-24px)] w-[3px] origin-top rounded-full bg-primary" aria-hidden="true"></div>
-          {growthStages.map(stage => (
-            <button type="button" data-stage-link={stage.number} class="relative flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-dark-500 transition-colors hover:bg-primary-50 hover:text-primary" aria-label={`Ir a ${stage.title}`}>
-              <span class="stage-dot relative z-10 h-3 w-3 shrink-0 rounded-full border-[3px] border-white bg-dark-200 shadow-sm transition-colors"></span>
-              <span>
-                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-primary">{stage.number}</span>
-                <span class="block text-sm font-bold">{stage.shortLabel}</span>
-              </span>
-            </button>
-          ))}
+    <div class="mx-auto mt-10 grid max-w-[880px] grid-cols-2 overflow-hidden rounded-2xl border border-[#ded8e8] bg-white shadow-[0_14px_38px_rgba(59,39,92,0.05)] sm:mt-12 sm:grid-cols-4">
+      {[
+        ['00–01', 'Entender'],
+        ['02–03', 'Investigar'],
+        ['04–05', 'Decidir'],
+        ['06', 'Ejecutar'],
+      ].map(([range, label], index) => (
+        <div class:list={[
+          'border-[#ebe7f0] px-3 py-4 text-center sm:px-4',
+          index < 2 ? 'border-b' : '',
+          index % 2 === 0 ? 'border-r' : '',
+          'sm:border-b-0 sm:border-r',
+          index === 3 ? 'sm:border-r-0' : '',
+        ]}
+        >
+          <span class="block text-[10px] font-bold tracking-[0.18em] text-primary">{range}</span>
+          <span class="mt-1 block text-sm font-semibold text-dark">{label}</span>
         </div>
-      </nav>
-
-      <ol class="space-y-5">
-        {growthStages.map(stage => (
-          <li id={`growth-stage-${stage.number}`} data-stage-card={stage.number} class="scroll-mt-28">
-            <article class="group relative grid gap-5 overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[0_14px_45px_rgba(34,59,121,0.07)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_24px_65px_rgba(34,59,121,0.13)] sm:grid-cols-[112px_1fr] sm:gap-7 sm:p-8 lg:p-10">
-              <span class="pointer-events-none absolute right-5 top-0 font-heading text-[88px] font-bold leading-none text-dark/[0.035] sm:text-[120px]" aria-hidden="true">{stage.number}</span>
-              <div class="relative flex h-[88px] w-[88px] items-center justify-center rounded-2xl border border-primary/10 bg-[linear-gradient(145deg,#ffffff,#f4eefe)] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] transition-transform duration-300 group-hover:rotate-[-2deg] group-hover:scale-[1.04] sm:h-[112px] sm:w-[112px]">
-                <Image src={stage.icon} alt="" class="h-full w-full object-contain" widths={[176, 224]} sizes="(min-width: 640px) 112px, 88px" loading="lazy" quality={90} />
-              </div>
-              <div class="relative min-w-0">
-                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Fase {stage.number}</p>
-                <h3 class="mt-2 font-heading text-2xl font-bold leading-tight text-dark sm:text-[28px]">{stage.title}</h3>
-                <p class="mt-4 max-w-[760px] text-[15px] leading-7 text-dark-500 sm:text-base">{stage.description}</p>
-              </div>
-            </article>
-          </li>
-        ))}
-      </ol>
+      ))}
     </div>
+
+    <ol data-growth-process class="process-sequence">
+      {growthStages.map((stage, index) => (
+        <li
+          id={`growth-stage-${stage.number}`}
+          data-stage-card={stage.number}
+          class="scroll-mt-28"
+        >
+          <article class="process-chapter">
+            <div class="chapter-photo">
+              <Image
+                src={stage.image}
+                alt={`Etapa ${stage.number}: ${stage.title}`}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                widths={[480, 720, 960, 1280]}
+                sizes={index === growthStages.length - 1 ? '(max-width: 767px) calc(100vw - 40px), 44vw' : '(max-width: 767px) calc(100vw - 40px), 48vw'}
+                loading="lazy"
+                quality={90}
+              />
+            </div>
+
+            <div class="chapter-copy">
+              <p class="chapter-label"><span>Etapa {stage.number}</span> {stage.shortLabel}</p>
+              <h3 class="relative mt-2 max-w-[520px] font-heading text-[22px] font-bold leading-[1.2] text-dark sm:text-[26px]">{stage.title}</h3>
+              <p class="relative mt-4 max-w-[700px] text-[15px] leading-7 text-dark-500 sm:text-base">{stage.description}</p>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
+
+<style>
+  .process-sequence { display: grid; gap: 48px; margin-top: 56px; }
+  .process-chapter { display: grid; gap: 24px; align-items: center; }
+  .chapter-photo { aspect-ratio: 16/10; overflow: hidden; border-radius: 6px; }
+  .chapter-label { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; color: #6742ac; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .chapter-label span { padding: 5px 9px; border: 1px solid #c9c5d2; border-radius: 3px; color: #525260; }
+  .chapter-copy h3 { margin-top: 18px; }
+  @media (min-width: 768px) {
+    .process-sequence { gap: 64px; }
+    .process-chapter { grid-template-columns: 1fr 1fr; gap: 7%; }
+    .process-sequence > li:nth-child(even) .chapter-photo { order: 2; }
+  }
+</style>
 
 <script>
 import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
@@ -62,52 +89,15 @@ registerMotion(() => {
   const title = document.querySelector<HTMLElement>('[data-process-title]')
   if (title)
     splitHeadline(title, { by: 'lines' })
-  if (!section)
+  if (!section || prefersReducedMotion())
     return
 
   const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-stage-card]'))
-  const links = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-stage-link]'))
-  const progress = section.querySelector<HTMLElement>('[data-process-progress]')
-
-  links.forEach((link) => {
-    link.addEventListener('click', () => {
-      document.getElementById(`growth-stage-${link.dataset.stageLink}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    })
-  })
-
-  if (prefersReducedMotion())
-    return
-
-  const { gsap, ScrollTrigger } = ensureGsap()
-  gsap.set(progress, { scaleY: 0 })
-  gsap.to(progress, {
-    scaleY: 1,
-    ease: 'none',
-    scrollTrigger: { trigger: section, start: 'top 42%', end: 'bottom 68%', scrub: 0.35 },
-  })
-
+  const { ScrollTrigger, gsap } = ensureGsap()
   ScrollTrigger.batch(cards, {
     start: 'top 88%',
     once: true,
-    onEnter: batch => gsap.fromTo(batch, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, stagger: 0.07, ease: 'power2.out' }),
-  })
-
-  cards.forEach((card) => {
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top center',
-      end: 'bottom center',
-      onToggle: ({ isActive }) => {
-        if (!isActive)
-          return
-        links.forEach((link) => {
-          const active = link.dataset.stageLink === card.dataset.stageCard
-          link.classList.toggle('bg-primary-50', active)
-          link.classList.toggle('text-primary', active)
-          link.querySelector('.stage-dot')?.classList.toggle('bg-primary', active)
-        })
-      },
-    })
+    onEnter: batch => gsap.fromTo(batch, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.52, stagger: 0.06, ease: 'power2.out' }),
   })
 })
 </script>

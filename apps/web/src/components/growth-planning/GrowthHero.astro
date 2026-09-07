@@ -1,88 +1,77 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import growthVisual from '@/assets/growth-planning/growth-roadmap-hero.png'
+import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
 ---
 
-<section class="relative isolate overflow-hidden bg-dark text-white">
-  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-    <div class="absolute -left-40 top-0 h-[480px] w-[480px] rounded-full bg-primary/20 blur-[130px]"></div>
-    <div class="absolute -right-28 bottom-0 h-[420px] w-[420px] rounded-full bg-navy/50 blur-[120px]"></div>
-    <div class="growth-grid absolute inset-0 opacity-20"></div>
-  </div>
+<section class="relative isolate overflow-hidden bg-white text-dark">
 
-  <div class="relative mx-auto grid min-h-[calc(100svh-80px)] max-w-[1512px] items-center gap-12 px-6 py-16 lg:grid-cols-[0.94fr_1.06fr] lg:px-16 lg:py-20 xl:px-24">
-    <div class="relative z-10 max-w-[690px]">
-      <h1 data-growth-title class="mt-7 max-w-[660px] font-heading text-[clamp(2.35rem,3.8vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-white">
-        Muchas empresas crecen. <span class="text-primary-300">Pocas saben exactamente por qué</span> — ni qué tienen que hacer mañana.
+  <div class="relative mx-auto grid max-w-[1512px] gap-9 px-5 pb-12 pt-10 sm:px-6 sm:pb-14 sm:pt-12 lg:min-h-[600px] lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-12 lg:px-16 lg:py-10 xl:px-24">
+    <div class="relative z-10 max-w-[660px]">
+      <p data-growth-eyebrow class="text-xs font-semibold tracking-[0.12em] text-primary uppercase">
+        Growth Planning / Estrategia de crecimiento
+      </p>
+      <h1 data-growth-title class="mt-5 max-w-[650px] font-heading text-[clamp(2.35rem,10vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-dark">
+        Entiende dónde estás.<br />Decide <span class="text-primary">cómo crecer.</span>
       </h1>
 
-      <p data-growth-copy class="mt-7 max-w-[610px] text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
-        Identificamos qué frena tu crecimiento y lo convertimos en decisiones priorizadas, responsables claros y un roadmap ejecutable.
+      <p data-growth-copy class="mt-5 max-w-[590px] text-base leading-7 text-dark-500 lg:text-[17px]">
+        Tres semanas para entender qué frena tu negocio y decidir qué hacer primero. Con evidencia, responsables y un plan para los próximos seis meses.
       </p>
 
-      <div data-growth-actions class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/contacto" class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_38px_rgba(125,68,228,0.38)] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-primary-400">
-          AGENDAR DIAGNÓSTICO
+      <div data-growth-actions class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href="/contacto" class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_34px_rgba(125,68,228,0.26)] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+          Agendar diagnóstico
           <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </a>
-        <a href="#proceso-growth" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/10">
-          VER EL PROCESO
+        <a href="#proceso-growth" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-dark/15 bg-white/70 px-6 py-3.5 text-sm font-bold text-dark backdrop-blur-sm transition-colors hover:border-primary/30 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+          Conocer el proceso
         </a>
       </div>
     </div>
 
-    <div data-growth-visual class="relative mx-auto w-full max-w-[700px] lg:mx-0 lg:justify-self-end">
-      <div class="absolute -inset-4 rounded-[32px] bg-primary/20 blur-3xl" aria-hidden="true"></div>
-      <figure class="relative overflow-hidden rounded-[26px] border border-white/15 bg-white/[0.05] p-2 shadow-[0_38px_100px_rgba(0,0,0,0.48)] backdrop-blur-xl sm:p-3">
+    <div data-growth-visual class="relative mx-auto w-full max-w-[650px] lg:mx-0 lg:justify-self-end">
+      <figure class="growth-photo">
         <Image
           src={growthVisual}
-          alt="Roadmap estratégico ascendente representado por siete hitos conectados"
-          class="aspect-[3/2] w-full rounded-[20px] object-cover"
+          alt="Equipo directivo trabajando con una consultora en un roadmap estratégico y una matriz de prioridades"
+          class="aspect-[4/3] w-full object-cover"
           loading="eager"
-          quality={92}
+          quality={94}
+          widths={[480, 720, 1080, 1440]}
+          sizes="(max-width: 1023px) calc(100vw - 40px), 56vw"
         />
-        <figcaption class="absolute inset-x-5 bottom-5 flex items-center justify-between rounded-xl border border-white/15 bg-dark/75 px-4 py-3 backdrop-blur-xl sm:inset-x-7 sm:bottom-7 sm:px-5">
-          <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/60 sm:text-xs">De diagnóstico a ejecución</span>
-          <span class="inline-flex items-center gap-2 text-xs font-bold text-white sm:text-sm">
-            <span class="h-2 w-2 rounded-full bg-highlight"></span>
-            7 etapas
-          </span>
+        <figcaption class="flex items-center justify-between gap-4 pt-4 text-xs text-dark-500">
+          <span>El negocio sobre la mesa. Las prioridades, claras.</span>
+          <span class="shrink-0 text-primary">Growth Planning</span>
         </figcaption>
       </figure>
-      <div data-growth-float class="absolute -left-3 top-7 hidden rounded-2xl border border-white/15 bg-dark/80 px-4 py-3 shadow-xl backdrop-blur-xl sm:block lg:-left-8">
-        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">Duración</p>
-        <p class="mt-1 font-heading text-xl font-bold text-white">3 semanas</p>
-      </div>
     </div>
   </div>
 
-  <div class="relative border-t border-white/10 bg-black/15">
-    <dl class="mx-auto grid max-w-[1512px] grid-cols-3 divide-x divide-white/10 px-3 sm:px-6 lg:px-24">
-      <div class="px-3 py-5 text-center sm:px-6 sm:py-6">
-        <dt class="text-[10px] uppercase tracking-[0.15em] text-white/45 sm:text-xs">Sprint</dt>
-        <dd class="mt-1 text-sm font-bold text-white sm:text-lg">3 semanas</dd>
+  <div class="relative border-t border-primary/10 bg-white/70 backdrop-blur">
+    <dl class="mx-auto grid max-w-[1512px] grid-cols-3 divide-x divide-primary/10 px-2 sm:px-6 lg:px-24">
+      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+        <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Sprint</dt>
+        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">3 semanas</dd>
       </div>
-      <div class="px-3 py-5 text-center sm:px-6 sm:py-6">
-        <dt class="text-[10px] uppercase tracking-[0.15em] text-white/45 sm:text-xs">Método</dt>
-        <dd class="mt-1 text-sm font-bold text-white sm:text-lg">7 etapas</dd>
+      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+        <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Método</dt>
+        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">7 etapas</dd>
       </div>
-      <div class="px-3 py-5 text-center sm:px-6 sm:py-6">
-        <dt class="text-[10px] uppercase tracking-[0.15em] text-white/45 sm:text-xs">Horizonte</dt>
-        <dd class="mt-1 text-sm font-bold text-white sm:text-lg">90–180 días</dd>
+      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+        <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Horizonte</dt>
+        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">90–180 días</dd>
       </div>
     </dl>
   </div>
 </section>
 
 <style>
-  .growth-grid {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size: 52px 52px;
-    mask-image: linear-gradient(to bottom, black, transparent 92%);
-  }
+  .growth-photo img { border-radius: 4px 52px 4px 4px; }
+  [data-growth-actions] a { box-shadow: none; border-radius: 6px; }
+  [data-growth-actions] a + a { border-color: transparent; background: transparent; text-decoration: underline; text-underline-offset: 5px; }
+  @media (min-width: 1024px) { [data-growth-title] { font-size: clamp(44px, 4.3vw, 64px); line-height: 1.06; } }
 </style>
 
 <script>
@@ -94,36 +83,14 @@ registerMotion(() => {
   const copy = document.querySelector<HTMLElement>('[data-growth-copy]')
   const actions = document.querySelector<HTMLElement>('[data-growth-actions]')
   const visual = document.querySelector<HTMLElement>('[data-growth-visual]')
-  const floating = document.querySelector<HTMLElement>('[data-growth-float]')
 
   if (title)
     splitHeadline(title, { by: 'lines', scrollTrigger: false })
-
   if (prefersReducedMotion())
     return
 
   const { gsap } = ensureGsap()
-  gsap.from([eyebrow, copy, actions], {
-    y: 24,
-    opacity: 0,
-    duration: 0.65,
-    stagger: 0.1,
-    delay: 0.18,
-    ease: 'expo.out',
-  })
-  gsap.from(visual, { x: 40, scale: 0.97, opacity: 0, duration: 0.8, ease: 'expo.out' })
-  gsap.to(floating, { y: -10, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut' })
-
-  if (visual && window.matchMedia('(pointer: fine)').matches) {
-    const move = (event: PointerEvent) => {
-      const rect = visual.getBoundingClientRect()
-      const x = (event.clientX - rect.left) / rect.width - 0.5
-      const y = (event.clientY - rect.top) / rect.height - 0.5
-      gsap.to(visual, { rotateY: x * 2.4, rotateX: y * -2.4, duration: 0.65, ease: 'power2.out', transformPerspective: 1100 })
-    }
-    const reset = () => gsap.to(visual, { rotateX: 0, rotateY: 0, duration: 0.8, ease: 'expo.out' })
-    visual.addEventListener('pointermove', move)
-    visual.addEventListener('pointerleave', reset)
-  }
+  gsap.from([eyebrow, copy, actions], { y: 18, opacity: 0, duration: 0.6, stagger: 0.1, delay: 0.16, ease: 'expo.out' })
+  gsap.from(visual, { y: 22, scale: 0.985, opacity: 0, duration: 0.8, ease: 'expo.out' })
 })
 </script>

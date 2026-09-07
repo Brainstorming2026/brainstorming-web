@@ -27,17 +27,28 @@ export function splitHeadline(el: HTMLElement, options: SplitHeadlineOptions = {
   const split = new SplitText(el, { type: by, mask: by })
   const targets = by === 'words' ? split.words : split.lines
 
-  gsap.from(targets, {
-    yPercent: 100,
-    opacity: 0,
-    duration: duration.headlineWord,
-    stagger: duration.headlineStagger,
-    ease: ease.out,
-    onComplete,
-    ...(scrollTrigger && {
-      scrollTrigger: { trigger: el, start: 'top 85%' },
-    }),
-  })
+  // El contenedor pudo entrar oculto por la compuerta CSS (`[data-animate]`).
+  // Ahora los hijos del split llevan la animación, así que se muestra ya.
+  gsap.set(el, { opacity: 1 })
+
+  // `fromTo` (no `from`): con ScrollTrigger, `from` deja `immediateRender:false`
+  // y el titular se ve completo hasta cruzar el trigger, ahí SALTA a oculto y
+  // recién anima. `fromTo` fija el estado inicial en la carga.
+  gsap.fromTo(
+    targets,
+    { yPercent: 100, opacity: 0 },
+    {
+      yPercent: 0,
+      opacity: 1,
+      duration: duration.headlineWord,
+      stagger: duration.headlineStagger,
+      ease: ease.out,
+      onComplete,
+      ...(scrollTrigger && {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+      }),
+    },
+  )
 
   return split
 }

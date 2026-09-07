@@ -17,6 +17,7 @@ const imagenSeparada = Boolean(detalle.heroImg)
   <Image
     id="project-hero-bg"
     data-standalone={imagenSeparada ? 'false' : 'true'}
+    data-animate={imagenSeparada ? undefined : 'clip-right'}
     src={detalle.heroBg}
     alt=""
     class="pointer-events-none absolute inset-0 h-full w-full object-cover"
@@ -29,24 +30,24 @@ const imagenSeparada = Boolean(detalle.heroImg)
       <div id="project-hero-icons" class="flex flex-col gap-3">
         {
           proyecto.categorias.map(cat => (
-            <Icon name={categoriaIcons[cat]} class="hero-piece h-8 w-8 text-dark-300" />
+            <Icon name={categoriaIcons[cat]} data-animate class="hero-piece h-8 w-8 text-dark-300" />
           ))
         }
       </div>
 
-      <Image id="project-hero-logo" src={detalle.logo} alt={proyecto.nombre} class="hero-piece mx-auto mt-6 h-auto w-40" />
+      <Image id="project-hero-logo" data-animate src={detalle.logo} alt={proyecto.nombre} class="hero-piece mx-auto mt-6 h-auto w-40" />
 
-      <p id="project-hero-category" class="hero-piece mt-6 font-heading text-[15px] font-bold text-dark">
+      <p id="project-hero-category" data-animate class="hero-piece mt-6 font-heading text-[15px] font-bold text-dark">
         {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}
       </p>
-      <p id="project-hero-desc" class="hero-piece mx-auto mt-4 max-w-[440px] text-[14px] leading-6 text-dark-500">
+      <p id="project-hero-desc" data-animate class="hero-piece mx-auto mt-4 max-w-[440px] text-[14px] leading-6 text-dark-500">
         {detalle.descripcion}
       </p>
     </div>
 
     {
       imagenSeparada && (
-        <div id="project-hero-img" class="relative">
+        <div id="project-hero-img" data-animate="circle" class="relative">
           <Image
             src={detalle.heroImg!}
             alt={detalle.heroImgAlt}

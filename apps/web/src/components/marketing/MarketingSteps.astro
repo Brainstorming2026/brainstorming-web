@@ -193,6 +193,9 @@ registerMotion(() => {
         duration: 0.7,
         stagger: 0.09,
         ease: 'back.out(1.5)',
+        // Fija el estado inicial en la carga: sin esto, `from` + ScrollTrigger
+        // deja el ícono visible y "salta" a oculto al cruzar el trigger.
+        immediateRender: true,
         scrollTrigger: { trigger: cards[0], start: 'top 84%', once: true },
       })
       glows.forEach((glow, i) => {

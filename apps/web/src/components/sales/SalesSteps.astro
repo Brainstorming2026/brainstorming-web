@@ -205,6 +205,10 @@ registerMotion(() => {
         duration: 0.42,
         stagger: 0.065,
         ease: 'power2.out',
+        // immediateRender: fija el estado inicial en la carga. Sin esto, `from`
+        // + ScrollTrigger deja el elemento visible y "salta" a oculto al cruzar
+        // el trigger antes de animar (glitch a media página).
+        immediateRender: true,
         scrollTrigger: { trigger: steps[0], start: 'top 86%', once: true },
       })
       gsap.from(icons, {
@@ -213,6 +217,7 @@ registerMotion(() => {
         duration: 0.36,
         stagger: 0.065,
         ease: 'back.out(1.3)',
+        immediateRender: true,
         scrollTrigger: { trigger: steps[0], start: 'top 86%', once: true },
       })
     }
@@ -226,6 +231,7 @@ registerMotion(() => {
       duration: 0.38,
       stagger: 0.06,
       ease: 'power2.out',
+      immediateRender: true,
       scrollTrigger: { trigger: benefitsSection, start: 'top 82%', once: true },
     })
   }
@@ -238,6 +244,7 @@ registerMotion(() => {
       duration: 0.46,
       stagger: 0.1,
       ease: 'power2.out',
+      immediateRender: true,
       scrollTrigger: { trigger: casesSection, start: 'top 78%', once: true },
     })
   }

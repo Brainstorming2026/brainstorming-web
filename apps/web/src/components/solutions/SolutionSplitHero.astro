@@ -29,6 +29,7 @@ const {
   {layeredIllustration && (
     <div
       data-split-hero-wave
+      data-animate
       class="pointer-events-none absolute inset-x-0 bottom-0 h-[36%] bg-[#eef3fd] [clip-path:polygon(0_36%,23%_18%,47%_37%,72%_12%,100%_28%,100%_100%,0_100%)] sm:h-[34%] lg:h-[31%]"
       aria-hidden="true"
     ></div>
@@ -36,6 +37,7 @@ const {
 
   <Image
     data-split-hero-bg
+    data-animate
     src={image}
     alt=""
     class:list={[
@@ -59,15 +61,16 @@ const {
   >
     <div class:list={['max-w-[600px]', layeredIllustration && 'lg:max-w-[570px]']}>
       {eyebrow && (
-        <p data-split-hero-eyebrow class="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
+        <p data-split-hero-eyebrow data-animate class="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
           {eyebrow}
         </p>
       )}
       {eyebrow && (
-        <span data-split-hero-rule aria-hidden="true" class="mb-5 block h-px w-16 origin-left bg-primary/45"></span>
+        <span data-split-hero-rule data-animate="draw" aria-hidden="true" class="mb-5 block h-px w-16 origin-left bg-primary/45"></span>
       )}
       <h1
         data-split-hero-headline
+        data-animate
         class:list={[
           'font-heading font-bold leading-[1.08] text-dark',
           compactTitle
@@ -77,11 +80,11 @@ const {
       >
         {title}
       </h1>
-      <p data-split-hero-text class="mt-6 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
+      <p data-split-hero-text data-animate class="mt-6 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
         {description}
       </p>
       {secondaryDescription && (
-        <p data-split-hero-text class="mt-3 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
+        <p data-split-hero-text data-animate class="mt-3 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
           {secondaryDescription}
         </p>
       )}
@@ -91,6 +94,7 @@ const {
   <div class:list={['relative overflow-hidden lg:hidden', layeredIllustration ? 'h-[350px] sm:h-[410px]' : 'h-[320px] sm:h-[380px]']} aria-hidden="true">
     <Image
       data-split-hero-bg
+      data-animate
       src={image}
       alt=""
       class:list={[

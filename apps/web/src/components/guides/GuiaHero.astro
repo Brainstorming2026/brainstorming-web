@@ -20,18 +20,20 @@ const featuredGuides = guides.filter(guia => guia.featured)
       <div class="w-full lg:w-1/2">
         <h1
           id="guias-hero-headline"
+          data-animate
           class="font-heading text-[40px] font-bold leading-[50px] text-white sm:text-[60px] sm:leading-[80px]"
         >
           Repositorio de Guías Prácticas de Brainstorming
         </h1>
         <p
           id="guias-hero-text"
+          data-animate
           class="mt-5 max-w-[500px] text-[18px] leading-6 text-white/80 sm:text-[20px] sm:leading-[28px]"
         >
           Aprende todo sobre el Marketing Digital con nuestras Guías Prácticas especializadas.
         </p>
       </div>
-      <div id="guias-hero-img" class="flex w-full justify-center lg:w-1/2">
+      <div id="guias-hero-img" data-animate="circle" class="flex w-full justify-center lg:w-1/2">
         <Image
           src={heroImg}
           alt="Guías prácticas"
@@ -43,6 +45,7 @@ const featuredGuides = guides.filter(guia => guia.featured)
     <div class="mt-20">
       <h2
         id="guias-featured-headline"
+        data-animate
         class="text-center font-heading text-[30px] font-bold text-white sm:text-[36px]"
       >
         Contenidos más consultados por nuestros usuarios

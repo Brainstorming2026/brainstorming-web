@@ -11,6 +11,7 @@ import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
       <p data-growth-eyebrow class="text-xs font-semibold tracking-[0.12em] text-primary uppercase">
         Growth Planning / Estrategia de crecimiento
       </p>
+      <span data-growth-rule aria-hidden="true" class="mt-4 block h-px w-16 origin-left bg-primary/45"></span>
       <h1 data-growth-title class="mt-5 max-w-[650px] font-heading text-[clamp(2.35rem,10vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-dark">
         Entiende dónde estás.<br />Decide <span class="text-primary">cómo crecer.</span>
       </h1>
@@ -20,11 +21,11 @@ import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
       </p>
 
       <div data-growth-actions class="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a href="/contacto" class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_34px_rgba(125,68,228,0.26)] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+        <a href="/contacto" data-pressable class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_34px_rgba(125,68,228,0.26)] transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
           Agendar diagnóstico
           <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </a>
-        <a href="#proceso-growth" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-dark/15 bg-white/70 px-6 py-3.5 text-sm font-bold text-dark backdrop-blur-sm transition-colors hover:border-primary/30 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+        <a href="#proceso-growth" data-pressable class="inline-flex min-h-12 items-center justify-center rounded-xl border border-dark/15 bg-white/70 px-6 py-3.5 text-sm font-bold text-dark backdrop-blur-sm transition-colors hover:border-primary/30 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
           Conocer el proceso
         </a>
       </div>
@@ -32,15 +33,17 @@ import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
 
     <div data-growth-visual class="relative mx-auto w-full max-w-[650px] lg:mx-0 lg:justify-self-end">
       <figure class="growth-photo">
-        <Image
-          src={growthVisual}
-          alt="Equipo directivo trabajando con una consultora en un roadmap estratégico y una matriz de prioridades"
-          class="aspect-[4/3] w-full object-cover"
-          loading="eager"
-          quality={94}
-          widths={[480, 720, 1080, 1440]}
-          sizes="(max-width: 1023px) calc(100vw - 40px), 56vw"
-        />
+        <div data-growth-photo class="overflow-hidden rounded-[4px_52px_4px_4px]">
+          <Image
+            src={growthVisual}
+            alt="Equipo directivo trabajando con una consultora en un roadmap estratégico y una matriz de prioridades"
+            class="aspect-[4/3] w-full object-cover"
+            loading="eager"
+            quality={94}
+            widths={[480, 720, 1080, 1440]}
+            sizes="(max-width: 1023px) calc(100vw - 40px), 56vw"
+          />
+        </div>
         <figcaption class="flex items-center justify-between gap-4 pt-4 text-xs text-dark-500">
           <span>El negocio sobre la mesa. Las prioridades, claras.</span>
           <span class="shrink-0 text-primary">Growth Planning</span>
@@ -50,16 +53,16 @@ import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
   </div>
 
   <div class="relative border-t border-primary/10 bg-white/70 backdrop-blur">
-    <dl class="mx-auto grid max-w-[1512px] grid-cols-3 divide-x divide-primary/10 px-2 sm:px-6 lg:px-24">
-      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+    <dl data-growth-stats class="mx-auto grid max-w-[1512px] grid-cols-3 divide-x divide-primary/10 px-2 sm:px-6 lg:px-24">
+      <div data-growth-stat class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
         <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Sprint</dt>
-        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">3 semanas</dd>
+        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg"><span data-count>3</span> semanas</dd>
       </div>
-      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+      <div data-growth-stat class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
         <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Método</dt>
-        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">7 etapas</dd>
+        <dd class="mt-1 text-xs font-bold text-dark sm:text-lg"><span data-count>7</span> etapas</dd>
       </div>
-      <div class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
+      <div data-growth-stat class="px-2 py-3.5 text-center sm:px-6 sm:py-5">
         <dt class="text-[9px] uppercase tracking-[0.12em] text-dark-400 sm:text-xs">Horizonte</dt>
         <dd class="mt-1 text-xs font-bold text-dark sm:text-lg">90–180 días</dd>
       </div>
@@ -75,22 +78,47 @@ import growthVisual from '@/assets/growth-planning/growth-strategy-workshop.png'
 </style>
 
 <script>
-import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+import { countUp, drawLine, ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const title = document.querySelector<HTMLElement>('[data-growth-title]')
   const eyebrow = document.querySelector<HTMLElement>('[data-growth-eyebrow]')
+  const rule = document.querySelector<HTMLElement>('[data-growth-rule]')
   const copy = document.querySelector<HTMLElement>('[data-growth-copy]')
   const actions = document.querySelector<HTMLElement>('[data-growth-actions]')
-  const visual = document.querySelector<HTMLElement>('[data-growth-visual]')
+  const photo = document.querySelector<HTMLElement>('[data-growth-photo]')
+  const caption = document.querySelector<HTMLElement>('[data-growth-visual] figcaption')
+  const stats = document.querySelectorAll<HTMLElement>('[data-growth-stat]')
+  const counters = document.querySelectorAll<HTMLElement>('[data-growth-stat] [data-count]')
 
   if (title)
     splitHeadline(title, { by: 'lines', scrollTrigger: false })
-  if (prefersReducedMotion())
+
+  if (prefersReducedMotion()) {
+    counters.forEach(n => countUp(n))
     return
+  }
 
   const { gsap } = ensureGsap()
+
+  if (rule)
+    drawLine(rule, { delay: 0.12 })
+
   gsap.from([eyebrow, copy, actions], { y: 18, opacity: 0, duration: 0.6, stagger: 0.1, delay: 0.16, ease: 'expo.out' })
-  gsap.from(visual, { y: 22, scale: 0.985, opacity: 0, duration: 0.8, ease: 'expo.out' })
+
+  if (photo)
+    revealClip(photo, { direction: 'left' })
+  if (caption)
+    gsap.from(caption, { opacity: 0, duration: 0.6, delay: 0.5, ease: 'expo.out' })
+
+  gsap.from(stats, {
+    y: 16,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.09,
+    delay: 0.38,
+    ease: 'expo.out',
+    onComplete: () => counters.forEach(n => countUp(n, { duration: 1.1, scrollTrigger: false })),
+  })
 })
 </script>

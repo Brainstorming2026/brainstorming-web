@@ -59,9 +59,12 @@ const {
   >
     <div class:list={['max-w-[600px]', layeredIllustration && 'lg:max-w-[570px]']}>
       {eyebrow && (
-        <p data-split-hero-eyebrow class="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
+        <p data-split-hero-eyebrow class="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">
           {eyebrow}
         </p>
+      )}
+      {eyebrow && (
+        <span data-split-hero-rule aria-hidden="true" class="mb-5 block h-px w-16 origin-left bg-primary/45"></span>
       )}
       <h1
         data-split-hero-headline
@@ -104,17 +107,21 @@ const {
 </section>
 
 <script>
-import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+import { drawLine, ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
-  document.querySelectorAll<HTMLElement>('[data-split-hero]').forEach((hero) => {
-    const backgrounds = hero.querySelectorAll('[data-split-hero-bg]')
-    const headline = hero.querySelector('[data-split-hero-headline]')
-    const texts = hero.querySelectorAll('[data-split-hero-text]')
-    const eyebrow = hero.querySelector('[data-split-hero-eyebrow]')
-    const { gsap } = ensureGsap()
+  const { gsap } = ensureGsap()
+  const reduced = prefersReducedMotion()
 
-    if (!prefersReducedMotion()) {
+  document.querySelectorAll<HTMLElement>('[data-split-hero]').forEach((hero) => {
+    const backgrounds = hero.querySelectorAll<HTMLElement>('[data-split-hero-bg]')
+    const headline = hero.querySelector<HTMLElement>('[data-split-hero-headline]')
+    const texts = hero.querySelectorAll<HTMLElement>('[data-split-hero-text]')
+    const eyebrow = hero.querySelector<HTMLElement>('[data-split-hero-eyebrow]')
+    const rule = hero.querySelector<HTMLElement>('[data-split-hero-rule]')
+    const wave = hero.querySelector<HTMLElement>('[data-split-hero-wave]')
+
+    if (!reduced) {
       gsap.set(texts, { opacity: 0, y: 10 })
       if (eyebrow)
         gsap.set(eyebrow, { opacity: 0, y: 8 })
@@ -122,20 +129,45 @@ registerMotion(() => {
 
     if (headline) {
       splitHeadline(headline, {
-        by: 'words',
+        by: 'lines',
         scrollTrigger: false,
         onComplete: () => {
-          gsap.to(texts, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 })
+          gsap.to(texts, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'expo.out' })
         },
       })
     }
 
-    if (!prefersReducedMotion()) {
-      if (eyebrow)
-        gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
-      backgrounds.forEach(background =>
-        gsap.fromTo(background, { scale: 1 }, { scale: 1.025, duration: 8, ease: 'none' }))
-    }
+    if (reduced)
+      return
+
+    if (eyebrow)
+      gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
+    if (rule)
+      drawLine(rule, { delay: 0.15 })
+
+    // La ola sube a su sitio, lento — sin tocar su clip-path de polígono.
+    if (wave)
+      gsap.fromTo(wave, { yPercent: 42, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'expo.out', delay: 0.1 })
+
+    backgrounds.forEach((bg) => {
+      // Entrada: la ilustración se revela desde la izquierda, sale de foco y se asienta.
+      gsap.fromTo(
+        bg,
+        { clipPath: 'inset(0 0 0 12%)', xPercent: 4, autoAlpha: 0, filter: 'blur(10px)' },
+        { clipPath: 'inset(0 0 0 0%)', xPercent: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1.6, ease: 'expo.out' },
+      )
+      // Parallax + zoom lentos atados al scroll (reemplaza el zoom fijo de 8s).
+      gsap.fromTo(
+        bg,
+        { yPercent: -4, scale: 1 },
+        {
+          yPercent: 9,
+          scale: 1.06,
+          ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.8 },
+        },
+      )
+    })
   })
 })
 </script>

@@ -36,16 +36,17 @@ import { growthBenefits } from '@/data/growth-planning'
         </div>
 
         <ol data-roadmap-timeline class="relative grid gap-0 sm:grid-cols-3">
+          <span data-roadmap-line aria-hidden="true"></span>
           {[
             ['30', 'Quick wins', 'Primeras acciones activadas.'],
             ['90', 'Hitos críticos', 'Prioridades en ejecución.'],
             ['180', 'Roadmap completo', 'Crecimiento con dirección.'],
           ].map(([days, title, description]) => (
             <li class="relative grid grid-cols-[38px_1fr] gap-3 py-4 sm:block sm:px-3 sm:py-0 sm:text-center">
-              <span class="relative z-10 mt-1 block h-3 w-3 rounded-full border-[3px] border-white bg-primary shadow-[0_0_0_1px_rgba(125,68,228,0.22)] sm:mx-auto sm:mt-[25px]"></span>
+              <span data-roadmap-dot class="relative z-10 mt-1 block h-3 w-3 rounded-full border-[3px] border-white bg-primary shadow-[0_0_0_1px_rgba(125,68,228,0.22)] sm:mx-auto sm:mt-[25px]"></span>
               <div class="sm:mt-7">
                 <p class="font-heading text-[32px] font-bold leading-none tracking-[-0.04em] text-primary">
-                  {days}<span class="ml-1 text-[10px] uppercase tracking-[0.14em] text-dark-400">días</span>
+                  <span data-count-days>{days}</span><span class="ml-1 text-[10px] uppercase tracking-[0.14em] text-dark-400">días</span>
                 </p>
                 <h4 class="mt-3 text-sm font-bold text-dark sm:text-base">{title}</h4>
                 <p class="mt-1 text-sm leading-6 text-dark-500">{description}</p>
@@ -61,9 +62,12 @@ import { growthBenefits } from '@/data/growth-planning'
 <style>
   .benefits-layout { display: grid; gap: 36px; }
   [data-benefits-title] { font-size: clamp(32px, 4vw, 48px); line-height: 1.12; }
-  [data-roadmap-timeline]::before { content: ''; position: absolute; left: 5px; top: 25px; bottom: 70px; width: 1px; background: #c8bfd8; }
+  [data-roadmap-line] { content: ''; position: absolute; left: 5px; top: 25px; bottom: 70px; width: 1px; background: #c8bfd8; transform: scaleY(0); transform-origin: 50% 0; }
   @media (min-width: 640px) {
-    [data-roadmap-timeline]::before { left: 16.66%; right: 16.66%; top: 31px; bottom: auto; width: auto; height: 1px; }
+    [data-roadmap-line] { left: 16.66%; right: 16.66%; top: 31px; bottom: auto; width: auto; height: 1px; transform: scaleX(0); transform-origin: 0 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-roadmap-line] { transform: none; }
   }
   @media (min-width: 1024px) {
     .benefits-layout { grid-template-columns: 1fr 1.15fr; gap: 9%; align-items: start; }
@@ -71,16 +75,50 @@ import { growthBenefits } from '@/data/growth-planning'
 </style>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { countUp, ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const title = document.querySelector<HTMLElement>('[data-benefits-title]')
   const cards = document.querySelectorAll('[data-benefit-card]')
   const output = document.querySelector<HTMLElement>('[data-roadmap-output]')
+  const timeline = document.querySelector<HTMLElement>('[data-roadmap-timeline]')
+  const line = document.querySelector<HTMLElement>('[data-roadmap-line]')
+  const dots = document.querySelectorAll<HTMLElement>('[data-roadmap-dot]')
+  const dayCounters = document.querySelectorAll<HTMLElement>('[data-count-days]')
+
   if (title)
     splitHeadline(title, { by: 'lines' })
   staggerGrid(cards, { variant: 'organic', itemStagger: 0.07 })
   if (output)
     revealClip(output, { direction: 'up' })
+
+  dayCounters.forEach(n => countUp(n, { duration: 1.6, start: 'top 90%' }))
+
+  if (prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+
+  if (dots.length) {
+    gsap.from(dots, {
+      scale: 0,
+      opacity: 0,
+      transformOrigin: '50% 50%',
+      duration: 0.5,
+      stagger: 0.14,
+      ease: 'back.out(1.7)',
+      scrollTrigger: { trigger: timeline, start: 'top 80%', once: true },
+    })
+  }
+
+  if (line && timeline) {
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 640px)', () => {
+      gsap.to(line, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 78%', end: 'bottom 62%', scrub: 0.6 } })
+    })
+    mm.add('(max-width: 639px)', () => {
+      gsap.to(line, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 82%', end: 'bottom 60%', scrub: 0.6 } })
+    })
+  }
 })
 </script>

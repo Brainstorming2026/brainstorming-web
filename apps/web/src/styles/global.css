@@ -288,3 +288,61 @@ html {
     @apply bg-transparent! dark:invert;
   }
 }
+
+/* ============================================================
+   Feedback al presionar — GLOBAL. Todo botón / CTA de la web se
+   hunde levemente al :active (scale 0.97). Curva ease-out fuerte,
+   140ms. Cobertura automática: <button>, [role=button], inputs
+   submit/button, <a> con clase bg-primary / border-primary /
+   bg-highlight (patrón de todos los CTA del sitio), .btn, .cta-btn,
+   y cualquier cosa con [data-pressable].
+   ============================================================ */
+:where(
+  button:not(:disabled):not([aria-disabled="true"]),
+  [role="button"]:not([aria-disabled="true"]),
+  input[type="submit"]:not(:disabled),
+  input[type="button"]:not(:disabled),
+  a[class*="bg-primary"],
+  a[class*="border-primary"],
+  a[class*="bg-highlight"],
+  .btn,
+  .cta-btn,
+  [data-pressable]
+) {
+  transition:
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+button:not(:disabled):not([aria-disabled="true"]):active,
+[role="button"]:not([aria-disabled="true"]):active,
+input[type="submit"]:not(:disabled):active,
+input[type="button"]:not(:disabled):active,
+a[class*="bg-primary"]:active,
+a[class*="border-primary"]:active,
+a[class*="bg-highlight"]:active,
+.btn:active,
+.cta-btn:active,
+[data-pressable]:active {
+  transform: scale(0.97) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  button:active,
+  [role="button"]:active,
+  input[type="submit"]:active,
+  input[type="button"]:active,
+  a[class*="bg-primary"]:active,
+  a[class*="border-primary"]:active,
+  a[class*="bg-highlight"]:active,
+  .btn:active,
+  .cta-btn:active,
+  [data-pressable]:active {
+    transform: none;
+  }
+}

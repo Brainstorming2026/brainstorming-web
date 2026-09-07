@@ -1,6 +1,7 @@
+export { countUp } from './count-up'
 export { ensureGsap } from './gsap-client'
 export { splitHeadline } from './headline'
 export { registerMotion } from './lifecycle'
 export { prefersReducedMotion } from './reduced-motion'
-export { drawLine, revealCircle, revealClip } from './reveal'
+export { drawLine, drawSVG, revealCircle, revealClip } from './reveal'
 export { staggerGrid } from './stagger-grid'

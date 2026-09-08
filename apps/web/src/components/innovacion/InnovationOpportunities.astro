@@ -1,0 +1,6 @@
+---
+import { Icon } from 'astro-icon/components'
+import { opportunities } from '@/data/innovation-content'
+---
+
+<section class="in-opportunities service-container" aria-labelledby="in-opportunities-title"><div class="in-opportunities-heading"><h2 id="in-opportunities-title">¿Qué quieres construir ahora?</h2><p>Trabajamos con empresas que quieren dar su siguiente paso.</p></div><div class="in-opportunities-grid">{opportunities.map(item => <article><Icon name={`automation/${item.icon}`} class="in-icon" /><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></section>

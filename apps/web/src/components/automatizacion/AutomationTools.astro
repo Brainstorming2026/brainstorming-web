@@ -1,0 +1,21 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { tools } from '@/data/automation-tools'
+---
+
+<section class="ai-tools service-container" aria-labelledby="ai-tools-title">
+  <div class="ai-tools-heading"><div><span class="ai-eyebrow">HERRAMIENTAS QUE IMPLEMENTAMOS</span><h2 id="ai-tools-title">La tecnología adecuada.<br /><span class="ai-accent">Conectada a tu realidad.</span></h2></div><p>Inteligencia, automatización y conexión.<br />Un ecosistema que trabaja contigo.</p></div>
+  <automation-tools>
+    <div class="ai-tools-viewport">
+      <div class="ai-tools-track">
+        {[0, 1].map(copy => <ul class="ai-tools-group" aria-hidden={copy === 1 ? 'true' : undefined}>{tools.map(tool => <li class="ai-tool"><img src={`/images/automation-tools/${tool.logo}.svg`} width="36" height="36" alt="" loading="lazy" /><span><strong>{tool.name}</strong><small>{tool.category}</small></span></li>)}</ul>)}
+      </div>
+    </div>
+    <div class="ai-tools-controls"><span>Conectamos las herramientas que tu empresa necesita.</span><button type="button" aria-label="Pausar carrusel" data-carousel-toggle><Icon name="automation/pause" class="ai-icon ai-pause-icon" /><Icon name="automation/play" class="ai-icon ai-play-icon" /><span data-carousel-label>Pausar</span></button></div>
+  </automation-tools>
+</section>
+
+<script>
+  import '@/scripts/automatizacion/automation-tools'
+</script>

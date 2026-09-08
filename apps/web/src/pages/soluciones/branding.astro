@@ -1,16 +1,27 @@
 ---
+import BrandingApplications from '@/components/branding/BrandingApplications.astro'
+import BrandingBenefits from '@/components/branding/BrandingBenefits.astro'
 import BrandingCta from '@/components/branding/BrandingCta.astro'
-import BrandingFunnel from '@/components/branding/BrandingFunnel.astro'
+import BrandingFoundation from '@/components/branding/BrandingFoundation.astro'
 import BrandingHero from '@/components/branding/BrandingHero.astro'
-import BrandingSteps from '@/components/branding/BrandingSteps.astro'
+import BrandingManual from '@/components/branding/BrandingManual.astro'
 import Layout from '@/layouts/Layout.astro'
+import '@/styles/branding.css'
 
-export const prerender = true;
+export const prerender = true
 ---
+<Layout title="Branding y Manual de Marca — Brainstorming" description="Posicionamiento, personalidad, lenguaje e identidad visual en un Manual de Marca listo para usar. Construye una marca consistente, reconocible y que genera confianza." footerCurveBg="#f4eefe">
+  <div class="branding-page font-body bg-white text-dark [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_button]:font-heading" id="branding-page">
+    <BrandingHero />
 
-<Layout title="Branding — Brainstorming">
-  <BrandingHero />
-  <BrandingFunnel />
-  <BrandingSteps />
-  <BrandingCta />
+    <BrandingFoundation />
+
+    <BrandingApplications />
+
+    <BrandingManual />
+
+    <BrandingBenefits />
+
+    <BrandingCta />
+  </div>
 </Layout>

@@ -82,6 +82,9 @@ import { countUp, drawLine, ensureGsap, prefersReducedMotion, registerMotion, re
 
 registerMotion(() => {
   const title = document.querySelector<HTMLElement>('[data-growth-title]')
+  if (!title)
+    return
+
   const eyebrow = document.querySelector<HTMLElement>('[data-growth-eyebrow]')
   const rule = document.querySelector<HTMLElement>('[data-growth-rule]')
   const copy = document.querySelector<HTMLElement>('[data-growth-copy]')
@@ -104,16 +107,20 @@ registerMotion(() => {
   if (rule)
     drawLine(rule, { delay: 0.12 })
 
-  gsap.from([eyebrow, copy, actions], { y: 18, opacity: 0, duration: 0.6, stagger: 0.1, delay: 0.16, ease: 'expo.out' })
+  gsap.fromTo([eyebrow, copy, actions].filter(Boolean),
+    { y: 18, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 0.16, ease: 'expo.out', clearProps: 'transform,opacity' },
+  )
 
   if (photo)
     revealClip(photo, { direction: 'left' })
   if (caption)
-    gsap.from(caption, { opacity: 0, duration: 0.6, delay: 0.5, ease: 'expo.out' })
+    gsap.fromTo(caption, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 0.5, ease: 'expo.out', clearProps: 'opacity' })
 
-  gsap.from(stats, {
-    y: 16,
-    opacity: 0,
+  gsap.fromTo(stats, { y: 16, opacity: 0 }, {
+    y: 0,
+    opacity: 1,
+    clearProps: 'transform,opacity',
     duration: 0.6,
     stagger: 0.09,
     delay: 0.38,

@@ -1,0 +1,6 @@
+---
+import { Icon } from 'astro-icon/components'
+import { dimensions } from '@/data/branding-content'
+---
+
+<section class="br-foundation service-container" aria-labelledby="br-foundation-title"><div class="br-foundation-intro"><span class="br-label">CLARIDAD DESDE LA ESENCIA</span><h2 id="br-foundation-title" data-br-heading>Lo que eres.<br />Lo que dices.<br /><span class="br-accent">Cómo te recuerdan.</span></h2></div><div><p class="br-description">Trabajamos el posicionamiento, la personalidad de marca, el lenguaje y la parte visual, todo consolidado en un Manual de Marca que sirve de guía para que cualquier pieza de comunicación — digital o impresa — sea consistente y reconocible.</p><p class="br-description-result">El resultado es una marca que genera confianza y se recuerda.</p><div class="br-dimensions">{dimensions.map(item => <article><Icon name={`automation/${item.icon}`} class="br-icon" /><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></div></section>

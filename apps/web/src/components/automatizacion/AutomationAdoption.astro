@@ -1,0 +1,17 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import adoption from '@/assets/automatizacion-ia/adopcion.png'
+import { adoptionSteps } from '@/data/automation'
+import { adoptionItems } from '@/data/automation-content'
+---
+
+<section class="ai-adoption" aria-labelledby="adoption-title">
+      <div class="service-container">
+        <div class="ai-adoption-heading"><div class="ai-eyebrow">03 / GESTIÓN DEL CAMBIO</div><h2 id="adoption-title" data-ai-reveal>Que tu equipo<br /><span class="ai-accent">quiera usar la IA.</span></h2><p>Esta es la parte que casi todas las implementaciones de IA se saltan — y por eso fracasan.</p></div>
+        <div class="ai-adoption-grid"><div class="ai-adoption-photo"><Image src={adoption} alt="Equipo aprendiendo y colaborando frente a una computadora" width={1000} sizes="(max-width: 767px) 100vw, 55vw" loading="lazy" /><div class="ai-photo-note">La transformación empieza<br /><strong>con las personas.</strong></div></div><div class="ai-adoption-copy"><p>La tecnología puede estar perfectamente configurada. Los agentes pueden estar listos. Pero si el equipo no entiende para qué sirve, siente que amenaza su trabajo o simplemente no confía en ella, la adopción no ocurre.</p><p class="ai-adoption-emphasis">Y una herramienta que nadie usa no transforma nada.</p><ul>{adoptionItems.map(item => <li><span class="ai-adoption-icon"><Icon name={`automation/${item.icon}`} class="ai-icon" /></span>{item.text}</li>)}</ul></div></div>
+        <div class="ai-adkar-heading"><h3>Un cambio que se sostiene.</h3><p>Aplicamos Gestión del Cambio Organizacional con el modelo ADKAR de Prosci.</p></div>
+        <div class="ai-adkar">{adoptionSteps.map(step => <article class="ai-adkar-step"><div><span class="ai-adkar-letter">{step.letter}</span><span class="ai-adkar-english">{step.english}</span></div><h4>{step.name}</h4><p>{step.text}</p></article>)}</div>
+        <p class="ai-adoption-closing">Porque automatizar no es solo un proyecto de tecnología.<br /><strong>Es un proyecto de personas.</strong></p>
+      </div>
+    </section>

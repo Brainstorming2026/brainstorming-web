@@ -1,0 +1,6 @@
+---
+import { Icon } from 'astro-icon/components'
+import { innovationBoard } from '@/data/innovation'
+---
+
+<section class="in-board" id="board-innovacion" aria-labelledby="in-board-title"><div class="service-container"><div class="in-section-heading"><div><span class="in-label">BRAINSTORMING / COLLECTIVE INTELLIGENCE</span><h2 id="in-board-title" data-in-heading>Tu siguiente negocio.<br /><span class="in-accent">Experiencia para construirlo.</span></h2></div><p>Innovación Estratégica es el servicio más exigente del portafolio — y está diseñado para serlo. Lo lidera directamente nuestro Board de Directores.</p></div><div class="in-board-list">{innovationBoard.map(person => <article class="in-director"><div class="in-director-identity"><span class="in-director-icon"><Icon name={`automation/${person.icon}`} class="in-icon" /></span><div><span class="in-label">{person.specialty}</span><h3>{person.name}</h3></div></div><p>{person.bio}</p></article>)}</div><p class="in-board-note">El Board se expande con miras a incorporar más directores especializados conforme el portafolio crece.</p></div></section>

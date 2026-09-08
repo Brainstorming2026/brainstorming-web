@@ -1,0 +1,31 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import operations from '@/assets/automatizacion-ia/operaciones.png'
+---
+
+<section class="ai-hero service-container" aria-labelledby="ai-title">
+      <div class="ai-hero-heading">
+        <h1 id="ai-title">Tu empresa puede<br class="ai-desktop-break" /> hacer más,<br /><span class="ai-accent">sin contratar más.</span></h1>
+        <div class="ai-hero-aside"><p>La IA ya está lista.<br /><strong>¿Lo está tu negocio?</strong></p><a class="ai-round-link" href="#diagnostico" aria-label="Explorar diagnóstico de automatización"><Icon name="automation/arrow-down" class="ai-icon" /></a></div>
+      </div>
+      <div class="ai-hero-stage">
+        <Image src={operations} alt="Profesional revisando documentos en su oficina" width={1536} sizes="(max-width: 767px) 100vw, 90vw" class="ai-operations-image" loading="eager" fetchpriority="high" />
+        <div class="ai-stage-caption"><span class="ai-eyebrow">MENOS REPETICIÓN. MÁS POSIBILIDADES.</span><p>El trabajo cambia.<br />El talento se libera.</p></div>
+        <div class="ai-flow" aria-label="Ejemplo de flujo automatizado">
+          <div class="ai-flow-top"><span><i class="ai-status"></i> Así se conecta tu operación</span><span>EJEMPLO DE FLUJO</span></div>
+          <div class="ai-flow-track">
+            <div class="ai-flow-node"><span class="ai-node-symbol"><Icon name="automation/message-square" class="ai-icon" /></span><div><small>ENTRADA</small><strong>Una nueva consulta</strong></div></div>
+            <svg class="ai-flow-line" viewBox="0 0 100 20" fill="none" aria-hidden="true"><path d="M0 10 H100" /></svg>
+            <div class="ai-flow-node ai-flow-brain"><span class="ai-node-symbol"><Icon name="automation/brain-circuit" class="ai-icon" /></span><div><small>AGENTE DE IA</small><strong>Entiende y ejecuta</strong></div></div>
+            <svg class="ai-flow-line" viewBox="0 0 100 20" fill="none" aria-hidden="true"><path d="M0 10 H100" /></svg>
+            <div class="ai-flow-node"><span class="ai-node-symbol"><Icon name="automation/circle-check" class="ai-icon" /></span><div><small>RESULTADO</small><strong>Una tarea resuelta</strong></div></div>
+          </div>
+          <div class="ai-flow-bottom">Conectado a tus sistemas <span>Tu equipo conserva el control</span></div>
+        </div>
+      </div>
+    </section>
+
+<script>
+  import '@/scripts/automation/page-motion'
+</script>

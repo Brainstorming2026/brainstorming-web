@@ -27,8 +27,7 @@ export function splitHeadline(el: HTMLElement, options: SplitHeadlineOptions = {
   const split = new SplitText(el, { type: by, mask: by })
   const targets = by === 'words' ? split.words : split.lines
 
-  // El contenedor pudo entrar oculto por la compuerta CSS (`[data-animate]`).
-  // Ahora los hijos del split llevan la animación, así que se muestra ya.
+  // El contenedor permanece visible; solo se animan los hijos del split.
   gsap.set(el, { opacity: 1 })
 
   // `fromTo` (no `from`): con ScrollTrigger, `from` deja `immediateRender:false`

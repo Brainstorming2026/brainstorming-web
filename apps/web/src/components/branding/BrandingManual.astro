@@ -1,0 +1,8 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import manualImage from '@/assets/branding/brainstorming-manual.png'
+import { chapters } from '@/data/branding-content'
+---
+
+<section class="br-manual" id="manual-de-marca" aria-labelledby="br-manual-title"><div class="service-container br-manual-grid"><div class="br-manual-visual"><span class="br-label">TU IDENTIDAD, DOCUMENTADA</span><figure><Image src={manualImage} alt="Visualización de un Manual de Marca con tipografía, colores y reglas del logotipo Brainstorming" width={1100} sizes="(max-width: 767px) 100vw, 55vw" loading="lazy" /><figcaption>Visualización ilustrativa del entregable.</figcaption></figure><div class="br-deliverable"><Icon name="automation/circle-check" class="br-icon" /><span>Entregable concreto<strong>Manual de Marca listo para usar.</strong></span></div></div><div class="br-manual-copy"><h2 id="br-manual-title" data-br-heading>Una guía clara.<br /><span class="br-accent">Para cada próxima pieza.</span></h2><p>Un punto de referencia para que tu equipo y quienes trabajan con tu marca compartan el mismo criterio.</p><div class="br-chapters">{chapters.map((chapter, i) => <details open={i === 0}><summary><span>0{i + 1}</span>{chapter.title}<Icon name="automation/arrow-down" class="br-icon" /></summary><p>{chapter.text}</p></details>)}</div></div></div></section>

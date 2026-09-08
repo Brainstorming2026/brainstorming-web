@@ -11,10 +11,13 @@ export function registerMotion(setup: () => void) {
   let ctx: gsap.Context | undefined
 
   const onLoad = () => {
+    // Revertir antes de reinicializar evita capturar estilos de otra ejecución.
+    ctx?.revert()
     ctx = gsap.context(setup)
   }
   const onSwap = () => {
     ctx?.revert()
+    ctx = undefined
   }
 
   document.addEventListener('astro:page-load', onLoad)

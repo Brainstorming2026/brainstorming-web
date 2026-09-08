@@ -1,0 +1,23 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import construccion from '@/assets/innovacion-estrategica/construccion.png'
+import exploracion from '@/assets/innovacion-estrategica/exploracion.png'
+import validacion from '@/assets/innovacion-estrategica/validacion.png'
+import { innovationPhases } from '@/data/innovation'
+
+const images = { exploracion, validacion, construccion }
+const alts = { exploracion: 'Mesa de trabajo con mapas de oportunidades y prototipos', validacion: 'Sesión de validación de un prototipo con un cliente', construccion: 'Equipo dando forma a un nuevo producto con prototipos físicos y digitales' }
+---
+<section class="in-process" id="proceso-innovacion" aria-labelledby="in-process-title">
+  <div class="service-container">
+    <div class="in-section-heading"><div><span class="in-label">DEL POTENCIAL A LA REALIDAD</span><h2 id="in-process-title" data-in-heading>Cinco fases.<br /><span class="in-accent">Un negocio por construir.</span></h2></div><p>Un recorrido deliberado, con validación real antes de invertir. Explora cada fase.</p></div>
+    <innovation-process>
+      <div class="in-phase-nav" aria-label="Fases del proceso">{innovationPhases.map((phase, i) => <button type="button" data-phase={i} id={`in-tab-${i}`}><span class="in-phase-number">0{i + 1}</span><span>{phase.name}</span><Icon name="automation/arrow-right" class="in-icon" /></button>)}</div>
+      <div class="in-phase-panels">{innovationPhases.map((phase, i) => <details class="in-phase" data-phase-panel id={`in-panel-${i}`} open={i === 0}><summary><span class="in-phase-number">0{i + 1}</span>{phase.name}<Icon name="automation/arrow-down" class="in-icon" /></summary><div class="in-phase-content"><div class="in-phase-copy"><span class="in-label">FASE 0{i + 1} / {phase.name.toUpperCase()}</span><h3>{phase.question}</h3><p>{phase.text}</p><div class="in-phase-focus"><Icon name="automation/scan-search" class="in-icon" /><span>{phase.focus}</span></div></div><figure><Image src={images[phase.image]} alt={alts[phase.image]} width={900} sizes="(max-width: 767px) 100vw, 40vw" loading="lazy" /><figcaption>DE LA IDEA A LA ACCIÓN <span>0{i + 1} / 05</span></figcaption></figure></div></details>)}</div>
+    </innovation-process>
+  </div>
+</section>
+<script>
+  import '@/scripts/innovacion/innovation-process'
+</script>

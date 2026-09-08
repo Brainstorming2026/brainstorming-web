@@ -149,7 +149,6 @@ html {
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -329,44 +328,6 @@ a[class*="bg-highlight"]:active,
   transform: scale(0.97) !important;
 }
 
-/* ============================================================
-   Compuerta de reveal (anti-FOUC de animaciones).
-
-   `html.motion` lo pone un script inline en <head> ANTES del primer
-   paint (solo si hay JS y no hay prefers-reduced-motion). Estas reglas
-   pre-ocultan el estado inicial de cada elemento animado para que NO se
-   vea pintado y completo un frame y luego "salte" a oculto cuando corre
-   GSAP. En cuanto GSAP hace su gsap.set()/gsap.to(), los estilos inline
-   ganan por especificidad y toman el control.
-
-   Sin `html.motion` (JS caído o reduced-motion) nada se oculta: el
-   contenido se ve al instante. Progressive enhancement.
-   ============================================================ */
-html.motion [data-animate] {
-  opacity: 0;
-}
-html.motion [data-animate="clip"] {
-  opacity: 1;
-  clip-path: inset(0 0 100% 0);
-}
-html.motion [data-animate="clip-left"] {
-  opacity: 1;
-  clip-path: inset(0 100% 0 0);
-}
-html.motion [data-animate="clip-right"] {
-  opacity: 1;
-  clip-path: inset(0 0 0 100%);
-}
-html.motion [data-animate="circle"] {
-  opacity: 1;
-  clip-path: circle(0% at 50% 50%);
-}
-html.motion [data-animate="draw"] {
-  opacity: 1;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -382,5 +343,18 @@ html.motion [data-animate="draw"] {
   .cta-btn:active,
   [data-pressable]:active {
     transform: none;
+  }
+}
+
+@utility service-container {
+  width: min(1320px, calc(100% - 96px));
+  margin-inline: auto;
+
+  @media (max-width: 1050px) {
+    width: calc(100% - 56px);
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% - 40px);
   }
 }

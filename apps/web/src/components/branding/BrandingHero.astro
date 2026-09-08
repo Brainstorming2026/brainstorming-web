@@ -1,68 +1,16 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import heroBg from '@/assets/branding/branding-bg-hd.webp'
+import systemImage from '@/assets/branding/brainstorming-sistema.png'
+import { contact } from '@/data/branding-content'
 ---
 
-<section class="relative overflow-hidden bg-white lg:min-h-[702px]">
-  <Image
-    data-branding-hero-bg
-    src={heroBg}
-    alt=""
-    class="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-bottom lg:block"
-    loading="eager"
-    fetchpriority="high"
-    widths={[758, 1512]}
-    sizes="100vw"
-  />
-  <div class="relative z-10 mx-auto flex max-w-[1512px] items-center px-6 pb-4 pt-16 lg:min-h-[702px] lg:px-24 lg:py-16">
-    <div class="max-w-[600px]">
-      <h1 id="branding-hero-headline" data-animate class="font-heading text-[clamp(2.35rem,10vw,3.25rem)] font-bold leading-[1.08] text-dark lg:text-[52px] lg:leading-[60px]">
-        Haz que tus clientes vengan a ti, que se sientan genuinamente atraídos hacia tu marca.
-      </h1>
-      <p id="branding-hero-text" data-animate class="mt-6 text-[16px] leading-[1.65] text-dark-500 lg:leading-6">
-        En Brainstorming, realizamos estrategias de contenidos que no resultan invasivas
-        para el usuario, con la finalidad de atraer al consumidor mediante contenidos
-        relevantes y experiencias que agreguen valor a tu público objetivo, considerando
-        siempre la etapa del buyer journey o customer journey en la que se encuentre tu
-        prospecto o cliente.
-      </p>
-    </div>
-  </div>
-
-  <div class="relative h-[320px] overflow-hidden sm:h-[380px] lg:hidden" aria-hidden="true">
-    <Image
-      data-branding-hero-bg
-      src={heroBg}
-      alt=""
-      class="pointer-events-none absolute bottom-0 right-[-10%] h-auto w-[190%] max-w-none sm:right-[-4%] sm:w-[165%]"
-      loading="eager"
-      widths={[758, 1120]}
-      sizes="(max-width: 639px) 190vw, 165vw"
-    />
-  </div>
-</section>
+<section class="br-hero service-container" aria-labelledby="br-title">
+      <div class="br-label br-hero-label"><span></span> BRANDING / IDENTIDAD DE MARCA</div>
+      <div class="br-hero-heading"><h1 id="br-title">Una marca sin identidad clara <span class="br-accent">no tiene alma.</span></h1><div><p>Y se confunde<br />con la competencia.</p><a href={contact} class="br-button" target="_blank" rel="noopener noreferrer">Conversemos sobre tu marca<Icon name="automation/arrow-right" class="br-icon" /></a></div></div>
+      <figure class="br-hero-image"><Image src={systemImage} alt="Visualización del sistema de identidad Brainstorming aplicado a manual, tarjetas y papelería" widths={[640, 960, 1280, 1536]} sizes="(max-width: 767px) 100vw, 90vw" loading="eager" fetchpriority="high" /><figcaption><span>UNA IDENTIDAD. EN CADA DETALLE.</span><span>Visualización de aplicaciones de marca.</span></figcaption></figure>
+    </section>
 
 <script>
-import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
-import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
-
-registerMotion(() => {
-  const backgrounds = document.querySelectorAll('[data-branding-hero-bg]')
-  const headline = document.getElementById('branding-hero-headline')
-  const text = document.getElementById('branding-hero-text')
-  const { gsap } = ensureGsap()
-
-  if (text && !prefersReducedMotion())
-    gsap.set(text, { opacity: 0, y: 10 })
-
-  if (headline) {
-    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (text)
-        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
-    } })
-  }
-  if (!prefersReducedMotion()) {
-    backgrounds.forEach(bg => gsap.fromTo(bg, { scale: 1 }, { scale: 1.025, duration: 8, ease: 'none' }))
-  }
-})
+  import '@/scripts/branding/page-motion'
 </script>

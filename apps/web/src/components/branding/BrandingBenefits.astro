@@ -1,0 +1,6 @@
+---
+import { Icon } from 'astro-icon/components'
+import { benefits } from '@/data/branding-content'
+---
+
+<section class="br-benefits service-container" aria-labelledby="br-benefits-title"><div><span class="br-label">UNA IDENTIDAD QUE APORTA VALOR</span><h2 id="br-benefits-title" data-br-heading>Reconocible.<br />Coherente.<br /><span class="br-accent">Tuya.</span></h2></div><ul>{benefits.map(item => <li><span class="br-benefit-icon"><Icon name={`automation/${item.icon}`} class="br-icon" /></span>{item.text}</li>)}</ul></section>

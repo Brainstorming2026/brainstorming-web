@@ -1,0 +1,33 @@
+---
+import InnovationBenefits from '@/components/innovacion/InnovationBenefits.astro'
+import InnovationBoard from '@/components/innovacion/InnovationBoard.astro'
+import InnovationCta from '@/components/innovacion/InnovationCta.astro'
+import InnovationHero from '@/components/innovacion/InnovationHero.astro'
+import InnovationIntro from '@/components/innovacion/InnovationIntro.astro'
+import InnovationOpportunities from '@/components/innovacion/InnovationOpportunities.astro'
+import InnovationProcess from '@/components/innovacion/InnovationProcess.astro'
+import InnovationValidation from '@/components/innovacion/InnovationValidation.astro'
+import Layout from '@/layouts/Layout.astro'
+import '@/styles/innovation.css'
+
+export const prerender = true
+---
+<Layout title="Innovación Estratégica — Brainstorming" description="Diseñamos y construimos el siguiente nivel de tu negocio. Exploración, ideación, validación y ejecución junto al Board de Brainstorming / Collective Intelligence." footerCurveBg="#f4eefe">
+  <div class="innovation-page font-body bg-white text-dark [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_button]:font-heading" id="innovation-page">
+    <InnovationHero />
+
+    <InnovationIntro />
+
+    <InnovationOpportunities />
+
+    <InnovationProcess />
+
+    <InnovationValidation />
+
+    <InnovationBoard />
+
+    <InnovationBenefits />
+
+    <InnovationCta />
+  </div>
+</Layout>

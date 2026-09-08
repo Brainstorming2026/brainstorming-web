@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import logo from '@/assets/logos/brainstorming-logo.webp'
+import { channels } from '@/data/branding-content'
+---
+<section class="br-applications service-container" aria-labelledby="br-app-title">
+  <div class="br-section-heading"><div><span class="br-label">CONSISTENCIA QUE SE RECONOCE</span><h2 id="br-app-title" data-br-heading>Distintos formatos.<br /><span class="br-accent">La misma identidad.</span></h2></div><p>El contexto cambia. Tu marca conserva su personalidad, su lenguaje y su expresión visual.</p></div>
+  <brand-applications>
+    <div class="br-channel-controls" aria-label="Aplicaciones de marca">{channels.map((channel, i) => <button type="button" id={`br-tab-${i}`} data-br-tab={i}>{channel}</button>)}</div>
+    <div class="br-application-stage">
+      <article id="br-panel-0" data-br-panel aria-labelledby="br-tab-0">
+        <div class="br-digital-mockup"><div class="br-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>Brainstorming / Digital</span></div><div class="br-digital-nav"><Image src={logo} alt="Brainstorming" width={210} /><span>Estrategia · Creatividad · Crecimiento</span></div><div class="br-digital-body"><div><small>INTELIGENCIA COLECTIVA</small><h3>Ideas claras.<br /><span>Marcas que crecen.</span></h3><p>Conectamos estrategia y creatividad para darle dirección a tu negocio.</p><span class="br-mock-cta">Construyamos lo que sigue<Icon name="automation/arrow-right" class="br-icon" /></span></div><div class="br-type-art" aria-hidden="true"><span>B</span><span class="br-type-caption">UNA FORMA PROPIA<br />DE HACER LAS COSAS.</span></div></div></div>
+      </article>
+      <article id="br-panel-1" data-br-panel aria-labelledby="br-tab-1">
+        <div class="br-social-mockup"><div class="br-social-card"><Image src={logo} alt="Brainstorming" width={210} /><h3>Lo que te<br />hace <em>único.</em></h3><span>DALE VOZ A TU MARCA.</span><div class="br-social-line"></div></div><div class="br-social-card br-social-light"><span class="br-social-eyebrow">ESTRATEGIA + CREATIVIDAD</span><h3>Una idea.<br />Una identidad.<br /><em>Tu siguiente paso.</em></h3><Image src={logo} alt="Brainstorming" width={210} /></div></div>
+      </article>
+      <article id="br-panel-2" data-br-panel aria-labelledby="br-tab-2">
+        <div class="br-print-mockup"><div class="br-letterhead"><Image src={logo} alt="Brainstorming" width={220} /><span class="br-letter-label">EL VALOR DE UNA IDENTIDAD CLARA</span><h3>Una marca.<br />Muchas posibilidades.</h3><div class="br-letter-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="br-letter-footer">Brainstorming / Collective Intelligence</span></div><div class="br-business-card"><Image src={logo} alt="Brainstorming" width={230} /><span>Estrategia que se convierte en acción.</span></div></div>
+      </article>
+    </div>
+    <div class="br-application-caption"><span>Visualizaciones de aplicación de la identidad Brainstorming.</span><span>Color · Tipografía · Lenguaje</span></div>
+  </brand-applications>
+</section>
+<script>
+  import '@/scripts/branding/branding-applications'
+</script>

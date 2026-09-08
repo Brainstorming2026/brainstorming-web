@@ -1,0 +1,22 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { priorities } from '@/data/automation-priorities'
+---
+
+<automation-matrix class="ai-map">
+  <div class="ai-map-heading"><span>¿Por dónde empezamos?</span><Icon name="automation/scan-search" class="ai-icon" /></div>
+  <p class="ai-map-hint">Explora cada cuadrante para ver cómo priorizamos.</p>
+  <div class="ai-matrix" role="group" aria-label="Prioridades según impacto y esfuerzo">
+    <span class="ai-axis-y">MAYOR IMPACTO</span>
+    {priorities.map((item, i) => <button type="button" class="ai-quadrant" aria-pressed={i === 0 ? 'true' : 'false'} aria-controls={`ai-priority-${i}`} data-priority={i}><div class="ai-quadrant-top"><Icon name={`automation/${item.icon}`} class="ai-icon" /><span>{item.label}</span></div><strong>{item.title}</strong><span class="ai-quadrant-meta">Impacto {item.impact.toLowerCase()} · Esfuerzo {item.effort.toLowerCase()}</span></button>)}
+    <span class="ai-axis-x">MAYOR ESFUERZO</span>
+  </div>
+  <div class="ai-priority-details" aria-live="polite" aria-atomic="true">
+    {priorities.map((item, i) => <div id={`ai-priority-${i}`} data-priority-detail hidden={i !== 0}><span class="ai-eyebrow">{item.detail}</span><p>{item.text}</p><small>{item.example}</small></div>)}
+  </div>
+</automation-matrix>
+
+<script>
+  import '@/scripts/automatizacion/automation-matrix'
+</script>

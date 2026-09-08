@@ -15,7 +15,8 @@ export const soluciones: FooterLink[] = [
   { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
   { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
   { label: 'Smart Selling', href: '/soluciones/smart-selling' },
-  { label: 'Optimización de Procesos y CX', href: '/soluciones/optimizacion-procesos' },
+  { label: 'Automatización de Procesos con IA', href: '/soluciones/automatizacion-ia' },
+  { label: 'Innovación Estratégica', href: '/soluciones/innovacion-estrategica' },
 ]
 
 export const empresa: FooterLink[] = [

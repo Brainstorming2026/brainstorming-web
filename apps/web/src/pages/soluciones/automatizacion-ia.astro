@@ -1,0 +1,32 @@
+---
+import AutomationAdoption from '@/components/automatizacion/AutomationAdoption.astro'
+import AutomationAgents from '@/components/automatizacion/AutomationAgents.astro'
+import AutomationBenefits from '@/components/automatizacion/AutomationBenefits.astro'
+import AutomationCta from '@/components/automatizacion/AutomationCta.astro'
+import AutomationDiagnosis from '@/components/automatizacion/AutomationDiagnosis.astro'
+import AutomationHero from '@/components/automatizacion/AutomationHero.astro'
+import AutomationIntro from '@/components/automatizacion/AutomationIntro.astro'
+import AutomationTools from '@/components/automatizacion/AutomationTools.astro'
+import Layout from '@/layouts/Layout.astro'
+import '@/styles/automation.css'
+
+export const prerender = true
+---
+<Layout title="Automatización de Procesos con IA — Brainstorming" description="Agentes de IA y flujos automatizados conectados a tus sistemas. Diagnóstico, implementación y gestión del cambio para que tu equipo haga más." footerCurveBg="#f4eefe">
+  <div class="automation-page font-body bg-white text-dark [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_button]:font-heading" id="automation-page">
+    <AutomationHero />
+
+    <AutomationIntro />
+
+    <AutomationDiagnosis />
+
+    <AutomationAgents />
+
+    <AutomationTools />
+
+    <AutomationAdoption />
+
+    <AutomationBenefits />
+    <AutomationCta />
+  </div>
+</Layout>

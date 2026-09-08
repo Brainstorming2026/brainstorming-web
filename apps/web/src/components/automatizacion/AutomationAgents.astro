@@ -1,0 +1,18 @@
+---
+import { Icon } from 'astro-icon/components'
+import { automationAreas } from '@/data/automation'
+
+const areaIcons = ['target', 'headset', 'megaphone', 'workflow', 'wallet']
+---
+
+<section class="ai-agents service-container" id="agentes" aria-labelledby="agents-title">
+  <div class="ai-agents-heading"><div><div class="ai-eyebrow">02 / IMPLEMENTACIÓN DE AGENTES DE IA</div><h2 id="agents-title" data-ai-reveal>Una nueva capacidad.<br /><span class="ai-accent">En cada área.</span></h2></div><p>Diseñamos e implementamos agentes de IA conectados a los sistemas existentes de la empresa.</p></div>
+  <automation-agents>
+    <div class="ai-agent-tabs" aria-label="Explorar agentes por área">{automationAreas.map((area, i) => <button type="button" id={`ai-tab-${i}`} data-area={i}><Icon name={`automation/${areaIcons[i]}`} class="ai-icon" />{area.name}</button>)}</div>
+    {automationAreas.map((area, i) => <article class="ai-agent-panel" id={`ai-panel-${i}`} aria-labelledby={`ai-tab-${i}`}><div class="ai-agent-detail"><span class="ai-eyebrow">AGENTE DE {area.name.toUpperCase()}</span><h3>{area.label}</h3><ul>{area.tasks.map(task => <li><Icon name="automation/circle-check" class="ai-icon" />{task}</li>)}</ul></div><div class="ai-agent-outcome"><span class="ai-eyebrow">{area.note}</span><strong class:list={['ai-agent-metric', { 'ai-agent-metric-text': i === 4 }]}>{area.metric}</strong><p>{area.result}</p><div class="ai-mini-flow">{area.flow.map((step, index) => <div><Icon name={index === 2 ? 'automation/circle-check' : 'automation/circle'} class="ai-icon" />{step}</div>)}</div></div></article>)}
+  </automation-agents>
+</section>
+
+<script>
+  import '@/scripts/automatizacion/automation-agents'
+</script>

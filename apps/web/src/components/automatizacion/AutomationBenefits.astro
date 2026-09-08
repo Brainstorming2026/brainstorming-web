@@ -1,0 +1,6 @@
+---
+import { Icon } from 'astro-icon/components'
+import { benefitIcons, benefits } from '@/data/automation-content'
+---
+
+<section class="ai-benefits service-container"><div><span class="ai-eyebrow">LO QUE CAMBIA EN TU EMPRESA</span><h2 data-ai-reveal>Más capacidad.<br /><span class="ai-accent">Más espacio<br />para crecer.</span></h2></div><ul>{benefits.map((benefit, i) => <li><span class="ai-benefit-icon"><Icon name={`automation/${benefitIcons[i]}`} class="ai-icon" /></span>{benefit}</li>)}</ul></section>

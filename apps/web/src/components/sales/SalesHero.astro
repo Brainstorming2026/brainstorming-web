@@ -1,15 +1,24 @@
 ---
-import heroBg from '@/assets/smart-selling/smart-selling-hero.png'
-import SolutionSplitHero from '@/components/solutions/SolutionSplitHero.astro'
+import image from '@/assets/service-heroes/smart-selling-editorial.png'
+import ServiceEditorialHero from '@/components/solutions/ServiceEditorialHero.astro'
 ---
 
-<SolutionSplitHero
-  image={heroBg}
+<ServiceEditorialHero
+  service="sales"
   eyebrow="Smart Selling / Sistema comercial predecible"
-  title="Los consumidores cambiaron cómo compran. Tu proceso de ventas tiene que alcanzarlos."
-  description="Diseñamos la arquitectura completa de tu sistema comercial: generación de oportunidades, calificación, seguimiento y cierre, conectados en un proceso que todo el equipo puede ejecutar."
-  secondaryDescription="Para empresas que venden bien, pero todavía de forma impredecible o demasiado dependiente del fundador."
-  compactTitle
-  imageFit="contain"
-  layeredIllustration
+  title="Vender bien no debería"
+  accent="depender de la suerte."
+  statement="Cada oportunidad, con un siguiente paso."
+  description="Conectamos diagnóstico, CRM, automatización y playbooks para que todo tu equipo avance hacia el cierre con un proceso claro."
+  image={image}
+  imageAlt="Tablero de oportunidades comerciales, CRM y playbook de ventas con etapas de seguimiento y cierre"
+  cta="Conversemos sobre tus ventas"
+  href="https://wa.me/51992528363?text=Hola%2C%20me%20interesa%20Smart%20Selling"
+  processHref="#proceso-smart-selling"
+  caption="Un equipo alineado. Un proceso que avanza."
+  facts={[
+    { label: 'Oportunidades', value: 'Prioriza a quién atender' },
+    { label: 'Seguimiento', value: 'Ningún próximo paso al azar' },
+    { label: 'Adopción', value: 'Un sistema que tu equipo usa' },
+  ]}
 />

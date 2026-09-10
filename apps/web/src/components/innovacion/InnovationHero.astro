@@ -1,14 +1,28 @@
 ---
-import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
-import exploration from '@/assets/innovacion-estrategica/exploracion.png'
+import image from '@/assets/service-heroes/innovation-editorial.png'
+import ServiceEditorialHero from '@/components/solutions/ServiceEditorialHero.astro'
 import { contact } from '@/data/innovation-content'
 ---
 
-<section class="in-hero service-container" aria-labelledby="in-title">
-      <div class="in-hero-copy"><div class="in-label in-hero-label"><span></span> INNOVACIÓN ESTRATÉGICA</div><h1 id="in-title">El siguiente negocio que vas a construir <span class="in-accent">todavía no existe.</span></h1><p class="in-hero-statement">Te ayudamos a diseñarlo.</p><p class="in-hero-description">De una oportunidad a un negocio validado. Con tu equipo y la dirección del Board de Brainstorming.</p><div class="in-hero-actions"><a href={contact} class="in-button" target="_blank" rel="noopener noreferrer">Conversemos sobre tu idea<Icon name="automation/arrow-right" class="in-icon" /></a><a href="#proceso-innovacion" class="in-text-link">Explorar el proceso<Icon name="automation/arrow-down" class="in-icon" /></a></div></div>
-      <div class="in-hero-visual"><figure><Image src={exploration} alt="Equipo explorando oportunidades de negocio con mapas y prototipos sobre una mesa" widths={[640, 960, 1280, 1536]} sizes="(max-width: 767px) 100vw, 55vw" loading="eager" fetchpriority="high" /><figcaption><span>EL FUTURO DEL NEGOCIO SE TRABAJA.</span><span>Brainstorming / Collective Intelligence</span></figcaption></figure><div class="in-hero-note"><Icon name="automation/route" class="in-icon" /><span>Explorar. Validar.<br /><strong>Construir lo que sigue.</strong></span></div></div>
-    </section>
+<ServiceEditorialHero
+  service="innovation"
+  eyebrow="Innovación estratégica / Nuevas oportunidades"
+  title="Tu próximo negocio"
+  accent="todavía no existe."
+  statement="Te ayudamos a diseñarlo. Y a validarlo."
+  description="De una oportunidad a un negocio validado, junto a tu equipo y el Board de Brainstorming."
+  image={image}
+  imageAlt="Prototipos modulares de cristal lila, modelos de negocio y bocetos para explorar una nueva oportunidad"
+  cta="Conversemos sobre tu idea"
+  href={contact}
+  processHref="#proceso-innovacion"
+  caption="El futuro del negocio se trabaja."
+  facts={[
+    { label: 'Punto de partida', value: 'Una oportunidad con potencial' },
+    { label: 'Validación', value: 'Evidencia con clientes reales' },
+    { label: 'Acompañamiento', value: 'El Board junto a tu equipo' },
+  ]}
+/>
 
 <script>
   import '@/scripts/innovation/page-motion'

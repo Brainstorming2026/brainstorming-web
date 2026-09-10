@@ -1,0 +1,70 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { proyectos } from '@/data/proyectos'
+import { proyectosDetalle } from '@/data/proyectosDetalle'
+
+const clients = proyectos.filter(project => project.categorias.includes('desarrollo-web'))
+---
+
+<div id="web-clientes" data-web-clients class="web-clients scroll-mt-28" role="region" aria-labelledby="web-clients-title" aria-roledescription="carrusel">
+  <div class="clients-heading">
+    <div>
+      <h3 id="web-clients-title" class="font-heading text-[25px] font-medium leading-tight tracking-[-0.035em] sm:text-[32px]">Empresas que confían en nosotros</h3>
+      <p class="mt-2 text-sm text-gray-body">Marcas para las que hemos desarrollado experiencias web.</p>
+    </div>
+    <div data-carousel-controls hidden class="clients-controls">
+      <button type="button" data-carousel-previous aria-label="Ver clientes anteriores" aria-controls="web-client-viewport"><Icon name="automation/arrow-right" class="size-[18px] rotate-180" /></button>
+      <button type="button" data-carousel-pause aria-label="Pausar carrusel de clientes" aria-pressed="false" aria-controls="web-client-viewport">
+        <span data-pause-icon><Icon name="automation/pause" class="size-4" /></span>
+        <span data-play-icon hidden><Icon name="automation/play" class="size-4" /></span>
+      </button>
+      <button type="button" data-carousel-next aria-label="Ver siguientes clientes" aria-controls="web-client-viewport"><Icon name="automation/arrow-right" class="size-[18px]" /></button>
+    </div>
+  </div>
+
+  <div id="web-client-viewport" data-carousel-viewport class="clients-viewport" tabindex="0" aria-label="Logos de clientes de desarrollo web; desplázate para ver más">
+    <div class="clients-track">
+      {[false, true].map(copy => (
+        <ul data-carousel-list={copy ? 'copy' : 'original'} hidden={copy} aria-hidden={copy ? 'true' : undefined} class="clients-list">
+          {clients.map(client => (
+            <li>
+              <a href={`/proyectos/${client.slug}`} tabindex={copy ? -1 : undefined} aria-label={`Ver proyecto de ${client.nombre}`}>
+                <Image src={proyectosDetalle[client.slug]?.logo ?? client.logo} alt={client.nombre} loading="lazy" widths={[300, 480]} sizes="144px" class="client-logo" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .web-clients { margin-top: 48px; }
+  .clients-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .clients-controls { display: flex; flex-shrink: 0; gap: 8px; }
+  .clients-controls[hidden], .clients-list[hidden], .clients-controls [hidden] { display: none; }
+  .clients-controls button { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid var(--color-primary-100); border-radius: 50%; color: var(--color-dark); cursor: pointer; transition: background .2s; }
+  .clients-controls button:hover { background: var(--color-primary-50); }
+  .web-clients :is(a, button, [tabindex]):focus-visible { outline: 2px solid var(--color-primary); outline-offset: -3px; }
+  .clients-viewport { overflow-x: auto; margin-top: 28px; border-block: 1px solid var(--color-primary-100); scrollbar-width: thin; scrollbar-color: var(--color-primary-100) transparent; }
+  .clients-track { display: flex; width: max-content; }
+  .clients-list { display: flex; flex: 0 0 auto; margin: 0; padding: 0; list-style: none; }
+  .clients-list li { flex: 0 0 200px; width: 200px; }
+  .clients-list a { display: flex; height: 126px; width: 100%; padding: 24px 28px; align-items: center; justify-content: center; }
+  .client-logo { width: 144px; height: 78px; object-fit: contain; filter: brightness(0); opacity: .7; transition: opacity .2s; }
+  .clients-list a:hover .client-logo, .clients-list a:focus-visible .client-logo { opacity: 1; }
+  @media (max-width: 767px) {
+    .web-clients { margin-top: 32px; }
+    .clients-heading { flex-wrap: wrap; gap: 18px; }
+    .clients-list li { flex-basis: 168px; width: 168px; }
+    .clients-list a { height: 108px; padding: 18px 16px; }
+    .client-logo { width: 136px; height: 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .client-logo, .clients-controls button { transition: none; } }
+</style>
+
+<script>
+  import '@/scripts/marketing/web-client-carousel'
+</script>

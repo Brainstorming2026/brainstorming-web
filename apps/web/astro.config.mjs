@@ -13,6 +13,13 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'server',
 
+  redirects: {
+    '/soluciones/desarrollo-web': {
+      status: 301,
+      destination: '/soluciones/inbound-marketing#desarrollo-web',
+    },
+  },
+
   adapter: vercel({
     imageService: true,
     imagesConfig: {

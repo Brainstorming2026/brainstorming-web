@@ -1,0 +1,122 @@
+---
+import { boardIntroduction, directors } from '@/data/board'
+---
+
+<section id="board-of-directors" class="board bg-white font-body text-dark" aria-labelledby="board-title">
+  <div class="mx-auto max-w-[1512px] px-6 py-20 sm:py-28 lg:px-24">
+    <header class="board-intro" data-board-reveal>
+      <div>
+        <p class="board-eyebrow"><span aria-hidden="true" /> Dirección estratégica / LATAM</p>
+        <h2 id="board-title" class="mt-8 font-heading font-bold">Board of<br /><span class="text-primary">Directors.</span></h2>
+        <p class="board-caption mt-6">Cinco especialidades.<br />Una visión integral de tu negocio.</p>
+      </div>
+      <div class="board-introduction">
+        <div class="board-signature" aria-hidden="true">
+          <svg viewBox="0 0 180 90" fill="none" width="180" height="90">
+            <path d="M12 70H168" stroke="currentColor" stroke-opacity=".2" />
+            {[0, 1, 2, 3, 4].map(i => (
+              <g class="board-plane">
+                <path d={`M${16 + i * 29} 24L${37 + i * 29} 12V64L${16 + i * 29} 76Z`} fill="currentColor" fill-opacity={0.12 + i * 0.18} stroke="currentColor" stroke-opacity=".45" />
+                <path d={`M${37 + i * 29} 12L${44 + i * 29} 17V68L${37 + i * 29} 64Z`} fill="currentColor" fill-opacity=".12" />
+              </g>
+            ))}
+          </svg>
+          <span>05 perspectivas<br />Experiencia compartida</span>
+        </div>
+        {boardIntroduction.map(paragraph => <p>{paragraph}</p>)}
+      </div>
+    </header>
+
+    <div class="board-roster">
+      {directors.map((director, index) => (
+        <article id={director.id} class="board-director" aria-labelledby={`${director.id}-name`} data-board-reveal>
+          <div class="board-identity">
+            <span class="board-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <p class="board-eyebrow text-primary-700">{director.specialty}</p>
+              <h3 id={`${director.id}-name`} class="mt-4 font-heading font-bold">{director.name}</h3>
+              <p class="board-role mt-5">{director.role}</p>
+            </div>
+          </div>
+          <div class="board-experience">
+            <p class="board-summary">{director.summary}</p>
+            <ul class="board-credentials" aria-label={`Experiencia destacada de ${director.name}`}>
+              {director.credentials.map(credential => <li>{credential}</li>)}
+            </ul>
+            <details class="board-details">
+              <summary>
+                <span class="board-label-closed">Ver trayectoria completa</span>
+                <span class="board-label-open">Cerrar trayectoria</span>
+                <span class="sr-only"> de {director.name}</span>
+                <span class="board-toggle" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M4 10H16M10 4V16" stroke="currentColor" stroke-width="1.5" /></svg>
+                </span>
+              </summary>
+              <div class="board-biography">
+                {director.biography.map(paragraph => <p>{paragraph}</p>)}
+              </div>
+            </details>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .board { scroll-margin-top: 100px; }
+  .board-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px); padding-bottom: 72px; }
+  .board-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 700; letter-spacing: .13em; line-height: 1.7; text-transform: uppercase; }
+  .board-eyebrow > span { width: 24px; height: 2px; background: var(--color-primary); }
+  .board h2 { font-size: clamp(56px, 6.5vw, 94px); line-height: .98; letter-spacing: -.065em; }
+  .board-caption { font-size: 20px; line-height: 1.5; letter-spacing: -.025em; }
+  .board-introduction { align-self: end; }
+  .board-introduction > p { font-size: clamp(17px, 1.4vw, 20px); line-height: 1.7; color: var(--color-gray-body); }
+  .board-introduction > p + p { margin-top: 18px; }
+  .board-signature { display: flex; align-items: center; gap: 20px; color: var(--color-primary); margin-bottom: 24px; }
+  .board-signature svg { flex-shrink: 0; width: 150px; height: 75px; }
+  .board-signature span { font-size: 11px; line-height: 1.8; letter-spacing: .08em; text-transform: uppercase; color: var(--color-gray-body); }
+  .board-roster { border-top: 1px solid var(--color-primary-200); }
+  .board-director { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px); padding-block: 48px; border-bottom: 1px solid var(--color-primary-100); scroll-margin-top: 110px; }
+  .board-identity { display: grid; grid-template-columns: 32px 1fr; gap: 24px; align-content: start; }
+  .board-number { font-size: 13px; line-height: 1.7; color: var(--color-primary-700); font-variant-numeric: tabular-nums; }
+  .board h3 { font-size: clamp(29px, 3vw, 42px); line-height: 1.08; letter-spacing: -.045em; text-wrap: balance; }
+  .board-role { max-width: 38ch; font-size: 14px; line-height: 1.75; color: var(--color-gray-body); }
+  .board-summary { font-size: clamp(19px, 1.65vw, 23px); line-height: 1.5; letter-spacing: -.025em; text-wrap: pretty; }
+  .board-credentials { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; }
+  .board-credentials li { border-left: 2px solid var(--color-primary-200); padding-left: 10px; font-size: 12px; line-height: 1.7; color: var(--color-primary-800); }
+  .board-details { margin-top: 24px; }
+  .board-details summary { display: flex; width: fit-content; align-items: center; gap: 18px; min-height: 44px; cursor: pointer; list-style: none; font-size: 13px; font-weight: 600; color: var(--color-primary-700); border-radius: 4px; }
+  .board-details summary::-webkit-details-marker { display: none; }
+  .board-details summary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 5px; }
+  .board-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--color-primary-200); border-radius: 50%; transition: background-color 160ms ease-out, transform 180ms ease-out; }
+  .board-label-open, .board-details[open] .board-label-closed { display: none; }
+  .board-details[open] .board-label-open { display: inline; }
+  .board-details[open] .board-toggle { transform: rotate(45deg); background: var(--color-primary-50); }
+  .board-biography { margin-top: 20px; padding: 24px; background: var(--color-primary-50); border-left: 2px solid var(--color-primary-200); color: var(--color-gray-body); font-size: 16px; line-height: 1.8; }
+  .board-biography p + p { margin-top: 16px; }
+  @media (hover: hover) and (pointer: fine) {
+    .board-details summary:hover .board-toggle { background: var(--color-primary-100); }
+  }
+  @media (max-width: 767px) {
+    .board-intro { grid-template-columns: 1fr; gap: 32px; padding-bottom: 40px; }
+    .board-signature { margin-bottom: 20px; }
+    .board-director { grid-template-columns: 1fr; gap: 24px; padding-block: 32px; }
+    .board-identity { grid-template-columns: 24px 1fr; gap: 14px; }
+    .board-role { max-width: none; }
+    .board-biography { padding: 20px 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .board-toggle { transition: none; }
+  }
+  @media print {
+    .board-details::details-content { content-visibility: visible; }
+    .board-biography { display: block; }
+  }
+</style>
+
+<script>
+import { initBoardMotion } from '@/scripts/about/board-motion'
+
+initBoardMotion()
+</script>

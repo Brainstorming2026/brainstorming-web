@@ -1,0 +1,69 @@
+---
+interface Props { service: 'growth' | 'innovation' | 'marketing' | 'sales' }
+const { service } = Astro.props
+const stories = {
+  sales: { label: 'De oportunidad a cierre', title: 'El próximo paso está claro.', steps: ['Calificar', 'Acompañar', 'Cerrar'], result: 'Seguimiento visible. Equipo alineado.' },
+  growth: { label: 'De diagnóstico a decisión', title: 'Un plan. Un orden claro.', steps: ['Entender', 'Priorizar', 'Activar'], result: 'Prioridades, responsables y próximos pasos.' },
+  innovation: { label: 'De oportunidad a negocio', title: 'Probar antes de construir.', steps: ['Hipótesis', 'Evidencia', 'Decisión'], result: 'Validación con clientes reales.' },
+  marketing: { label: 'De contenido a conversación', title: 'Cada contacto tiene un siguiente paso.', steps: ['Atraer', 'Nutrir', 'Convertir'], result: 'Un recorrido conectado a tu equipo comercial.' },
+}
+const story = stories[service]
+---
+
+<div data-hero-story class="story-panel" aria-label={story.label}>
+  <div class="story-label"><span aria-hidden="true"></span>{story.label}</div>
+  <p class="story-title">{story.title}</p>
+  <svg class="story-diagram" viewBox="0 0 280 94" fill="none" aria-hidden="true">
+    {service === 'growth' && (
+<>
+      <path d="M12 78H268M12 50H268M12 22H268" stroke="#ece7f5" />
+      <rect data-story-shape x="26" y="56" width="45" height="22" rx="3" fill="#e3d5fb" />
+      <rect data-story-shape x="117" y="35" width="45" height="43" rx="3" fill="#b899ed" />
+      <rect data-story-shape x="209" y="12" width="45" height="66" rx="3" fill="#7d44e4" />
+      <path data-story-path d="M48 49L139 28L232 5" stroke="#7d44e4" stroke-width="1.5" />
+      <circle data-story-node cx="48" cy="49" r="3.5" fill="#7d44e4" />
+      <circle data-story-node cx="139" cy="28" r="3.5" fill="#7d44e4" />
+      <circle data-story-node cx="232" cy="5" r="3.5" fill="#7d44e4" />
+    </>
+)}
+    {service === 'innovation' && (
+<>
+      <path d="M48 47H232" stroke="#e3d5fb" stroke-width="2" />
+      <path data-story-path d="M48 47H232" stroke="#7d44e4" stroke-width="2" />
+      <g data-story-shape><path d="M48 15L76 31V63L48 79L20 63V31L48 15Z" fill="#f4eefe" stroke="#c6abf2" /><path d="M20 31L48 47L76 31M48 47V79" stroke="#c6abf2" /></g>
+      <g data-story-shape><path d="M140 15L168 31V63L140 79L112 63V31L140 15Z" fill="#e3d5fb" stroke="#ad85e9" /><path d="M112 31L140 47L168 31M140 47V79" stroke="#ad85e9" /></g>
+      <g data-story-shape><path d="M232 15L260 31V63L232 79L204 63V31L232 15Z" fill="#7d44e4" /><path d="M204 31L232 47L260 31M232 47V79" stroke="#b899ed" /><path data-story-node d="M222 30L229 36L241 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></g>
+    </>
+)}
+    {service === 'marketing' && (
+<>
+      <path d="M48 47H232" stroke="#e3d5fb" stroke-width="2" />
+      <path data-story-path d="M48 47H232" stroke="#7d44e4" stroke-width="2" />
+      <g data-story-shape><rect x="23" y="20" width="50" height="54" rx="7" fill="#f4eefe" stroke="#c6abf2" /><path d="M35 34H60M35 43H60M35 52H49" stroke="#9d72e4" stroke-width="2" stroke-linecap="round" /></g>
+      <g data-story-shape><rect x="114" y="24" width="52" height="46" rx="7" fill="#e3d5fb" /><path d="M123 37L140 49L157 37M123 37V58H157V37H123Z" stroke="#7d44e4" stroke-width="1.5" stroke-linejoin="round" /></g>
+      <g data-story-shape><rect x="206" y="20" width="52" height="54" rx="7" fill="#7d44e4" /><path d="M220 35H245V53H232L224 60V53H220V35Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" /><path data-story-node d="M225 44H240" stroke="white" stroke-width="2" stroke-linecap="round" /></g>
+    </>
+)}
+    {service === 'sales' && (
+      <>
+        <path d="M46 47H234" stroke="#e3d5fb" stroke-width="2" />
+        <path data-story-path d="M46 47H234" stroke="#7d44e4" stroke-width="2" />
+        <g data-story-shape><rect x="19" y="15" width="55" height="64" rx="6" fill="#f4eefe" stroke="#c6abf2" /><circle cx="46" cy="33" r="7" fill="#b899ed" /><path d="M33 53H60M33 62H51" stroke="#9d72e4" stroke-width="2" stroke-linecap="round" /></g>
+        <g data-story-shape><rect x="113" y="15" width="55" height="64" rx="6" fill="#e3d5fb" /><path d="M125 31H156M125 41H149M125 51H152" stroke="#7d44e4" stroke-width="2" stroke-linecap="round" /><rect x="125" y="60" width="20" height="6" rx="3" fill="#b899ed" /></g>
+        <g data-story-shape><rect x="207" y="15" width="55" height="64" rx="6" fill="#7d44e4" /><circle cx="234" cy="47" r="17" stroke="#b899ed" /><path data-story-node d="M225 47L231 53L244 40" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></g>
+      </>
+    )}
+  </svg>
+  <ol class="story-steps">{story.steps.map(step => <li>{step}</li>)}</ol>
+  <p class="story-result">{story.result}</p>
+</div>
+
+<style>
+  .story-panel { padding: 22px 24px 18px; border: 1px solid #e6daf8; border-radius: 9px; background: #fff; box-shadow: 0 14px 44px #29203518; transform-style: preserve-3d; }
+  .story-label { display: flex; align-items: center; gap: 8px; color: #655b75; font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+  .story-label > span { width: 5px; height: 5px; border-radius: 50%; background: #7d44e4; }
+  .story-panel .story-title { margin-top: 12px; color: #202020; font-size: 19px; line-height: 1.2; letter-spacing: -.035em; font-weight: 500; }
+  .story-diagram { display: block; width: 100%; height: auto; margin-top: 18px; overflow: visible; }
+  .story-steps { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 8px; list-style: none; padding: 0; margin: 5px 0 0; font-size: 10px; color: #655b75; }
+  .story-panel .story-result { margin-top: 17px; padding-top: 13px; border-top: 1px solid #eee8f5; color: #655b75; font-size: 10px; line-height: 1.5; }
+</style>

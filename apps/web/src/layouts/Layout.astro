@@ -3,6 +3,7 @@ import { ClientRouter, fade } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
 import Navbar from '@/components/common/Navbar.astro'
 import SplashScreen from '@/components/common/SplashScreen.astro'
+import SolutionMotion from '@/components/solutions/SolutionMotion.astro'
 import '@/styles/global.css'
 
 interface Props {
@@ -12,7 +13,8 @@ interface Props {
   showNavbar?: boolean
 }
 
-const { title, description = 'Brainstorming — Agencia de Marketing', footerCurveBg, showNavbar = true } = Astro.props;
+const { title, description = 'Brainstorming — Agencia de Marketing', footerCurveBg, showNavbar = true } = Astro.props
+const isSolution = Astro.url.pathname.startsWith('/soluciones')
 ---
 
 <!doctype html>
@@ -39,9 +41,10 @@ const { title, description = 'Brainstorming — Agencia de Marketing', footerCur
   <body class="font-body text-ink antialiased overflow-x-hidden">
     <SplashScreen />
     {showNavbar && <Navbar />}
-    <main transition:animate={fade({ duration: '0.4s' })}>
+    <main data-solution-page={isSolution ? '' : undefined} transition:animate={fade({ duration: '0.4s' })}>
       <slot />
     </main>
+    {isSolution && <SolutionMotion />}
     <Footer curveBg={footerCurveBg} />
   </body>
 </html>

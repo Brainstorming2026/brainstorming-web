@@ -1,15 +1,24 @@
 ---
-import heroBg from '@/assets/marketing/marketing-hero-inbound-v3.png'
-import SolutionSplitHero from '@/components/solutions/SolutionSplitHero.astro'
+import image from '@/assets/service-heroes/inbound-marketing-editorial.png'
+import ServiceEditorialHero from '@/components/solutions/ServiceEditorialHero.astro'
 ---
 
-<SolutionSplitHero
-  image={heroBg}
-  imageFit="contain"
-  compactTitle
-  layeredIllustration
+<ServiceEditorialHero
+  service="marketing"
   eyebrow="Inbound Marketing / Atracción inteligente"
-  title="Haz que tus clientes vengan a ti."
-  description="Conectamos contenido útil, SEO, campañas y automatización para atraer a las personas correctas y acompañarlas con el mensaje adecuado en cada etapa de decisión."
-  secondaryDescription="Así construyes un flujo constante de prospectos calificados, reduces la prospección fría y haces más eficiente tu inversión comercial."
+  title="Haz que tus clientes"
+  accent="vengan a ti."
+  statement="Contenido que conecta. Conversaciones que avanzan."
+  description="Conectamos contenido, SEO, campañas y automatización para atraer prospectos calificados y acompañar su decisión."
+  image={image}
+  imageAlt="Sistema de contenidos con una revista, artículos en móvil y un calendario editorial en una tablet"
+  cta="Conversemos sobre tu estrategia"
+  href="https://wa.me/51992528363?text=Hola%2C%20me%20interesa%20implementar%20Inbound%20Marketing"
+  processHref="#proceso-inbound"
+  caption="Contenido útil. Relaciones con futuro."
+  facts={[
+    { label: 'Atracción', value: 'Las personas correctas' },
+    { label: 'Nutrición', value: 'El mensaje en cada etapa' },
+    { label: 'Conversión', value: 'Oportunidades para ventas' },
+  ]}
 />

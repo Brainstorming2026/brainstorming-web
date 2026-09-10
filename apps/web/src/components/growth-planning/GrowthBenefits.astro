@@ -101,12 +101,12 @@ registerMotion(() => {
 
   if (dots.length) {
     gsap.from(dots, {
-      scale: 0,
+      scale: 0.92,
       opacity: 0,
       transformOrigin: '50% 50%',
       duration: 0.5,
       stagger: 0.14,
-      ease: 'back.out(1.7)',
+      ease: 'power3.out',
       immediateRender: true,
       scrollTrigger: { trigger: timeline, start: 'top 80%', once: true },
     })

@@ -1,5 +1,5 @@
-import { ensureGsap } from './gsap-client'
 import { duration, ease } from './config'
+import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
 interface SplitHeadlineOptions {
@@ -13,41 +13,37 @@ interface SplitHeadlineOptions {
 /**
  * Revela un titular con máscara: cada palabra/línea entra desde abajo dentro
  * de un contenedor overflow-hidden generado por SplitText (`mask`), con
- * stagger y ease-out fuerte. Con prefers-reduced-motion cae a un fade simple.
+ * stagger y ease-out fuerte. Con prefers-reduced-motion se muestra sin transición.
  */
 export function splitHeadline(el: HTMLElement, options: SplitHeadlineOptions = {}) {
   const { by = 'words', scrollTrigger = true, onComplete } = options
   const { gsap, SplitText } = ensureGsap()
 
   if (prefersReducedMotion()) {
-    gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, onComplete })
+    gsap.set(el, { clearProps: 'opacity,transform' })
+    onComplete?.()
     return
   }
 
-  const split = new SplitText(el, { type: by, mask: by })
-  const targets = by === 'words' ? split.words : split.lines
-
-  // El contenedor permanece visible; solo se animan los hijos del split.
-  gsap.set(el, { opacity: 1 })
-
-  // `fromTo` (no `from`): con ScrollTrigger, `from` deja `immediateRender:false`
-  // y el titular se ve completo hasta cruzar el trigger, ahí SALTA a oculto y
-  // recién anima. `fromTo` fija el estado inicial en la carga.
-  gsap.fromTo(
-    targets,
-    { yPercent: 100, opacity: 0 },
-    {
-      yPercent: 0,
-      opacity: 1,
-      duration: duration.headlineWord,
-      stagger: duration.headlineStagger,
-      ease: ease.out,
-      onComplete,
-      ...(scrollTrigger && {
-        scrollTrigger: { trigger: el, start: 'top 85%' },
-      }),
-    },
-  )
-
-  return split
+  // Re-split lines after fonts load or the available width changes.
+  return SplitText.create(el, {
+    type: by,
+    mask: by,
+    autoSplit: true,
+    onSplit: split => gsap.fromTo(
+      by === 'words' ? split.words : split.lines,
+      { yPercent: 100, opacity: 0 },
+      {
+        yPercent: 0,
+        opacity: 1,
+        duration: duration.headlineWord,
+        stagger: duration.headlineStagger,
+        ease: ease.out,
+        onComplete,
+        ...(scrollTrigger && {
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        }),
+      },
+    ),
+  })
 }

@@ -12,7 +12,6 @@ export interface FooterRed {
 export const soluciones: FooterLink[] = [
   { label: 'Growth Planning', href: '/soluciones/growth-planning' },
   { label: 'Branding', href: '/soluciones/branding' },
-  { label: 'Desarrollo Web', href: '/soluciones/desarrollo-web' },
   { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
   { label: 'Smart Selling', href: '/soluciones/smart-selling' },
   { label: 'Automatización de Procesos con IA', href: '/soluciones/automatizacion-ia' },

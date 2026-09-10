@@ -1,5 +1,5 @@
-import { ensureGsap } from './gsap-client'
 import { duration, ease } from './config'
+import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
 interface StaggerGridOptions {
@@ -27,7 +27,7 @@ export function staggerGrid(items: Element[] | NodeListOf<Element>, options: Sta
   const { gsap, ScrollTrigger } = ensureGsap()
 
   if (prefersReducedMotion()) {
-    gsap.fromTo(list, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.05 })
+    gsap.set(list, { clearProps: 'opacity,transform,clipPath' })
     return
   }
 
@@ -46,6 +46,8 @@ export function staggerGrid(items: Element[] | NodeListOf<Element>, options: Sta
   // hacia él y "salta" al estado oculto justo al entrar (glitch visible).
   gsap.set(list, from)
 
+  // Batch callbacks fire after setup; keep their tweens in a revertible context.
+  const batchContext = gsap.context(() => {})
   ScrollTrigger.batch(list, {
     start: 'top 88%',
     // Reveal de entrada: pasa una sola vez por elemento, no se repite al
@@ -53,6 +55,8 @@ export function staggerGrid(items: Element[] | NodeListOf<Element>, options: Sta
     // ya son single-shot por defecto de GSAP).
     once: true,
     onEnter: (batch: Element[]) =>
-      gsap.to(batch, { ...to, stagger: itemStagger, overwrite: true }),
+      batchContext.add(() => {
+        gsap.to(batch, { ...to, stagger: itemStagger, overwrite: true, clearProps: 'transform,opacity,clipPath' })
+      }),
   })
 }

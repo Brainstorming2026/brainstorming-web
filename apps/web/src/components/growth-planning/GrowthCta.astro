@@ -31,7 +31,7 @@ registerMotion(() => {
     return
   const { gsap } = ensureGsap()
   if (button)
-    gsap.fromTo(button, { y: 24, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.4)', scrollTrigger: { trigger: button, start: 'top 90%', once: true } })
+    gsap.fromTo(button, { y: 24, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: button, start: 'top 90%', once: true } })
   if (glow && section) {
     // Respiración lenta del halo atada al scroll — nada de loops en main thread.
     gsap.fromTo(

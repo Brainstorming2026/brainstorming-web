@@ -1,0 +1,61 @@
+<script>
+import { ensureGsap, registerMotion } from '@/lib/motion'
+import { pointerDepth } from '@/lib/motion/pointer-depth'
+
+registerMotion(() => {
+  const root = document.querySelector<HTMLElement>('[data-solution-page]')
+  if (!root)
+    return
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const image = root.querySelector('.br-hero-image')
+    if (image) {
+      gsap.from(image, {
+        y: 20,
+        duration: 0.8,
+        ease: 'power3.out',
+        clearProps: 'transform',
+        scrollTrigger: { trigger: image, start: 'top 94%', once: true },
+      })
+    }
+  }, root)
+  media.add('(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups: (() => void)[] = []
+    for (const [areaSelector, surfaceSelector] of [
+      ['.br-hero-image', '.br-hero-image > img'],
+      ['.ai-hero-stage', '.ai-flow'],
+    ]) {
+      const area = root.querySelector<HTMLElement>(areaSelector)
+      const surface = root.querySelector<HTMLElement>(surfaceSelector)
+      if (area && surface)
+        cleanups.push(pointerDepth(area, surface, 3))
+    }
+    return () => cleanups.forEach(cleanup => cleanup())
+  }, root)
+  return () => media.revert()
+})
+</script>
+
+<style is:global>
+  [data-solution-page] {
+    --service-ease-out: cubic-bezier(.23, 1, .32, 1);
+  }
+  [data-solution-page] :is(.hero-cta, .br-button, .ai-button, .in-button, .cta-btn, [data-growth-cta], [data-pressable], .clients-controls button) {
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, scale 140ms var(--service-ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    [data-solution-page] :is(.hero-cta, .br-button, .ai-button, .in-button, .cta-btn, [data-growth-cta], [data-pressable], .clients-controls button):active:not(:focus-visible) { scale: .97; }
+  }
+  @media (hover: none) {
+    [data-solution-page] :is([data-marketing-card], .benefit-item, .br-button, .ai-button, .in-button):hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-solution-page] *, [data-solution-page] *::before, [data-solution-page] *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+    [data-solution-page] :is(.hero-cta, .br-button, .ai-button, .in-button, .cta-btn, [data-growth-cta], [data-pressable], .clients-controls button):active { scale: 1; }
+  }
+</style>

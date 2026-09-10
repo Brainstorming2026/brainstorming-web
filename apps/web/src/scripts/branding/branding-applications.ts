@@ -22,14 +22,14 @@ class BrandApplications extends HTMLElement {
       if (focus)
         tabs[index].focus()
       if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches)
-        tween = gsap.fromTo(panels[index], { opacity: 0.4, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', clearProps: 'opacity,transform' })
+        tween = gsap.fromTo(panels[index], { opacity: 0.4, y: 12 }, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out', clearProps: 'opacity,transform' })
     }
     tabs.forEach((tab, i) => {
       tab.setAttribute('role', 'tab')
       tab.setAttribute('aria-controls', panels[i].id)
       panels[i].setAttribute('role', 'tabpanel')
       panels[i].tabIndex = 0
-      tab.addEventListener('click', () => select(i), { signal: controller.signal })
+      tab.addEventListener('click', event => select(i, false, event.detail > 0), { signal: controller.signal })
       tab.addEventListener('keydown', (event) => {
         let next = i
         if (event.key === 'ArrowRight')
@@ -42,7 +42,7 @@ class BrandApplications extends HTMLElement {
           next = tabs.length - 1
         else return
         event.preventDefault()
-        select(next, true)
+        select(next, true, false)
       }, { signal: controller.signal })
     })
     select(0, false, false)

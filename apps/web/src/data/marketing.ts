@@ -20,6 +20,7 @@ export interface MarketingStep {
   icon: ImageMetadata
   title: string
   description: string
+
 }
 
 export interface MarketingBenefit {
@@ -56,7 +57,8 @@ export const marketingSteps: MarketingStep[] = [
     number: '05',
     icon: step05,
     title: 'Creación + Automatización de Contenido',
-    description: 'Producimos el contenido e implementamos flujos de nutrición automatizados por email y WhatsApp con IA: triggers de comportamiento, lead scoring y secuencias personalizadas. Incluye desarrollo de Landing Pages y sitios web cuando el proyecto lo requiere.',
+    description: 'Producimos el contenido e implementamos flujos de nutrición automatizados por email y WhatsApp con IA: triggers de comportamiento, lead scoring y secuencias personalizadas.',
+
   },
   {
     number: '06',

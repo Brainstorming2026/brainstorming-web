@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import webImage from '@/assets/marketing/process/desarrollo-web-inbound.png'
+import WebClientCarousel from './WebClientCarousel.astro'
+---
+
+<section id="desarrollo-web" data-web-development class="web-development scroll-mt-24 bg-white text-dark" aria-labelledby="web-development-title">
+  <div class="service-container">
+    <header class="web-heading">
+      <div>
+        <p data-web-reveal class="mb-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-body">
+          <span aria-hidden="true" class="h-0.5 w-6 bg-primary"></span>
+          Desarrollo Web / Parte de tu estrategia Inbound
+        </p>
+        <h2 id="web-development-title" data-web-title class="font-heading">Tu web también debe <span class="text-primary">generar oportunidades.</span></h2>
+      </div>
+      <div data-web-reveal class="web-aside">
+        <p>Diseñamos sitios web y landing pages que convierten visitas en oportunidades, conectados con tu estrategia de contenido y captación.</p>
+        <a href="#web-clientes" class="group mt-5 inline-flex min-h-11 items-center gap-3 text-sm font-medium underline decoration-primary/30 underline-offset-4 hover:text-primary">
+          Conoce las marcas que acompañamos
+          <Icon name="automation/arrow-down" class="size-4 shrink-0 transition-transform motion-safe:group-hover:translate-y-1" />
+        </a>
+      </div>
+    </header>
+
+    <figure class="web-visual" data-web-visual>
+      <div class="web-image-frame">
+        <Image src={webImage} alt="Sitio web con formulario de captación, adaptado a portátil y móvil" widths={[480, 720, 960, 1280, 1600, 1920, 2560]} sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1416px) 100vw, 1320px" loading="lazy" quality={90} class="web-image" />
+      </div>
+      <figcaption class="web-caption">
+        <span>Una experiencia que conecta.</span>
+        <span>De la primera visita al primer contacto.</span>
+      </figcaption>
+    </figure>
+
+    <WebClientCarousel />
+  </div>
+</section>
+
+<style>
+  .web-development { padding-block: 96px 80px; }
+  .web-heading { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, .8fr); gap: 70px; align-items: end; margin-bottom: 38px; }
+  .web-heading h2 { max-width: 850px; font-size: clamp(40px, 4.8vw, 70px); font-weight: 500; line-height: 1.04; letter-spacing: -.055em; text-wrap: balance; }
+  .web-aside p { max-width: 360px; font-size: 16px; line-height: 1.75; color: var(--color-gray-body); }
+  .web-image-frame { overflow: hidden; border-radius: 9px; background: var(--color-primary-50); }
+  .web-image { width: 100%; height: clamp(340px, 40vw, 570px); object-fit: cover; object-position: center 43%; }
+  .web-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 15px; font-size: 10px; color: var(--color-gray-body); }
+  .web-caption > span:first-child { text-transform: uppercase; letter-spacing: .1em; }
+  .web-development a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 5px; }
+  @media (max-width: 767px) {
+    .web-development { padding-block: 60px 50px; }
+    .web-heading { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
+    .web-heading h2 { font-size: clamp(39px, 8.5vw, 58px); }
+    .web-aside p { max-width: 540px; font-size: 15px; }
+    .web-image { height: auto; aspect-ratio: 3/2; }
+  }
+</style>
+
+<script>
+import { ensureGsap, registerMotion } from '@/lib/motion'
+
+registerMotion(() => {
+  const root = document.querySelector<HTMLElement>('[data-web-development]')
+  if (!root)
+    return
+  const { gsap, SplitText } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const title = root.querySelector<HTMLElement>('[data-web-title]')
+    if (title) {
+      SplitText.create(title, {
+        type: 'lines',
+        mask: 'lines',
+        autoSplit: true,
+        onSplit: split => gsap.from(split.lines, {
+          yPercent: 100,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: title, start: 'top 92%', once: true },
+        }),
+      })
+    }
+    root.querySelectorAll('[data-web-reveal], [data-web-visual]').forEach((element) => {
+      gsap.from(element, {
+        y: 22,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity',
+        scrollTrigger: { trigger: element, start: 'top 94%', once: true },
+      })
+    })
+  }, root)
+  return () => media.revert()
+})
+</script>

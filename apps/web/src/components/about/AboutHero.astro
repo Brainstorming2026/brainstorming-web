@@ -2,6 +2,7 @@
 import { getImage, Image } from 'astro:assets'
 import heroBg from '@/assets/nosotros/nosotros-hero-desktop-hd.png'
 import heroMobileBg from '@/assets/nosotros/nosotros-hero-mobile.png'
+import { aboutContent } from '@/data/transversal-content'
 
 const heroMobileWebp = await getImage({
   src: heroMobileBg,
@@ -13,7 +14,7 @@ const heroMobileWebp = await getImage({
 ---
 
 <section
-  class="relative h-[calc(100svh-5rem)] min-h-[620px] max-h-[900px] overflow-hidden bg-indigo lg:h-[calc(100vh-5rem)] lg:max-h-none"
+  class="relative isolate flex min-h-[min(680px,calc(100svh-5rem))] overflow-hidden bg-indigo lg:min-h-[calc(100vh-5rem)]"
 >
   <picture>
     <source media="(max-width: 1023px)" srcset={heroMobileWebp.src} type="image/webp" />
@@ -24,45 +25,45 @@ const heroMobileWebp = await getImage({
       class="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
       loading="eager"
       fetchpriority="high"
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      quality={80}
     />
   </picture>
   <div
-    class="relative z-10 mx-auto flex h-full max-w-[1512px] items-end px-6 pb-12 pt-24 sm:px-10 sm:pb-16 lg:items-center lg:justify-end lg:px-24 lg:py-0"
+    class="relative z-10 mx-auto flex w-full max-w-[1512px] items-end px-6 pb-12 pt-48 sm:px-10 sm:pb-16 lg:items-center lg:justify-end lg:px-24 lg:py-24"
   >
-    <div class="w-full max-w-[560px] lg:max-w-[480px]">
-      <h1 id="about-hero-headline" data-animate class="font-heading text-[clamp(2.75rem,12vw,4rem)] font-bold leading-[0.98] text-white lg:text-[55px] lg:leading-tight">
-        ¿Quiénes<br />Somos?
+    <div class="w-full max-w-[580px] lg:max-w-[520px]">
+      <h1 id="about-hero-headline" data-animate class="font-heading text-[clamp(2rem,4.3vw,3.5rem)] font-bold leading-[1.08] tracking-[-0.035em] text-white">
+        {aboutContent.title}
       </h1>
       <div id="about-hero-line" data-animate="draw" class="mt-5 h-[3px] w-12 bg-white"></div>
-      <p id="about-hero-text" data-animate class="mt-5 max-w-[34rem] text-[16px] leading-[1.65] text-white sm:text-[18px] lg:mt-6 lg:max-w-none lg:text-[16px] lg:leading-relaxed lg:text-white/90">
-        Somos una consultora de servicio completo en constante innovación, que
-        diseña soluciones digitales centradas en el consumidor para optimizar
-        pequeñas y grandes empresas.
-      </p>
     </div>
   </div>
 </section>
 
 <script>
-import { drawLine, ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { drawLine, ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const bg = document.getElementById('about-hero-bg')
   const headline = document.getElementById('about-hero-headline')
   const line = document.getElementById('about-hero-line')
-  const text = document.getElementById('about-hero-text')
   const { gsap } = ensureGsap()
 
   // Oculto YA (no recién cuando termine el titular) — evita el flash de
   // contenido visible antes de animar.
-  if (line) gsap.set(line, { scaleX: 0, transformOrigin: '0% 50%' })
-  if (text) gsap.set(text, { opacity: 0, y: 10 })
+  if (line && !prefersReducedMotion())
+    gsap.set(line, { scaleX: 0, transformOrigin: '0% 50%' })
 
-  if (headline) splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
-    if (line) drawLine(line)
-    if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
-  } })
+  if (headline) {
+    splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
+      if (line)
+        drawLine(line)
+    } })
+  }
 
-  if (bg) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+  if (bg && !prefersReducedMotion())
+    gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
 })
 </script>

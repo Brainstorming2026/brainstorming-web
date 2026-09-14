@@ -1,5 +1,6 @@
 ---
 import { boardIntroduction, directors } from '@/data/board'
+import { aboutContent } from '@/data/transversal-content'
 ---
 
 <section id="board-of-directors" class="board bg-white font-body text-dark" aria-labelledby="board-title">
@@ -7,8 +8,8 @@ import { boardIntroduction, directors } from '@/data/board'
     <header class="board-intro" data-board-reveal>
       <div>
         <p class="board-eyebrow"><span aria-hidden="true" /> Dirección estratégica / LATAM</p>
-        <h2 id="board-title" class="mt-8 font-heading font-bold">Board of<br /><span class="text-primary">Directors.</span></h2>
-        <p class="board-caption mt-6">Cinco especialidades.<br />Una visión integral de tu negocio.</p>
+        <h2 id="board-title" class="mt-8 font-heading font-bold">{aboutContent.board.title}</h2>
+        <p class="board-caption mt-6">{aboutContent.board.caption}</p>
       </div>
       <div class="board-introduction">
         <div class="board-signature" aria-hidden="true">

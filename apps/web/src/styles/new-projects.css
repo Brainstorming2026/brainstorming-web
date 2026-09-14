@@ -1,0 +1,58 @@
+/* Additive styles: the approved Aruma, Atsa and Retyg layouts are untouched. */
+.new-case .study-heading h1 { font-size: clamp(40px, 4.6vw, 68px); }
+.new-case-logo { display: flex; align-items: center; width: fit-content; max-width: 100%; min-height: 64px; padding: 12px; margin-bottom: 22px; border-radius: 8px; }
+.new-case-logo img { width: auto; height: auto; max-width: 210px; max-height: 64px; object-fit: contain; }
+/* Futura's SVG defines only a viewBox. Give its flex container and image a
+   definite inline size so intrinsic sizing cannot collapse to the padding. */
+.new-case[data-study="futura-wealth"] .new-case-logo { width: 234px; justify-content: center; }
+.new-case[data-study="futura-wealth"] .new-case-logo img { width: 210px; max-width: 100%; flex-shrink: 0; }
+.new-case-challenge { margin-top: 24px; font-size: 18px; line-height: 1.8; color: var(--study-muted); }
+.new-case-approach { padding-block: 80px; background: var(--study-surface); }
+.new-case-approach h2, .new-case-results h2 { margin-top: 18px; font-size: clamp(32px, 3.4vw, 48px); font-weight: 700; line-height: 1.12; letter-spacing: -0.035em; }
+.new-case-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; margin-block: 48px 64px; }
+.new-case-steps article { border-top: 1px solid color-mix(in srgb, var(--study-accent) 20%, white); padding-top: 26px; }
+.new-case-steps svg { width: 32px; height: 32px; stroke-width: 1.5; color: var(--study-accent); }
+.new-case-steps h3 { margin-block: 22px 12px; font-size: 20px; font-weight: 600; line-height: 1.25; }
+.new-case-steps p { font-size: 16px; line-height: 1.75; color: var(--study-muted); }
+.new-case-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.new-case-gallery--single { grid-template-columns: minmax(0, 1fr); max-width: 1000px; margin-inline: auto; }
+.new-case-results { padding-block: 88px 16px; }
+.new-case-results-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.new-case-results-heading > p { max-width: 58ch; font-size: 17px; line-height: 1.8; color: var(--study-muted); }
+.new-case-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 48px; }
+.new-case-metrics > div { border-top: 2px solid var(--study-accent); padding-top: 24px; }
+.new-case-metrics dt { min-height: 44px; max-width: 26ch; font-size: 15px; line-height: 1.5; font-weight: 500; }
+.new-case-metrics dd { display: flex; flex-direction: column; align-items: start; gap: 10px; margin-top: 16px; }
+.new-case-before { font-size: 17px; color: var(--study-muted); }
+.new-case-metrics strong { font-family: var(--font-heading); font-size: clamp(38px, 4.5vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; color: var(--study-accent); }
+.new-case-metric-note { font-size: 13px; line-height: 1.5; color: var(--study-muted); }
+.new-case-outcomes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; }
+.new-case-outcomes li { display: flex; align-items: flex-start; gap: 14px; padding-block: 24px; border-top: 1px solid var(--study-line); font-size: 18px; font-weight: 500; line-height: 1.5; }
+.new-case-outcomes svg { flex-shrink: 0; width: 24px; height: 24px; margin-top: 2px; stroke-width: 1.6; color: var(--study-accent); }
+.new-case-next-logo { display: grid; place-items: center; min-height: 200px; padding: 32px; border: 1px solid var(--study-line); border-radius: 12px; }
+.new-case-next-logo img { width: auto; height: auto; max-width: min(100%, 280px); max-height: 100px; object-fit: contain; }
+.new-case .study-next h2 { font-size: clamp(28px, 3.4vw, 48px); text-wrap: balance; }
+@media (max-width: 1023px) {
+  .new-case-steps { gap: 24px; }
+  .new-case-metrics { gap: 20px; }
+  .new-case-outcomes { gap: 20px; }
+}
+@media (max-width: 767px) {
+  .new-case .study-heading h1 { font-size: clamp(34px, 9vw, 54px); }
+  .new-case-logo img { max-width: 190px; max-height: 56px; }
+  .new-case[data-study="futura-wealth"] .new-case-logo { width: 214px; }
+  .new-case[data-study="futura-wealth"] .new-case-logo img { width: 190px; }
+  .new-case-challenge { font-size: 16px; line-height: 1.75; }
+  .new-case-approach { padding-block: 56px; }
+  .new-case-steps { grid-template-columns: 1fr; gap: 28px; margin-block: 32px 40px; }
+  .new-case-steps h3 { margin-top: 16px; }
+  .new-case-gallery { grid-template-columns: 1fr; }
+  .new-case-results { padding-block: 56px 0; }
+  .new-case-results-heading { grid-template-columns: 1fr; gap: 24px; }
+  .new-case-results-heading > p { font-size: 16px; }
+  .new-case-metrics, .new-case-outcomes { grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+  .new-case-metrics dt { min-height: auto; max-width: none; }
+  .new-case-metrics strong { font-size: 48px; }
+  .new-case-outcomes li { padding-block: 20px 0; font-size: 17px; }
+  .new-case-next-logo { min-height: 180px; }
+}

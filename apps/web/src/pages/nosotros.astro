@@ -1,20 +1,26 @@
 ---
 import AboutHero from '@/components/about/AboutHero.astro'
 import BoardOfDirectors from '@/components/about/BoardOfDirectors.astro'
-import CallToAction from '@/components/about/CallToAction.astro'
-import HowWeDo from '@/components/about/HowWeDo.astro'
-import WhatWeDo from '@/components/about/WhatWeDo.astro'
-import WhyUs from '@/components/about/WhyUs.astro'
+import Methodology from '@/components/about/Methodology.astro'
+import Principles from '@/components/about/Principles.astro'
+import Reasons from '@/components/about/Reasons.astro'
+import WhoWeAre from '@/components/about/WhoWeAre.astro'
+import ConversationCta from '@/components/common/ConversationCta.astro'
+import TransversalMotion from '@/components/common/TransversalMotion.astro'
+import { aboutContent } from '@/data/transversal-content'
 import Layout from '@/layouts/Layout.astro'
+import '@/styles/transversal.css'
 
 export const prerender = true;
 ---
 
-<Layout title="Nosotros — Brainstorming">
+<Layout title="Nosotros — Brainstorming" description={aboutContent.introduction.paragraphs[0]}>
   <AboutHero />
-  <WhatWeDo />
-  <HowWeDo />
+  <WhoWeAre />
+  <Methodology />
+  <Principles />
   <BoardOfDirectors />
-  <WhyUs />
-  <CallToAction />
+  <Reasons />
+  <ConversationCta id="about-conversation" final projects />
+  <TransversalMotion />
 </Layout>

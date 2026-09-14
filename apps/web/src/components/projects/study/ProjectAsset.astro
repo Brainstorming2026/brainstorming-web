@@ -1,0 +1,62 @@
+---
+import type { ProjectImageSlot } from '@/data/new-projects'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+
+interface Props {
+  asset: ProjectImageSlot
+  priority?: boolean
+  sizes?: string
+}
+const { asset, priority = false, sizes = '(min-width: 1440px) 640px, (min-width: 768px) 45vw, 90vw' } = Astro.props
+---
+
+<figure class="case-asset" data-asset-id={asset.id} style={{ '--asset-ratio': asset.ratio }}>
+  {asset.src
+? (
+    <div class="case-asset-image" data-study-image>
+      <Image src={asset.src} alt={asset.alt} widths={[480, 800, 1200, 1600].filter(width => width < asset.src!.width).concat(asset.src.width)} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} />
+    </div>
+  )
+: (
+    <div class="case-asset-placeholder">
+      <Icon name="study/panels-top-left" aria-hidden="true" />
+      <span class="case-asset-status">Imagen pendiente</span>
+      <p class="case-asset-title">{asset.title}</p>
+      <p class="case-asset-request">{asset.request}</p>
+      <span class="case-asset-format">{asset.ratio === '16/9' ? 'Horizontal · 16:9 · sugerido 1920 × 1080 px' : 'Horizontal · 4:3 · sugerido 1600 × 1200 px'}</span>
+    </div>
+  )}
+  <figcaption>{asset.title}</figcaption>
+</figure>
+
+<style>
+  .case-asset { min-width: 0; margin: 0; }
+  .case-asset-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 340px;
+    height: 100%;
+    padding: clamp(24px, 4vw, 48px);
+    border: 1px dashed color-mix(in srgb, var(--study-accent) 30%, white);
+    border-radius: 12px;
+    background: var(--study-surface);
+    color: var(--color-dark);
+    text-align: center;
+  }
+  .case-asset-placeholder svg { width: 34px; height: 34px; stroke-width: 1.4; color: var(--study-accent); }
+  .case-asset-status { color: var(--study-accent); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  .case-asset-title { max-width: 32ch; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 26px); font-weight: 600; line-height: 1.25; text-wrap: balance; }
+  .case-asset-request { max-width: 56ch; font-size: 14px; line-height: 1.7; color: var(--color-gray-body); }
+  .case-asset-format { margin-top: 6px; color: var(--color-gray-body); font-size: 12px; line-height: 1.5; }
+  .case-asset-image { overflow: hidden; border-radius: 12px; background: var(--study-surface); }
+  .case-asset-image img { width: 100%; height: auto; aspect-ratio: var(--asset-ratio); object-fit: contain; }
+  figcaption { margin-top: 12px; color: var(--color-gray-body); font-size: 12px; line-height: 1.5; }
+  @media (max-width: 767px) {
+    .case-asset-placeholder { padding: 28px 20px; min-height: 300px; gap: 12px; }
+    .case-asset-request { font-size: 13px; }
+  }
+</style>

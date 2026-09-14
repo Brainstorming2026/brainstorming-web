@@ -1,9 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { soluciones, empresa, recursos, redes } from '@/data'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 import FooterMap from '@/components/common/FooterMap'
+import { empresa, recursos, redes, soluciones } from '@/data'
+import { siteContact } from '@/data/site-navigation'
 
 interface Props {
   /** Tailwind bg-color class matching the section right above the footer, so the curve's transparent edges blend in seamlessly instead of showing a white gap. */
@@ -67,6 +68,7 @@ const { curveBg = 'bg-white' } = Astro.props
                 <li>
                   <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
                     {l.label}
+                    {l.complementary && <span class="ml-1 text-primary-300" aria-label="Servicio complementario">★</span>}
                   </a>
                 </li>
               ))
@@ -110,18 +112,19 @@ const { curveBg = 'bg-white' } = Astro.props
           <ul class="mt-4 flex flex-col gap-3 text-[13px] sm:text-sm">
             <li class="flex items-center gap-2">
               <Icon name="footer-map" class="h-4 w-4 shrink-0" />
-              <span>Lima, Perú</span>
+              <span>{siteContact.location}</span>
             </li>
             <li>
-              <a href="mailto:conversemos@brainstorming.la" class="flex items-start gap-2 transition-colors hover:text-primary-300">
+              <a href={`mailto:${siteContact.email}`} data-copy-email={siteContact.email} class="flex flex-wrap items-start gap-2 transition-colors hover:text-primary-300">
                 <Icon name="footer-mail" class="mt-0.5 h-4 w-4 shrink-0" />
-                <span class="break-all">conversemos@brainstorming.la</span>
+                <span class="break-all">{siteContact.email}</span>
+                <span data-copy-feedback role="status" aria-live="polite" class="w-full pl-6 text-xs text-primary-300 opacity-0 transition-opacity"></span>
               </a>
             </li>
             <li>
-              <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-primary-300">
+              <a href={siteContact.whatsapp} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-primary-300">
                 <Icon name="footer-phone" class="h-4 w-4 shrink-0" />
-                <span>+51 992 528 363</span>
+                <span>{siteContact.phone}</span>
               </a>
             </li>
           </ul>
@@ -160,6 +163,7 @@ const { curveBg = 'bg-white' } = Astro.props
               <li>
                 <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
                   {l.label}
+                  {l.complementary && <span class="ml-1 text-primary-300" aria-label="Servicio complementario">★</span>}
                 </a>
               </li>
             ))
@@ -205,18 +209,19 @@ const { curveBg = 'bg-white' } = Astro.props
         <ul class="mt-5 flex flex-col gap-4 text-[15px]">
           <li class="flex items-center gap-2.5">
             <Icon name="footer-map" class="h-5 w-5 shrink-0" />
-            <span>Lima, Perú</span>
+            <span>{siteContact.location}</span>
           </li>
           <li>
-            <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+            <a href={`mailto:${siteContact.email}`} data-copy-email={siteContact.email} class="flex flex-wrap items-start gap-2.5 transition-colors hover:text-primary-300">
               <Icon name="footer-mail" class="h-5 w-5 shrink-0" />
-              <span>conversemos@brainstorming.la</span>
+              <span class="min-w-0 break-words">{siteContact.email}</span>
+              <span data-copy-feedback role="status" aria-live="polite" class="w-full pl-7.5 text-xs text-primary-300 opacity-0 transition-opacity"></span>
             </a>
           </li>
           <li>
-            <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
+            <a href={siteContact.whatsapp} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 transition-colors hover:text-primary-300">
               <Icon name="footer-phone" class="h-5 w-5 shrink-0" />
-              <span>+51 992 528 363</span>
+              <span>{siteContact.phone}</span>
             </a>
           </li>
         </ul>
@@ -226,9 +231,31 @@ const { curveBg = 'bg-white' } = Astro.props
 
   <!-- Barra inferior -->
   <div class="border-t border-white/10">
-    <p class="py-5 text-center text-xs text-white/80 sm:py-6 sm:text-sm">
-      Copyright © 2026 Brainstorming
+    <p class="px-6 py-5 text-center text-xs text-white/80 sm:py-6 sm:text-sm">
+      {siteContact.copyright}
     </p>
   </div>
   </div>
 </footer>
+
+<script>
+// mailto does nothing when the visitor has no desktop mail client, so also copy the address.
+document.querySelectorAll<HTMLAnchorElement>('[data-copy-email]').forEach((link) => {
+  const feedback = link.querySelector<HTMLElement>('[data-copy-feedback]')
+  let timer: number | undefined
+  link.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(link.dataset.copyEmail ?? '')
+    }
+    catch {
+      return
+    }
+    if (!feedback)
+      return
+    feedback.textContent = 'Correo copiado'
+    feedback.classList.remove('opacity-0')
+    window.clearTimeout(timer)
+    timer = window.setTimeout(() => feedback.classList.add('opacity-0'), 2200)
+  })
+})
+</script>

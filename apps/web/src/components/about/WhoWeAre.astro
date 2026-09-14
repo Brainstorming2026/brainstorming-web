@@ -1,0 +1,12 @@
+---
+import { aboutContent } from '@/data/transversal-content'
+---
+
+<section class="editorial-section" aria-labelledby="who-we-are-title">
+  <div class="editorial-container editorial-split">
+    <h2 id="who-we-are-title" class="editorial-title" data-editorial-heading>{aboutContent.introduction.title}</h2>
+    <div class="editorial-prose" data-editorial-reveal>
+      {aboutContent.introduction.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>

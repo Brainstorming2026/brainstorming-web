@@ -18,11 +18,12 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
         </p>
 
         <div class="studio-contacts mt-8 grid gap-3">
-          <a href="mailto:conversemos@brainstorming.la" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
+          <a href="mailto:conversemos@brainstorming.la" data-copy-email="conversemos@brainstorming.la" class="group relative flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">
               <Icon name="footer-mail" class="h-4 w-4" />
             </span>
             <span class="min-w-0 break-all">conversemos@brainstorming.la</span>
+            <span data-copy-feedback role="status" aria-live="polite" class="ml-auto shrink-0 text-xs font-medium text-primary opacity-0 transition-opacity"></span>
           </a>
           <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 items-center gap-3 rounded-2xl border border-[#e2ddea] bg-white/85 px-4 py-3 text-sm font-semibold text-dark shadow-[0_10px_30px_rgba(59,39,92,0.05)] backdrop-blur transition-[border-color,transform] hover:-translate-y-0.5 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary-100">

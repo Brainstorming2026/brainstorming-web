@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components'
+import { siteServices } from '@/data/site-navigation'
+import { homeContent } from '@/data/transversal-content'
+
+const services = siteServices.flatMap(service => service.home ? [{ ...service.home, href: service.href }] : []).sort((a, b) => a.order - b.order)
+---
+
+<section class="editorial-section editorial-services" aria-labelledby="home-services-title">
+  <div class="editorial-container editorial-service-layout">
+    <div>
+      <h2 id="home-services-title" class="editorial-title" data-editorial-heading>{homeContent.services.title}</h2>
+      <a class="editorial-link mt-8" href={homeContent.services.action.href}>{homeContent.services.action.label}<Icon name="automation/arrow-right" class="h-5 w-5" aria-hidden="true" /></a>
+    </div>
+    <ul class="editorial-service-list">
+      {services.map(service => (
+        <li data-editorial-reveal>
+          <a href={service.href} class="editorial-service">
+            <Icon name={service.icon} class="editorial-service-icon h-8 w-8" aria-hidden="true" />
+            <div><h3>{service.label}</h3><p>{service.description}</p></div>
+            <Icon name="study/arrow-up-right" class="editorial-service-arrow h-5 w-5" aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+---
+import type { StudyChapter } from '@/data/project-studies'
+import { Icon } from 'astro-icon/components'
+import StudyMedia from './StudyMedia.astro'
+
+interface Props { chapter: StudyChapter }
+const { chapter } = Astro.props
+---
+
+<section class="study-web" id={chapter.id} aria-labelledby={`${chapter.id}-title`}>
+  <div class="study-container study-web-layout">
+    <div class="study-web-content">
+      <p class="study-section-label"><Icon name="study/panels-top-left" aria-hidden="true" /> Diseño y desarrollo web</p>
+      <h2 id={`${chapter.id}-title`} data-study-heading>{chapter.title}</h2>
+      <div class="study-web-copy" data-study-reveal>
+        {chapter.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+      </div>
+      {chapter.highlights && chapter.highlights.length > 0 && (
+        <ul class="study-web-highlights" aria-label="Claves del desarrollo">
+          {chapter.highlights.map(item => (
+            <li data-study-reveal>
+              <Icon name={`study/${item.icon}`} aria-hidden="true" />
+              <div><h3>{item.label}</h3><p>{item.description}</p></div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <div class="study-web-visual">
+      {chapter.images.map(image => <StudyMedia image={image} sizes="(min-width: 1440px) 640px, (min-width: 1024px) 48vw, 90vw" />)}
+    </div>
+  </div>
+</section>

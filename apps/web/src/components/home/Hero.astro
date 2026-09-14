@@ -1,8 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { heroYoutubeId as youtubeId } from '@/data'
 import heroVideo from '@/assets/logos/hero-video.webp'
+import { heroYoutubeId as youtubeId } from '@/data'
+import { homeContent } from '@/data/transversal-content'
 ---
 
 <section id="hero" class="bg-white">
@@ -10,14 +11,18 @@ import heroVideo from '@/assets/logos/hero-video.webp'
     class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:gap-16 lg:px-24 lg:py-24"
   >
     <!-- Titular -->
-    <h1
-      id="hero-headline"
-      data-animate
-      class="font-heading text-4xl font-bold leading-tight text-ink sm:text-5xl"
-    >
-      Te ayudamos a escalar las ventas de tu negocio y mejorar tu rentabilidad
-      mediante soluciones digitales centradas en tus consumidores.
-    </h1>
+    <div class="min-w-0">
+      <h1
+        id="hero-headline"
+        data-animate
+        class="font-heading text-[clamp(2rem,3.4vw,3.25rem)] font-bold leading-[1.1] tracking-[-0.035em] text-ink"
+      >
+        {homeContent.hero.title}
+      </h1>
+      <p class="mt-7 max-w-[60ch] text-base leading-relaxed text-gray-body sm:text-lg">
+        {homeContent.hero.subtitle}
+      </p>
+    </div>
 
     <!-- Video con facade -->
     <div
@@ -29,6 +34,11 @@ import heroVideo from '@/assets/logos/hero-video.webp'
       <Image
         src={heroVideo}
         alt="Video de presentación de Brainstorming"
+        widths={[480, 720, 1080]}
+        sizes="(min-width: 1024px) 42vw, 100vw"
+        quality={75}
+        loading="eager"
+        fetchpriority="high"
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div
@@ -47,10 +57,12 @@ import heroVideo from '@/assets/logos/hero-video.webp'
 </section>
 
 <script>
-const holder = document.getElementById('hero-video')
-holder?.addEventListener('click', () => {
-  const id = holder.dataset.id
-  holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video Brainstorming" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+document.addEventListener('astro:page-load', () => {
+  const holder = document.getElementById('hero-video')
+  holder?.addEventListener('click', () => {
+    const id = holder.dataset.id
+    holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video Brainstorming" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+  }, { once: true })
 })
 </script>
 
@@ -60,7 +72,9 @@ import { registerMotion, revealCircle, splitHeadline } from '@/lib/motion'
 registerMotion(() => {
   const headline = document.getElementById('hero-headline')
   const video = document.getElementById('hero-video')
-  if (headline) splitHeadline(headline, { by: 'words', scrollTrigger: false })
-  if (video) revealCircle(video, { delay: 0.3 })
+  if (headline)
+    splitHeadline(headline, { by: 'words', scrollTrigger: false })
+  if (video)
+    revealCircle(video, { delay: 0.3 })
 })
 </script>

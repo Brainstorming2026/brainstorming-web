@@ -14,6 +14,10 @@ export default defineConfig({
   output: 'server',
 
   redirects: {
+    '/guias': {
+      status: 301,
+      destination: '/guias-practicas-brainstorming',
+    },
     '/soluciones/desarrollo-web': {
       status: 301,
       destination: '/soluciones/inbound-marketing#desarrollo-web',

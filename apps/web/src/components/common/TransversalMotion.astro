@@ -1,0 +1,10 @@
+<script>
+import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+
+registerMotion(() => {
+  document.querySelectorAll<HTMLElement>('[data-editorial-heading]').forEach((headline) => {
+    splitHeadline(headline, { by: 'lines' })
+  })
+  staggerGrid(document.querySelectorAll('[data-editorial-reveal]'), { variant: 'wipe', itemDuration: 0.5, itemStagger: 0.08 })
+})
+</script>

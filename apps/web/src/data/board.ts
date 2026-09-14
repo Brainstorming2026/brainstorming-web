@@ -1,3 +1,5 @@
+import { aboutContent } from './transversal-content'
+
 interface Director {
   id: string
   name: string
@@ -8,10 +10,7 @@ interface Director {
   biography: string[]
 }
 
-export const boardIntroduction = [
-  'Somos una consultora estratégica fundada sobre la convicción de que las empresas medianas de LATAM merecen el mismo nivel de pensamiento que tienen las grandes.',
-  'Nuestro Board de Directores reúne cinco especialistas con trayectoria real en estrategia de crecimiento, inteligencia artificial, innovación, finanzas corporativas y neurociencia aplicada al liderazgo.',
-]
+export const boardIntroduction = aboutContent.board.paragraphs
 
 export const directors: Director[] = [
   {

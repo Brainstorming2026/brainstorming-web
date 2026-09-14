@@ -1,0 +1,108 @@
+---
+import type { StudySlug } from '@/data/project-studies'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import StudyContact from '@/components/projects/study/StudyContact.astro'
+import StudyMedia from '@/components/projects/study/StudyMedia.astro'
+import StudyWeb from '@/components/projects/study/StudyWeb.astro'
+import { projectStudies } from '@/data/project-studies'
+import { proyectosDetalle } from '@/data/proyectosDetalle'
+import '@/styles/project-study.css'
+
+interface Props { slug: StudySlug }
+const { slug } = Astro.props
+const study = projectStudies[slug]
+const detail = proyectosDetalle[slug]
+const next = projectStudies[study.next]
+const nextDetail = proyectosDetalle[study.next]
+---
+
+<article class="project-study" data-study={slug} style={{ '--study-accent': study.accent, '--study-surface': study.surface }}>
+  <header class="study-cover study-container">
+    <div class="study-topline">
+      <span class="study-eyebrow">{study.sector}</span>
+    </div>
+    <div class="study-heading">
+      <div class="study-heading-main">
+        <p class="study-client">{study.client}</p>
+        <h1 data-study-heading>{study.title}</h1>
+      </div>
+      <div class="study-intro">
+        <Image class="study-client-logo" src={detail.logo} alt={`Logotipo de ${study.client}`} loading="eager" />
+        <p>{study.summary}</p>
+        <a class="study-text-link" href="#el-proyecto">Explorar el proyecto <Icon name="study/arrow-down" aria-hidden="true" /></a>
+      </div>
+    </div>
+    <ul class="study-services" aria-label="Servicios realizados">
+      {study.services.map(service => (
+        <li><Icon name={`study/${service.icon}`} aria-hidden="true" /><span>{service.label}</span></li>
+      ))}
+    </ul>
+  </header>
+
+  <div class="study-hero-stage study-container">
+    <StudyMedia image={{ src: detail.heroImg ?? detail.heroBg, alt: detail.heroImgAlt, caption: study.heroCaption }} priority />
+  </div>
+
+  <div class="study-container">
+    <nav class="study-index" aria-label="En este proyecto">
+      <span class="study-eyebrow">En este proyecto</span>
+      <div>
+        <a href="#el-proyecto">Contexto</a>
+        {study.chapters.map(chapter => <a href={`#${chapter.id}`}>{chapter.label}</a>)}
+      </div>
+    </nav>
+
+    <section class="study-context" id="el-proyecto" aria-labelledby="study-context-title">
+      <div>
+        <p class="study-eyebrow">El punto de partida</p>
+        <h2 id="study-context-title" data-study-heading>Entender la marca.<br />Encontrar la oportunidad.</h2>
+      </div>
+      <div class="study-context-copy" data-study-reveal>
+        <div><h3>El reto</h3><p>{detail.descripcion}</p></div>
+        <div><h3>Nuestra respuesta</h3><p>{study.response}</p></div>
+      </div>
+    </section>
+  </div>
+
+  {study.chapters.map(chapter => chapter.kind === 'web'
+? <StudyWeb chapter={chapter} />
+: (
+    <section class:list={['study-chapter', `study-chapter--${chapter.kind}`]} id={chapter.id} aria-labelledby={`${chapter.id}-title`}>
+      <div class="study-container">
+        <div class="study-chapter-heading">
+          <div>
+            <p class="study-section-label"><Icon name={chapter.kind === 'identity' ? 'study/pen-tool' : 'study/magnet'} aria-hidden="true" />{chapter.label}</p>
+            <h2 id={`${chapter.id}-title`} data-study-heading>{chapter.title}</h2>
+          </div>
+          <div class="study-chapter-copy" data-study-reveal>
+            {chapter.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+          </div>
+        </div>
+        <div class:list={['study-gallery', `study-gallery--${chapter.images.length}`]}>
+          {chapter.images.map(image => <StudyMedia image={image} sizes={chapter.images.length === 3 ? '(min-width: 1440px) 400px, (min-width: 768px) 30vw, 90vw' : '(min-width: 1440px) 700px, (min-width: 768px) 50vw, 90vw'} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <StudyContact />
+
+  <aside class="study-next study-container" aria-label="Seguir explorando">
+    <a href={`/proyectos/${study.next}`} class="study-next-link">
+      <div>
+        <p class="study-eyebrow">Otro proyecto, otra perspectiva</p>
+        <h2>{next.client} <Icon name="study/arrow-up-right" aria-hidden="true" /></h2>
+        <p>{next.services.map(service => service.label).join(' · ')}</p>
+      </div>
+      <div class="study-next-image" style={{ background: next.surface }}>
+        <Image src={nextDetail.heroImg ?? nextDetail.heroBg} alt="" loading="lazy" width={460} />
+      </div>
+    </a>
+  </aside>
+
+</article>
+
+<script>
+  import '@/scripts/projects/study'
+</script>

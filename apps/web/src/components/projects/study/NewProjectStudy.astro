@@ -1,0 +1,98 @@
+---
+import type { NewProject } from '@/data/new-projects'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { newProjectLogos, newProjects, newProjectServices } from '@/data/new-projects'
+import ProjectAsset from './ProjectAsset.astro'
+import StudyContact from './StudyContact.astro'
+import '@/styles/project-study.css'
+import '@/styles/new-projects.css'
+
+interface Props { project: NewProject }
+const { project } = Astro.props
+const next = newProjects.find(candidate => candidate.slug === project.next)!
+---
+
+<article class="project-study new-case" data-study={project.slug} style={{ '--study-accent': project.accent, '--study-surface': project.surface }}>
+  <header class="study-cover study-container">
+    <div class="study-topline"><span class="study-eyebrow">{project.sector}</span></div>
+    <div class="study-heading">
+      <div class="study-heading-main">
+        <p class="study-client">{project.client}</p>
+        <h1 data-study-heading>{project.title}</h1>
+      </div>
+      <div class="study-intro">
+        <div class="new-case-logo" style={{ background: project.logoSurface }}>
+          <Image src={newProjectLogos[project.slug]} alt={`Logotipo de ${project.client}`} loading="eager" />
+        </div>
+        <p>{project.summary}</p>
+        <a class="study-text-link" href="#el-proyecto">Explorar el proyecto <Icon name="study/arrow-down" aria-hidden="true" /></a>
+      </div>
+    </div>
+    <ul class="study-services" aria-label="Servicios realizados">
+      {project.services.map(key => <li><Icon name={newProjectServices[key].icon} aria-hidden="true" /><span>{newProjectServices[key].label}</span></li>)}
+    </ul>
+  </header>
+
+  <div class="study-container new-case-hero"><ProjectAsset asset={project.hero} priority sizes="(min-width: 1440px) 1320px, 90vw" /></div>
+
+  <div class="study-container">
+    <nav class="study-index" aria-label="En este proyecto">
+      <span class="study-eyebrow">En este proyecto</span>
+      <div><a href="#el-proyecto">El reto</a><a href="#enfoque">Lo que hicimos</a><a href="#resultados">Resultados</a></div>
+    </nav>
+    <section class="study-context" id="el-proyecto" aria-labelledby="case-challenge-title">
+      <div>
+        <p class="study-eyebrow">El punto de partida</p>
+        <h2 id="case-challenge-title" data-study-heading>El reto.</h2>
+        <p class="new-case-challenge" data-study-reveal>{project.challenge}</p>
+      </div>
+      <div class="study-context-copy" data-study-reveal>
+        <div><h3>Lo que hicimos</h3><p>{project.response}</p></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="new-case-approach" id="enfoque" aria-labelledby="case-approach-title">
+    <div class="study-container">
+      <p class="study-eyebrow">De la estrategia a la acción</p>
+      <h2 id="case-approach-title" data-study-heading>Las claves del proyecto.</h2>
+      <div class="new-case-steps">
+        {project.approach.map(step => <article data-study-reveal><Icon name={step.icon} aria-hidden="true" /><h3>{step.title}</h3><p>{step.text}</p></article>)}
+      </div>
+      <div class:list={['new-case-gallery', { 'new-case-gallery--single': project.media.length === 1 }]}>
+        {project.media.map(asset => <ProjectAsset asset={asset} sizes={project.media.length === 1 ? '(min-width: 1440px) 1000px, 90vw' : '(min-width: 1440px) 640px, (min-width: 768px) 45vw, 90vw'} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="new-case-results study-container" id="resultados" aria-labelledby="case-results-title">
+    <div class="new-case-results-heading">
+      <div><p class="study-eyebrow">El impacto del trabajo</p><h2 id="case-results-title" data-study-heading>Resultados.</h2></div>
+      <p data-study-reveal>{project.results.summary}</p>
+    </div>
+    {project.results.metrics && (
+      <dl class="new-case-metrics">
+        {project.results.metrics.map(metric => <div data-study-reveal><dt>{metric.label}</dt><dd>{metric.before && <span class="new-case-before">De {metric.before} a</span>}<strong>{metric.value}</strong>{metric.note && <span class="new-case-metric-note">{metric.note}</span>}</dd></div>)}
+      </dl>
+    )}
+    {project.results.outcomes && (
+      <ul class="new-case-outcomes">
+        {project.results.outcomes.map(outcome => <li data-study-reveal><Icon name="automation/circle-check" aria-hidden="true" /><span>{outcome}</span></li>)}
+      </ul>
+    )}
+  </section>
+
+  <StudyContact />
+
+  <aside class="study-next study-container" aria-label="Seguir explorando">
+    <a href={`/proyectos/${next.slug}`} class="study-next-link">
+      <div><p class="study-eyebrow">Otro proyecto, otra perspectiva</p><h2>{next.client}<Icon name="study/arrow-up-right" aria-hidden="true" /></h2><p>{next.services.map(key => newProjectServices[key].label).join(' · ')}</p></div>
+      <div class="new-case-next-logo" style={{ background: next.logoSurface }}><Image src={newProjectLogos[next.slug]} alt="" loading="lazy" /></div>
+    </a>
+  </aside>
+</article>
+
+<script>
+  import '@/scripts/projects/study'
+</script>

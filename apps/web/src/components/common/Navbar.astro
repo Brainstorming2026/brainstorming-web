@@ -9,7 +9,7 @@ const currentPath = Astro.url.pathname
 
 <header class="sticky top-0 z-50 border-b border-black/10 bg-white">
   <nav
-    class="mx-auto flex h-20 max-w-[1512px] items-center justify-between px-6 lg:px-16"
+    class="mx-auto flex h-20 max-w-[1512px] items-center justify-between gap-4 px-6 xl:px-16"
     aria-label="Principal"
   >
     <a href="/" class="shrink-0" aria-label="Brainstorming — inicio">
@@ -17,10 +17,13 @@ const currentPath = Astro.url.pathname
         src={logo}
         alt="Brainstorming"
         class="h-8 w-auto"
+        widths={[200, 300, 400]}
+        sizes="220px"
+        quality={80}
       />
     </a>
 
-    <ul class="hidden items-center gap-1 lg:flex">
+    <ul class="hidden items-center gap-1 xl:flex">
       {
         links.map((link) => {
           const isActive = link.href !== '/' && currentPath.startsWith(link.href)
@@ -33,7 +36,7 @@ const currentPath = Astro.url.pathname
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 class:list={[
-                  'flex items-center gap-1.5 px-4 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
+                  'flex items-center gap-1.5 whitespace-nowrap px-3 py-2 font-heading text-base font-bold transition-colors hover:text-primary',
                   isActive ? 'text-primary' : 'text-ink',
                 ]}
               >
@@ -43,14 +46,15 @@ const currentPath = Astro.url.pathname
                 )}
               </a>
               {hasDropdown && (
-                <ul class="invisible absolute left-0 top-full z-50 min-w-[200px] rounded-[10px] border border-black/10 bg-white py-2 shadow-lg opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  {link.children?.map((child) => (
-                    <li>
+                <ul class="invisible absolute left-0 top-full z-50 w-[320px] rounded-[10px] border border-black/10 bg-white py-2 shadow-lg opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  {link.children?.map(child => (
+                    <li class:list={{ 'mt-2 border-t border-black/10 pt-2': child.complementary }}>
                       <a
                         href={child.href}
                         class="block px-4 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-primary/5 hover:text-primary"
                       >
                         {child.label}
+                        {child.complementary && <><span class="ml-2 text-primary" aria-hidden="true">★</span><span class="mt-1 block text-xs font-normal text-gray-body">Servicio complementario</span></>}
                       </a>
                     </li>
                   ))}
@@ -64,7 +68,7 @@ const currentPath = Astro.url.pathname
 
     <a
       href="/contacto"
-      class="hidden rounded-[10px] bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-600 lg:inline-block"
+      class="hidden shrink-0 rounded-[10px] bg-primary px-6 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-600 xl:inline-block"
     >
       Agendar Asesoría
     </a>
@@ -72,7 +76,7 @@ const currentPath = Astro.url.pathname
     <button
       type="button"
       id="nav-toggle"
-      class="text-ink lg:hidden"
+      class="flex h-11 w-11 items-center justify-center text-ink xl:hidden"
       aria-label="Abrir menú"
       aria-expanded="false"
       aria-controls="mobile-menu"
@@ -83,7 +87,7 @@ const currentPath = Astro.url.pathname
 
   <div
     id="mobile-menu"
-    class="hidden border-t border-black/10 bg-white px-6 py-4 lg:hidden"
+    class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-black/10 bg-white px-6 py-4 xl:hidden"
   >
     <ul class="flex flex-col gap-1">
       {
@@ -108,7 +112,7 @@ const currentPath = Astro.url.pathname
                 {hasDropdown && (
                   <button
                     type="button"
-                    class="mobile-dropdown-toggle p-2 text-ink"
+                    class="mobile-dropdown-toggle flex h-11 w-11 items-center justify-center text-ink"
                     aria-expanded="false"
                     aria-label={`Mostrar submenú de ${link.label}`}
                   >
@@ -118,13 +122,14 @@ const currentPath = Astro.url.pathname
               </div>
               {hasDropdown && (
                 <ul class="mobile-dropdown-panel ml-4 hidden flex-col gap-1">
-                  {link.children?.map((child) => (
-                    <li>
+                  {link.children?.map(child => (
+                    <li class:list={{ 'mt-2 border-t border-black/10 pt-2': child.complementary }}>
                       <a
                         href={child.href}
-                        class="block py-1.5 text-sm font-bold text-ink hover:text-primary"
+                        class="block py-3 text-sm font-bold text-ink hover:text-primary"
                       >
                         {child.label}
+                        {child.complementary && <><span class="ml-2 text-primary" aria-hidden="true">★</span><span class="mt-1 block text-xs font-normal text-gray-body">Servicio complementario</span></>}
                       </a>
                     </li>
                   ))}
@@ -143,6 +148,10 @@ const currentPath = Astro.url.pathname
     </a>
   </div>
 </header>
+
+<style>
+  header a:focus-visible, header button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 4px; }
+</style>
 
 <script>
 document.addEventListener('astro:page-load', () => {

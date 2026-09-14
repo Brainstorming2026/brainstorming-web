@@ -1,0 +1,26 @@
+---
+import type { StudyImage } from '@/data/project-studies'
+import { Image } from 'astro:assets'
+
+interface Props {
+  image: StudyImage
+  priority?: boolean
+  sizes?: string
+}
+
+const { image, priority = false, sizes = '(min-width: 1440px) 1200px, (min-width: 768px) 85vw, 90vw' } = Astro.props
+---
+
+<figure class="study-media">
+  <div class="study-media-frame" data-study-image>
+    <Image
+      src={image.src}
+      alt={image.alt}
+      widths={[480, 800, 1200, 1600].filter(width => width < image.src.width).concat(image.src.width)}
+      sizes={sizes}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+    />
+  </div>
+  <figcaption>{image.caption}</figcaption>
+</figure>

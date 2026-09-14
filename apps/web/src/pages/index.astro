@@ -1,26 +1,24 @@
 ---
+import ConversationCta from '@/components/common/ConversationCta.astro'
+import TransversalMotion from '@/components/common/TransversalMotion.astro'
 import Clientes from '@/components/home/Clientes.astro'
-import Ecosistema from '@/components/home/Ecosistema.astro'
-import Embudo from '@/components/home/Embudo.astro'
-import Expertos from '@/components/home/Expertos.astro'
 import Hero from '@/components/home/Hero.astro'
 import Problemas from '@/components/home/Problemas.astro'
-import Ready from '@/components/home/Ready.astro'
-import Roadmap from '@/components/home/Roadmap.astro'
-import Roas from '@/components/home/Roas.astro'
+import Results from '@/components/home/Results.astro'
+import ServicesHub from '@/components/home/ServicesHub.astro'
+import { homeContent } from '@/data/transversal-content'
 import Layout from '@/layouts/Layout.astro'
+import '@/styles/transversal.css'
 
 export const prerender = true;
 ---
 
-<Layout title="Brainstorming — Consultoría en Transformación Digital">
+<Layout title={homeContent.title} description={homeContent.hero.subtitle}>
   <Hero />
   <Problemas />
-  <Ready />
-  <Roadmap />
-  <Ecosistema />
-  <Embudo />
-  <Expertos />
-  <Roas />
+  <Results />
+  <ServicesHub />
   <Clientes />
+  <ConversationCta id="home-final-conversation" final />
+  <TransversalMotion />
 </Layout>

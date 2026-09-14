@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import conversation from '@/assets/growth-planning/contact-creative-conversation.png'
 ---
@@ -9,7 +10,7 @@ import conversation from '@/assets/growth-planning/contact-creative-conversation
       <p class="eyebrow">Brainstorming / Contacto</p>
       <h1 id="contact-heading">Las buenas ideas<br />empiezan <em>conversando.</em></h1>
       <p class="intro">Cuéntanos qué quieres lograr. Encontraremos juntos el siguiente paso para tu negocio.</p>
-      <a class="hero-link" href="#contacto-form">Conversemos <span aria-hidden="true">↗</span></a>
+      <a class="hero-link" href="#contacto-form">Conversemos <Icon name="study/arrow-up-right" aria-hidden="true" class="hero-link-icon" /></a>
     </div>
     <div class="hero-photo">
       <Image src={conversation} alt="Dos profesionales conversan sobre propuestas creativas en una mesa de trabajo." widths={[640, 960, 1536]} sizes="(min-width: 900px) 65vw, 100vw" format="webp" quality={85} loading="eager" fetchpriority="high" />
@@ -27,8 +28,8 @@ import conversation from '@/assets/growth-planning/contact-creative-conversation
   h1 em { color: #713cce; font-family: Georgia, serif; font-weight: 400; }
   .intro { max-width: 370px; color: #525260; font-size: 16px; line-height: 1.7; }
   .hero-link { display: inline-flex; align-items: center; gap: 28px; min-height: 44px; margin-top: 18px; color: #40216c; font-size: 14px; font-weight: 600; border-bottom: 1px solid #9f8bbd; }
-  .hero-link span { transition: transform .2s ease; }
-  .hero-link:hover span { transform: translate(3px,-3px); }
+  .hero-link-icon { width: 20px; height: 20px; transition: transform .2s ease; }
+  .hero-link:hover .hero-link-icon { transform: translate(3px,-3px); }
   .hero-link:focus-visible { outline: 2px solid #713cce; outline-offset: 5px; }
   .hero-photo { height: 240px; overflow: hidden; }
   .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: right 48%; }
@@ -41,5 +42,5 @@ import conversation from '@/assets/growth-planning/contact-creative-conversation
     .hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,#e8ecf3 0%,transparent 35%); }
     .hero-curve { height: 48px; }
   }
-  @media (prefers-reduced-motion: reduce) { .hero-link span { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-link-icon { transition: none; } }
 </style>

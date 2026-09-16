@@ -2,6 +2,12 @@
 import type { ProjectImageSlot } from '@/data/new-projects'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+import AitSystem from './AitSystem.astro'
+import EtnaScope from './EtnaScope.astro'
+import FuturaOperations from './FuturaOperations.astro'
+import NordicJourney from './NordicJourney.astro'
+import PastipanCampaign from './PastipanCampaign.astro'
+import ProjectEvidence from './ProjectEvidence.astro'
 
 interface Props {
   asset: ProjectImageSlot
@@ -11,13 +17,25 @@ interface Props {
 const { asset, priority = false, sizes = '(min-width: 1440px) 640px, (min-width: 768px) 45vw, 90vw' } = Astro.props
 ---
 
-<figure class="case-asset" data-asset-id={asset.id} style={{ '--asset-ratio': asset.ratio }}>
+<figure class:list={['case-asset', { 'case-asset--evidence': asset.visual }]} data-asset-id={asset.id} style={{ '--asset-ratio': asset.ratio }}>
   {asset.src
 ? (
     <div class="case-asset-image" data-study-image>
       <Image src={asset.src} alt={asset.alt} widths={[480, 800, 1200, 1600].filter(width => width < asset.src!.width).concat(asset.src.width)} sizes={sizes} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} />
     </div>
   )
+: asset.visual === 'nordic-journey'
+? <NordicJourney />
+: asset.visual === 'ait-system'
+? <AitSystem />
+: asset.visual === 'futura-workspace'
+? <FuturaOperations />
+: asset.visual === 'pastipan-campaign'
+? <PastipanCampaign />
+: asset.visual === 'etna-scope'
+? <EtnaScope />
+: asset.visual
+? <ProjectEvidence visual={asset.visual} alt={asset.alt} />
 : (
     <div class="case-asset-placeholder">
       <Icon name="study/panels-top-left" aria-hidden="true" />
@@ -27,11 +45,12 @@ const { asset, priority = false, sizes = '(min-width: 1440px) 640px, (min-width:
       <span class="case-asset-format">{asset.ratio === '16/9' ? 'Horizontal · 16:9 · sugerido 1920 × 1080 px' : 'Horizontal · 4:3 · sugerido 1600 × 1200 px'}</span>
     </div>
   )}
-  <figcaption>{asset.title}</figcaption>
+  <figcaption><span>{asset.title}</span>{asset.source && <small>{asset.source}</small>}</figcaption>
 </figure>
 
 <style>
   .case-asset { min-width: 0; margin: 0; }
+  .case-asset--evidence { grid-column: 1 / -1; }
   .case-asset-placeholder {
     display: flex;
     flex-direction: column;
@@ -53,8 +72,10 @@ const { asset, priority = false, sizes = '(min-width: 1440px) 640px, (min-width:
   .case-asset-request { max-width: 56ch; font-size: 14px; line-height: 1.7; color: var(--color-gray-body); }
   .case-asset-format { margin-top: 6px; color: var(--color-gray-body); font-size: 12px; line-height: 1.5; }
   .case-asset-image { overflow: hidden; border-radius: 12px; background: var(--study-surface); }
-  .case-asset-image img { width: 100%; height: auto; aspect-ratio: var(--asset-ratio); object-fit: contain; }
-  figcaption { margin-top: 12px; color: var(--color-gray-body); font-size: 12px; line-height: 1.5; }
+  .case-asset-image img { display: block; width: 100%; height: auto; }
+  figcaption { display: grid; gap: 4px; margin-top: 12px; color: var(--color-gray-body); font-size: 12px; line-height: 1.5; }
+  figcaption span { color: var(--color-dark); font-weight: 600; }
+  figcaption small { font-size: inherit; }
   @media (max-width: 767px) {
     .case-asset-placeholder { padding: 28px 20px; min-height: 300px; gap: 12px; }
     .case-asset-request { font-size: 13px; }

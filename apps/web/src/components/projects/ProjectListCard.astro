@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  href: string
+  icons: string[]
+  title: string
+  subtitle: string
+  image?: { src: ImageMetadata, alt: string }
+  logo?: ImageMetadata
+  first?: boolean
+}
+
+const { href, icons, title, subtitle, image, logo, first = false } = Astro.props
+---
+
+<article class:list={['proyecto-card grid items-stretch gap-0 overflow-hidden rounded-lg md:grid-cols-2', !first && 'mt-6']}>
+  <div class="proyecto-img-wrap relative min-h-[300px] overflow-hidden bg-black/10">
+    {image
+      ? <Image class="proyecto-img h-full w-full object-cover" src={image.src} alt={image.alt} widths={[480, 800, 1200]} sizes="(min-width: 768px) 45vw, 90vw" loading="lazy" />
+      : logo && <Image class="proyecto-img h-full w-full object-contain p-10" src={logo} alt="" loading="lazy" />}
+  </div>
+
+  <div class="proyecto-content flex flex-col justify-center bg-section-dark px-8 py-10">
+    <div class="mb-4 flex flex-col gap-3">
+      {icons.map(icon => <Icon name={icon} class="h-10 w-10 text-white" />)}
+    </div>
+
+    <h2 class="font-heading text-[35px] font-bold leading-tight text-white">{title}</h2>
+    <p class="mt-2 font-heading text-[16px] font-bold text-white/70">{subtitle}</p>
+
+    <div class="mt-8">
+      <a href={href} class="inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600">
+        VER PROYECTO
+      </a>
+    </div>
+  </div>
+</article>
+
+<script>
+import { registerMotion, revealClip } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+
+registerMotion(() => {
+  const cards = document.querySelectorAll<HTMLElement>('.proyecto-card')
+  const { gsap } = ensureGsap()
+
+  cards.forEach((card, i) => {
+    const imgWrap = card.querySelector<HTMLElement>('.proyecto-img-wrap')
+    const img = card.querySelector<HTMLElement>('.proyecto-img')
+    const content = card.querySelector<HTMLElement>('.proyecto-content')
+    const dir = i % 2 === 0 ? 'left' : 'right'
+
+    if (imgWrap) revealClip(imgWrap, { direction: dir })
+    if (img) {
+      if (prefersReducedMotion()) {
+        gsap.set(img, { scale: 1 })
+      }
+      else {
+        gsap.fromTo(img, { scale: 1.18 }, { scale: 1, duration: 1.6, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 85%' } })
+      }
+    }
+    if (content) {
+      if (prefersReducedMotion()) {
+        gsap.fromTo(content, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+      }
+      else {
+        gsap.set(content, { opacity: 0, y: 20 })
+        gsap.to(content, { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out', delay: 0.2, scrollTrigger: { trigger: card, start: 'top 85%' } })
+      }
+    }
+  })
+})
+</script>

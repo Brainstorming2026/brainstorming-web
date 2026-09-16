@@ -5,6 +5,11 @@ import futuraLogo from '@/assets/projects/new/logos/futura-wealth.svg'
 import nordicLogo from '@/assets/projects/new/logos/nordic.png'
 import pastipanLogo from '@/assets/projects/new/logos/pastipan-alternative.png'
 import senatiLogo from '@/assets/projects/new/logos/senati.svg'
+import nordicAdmissions from '@/assets/projects/new/nordic/admissions.png'
+import nordicEducationLevels from '@/assets/projects/new/nordic/education-levels.png'
+import pastipanStorefront from '@/assets/projects/new/pastipan/storefront.png'
+import senatiJourneyConcept from '@/assets/projects/new/senati/nurturing-journey-concept-v2.png'
+import senatiTrainingConcept from '@/assets/projects/new/senati/technical-training-concept.png'
 
 export const newProjectServices = {
   'smart-selling': { label: 'Smart Selling', icon: 'automation/workflow' },
@@ -14,12 +19,18 @@ export const newProjectServices = {
 } as const
 
 export type NewProjectSlug = 'ait-capital' | 'senati' | 'pastipan' | 'nordic' | 'etna' | 'futura-wealth'
+export type ProjectEvidenceVisual = 'ait-impact' | 'ait-system' | 'nordic-journey' | 'futura-workspace' | 'pastipan-campaign' | 'etna-scope'
 export type ProjectImageSlot = {
   id: string
   title: string
   request: string
   ratio: '16/9' | '4/3'
-} & ({ src: ImageMetadata, alt: string } | { src?: undefined, alt?: never })
+  source?: string
+} & (
+  | { src: ImageMetadata, alt: string, visual?: never }
+  | { visual: ProjectEvidenceVisual, alt: string, src?: never }
+  | { src?: undefined, visual?: undefined, alt?: never }
+)
 
 export interface NewProject {
   slug: NewProjectSlug
@@ -112,16 +123,22 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'ait-portada',
-      title: 'Equipo comercial y operación de AIT Capital',
-      request: 'Solicitar una fotografía horizontal del equipo comercial o una composición de la operación de la empresa. Sin datos visibles de clientes.',
+      title: 'Evolución de la facturación en cuatro meses',
+      request: '',
       ratio: '16/9',
+      visual: 'ait-impact',
+      alt: 'Comparación de facturación: de S/ 100 mil a S/ 1.5 millones en cuatro meses.',
+      source: 'Documento original del proyecto, página 22.',
     },
     media: [
       {
         id: 'ait-crm',
-        title: 'CRM y flujos de seguimiento',
-        request: 'Solicitar una captura del pipeline implementado y del flujo email / WhatsApp. Anonimizar nombres, teléfonos, correos y montos confidenciales.',
+        title: 'Un sistema de seguimiento, de la oportunidad al cierre',
+        request: '',
         ratio: '4/3',
+        visual: 'ait-system',
+        alt: 'Esquema del sistema comercial de AIT Capital: prospección, calificación, reunión y seguimiento.',
+        source: 'Esquema explicativo basado en el alcance documentado del proyecto.',
       },
     ],
     next: 'senati',
@@ -179,16 +196,20 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'senati-portada',
-      title: 'Aprendizaje técnico en SENATI',
-      request: 'Solicitar una fotografía horizontal de estudiantes en un taller o laboratorio real, con autorización de uso de imagen.',
+      title: 'La formación técnica como siguiente oportunidad',
+      request: '',
       ratio: '16/9',
+      src: senatiTrainingConcept,
+      alt: 'Escena conceptual de formación técnica con estudiantes adultos en un taller de mecatrónica.',
     },
     media: [
       {
         id: 'senati-nutricion',
-        title: 'Recorrido del prospecto hacia la matrícula',
-        request: 'Solicitar capturas de mensajes y del flujo de nutrición por etapa. Mostrar piezas reales de la campaña y ocultar datos personales.',
-        ratio: '4/3',
+        title: 'Un recorrido para acompañar el interés hasta la matrícula',
+        request: '',
+        ratio: '16/9',
+        src: senatiJourneyConcept,
+        alt: 'Ilustración del recorrido: captación, segmentación, contacto por etapa, seguimiento y matrícula.',
       },
     ],
     next: 'pastipan',
@@ -199,6 +220,7 @@ export const newProjects: NewProject[] = [
     sector: 'Alimentos / Panadería Industrial',
     services: [
       'growth-planning',
+      'inbound-marketing',
     ],
     title: 'Una dirección clara\npara el siguiente crecimiento.',
     summary: 'Investigación y planificación estratégica para definir dónde crecer, cómo diferenciarse y qué priorizar.',
@@ -207,7 +229,7 @@ export const newProjects: NewProject[] = [
     logoSource: 'https://pastipan.com.pe/',
     logoSurface: '#ffffff',
     challenge: 'La marca necesitaba una reorientación estratégica completa: tenía producto y operación, pero sin claridad sobre hacia dónde crecer, cómo diferenciarse y qué hacer primero.',
-    response: 'Ejecutamos un Growth Planning completo: investigación profunda con etnografía de consumidores y clientes, análisis de mercado y benchmark competitivo, definición de propuesta de valor diferenciada y mapeo de las nuevas rutas estratégicas. Entregamos un roadmap priorizado con quick wins y visión de mediano plazo.',
+    response: 'Investigamos la relación de distintas generaciones con la marca y encontramos una tensión útil: los públicos mayores recordaban Pastipan con cariño, mientras que para los jóvenes había perdido presencia. Ese hallazgo dio origen a Newstalgia, una dirección estratégica que recupera la memoria de la marca con un lenguaje renovado para sus canales y contenidos.',
     approach: [
       {
         icon: 'study/search',
@@ -216,13 +238,13 @@ export const newProjects: NewProject[] = [
       },
       {
         icon: 'automation/target',
-        title: 'Definir la diferencia',
-        text: 'Una propuesta de valor diferenciada y nuevas rutas estratégicas para la marca.',
+        title: 'Convertir el hallazgo en una idea',
+        text: 'Newstalgia conectó el recuerdo afectivo de la marca con un lenguaje vigente para nuevas audiencias.',
       },
       {
         icon: 'automation/route',
-        title: 'Priorizar la acción',
-        text: 'Un roadmap con quick wins y una visión de mediano plazo, priorizado por impacto.',
+        title: 'Llevar la estrategia a los canales',
+        text: 'La dirección de comunicación se tradujo en una presencia renovada para web, tienda y redes sociales.',
       },
     ],
     results: {
@@ -235,16 +257,22 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'pastipan-portada',
-      title: 'El producto y la experiencia Pastipan',
-      request: 'Solicitar fotografía horizontal de productos en una tienda o en su contexto de consumo. Preferir una imagen de marca, no una foto genérica de panadería.',
+      title: 'La experiencia Pastipan, del punto de venta al canal digital',
+      request: '',
       ratio: '16/9',
+      src: pastipanStorefront,
+      alt: 'Sitio web de Pastipan con una vista panorámica de una de sus tiendas.',
+      source: 'Presentación Inbound 2026, página 51.',
     },
     media: [
       {
         id: 'pastipan-estrategia',
-        title: 'Investigación y roadmap estratégico',
-        request: 'Solicitar una composición de hallazgos de investigación y roadmap priorizado. Usar extractos autorizados sin información comercial confidencial.',
+        title: 'Newstalgia aplicada a contenidos de marca',
+        request: '',
         ratio: '4/3',
+        visual: 'pastipan-campaign',
+        alt: 'Newstalgia: hallazgo de investigación y tres piezas reales de Pastipan sobre encuentro, producto y experiencia.',
+        source: 'Presentación Inbound 2026, página 51.',
       },
     ],
     next: 'nordic',
@@ -256,6 +284,7 @@ export const newProjects: NewProject[] = [
     services: [
       'growth-planning',
       'smart-selling',
+      'inbound-marketing',
     ],
     title: 'Una propuesta que conecta.\nUn proceso que acompaña.',
     summary: 'Estrategia de comunicación y un sistema comercial para acompañar el interés de las familias hasta la matrícula.',
@@ -292,22 +321,31 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'nordic-portada',
-      title: 'La experiencia educativa de Nordic',
-      request: 'Solicitar una fotografía horizontal del campus o de una actividad educativa. Si aparecen menores, usar únicamente material con autorización de uso de imagen.',
+      title: 'Una propuesta educativa convertida en invitación',
+      request: '',
       ratio: '16/9',
+      src: nordicAdmissions,
+      alt: 'Pieza de admisión 2026–2027 de Nordic International School con invitación a una visita guiada.',
+      source: 'Campaña de admisión de Nordic International School.',
     },
     media: [
       {
         id: 'nordic-estrategia',
         title: 'Propuesta de valor y comunicación',
-        request: 'Solicitar piezas de comunicación o extractos de la propuesta de valor trabajada para el colegio.',
+        request: '',
         ratio: '4/3',
+        src: nordicEducationLevels,
+        alt: 'Página de Nordic International School que presenta sus niveles inicial, primaria y secundaria.',
+        source: 'Comunicación de los niveles educativos de Nordic International School.',
       },
       {
         id: 'nordic-crm',
-        title: 'Proceso de admisión y seguimiento',
-        request: 'Solicitar una captura del CRM o del flujo de admisión implementado. Ocultar todos los datos de estudiantes y familias.',
+        title: 'Del interés de la familia al proceso de admisión',
+        request: '',
         ratio: '4/3',
+        visual: 'nordic-journey',
+        alt: 'Recorrido explicativo del proceso: interés, visita, seguimiento, admisión y matrícula.',
+        source: 'Recorrido explicativo de las etapas de admisión.',
       },
     ],
     next: 'etna',
@@ -354,24 +392,14 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'etna-portada',
-      title: 'Familia de productos con la nueva identidad',
-      request: 'Solicitar una composición horizontal de las líneas de baterías con el branding desarrollado. Confirmar que corresponde al trabajo de la agencia.',
+      title: 'Estrategia de identidad y diferenciación por línea',
+      request: '',
       ratio: '16/9',
+      visual: 'etna-scope',
+      alt: 'Síntesis del alcance de branding de ETNA: investigación, identidad y coherencia entre líneas.',
+      source: 'Síntesis del alcance del proyecto. Las aplicaciones de identidad no están incluidas en esta muestra.',
     },
-    media: [
-      {
-        id: 'etna-identidad',
-        title: 'Evolución de la identidad de marca',
-        request: 'Solicitar artes aprobados de la identidad anterior y la propuesta final para compararlas. No usar el logo actual como supuesto rediseño sin confirmación.',
-        ratio: '4/3',
-      },
-      {
-        id: 'etna-aplicaciones',
-        title: 'Aplicaciones por línea de producto',
-        request: 'Solicitar mockups o fotografías de etiquetas, empaques y piezas comerciales de las líneas trabajadas.',
-        ratio: '4/3',
-      },
-    ],
+    media: [],
     next: 'futura-wealth',
   },
   {
@@ -407,27 +435,23 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
-      summary: 'Mayor volumen de leads calificados en el pipeline, clientes potenciales ultra calificados y mejora medible en la tasa de cierre.',
+      summary: 'Un proceso comercial ordenado, con etapas visibles y una estructura de onboarding que permite al equipo concentrarse en el seguimiento de oportunidades.',
       outcomes: [
-        'Mayor volumen de leads calificados',
-        'Prospectos altamente calificados',
-        'Mejora en la tasa de cierre',
+        'Pipeline comercial centralizado',
+        'Reuniones y siguientes acciones visibles',
+        'Onboarding y capacitación estructurados',
       ],
     },
     hero: {
       id: 'futura-portada',
-      title: 'Asesoría patrimonial y equipo Futura',
-      request: 'Solicitar una fotografía horizontal del equipo o de una reunión de asesoría. Usar una escena real autorizada, sin documentos financieros legibles.',
+      title: 'Seguimiento comercial en un solo espacio',
+      request: '',
       ratio: '16/9',
+      visual: 'futura-workspace',
+      alt: 'Espacio real de Futura en Monday con módulos de CRM, onboarding y capacitación.',
+      source: 'Detalle del espacio de trabajo de Futura en Monday. Recorte de la captura original.',
     },
-    media: [
-      {
-        id: 'futura-proceso',
-        title: 'Pipeline y automatización comercial',
-        request: 'Solicitar captura del pipeline y esquema del flujo implementado. Anonimizar nombres, patrimonios, correos y cualquier información de clientes.',
-        ratio: '4/3',
-      },
-    ],
+    media: [],
     next: 'ait-capital',
   },
 ]

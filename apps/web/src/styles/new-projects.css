@@ -15,7 +15,8 @@
 .new-case-steps h3 { margin-block: 22px 12px; font-size: 20px; font-weight: 600; line-height: 1.25; }
 .new-case-steps p { font-size: 16px; line-height: 1.75; color: var(--study-muted); }
 .new-case-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
-.new-case-gallery--single { grid-template-columns: minmax(0, 1fr); max-width: 1000px; margin-inline: auto; }
+.new-case-gallery--single { grid-template-columns: minmax(0, 1fr); width: 100%; margin-inline: auto; }
+.new-case-gallery--evidence { grid-template-columns: minmax(0, 1fr); }
 .new-case-results { padding-block: 88px 16px; }
 .new-case-results-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
 .new-case-results-heading > p { max-width: 58ch; font-size: 17px; line-height: 1.8; color: var(--study-muted); }

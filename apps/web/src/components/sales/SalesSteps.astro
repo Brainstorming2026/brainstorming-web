@@ -116,10 +116,11 @@ import { salesBenefits, salesCaseStudies, salesSteps } from '@/data'
     <div class="mt-12 grid gap-6 lg:grid-cols-12">
       {
         salesCaseStudies.map((caseStudy, caseIndex) => (
-          <article
+          <a
+            href={caseStudy.href}
             data-sales-case
             class:list={[
-              'relative overflow-hidden rounded-[24px] border border-black/[0.09] bg-white shadow-[0_18px_55px_rgba(28,34,55,0.07)]',
+              'group/case relative overflow-hidden rounded-[24px] border border-black/[0.09] bg-white shadow-[0_18px_55px_rgba(28,34,55,0.07)] transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/30 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-primary',
               caseIndex === 0 ? 'lg:col-span-7' : 'lg:col-span-5',
             ]}
           >
@@ -164,8 +165,12 @@ import { salesBenefits, salesCaseStudies, salesSteps } from '@/data'
                   ))
                 }
               </dl>
+              <span class="mt-6 flex items-center justify-between border-t border-black/[0.08] pt-5 text-sm font-bold text-primary">
+                Ver proyecto completo
+                <span class="text-xl transition-transform duration-200 group-hover/case:translate-x-1" aria-hidden="true">→</span>
+              </span>
             </div>
-          </article>
+          </a>
         ))
       }
     </div>

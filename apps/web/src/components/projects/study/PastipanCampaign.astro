@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets'
+import celebration from '@/assets/projects/new/pastipan/celebracion.webp'
+import experience from '@/assets/projects/new/pastipan/experiencia.webp'
+import product from '@/assets/projects/new/pastipan/producto.webp'
+
+const pieces = [
+  { src: celebration, alt: 'Pieza de Pastipan con una celebración navideña entre amigos.', label: 'El encuentro' },
+  { src: product, alt: 'Pieza de Pastipan con una caja de producto y una taza en un escritorio.', label: 'El momento cotidiano' },
+  { src: experience, alt: 'Pieza de Pastipan con un cliente disfrutando un sándwich en una tienda.', label: 'La experiencia' },
+]
+---
+
+<section class="pastipan-campaign" aria-labelledby="pastipan-concept-title">
+  <header><p>De un hallazgo a una idea de marca</p><h3 id="pastipan-concept-title">Newstalgia<span>.</span></h3><div>El cariño de siempre.<br />Una nueva forma de encontrarse.</div></header>
+  <div class="campaign-insight"><span>EL HALLAZGO</span><p>Los mayores recordaban Pastipan con cariño. Para los más jóvenes, la marca había perdido presencia. La estrategia conectó esa memoria afectiva con un lenguaje renovado.</p></div>
+  <div class="campaign-pieces">
+    {pieces.map((piece, index) => (
+      <figure><Image src={piece.src} alt={piece.alt} widths={[300, 430]} sizes="(min-width: 768px) 30vw, 85vw" loading="lazy" /><figcaption><span>0{index + 1}</span>{piece.label}</figcaption></figure>
+    ))}
+  </div>
+  <footer><span>INVESTIGACIÓN → CONCEPTO → CONTENIDO</span><p>Piezas de comunicación incluidas en la presentación del proyecto.</p></footer>
+</section>
+
+<style>
+  .pastipan-campaign { padding: clamp(24px, 4vw, 56px); background: #fffaf7; color: #50211e; border-radius: 8px; }
+  header { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px 30px; align-items: end; }
+  header > p { grid-column: 1/-1; color: #a03635; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; }
+  h3 { font: 600 clamp(40px, 6vw, 86px)/1 var(--font-heading); letter-spacing: -.065em; }
+  h3 span { color: #c72e30; }
+  header > div { font: 400 clamp(21px, 2.5vw, 33px)/1.2 var(--font-heading); letter-spacing: -.02em; }
+  .campaign-insight { display: grid; grid-template-columns: .45fr 1fr; gap: 24px; margin-block: 38px; padding-top: 22px; border-top: 1px solid #e7c9c3; }
+  .campaign-insight > span { font-size: 10px; letter-spacing: .13em; color: #a03635; }
+  .campaign-insight p { max-width: 64ch; font-size: 15px; line-height: 1.75; }
+  .campaign-pieces { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2.5vw, 30px); align-items: start; }
+  .campaign-pieces figure { min-width: 0; margin: 0; }
+  .campaign-pieces figure:nth-child(2) { padding-top: 38px; }
+  .campaign-pieces img { display: block; width: 100%; height: auto; border-radius: 4px; }
+  figcaption { display: flex; gap: 12px; margin-top: 14px; font-size: 12px; line-height: 1.5; }
+  figcaption span { color: #a03635; font-size: 10px; }
+  footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-top: 36px; padding-top: 20px; border-top: 1px solid #e7c9c3; }
+  footer span { font-size: 9px; letter-spacing: .1em; }
+  footer p { font-size: 11px; color: #795b55; }
+  @media(max-width: 767px) {
+    header, .campaign-insight { grid-template-columns: 1fr; }
+    .campaign-insight { gap: 10px; }
+    .campaign-pieces { grid-template-columns: 1fr; gap: 28px; max-width: 430px; margin-inline: auto; }
+    .campaign-pieces figure:nth-child(2) { padding-top: 0; }
+  }
+</style>

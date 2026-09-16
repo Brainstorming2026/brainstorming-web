@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import nordicAdmissions from '@/assets/projects/new/nordic/admissions.png'
+import pastipanCampaign from '@/assets/projects/new/pastipan/newstalgia-campaign.png'
+
+const cases = [
+  {
+    client: 'Pastipan',
+    title: 'Una memoria de marca convertida en contenido vigente.',
+    text: 'La investigación reveló una conexión afectiva en públicos mayores y menor presencia entre jóvenes. Newstalgia convirtió ese contraste en una dirección de comunicación.',
+    href: '/proyectos/pastipan',
+    image: pastipanCampaign,
+    alt: 'Selección de contenidos de la campaña Newstalgia de Pastipan.',
+    tag: 'Investigación → concepto → contenido',
+  },
+  {
+    client: 'Nordic International School',
+    title: 'La propuesta educativa llega a una acción concreta.',
+    text: 'El posicionamiento se tradujo en comunicación de admisión: una invitación clara para que las familias conozcan la propuesta y agenden una visita.',
+    href: '/proyectos/nordic',
+    image: nordicAdmissions,
+    alt: 'Pieza de admisión de Nordic International School con invitación a una visita guiada.',
+    tag: 'Posicionamiento → comunicación → admisión',
+  },
+]
+---
+
+<section class="bg-[#f4f6f8] py-20 sm:py-24 lg:py-28" aria-labelledby="inbound-cases-title">
+  <div class="mx-auto max-w-[1240px] px-6 lg:px-12">
+    <header class="grid gap-5 lg:grid-cols-[.9fr_1.1fr] lg:items-end lg:gap-16">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[.22em] text-primary sm:text-xs">Así funciona en proyectos reales</p>
+        <h2 id="inbound-cases-title" class="mt-4 max-w-[560px] font-heading text-[clamp(2rem,5vw,3.25rem)] font-bold leading-[1.08] tracking-[-.035em] text-dark">El contenido empieza antes de escribir.</h2>
+      </div>
+      <p class="max-w-[610px] text-[16px] leading-7 text-dark-500 sm:text-[17px] lg:justify-self-end">Primero encontramos una razón relevante para conectar. Después la convertimos en una pieza, una ruta y una acción que se pueda medir.</p>
+    </header>
+
+    <div class="mt-12 grid gap-7 lg:grid-cols-2">
+      {cases.map(item => (
+        <a href={item.href} class="group overflow-hidden rounded-[20px] border border-black/[.09] bg-white transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/30 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-primary">
+          <div class="aspect-[16/9] overflow-hidden bg-white">
+            <Image src={item.image} alt={item.alt} widths={[480, 800]} sizes="(max-width: 1023px) calc(100vw - 48px), 560px" class="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.02]" loading="lazy" />
+          </div>
+          <div class="p-6 sm:p-8">
+            <p class="text-[10px] font-bold uppercase tracking-[.18em] text-primary">{item.client}</p>
+            <h3 class="mt-3 max-w-[18ch] font-heading text-[25px] font-bold leading-[1.14] tracking-[-.025em] text-dark sm:text-[30px]">{item.title}</h3>
+            <p class="mt-4 text-[15px] leading-7 text-dark-500">{item.text}</p>
+            <div class="mt-7 flex items-center justify-between border-t border-black/[.08] pt-5">
+              <span class="text-[11px] font-semibold text-dark-500">{item.tag}</span>
+              <span class="flex items-center gap-2 text-sm font-bold text-primary">Ver caso <Icon name="study/arrow-up-right" class="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /></span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="mt-5 text-xs leading-5 text-dark-500">Piezas documentales de la Presentación Inbound 2026, páginas 48 y 51. La publicación final del material de Nordic requiere confirmar autorización de imagen.</p>
+  </div>
+</section>

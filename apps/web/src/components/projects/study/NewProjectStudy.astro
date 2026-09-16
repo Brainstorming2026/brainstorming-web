@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { newProjectLogos, newProjects, newProjectServices } from '@/data/new-projects'
 import ProjectAsset from './ProjectAsset.astro'
+import ProjectResults from './ProjectResults.astro'
 import StudyContact from './StudyContact.astro'
 import '@/styles/project-study.css'
 import '@/styles/new-projects.css'
@@ -60,28 +61,15 @@ const next = newProjects.find(candidate => candidate.slug === project.next)!
       <div class="new-case-steps">
         {project.approach.map(step => <article data-study-reveal><Icon name={step.icon} aria-hidden="true" /><h3>{step.title}</h3><p>{step.text}</p></article>)}
       </div>
-      <div class:list={['new-case-gallery', { 'new-case-gallery--single': project.media.length === 1 }]}>
-        {project.media.map(asset => <ProjectAsset asset={asset} sizes={project.media.length === 1 ? '(min-width: 1440px) 1000px, 90vw' : '(min-width: 1440px) 640px, (min-width: 768px) 45vw, 90vw'} />)}
+      {project.media.length > 0 && (
+      <div class:list={['new-case-gallery', { 'new-case-gallery--single': project.media.length === 1, 'new-case-gallery--evidence': project.media.some(asset => asset.visual) }]}>
+        {project.media.map(asset => <ProjectAsset asset={asset} sizes={project.media.length === 1 || project.media.some(item => item.visual) ? '(min-width: 1440px) 1320px, 90vw' : '(min-width: 1440px) 640px, (min-width: 768px) 45vw, 90vw'} />)}
       </div>
+      )}
     </div>
   </section>
 
-  <section class="new-case-results study-container" id="resultados" aria-labelledby="case-results-title">
-    <div class="new-case-results-heading">
-      <div><p class="study-eyebrow">El impacto del trabajo</p><h2 id="case-results-title" data-study-heading>Resultados.</h2></div>
-      <p data-study-reveal>{project.results.summary}</p>
-    </div>
-    {project.results.metrics && (
-      <dl class="new-case-metrics">
-        {project.results.metrics.map(metric => <div data-study-reveal><dt>{metric.label}</dt><dd>{metric.before && <span class="new-case-before">De {metric.before} a</span>}<strong>{metric.value}</strong>{metric.note && <span class="new-case-metric-note">{metric.note}</span>}</dd></div>)}
-      </dl>
-    )}
-    {project.results.outcomes && (
-      <ul class="new-case-outcomes">
-        {project.results.outcomes.map(outcome => <li data-study-reveal><Icon name="automation/circle-check" aria-hidden="true" /><span>{outcome}</span></li>)}
-      </ul>
-    )}
-  </section>
+  <ProjectResults project={project} />
 
   <StudyContact />
 

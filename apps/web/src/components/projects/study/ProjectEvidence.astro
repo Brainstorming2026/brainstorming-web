@@ -1,0 +1,45 @@
+---
+import type { ProjectEvidenceVisual } from '@/data/new-projects'
+interface Props { visual: ProjectEvidenceVisual, alt: string, compact?: boolean }
+const { alt, compact = false } = Astro.props
+---
+
+<div class:list={['case-evidence', { 'case-evidence--compact': compact }]} role="img" aria-label={alt}>
+  <header><span>AIT Capital · Smart Selling</span><span>4 meses</span></header>
+  <div class="revenue-comparison">
+    <div class="revenue-before"><span>El punto de partida</span><strong>S/ 100K</strong><i aria-hidden="true"></i></div>
+    <div class="revenue-after"><span>La nueva escala</span><strong>S/ 1.5M</strong><i aria-hidden="true"></i></div>
+  </div>
+  <footer><p>El proceso cambió.<br /><strong>La facturación también.</strong></p><span>Evolución de la facturación en soles</span></footer>
+</div>
+
+<style>
+  .case-evidence { container-type: inline-size; width: 100%; padding: clamp(24px, 5vw, 64px); border-radius: 8px; color: #151954; background: #edf0f8; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid #c9cee1; }
+  header span { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; }
+  header span:last-child { flex: none; }
+  .revenue-comparison { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(24px, 5vw, 80px); align-items: end; padding-block: clamp(36px, 7vw, 90px); }
+  .revenue-comparison > div { display: grid; min-width: 0; gap: 20px; }
+  .revenue-comparison span { font-size: 12px; color: #5f6583; }
+  .revenue-comparison strong { font: 500 clamp(32px, 7.6cqw, 108px)/1 var(--font-heading); letter-spacing: -.065em; white-space: nowrap; }
+  .revenue-before strong { color: #686f90; font-size: clamp(26px, 5.8cqw, 80px); }
+  .revenue-comparison i { width: 100%; height: 3px; background: #151954; }
+  .revenue-before i { background: #a4abc6; }
+  footer { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding-top: 24px; border-top: 1px solid #c9cee1; }
+  footer p { font-size: 18px; line-height: 1.5; }
+  footer strong { font-weight: 500; }
+  footer > span { max-width: 25ch; font-size: 11px; line-height: 1.5; color: #5f6583; }
+  .case-evidence--compact { height: 100%; padding: 22px; border-radius: 0; }
+  .case-evidence--compact header { padding-bottom: 14px; }
+  .case-evidence--compact header span { font-size: 8px; letter-spacing: .08em; }
+  .case-evidence--compact .revenue-comparison { padding-block: 22px; gap: 20px; }
+  .case-evidence--compact .revenue-comparison > div { gap: 12px; }
+  .case-evidence--compact .revenue-comparison span { font-size: 10px; }
+  .case-evidence--compact footer { display: none; }
+  @media(max-width: 479px) {
+    .case-evidence:not(.case-evidence--compact) .revenue-comparison { grid-template-columns: 1fr; }
+    .case-evidence:not(.case-evidence--compact) .revenue-comparison strong { font-size: 16cqw; }
+    .case-evidence:not(.case-evidence--compact) .revenue-before strong { font-size: 11cqw; }
+    footer { align-items: start; flex-direction: column; }
+  }
+</style>

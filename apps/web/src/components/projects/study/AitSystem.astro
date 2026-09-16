@@ -1,0 +1,37 @@
+---
+const stages = [
+  { name: 'Prospección', verb: 'Encontrar.', description: 'Identificar oportunidades y abrir nuevas conversaciones comerciales.', support: 'IA aplicada a la prospección' },
+  { name: 'Calificación', verb: 'Priorizar.', description: 'Calificar leads para enfocar el trabajo del equipo comercial.', support: 'IA aplicada a la calificación' },
+  { name: 'Reunión', verb: 'Conversar.', description: 'Llevar las oportunidades a una reunión comercial con un proceso definido.', support: 'Proceso comercial + CRM' },
+  { name: 'Seguimiento', verb: 'Continuar.', description: 'Mantener el contacto y dar continuidad a cada oportunidad después de la reunión.', support: 'Email + WhatsApp + IA' },
+]
+---
+
+<section class="ait-system" aria-labelledby="ait-system-title">
+  <header><p>AIT Capital · Smart Selling</p><h3 id="ait-system-title">Cada oportunidad,<br /><em>un siguiente paso.</em></h3><div>Del seguimiento personal a un proceso conectado por CRM, email, WhatsApp e inteligencia artificial.</div><span class="system-caption">Arquitectura del proceso comercial</span></header>
+  <ol>
+    {stages.map((stage, index) => (
+      <li><span class="step-index">0{index + 1}</span><div><span class="step-name">{stage.name}</span><h4>{stage.verb}</h4><p>{stage.description}</p><small>{stage.support}</small></div></li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .ait-system { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(32px, 6vw, 90px); padding: clamp(24px, 4.5vw, 60px); background: #fff; border-radius: 8px; color: #151954; }
+  header { align-self: start; }
+  header > p { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+  h3 { margin-top: 28px; font: 600 clamp(31px, 3.5vw, 50px)/1.08 var(--font-heading); letter-spacing: -.045em; }
+  h3 em { font-style: normal; color: #626a98; }
+  header > div { max-width: 33ch; margin-top: 24px; color: #5b6078; font-size: 15px; line-height: 1.8; }
+  .system-caption { display: block; margin-top: 42px; padding-top: 20px; border-top: 1px solid #d9dcec; font-size: 11px; color: #5b6078; }
+  ol { margin: 0; padding: 0; list-style: none; }
+  li { display: grid; grid-template-columns: 35px 1fr; gap: 16px; position: relative; padding-bottom: 28px; }
+  li:not(:last-child)::before { position: absolute; top: 34px; bottom: 0; left: 14px; width: 1px; content: ''; background: #c6cce3; }
+  .step-index { display: grid; place-items: center; width: 29px; height: 29px; border: 1px solid #c6cce3; border-radius: 50%; font-size: 10px; }
+  .step-name { display: block; padding-top: 5px; color: #656b8a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+  h4 { margin-top: 12px; font: 500 clamp(25px, 2.8vw, 38px)/1.05 var(--font-heading); letter-spacing: -.035em; }
+  li p { margin-top: 12px; max-width: 45ch; color: #5b6078; font-size: 14px; line-height: 1.7; }
+  li small { display: block; margin-top: 14px; font-size: 10px; font-weight: 600; letter-spacing: .03em; }
+  li:last-child { padding-bottom: 0; }
+  @media(max-width: 767px) { .ait-system { grid-template-columns: 1fr; } .system-caption { margin-top: 24px; } }
+</style>

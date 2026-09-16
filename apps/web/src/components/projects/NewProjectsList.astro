@@ -1,70 +1,28 @@
 ---
-import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
 import { newProjectLogos, newProjects, newProjectServices } from '@/data/new-projects'
-import '@/styles/project-study.css'
+import ProjectListCard from './ProjectListCard.astro'
 ---
 
-<section class="project-study new-project-list" aria-labelledby="new-projects-title">
-  <div class="study-container">
-    <header>
-      <p class="study-eyebrow">Estrategia, tecnología y marca</p>
-      <h2 id="new-projects-title" data-study-heading>Nuevos proyectos.</h2>
-      <p>Retos distintos. Una forma de trabajar: entender, conectar y transformar.</p>
+<section id="new-projects-list" class="bg-section-dark" aria-labelledby="new-projects-title">
+  <div class="mx-auto max-w-[1512px] px-6 py-16 lg:px-24">
+    <header class="mb-10 max-w-[640px]">
+      <p class="font-heading text-sm font-bold text-white/70">Estrategia, tecnología y marca</p>
+      <h2 id="new-projects-title" class="mt-4 font-heading text-[35px] font-bold leading-tight text-white sm:text-5xl">Nuevos proyectos.</h2>
+      <p class="mt-4 text-[14px] leading-6 text-white/70">Retos distintos. Una forma de trabajar: entender, conectar y transformar.</p>
     </header>
-    <div class="new-project-grid">
-      {newProjects.map(project => (
-        <a href={`/proyectos/${project.slug}`} class="new-project-card" aria-label={`Ver proyecto: ${project.client}`} data-study-reveal>
-          <div class="new-project-cover" style={{ background: project.hero.src ? project.surface : project.logoSurface }}>
-            {project.hero.src
-              ? <Image class="new-project-photo" src={project.hero.src} alt={project.hero.alt} widths={[480, 800, 1200]} sizes="(min-width: 768px) 45vw, 90vw" loading="lazy" />
-              : <><Image class="new-project-logo" src={newProjectLogos[project.slug]} alt="" loading="lazy" /><span class="new-project-pending">Imagen del proyecto pendiente</span></>}
-          </div>
-          <div class="new-project-card-body">
-            <p class="new-project-sector">{project.sector}</p>
-            <h3>{project.client}</h3>
-            <p class="new-project-summary">{project.summary}</p>
-            <ul aria-label="Servicios">{project.services.map(key => <li><Icon name={newProjectServices[key].icon} aria-hidden="true" />{newProjectServices[key].label}</li>)}</ul>
-            <span class="new-project-link">Ver proyecto <Icon name="study/arrow-up-right" aria-hidden="true" /></span>
-          </div>
-        </a>
-      ))}
-    </div>
+
+    {
+      newProjects.map((project, i) => (
+        <ProjectListCard
+          first={i === 0}
+          href={`/proyectos/${project.slug}`}
+          icons={project.services.map(key => newProjectServices[key].icon)}
+          title={project.client}
+          subtitle={project.services.map(key => newProjectServices[key].label).join(' / ')}
+          image={project.hero.src ? { src: project.hero.src, alt: project.hero.alt } : undefined}
+          logo={newProjectLogos[project.slug]}
+        />
+      ))
+    }
   </div>
 </section>
-
-<script>
-  import '@/scripts/projects/study'
-</script>
-
-<style>
-  .new-project-list { padding-block: 80px; }
-  header { margin-bottom: 40px; }
-  header h2 { margin-block: 16px; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; }
-  header > p:last-child { font-size: 17px; line-height: 1.6; color: var(--color-gray-body); }
-  .new-project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
-  .new-project-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--study-line); border-radius: 16px; overflow: hidden; transition: border-color 200ms ease; }
-  .new-project-cover { position: relative; display: grid; place-items: center; height: 240px; border-bottom: 1px solid var(--study-line); }
-  .new-project-logo { width: auto; height: auto; max-width: min(64%, 280px); max-height: 100px; object-fit: contain; }
-  .new-project-photo { width: 100%; height: 100%; object-fit: cover; }
-  .new-project-pending { position: absolute; right: 16px; bottom: 14px; left: 16px; width: fit-content; margin-inline: auto; padding: 5px 10px; border-radius: 4px; background: var(--color-mist-50); color: var(--color-gray-body); font-size: 11px; line-height: 1.4; }
-  .new-project-card-body { display: flex; flex: 1; flex-direction: column; padding: 28px; }
-  .new-project-sector { margin-bottom: 12px; font-size: 12px; color: var(--color-gray-body); }
-  h3 { font-size: clamp(24px, 2.5vw, 34px); font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; }
-  .new-project-summary { margin-top: 16px; max-width: 52ch; color: var(--color-gray-body); font-size: 16px; line-height: 1.7; }
-  ul { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-block: 24px; }
-  li { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; }
-  li svg { width: 22px; height: 22px; stroke-width: 1.6; color: var(--color-primary-600); }
-  .new-project-link { display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding-top: 16px; margin-top: auto; border-top: 1px solid var(--study-line); color: var(--color-primary-700); font-size: 14px; font-weight: 600; }
-  .new-project-link svg { width: 24px; height: 24px; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1); }
-  @media (hover: hover) and (pointer: fine) {
-    .new-project-card:hover { border-color: var(--color-primary-300); }
-    .new-project-card:hover .new-project-link svg { transform: translate(3px, -3px); }
-  }
-  @media (max-width: 767px) {
-    .new-project-list { padding-block: 56px; }
-    .new-project-grid { grid-template-columns: 1fr; gap: 24px; }
-    .new-project-cover { height: 200px; }
-    .new-project-card-body { padding: 24px; }
-  }
-</style>

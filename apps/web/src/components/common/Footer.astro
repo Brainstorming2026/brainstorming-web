@@ -68,7 +68,6 @@ const { curveBg = 'bg-white' } = Astro.props
                 <li>
                   <a href={l.href} class="font-heading text-[13px] font-semibold text-white/90 transition-colors hover:text-primary-300 sm:text-sm">
                     {l.label}
-                    {l.complementary && <span class="ml-1 text-primary-300" aria-label="Servicio complementario">★</span>}
                   </a>
                 </li>
               ))
@@ -163,7 +162,6 @@ const { curveBg = 'bg-white' } = Astro.props
               <li>
                 <a href={l.href} class="font-heading text-[15px] font-semibold text-white/90 transition-colors hover:text-primary-300">
                   {l.label}
-                  {l.complementary && <span class="ml-1 text-primary-300" aria-label="Servicio complementario">★</span>}
                 </a>
               </li>
             ))

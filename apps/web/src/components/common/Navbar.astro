@@ -54,7 +54,6 @@ const currentPath = Astro.url.pathname
                         class="block px-4 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-primary/5 hover:text-primary"
                       >
                         {child.label}
-                        {child.complementary && <><span class="ml-2 text-primary" aria-hidden="true">★</span><span class="mt-1 block text-xs font-normal text-gray-body">Servicio complementario</span></>}
                       </a>
                     </li>
                   ))}
@@ -129,7 +128,6 @@ const currentPath = Astro.url.pathname
                         class="block py-3 text-sm font-bold text-ink hover:text-primary"
                       >
                         {child.label}
-                        {child.complementary && <><span class="ml-2 text-primary" aria-hidden="true">★</span><span class="mt-1 block text-xs font-normal text-gray-body">Servicio complementario</span></>}
                       </a>
                     </li>
                   ))}

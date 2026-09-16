@@ -1,0 +1,60 @@
+---
+const stages = [
+  { number: '01', title: 'Evento', text: 'Una oportunidad cambia de etapa o necesita una siguiente acción.' },
+  { number: '02', title: 'Regla', text: 'El sistema evalúa una condición definida por el proceso.' },
+  { number: '03', title: 'Acción', text: 'Crea una actividad, actualiza un registro o prepara una comunicación.' },
+  { number: '04', title: 'Supervisión', text: 'El equipo valida excepciones y revisa lo que realmente se ejecutó.' },
+]
+---
+
+<section class="automation-evidence" aria-labelledby="automation-evidence-title">
+  <div class="automation-evidence__inner">
+    <header>
+      <p>De la lógica a la operación</p>
+      <h2 id="automation-evidence-title">Una automatización tiene que poder explicarse.</h2>
+      <span>Mostramos qué activa el flujo, qué decide y qué cambia. Una regla configurada se distingue de una acción ejecutada.</span>
+    </header>
+    <ol>
+      {stages.map(stage => (
+        <li>
+          <span>{stage.number}</span>
+          <h3>{stage.title}</h3>
+          <p>{stage.text}</p>
+        </li>
+      ))}
+    </ol>
+    <div class="automation-evidence__note">
+      <strong>Criterio de evidencia</strong>
+      <p>La configuración demuestra la lógica del proceso. El historial de ejecuciones y sus resultados demuestran la operación.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .automation-evidence { padding-block: clamp(72px, 8vw, 112px); background: #132238; color: #fff; }
+  .automation-evidence__inner { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
+  header { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 18px 8%; align-items: end; }
+  header > p { grid-column: 1 / -1; color: #b8d7ff; font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+  h2 { max-width: 13ch; font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 58px); font-weight: 700; line-height: 1.04; letter-spacing: -.045em; }
+  header > span { max-width: 58ch; color: #c5cfdb; font-size: 16px; line-height: 1.75; }
+  ol { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 56px; border-top: 1px solid rgb(184 215 255 / 28%); }
+  li { position: relative; min-height: 230px; padding: 26px 24px 28px 0; border-bottom: 1px solid rgb(184 215 255 / 28%); }
+  li:not(:last-child) { border-right: 1px solid rgb(184 215 255 / 18%); }
+  li:not(:first-child) { padding-left: 24px; }
+  li > span { color: #8cbcff; font-size: 11px; font-weight: 700; letter-spacing: .15em; }
+  li h3 { margin-top: 52px; font-family: var(--font-heading); font-size: 24px; font-weight: 700; }
+  li p { margin-top: 12px; max-width: 26ch; color: #c5cfdb; font-size: 14px; line-height: 1.65; }
+  .automation-evidence__note { display: grid; grid-template-columns: minmax(140px, .35fr) 1fr; gap: 24px; margin-top: 28px; padding: 22px 24px; border-left: 3px solid #8cbcff; background: rgb(255 255 255 / 6%); }
+  .automation-evidence__note strong { font-size: 13px; }
+  .automation-evidence__note p { color: #c5cfdb; font-size: 14px; line-height: 1.6; }
+  @media (max-width: 767px) {
+    .automation-evidence__inner { width: min(100% - 40px, 1240px); }
+    header { grid-template-columns: 1fr; }
+    header > p { grid-column: auto; }
+    ol { grid-template-columns: 1fr; margin-top: 40px; }
+    li, li:not(:first-child) { display: grid; grid-template-columns: 38px 1fr; min-height: 0; gap: 5px 12px; padding: 22px 0; border-right: 0; }
+    li h3 { margin-top: 0; }
+    li p { grid-column: 2; margin-top: 4px; }
+    .automation-evidence__note { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>

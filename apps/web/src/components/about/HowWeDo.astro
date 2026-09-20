@@ -4,13 +4,14 @@ import circle from '@/assets/nosotros/nosotros-circle.png'
 import figure1 from '@/assets/nosotros/nosotros-figure1.png'
 import figure2 from '@/assets/nosotros/nosotros-figure2.png'
 import figure3 from '@/assets/nosotros/nosotros-figure3.png'
+import { aboutContent } from '@/data/transversal-content'
 
 const pillars = [
   {
     image: figure1,
     title: 'Tecnología',
     description:
-      'Somos digitales y queremos que tu también lo seas. La aplicación de diversas herramientas digitales han optimizado nuestro funcionamiento empresarial y lo pueden hacer para ti.',
+      'Somos digitales y queremos que tú también lo seas. La aplicación de diversas herramientas digitales ha optimizado nuestro funcionamiento empresarial y lo pueden hacer para ti.',
   },
   {
     image: figure2,
@@ -37,33 +38,18 @@ const pillars = [
             ¿Cómo lo hacemos?
           </h2>
 
-          <h3 class="mt-10 font-heading text-[20px] font-bold text-white">
-            La metodología Brainstorming
-          </h3>
-          <p class="mt-4 text-[16px] leading-relaxed text-white/80">
-            Optimizamos constantemente para trabajar cada día mejor y
-            adaptarnos más ágilmente a tus necesidades. En Brainstorming, hemos
-            interiorizado diferentes metodologías de trabajo para poder extraer lo
-            mejor de cada una de ellas, saciando nuestra sed de eficiencia, nuestra
-            sed de agregar más valor a tus productos en menos tiempo.
-          </p>
+          <p class="methodology-opening">{aboutContent.methodology.opening}</p>
+          <div class="methodology-copy">
+            {aboutContent.methodology.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+          </div>
 
-          <h3 class="mt-10 font-heading text-[20px] font-bold text-white">
-            Aplicamos Ingeniería
-          </h3>
-          <p class="mt-4 text-[16px] leading-relaxed text-white/80">
-            Desde nuestro nacimiento, tuvimos muy bien sedimentados tres pilares
-            fundamentales, los cuales nos han permitido generar una cultura de
-            trabajo colaborativa super-eficiente con máxima capacidad de
-            adaptación. Queremos hacer lo mismo por ti.
-          </p>
         </div>
 
         <div id="howwedo-circle-wrap" class="flex justify-center">
           <Image
             src={circle}
-            alt="Metodologías Brainstorming"
-            class="w-full max-w-[500px] animate-spin-slow"
+            alt="Metodologías que combinamos: Design Thinking, Lean Startup, Agile, Kanban, Scrum y Six Sigma"
+            class="methodology-wheel w-full max-w-[440px]"
             loading="lazy"
           />
         </div>
@@ -72,16 +58,17 @@ const pillars = [
   </div>
 
   <!-- Part 2: Three pillars -->
-  <div class="bg-white py-16">
+  <div class="pillars-section bg-white py-16">
     <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
+      <div class="pillars-heading"><p>Tecnología, procesos y proyectos</p><h2>Aplicamos ingeniería<br />a la forma de trabajar.</h2></div>
       <div id="howwedo-pillars" class="grid gap-12 md:grid-cols-3">
         {
           pillars.map(pillar => (
-            <div class="howwedo-pillar text-center">
+            <div class="howwedo-pillar">
               <Image
                 src={pillar.image}
                 alt={pillar.title}
-                class="mx-auto h-[220px] w-auto object-contain"
+                class="pillar-image mx-auto h-[190px] w-auto object-contain"
                 loading="lazy"
               />
               <h3 class="mt-6 font-heading text-[22px] font-bold text-ink">
@@ -98,51 +85,35 @@ const pillars = [
   </div>
 </section>
 
+<style>
+  .methodology-opening { margin-top: 32px; max-width: 32ch; font: 500 clamp(22px, 2.2vw, 30px)/1.4 var(--font-heading); letter-spacing: -.025em; color: white; }
+  .methodology-copy { margin-top: 28px; color: #dce3f1; font-size: 16px; line-height: 1.85; }
+  .methodology-copy p + p { margin-top: 20px; }
+  .methodology-wheel { height: auto; }
+  .pillars-section { padding-block: clamp(64px, 7vw, 104px); }
+  .pillars-heading { margin-bottom: 48px; }
+  .pillars-heading > p { font-size: 12px; color: #6740b2; margin-bottom: 16px; }
+  .pillars-heading h2 { font: 600 clamp(30px, 3vw, 44px)/1.12 var(--font-heading); letter-spacing: -.04em; }
+  .howwedo-pillar { border-bottom: 1px solid #dfe3eb; padding-bottom: 28px; }
+  .pillar-image { margin-bottom: 32px; max-width: 100%; }
+  @media (max-width: 767px) { .methodology-wheel { max-width: 320px; } .pillar-image { height: 160px; } }
+</style>
 <script>
-import { ensureGsap, registerMotion, staggerGrid } from '@/lib/motion'
-import { ease } from '@/lib/motion/config'
-import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { ensureGsap, registerMotion } from '@/lib/motion'
 
 registerMotion(() => {
-  const text = document.getElementById('howwedo-text')
-  // La imagen tiene animate-spin-slow (CSS keyframes en `transform`) — animo el
-  // WRAPPER, no la imagen, para no pisar la rotación con el scale de entrada.
-  const circle = document.getElementById('howwedo-circle-wrap')
-  const pillars = document.querySelectorAll('#howwedo-pillars .howwedo-pillar')
-
-  // Reveal por bloque (h2/h3/p), no un wipe de clip-path sobre todo el texto
-  // junto — con varios párrafos se lee mejor si cada uno entra en su turno.
-  if (text && !prefersReducedMotion()) {
-    const { gsap } = ensureGsap()
-    const blocks = Array.from(text.children) as HTMLElement[]
-    gsap.set(blocks, { opacity: 0, y: 26 })
-    gsap.to(blocks, {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      ease: ease.out,
-      stagger: 0.16,
-      scrollTrigger: { trigger: text, start: 'top 82%' },
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const text = document.getElementById('howwedo-text')
+    if (text)
+      gsap.from(text.children, { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: text, start: 'top 85%', once: true } })
+    const circle = document.getElementById('howwedo-circle-wrap')
+    if (circle)
+      gsap.from(circle, { scale: 0.96, autoAlpha: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: circle, start: 'top 85%', once: true } })
+    document.querySelectorAll('.howwedo-pillar').forEach((pillar) => {
+      gsap.from(pillar, { y: 24, autoAlpha: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: pillar, start: 'top 88%', once: true } })
     })
-  }
-  else if (text) {
-    ensureGsap().gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: 0.4 })
-  }
-
-  if (circle && !prefersReducedMotion()) {
-    const { gsap } = ensureGsap()
-    gsap.set(circle, { scale: 0.85, opacity: 0 })
-    gsap.to(circle, {
-      scale: 1,
-      opacity: 1,
-      duration: 1,
-      ease: ease.out,
-      scrollTrigger: { trigger: circle, start: 'top 80%' },
-    })
-  }
-
-  // Sección de "quiénes somos": ritmo pausado, no un grid de datos — más
-  // lento y con más separación entre pilares para que se sienta premium.
-  staggerGrid(pillars, { variant: 'organic', itemDuration: 1.7, itemStagger: 0.28 })
+  })
 })
 </script>

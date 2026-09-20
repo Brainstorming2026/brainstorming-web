@@ -1,0 +1,103 @@
+---
+import { Icon } from 'astro-icon/components'
+
+// Complementary home copy derived from the approved service scope (PDF pp. 4–11).
+const outcomes = [
+  { title: 'Saber qué hacer primero.', text: 'Prioridades claras, ordenadas por impacto y esfuerzo.' },
+  { title: 'Vender con un sistema.', text: 'Un proceso comercial que el equipo pueda seguir y medir.' },
+  { title: 'Decidir con evidencia.', text: 'Información de tus clientes, indicadores y procesos visibles.' },
+]
+const stages = [
+  { title: 'Entender', service: 'Growth Planning', text: 'Diagnóstico del negocio y prioridades para avanzar.', icon: 'automation/scan-search', href: '/soluciones/growth-planning' },
+  { title: 'Atraer', service: 'Inbound Marketing', text: 'Contenido y canales que conectan con el cliente ideal.', icon: 'study/magnet', href: '/soluciones/inbound-marketing' },
+  { title: 'Convertir', service: 'Smart Selling', text: 'CRM, seguimiento y un proceso de ventas consistente.', icon: 'automation/workflow', href: '/soluciones/smart-selling' },
+  { title: 'Automatizar', service: 'Automatización con IA', text: 'Menos tareas repetitivas. Más capacidad para tu equipo.', icon: 'automation/brain-circuit', href: '/soluciones/automatizacion-ia' },
+  { title: 'Evolucionar', service: 'Innovación Estratégica', text: 'Diseñar y validar las siguientes oportunidades del negocio.', icon: 'automation/route', href: '/soluciones/innovacion-estrategica' },
+]
+---
+
+<section class="growth-ready" aria-labelledby="growth-ready-title" data-growth-section>
+  <div class="editorial-container ready-layout">
+    <div class="ready-intro" data-growth-reveal>
+      <p class="growth-eyebrow">DEL RETO A LA ACCIÓN</p>
+      <h2 id="growth-ready-title">Antes de hablar de soluciones,<br /><span>hablemos de lo que quieres lograr.</span></h2>
+      <p class="ready-description">Crecer empieza por tener claridad. Sobre el negocio, sobre las prioridades y sobre el siguiente paso.</p>
+    </div>
+    <div class="ready-panel" data-growth-reveal>
+      <div class="panel-heading"><span>Tu siguiente etapa</span><span aria-hidden="true">↗</span></div>
+      <ul>{outcomes.map(item => <li class="ready-outcome"><span class="outcome-check"><Icon name="service-checkbox" aria-hidden="true" /></span><div><h3>{item.title}</h3><p>{item.text}</p></div></li>)}</ul>
+      <div class="panel-footer"><span class="status-dot" aria-hidden="true"></span>Un plan claro. Un equipo alineado.</div>
+    </div>
+  </div>
+</section>
+
+<section class="growth-journey" aria-labelledby="growth-journey-title" data-growth-section>
+  <div class="editorial-container">
+    <div class="journey-heading" data-growth-reveal>
+      <div><p class="growth-eyebrow">ESTRATEGIA QUE SE CONVIERTE EN ACCIÓN</p><h2 id="growth-journey-title">Cada paso tiene<br /><span>un propósito.</span></h2></div>
+      <p>Primero entendemos qué necesita tu negocio. Después conectamos estrategia, marketing, ventas y tecnología para hacerlo avanzar.</p>
+    </div>
+    <div class="journey-map">
+
+      <ol>{stages.map((stage, index) => <li class="journey-stage" data-growth-reveal><a href={stage.href}><div class="stage-mark"><Icon name={stage.icon} aria-hidden="true" /><span>0{index + 1}</span></div><h3>{stage.title}</h3><p>{stage.text}</p><span class="stage-service">{stage.service}<Icon name="study/arrow-up-right" aria-hidden="true" /></span></a></li>)}</ol>
+    </div>
+    <p class="journey-note">El punto de partida y las soluciones se definen según el diagnóstico de tu empresa.</p>
+  </div>
+</section>
+
+<style>
+  .growth-ready { padding-block: 32px 104px; background: white; }
+  .ready-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .growth-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .14em; color: #6740b2; margin-bottom: 24px; }
+  h2 { font: 600 clamp(30px, 3.3vw, 48px)/1.13 var(--font-heading); letter-spacing: -.045em; text-wrap: balance; }
+  .ready-intro h2 span { color: #7a8190; }
+  .ready-description { max-width: 40ch; margin-top: 28px; font-size: 17px; line-height: 1.8; color: #606675; }
+  .ready-panel { border: 1px solid #e2dced; border-radius: 20px; padding: 32px; background: #fff; box-shadow: 0 22px 65px -25px #38246730; }
+  .panel-heading { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e9e4ef; padding-bottom: 20px; font-size: 13px; color: #746a88; }
+  .panel-heading > span:last-child { color: #8244ed; font-size: 24px; }
+  .ready-outcome { display: flex; gap: 20px; align-items: start; padding-block: 26px; }
+  .ready-outcome + .ready-outcome { border-top: 1px solid #f0edf5; }
+  .outcome-check { flex: 0 0 42px; }
+  .outcome-check svg { width: 42px; height: 42px; }
+  .ready-outcome h3 { font: 600 21px/1.3 var(--font-heading); letter-spacing: -.025em; }
+  .ready-outcome p { color: #626575; font-size: 15px; line-height: 1.7; margin-top: 8px; }
+  .panel-footer { display: flex; align-items: center; gap: 10px; padding: 16px; border-radius: 8px; font-size: 12px; color: #6740b2; background: #f5f1fc; }
+  .status-dot { width: 6px; height: 6px; background: #8244ed; border-radius: 50%; }
+  .growth-journey { background: #fafafb; padding-block: 96px; }
+  .journey-heading { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+  .journey-heading h2 span { color: #727887; }
+  .journey-heading > p { max-width: 45ch; font-size: 17px; color: #606675; line-height: 1.8; }
+  .journey-map { position: relative; margin-top: 64px; }
+  .journey-map ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 36px; }
+  .journey-stage a { display: flex; flex-direction: column; position: relative; height: 100%; padding-bottom: 24px; border-bottom: 1px solid #dfe2e9; }
+  .journey-stage a:focus-visible { outline: 2px solid #8244ed; outline-offset: 8px; }
+  .stage-mark { display: flex; justify-content: space-between; align-items: start; margin-bottom: 36px; }
+  .stage-mark > svg { width: 64px; height: 64px; color: #283b60; stroke-width: 1.25; }
+  .stage-mark :global(svg > :last-child) { stroke: #8244ed; }
+  .stage-mark > span { padding-top: 6px; font: 400 12px/1 var(--font-heading); color: #9299a7; font-variant-numeric: tabular-nums; }
+  .journey-stage h3 { font: 500 26px/1.2 var(--font-heading); letter-spacing: -.035em; color: #182744; }
+  .journey-stage p { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #606675; }
+  .stage-service { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 28px; font-size: 12px; font-weight: 500; color: #6740b2; }
+  .stage-service svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .journey-note { margin-top: 28px; padding-top: 0; font-size: 13px; line-height: 1.7; color: #737889; }
+  @media (max-width: 1023px) { .ready-layout { gap: 32px; } .journey-map ol { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; } }
+  @media (max-width: 767px) { .ready-layout, .journey-heading { grid-template-columns: 1fr; } .growth-ready { padding-bottom: 64px; } .ready-panel { padding: 24px; } .growth-journey { padding-block: 64px; } .journey-map { margin-top: 36px; } .journey-map ol { grid-template-columns: 1fr; gap: 0; } .journey-stage a { padding: 24px 0 24px 80px; border-bottom: 1px solid #dfe3ed; } .stage-mark { position: absolute; left: 0; top: 24px; display: flex; flex-direction: column; gap: 12px; } .stage-service { margin-top: 16px; } }
+</style>
+
+<script>
+import { registerMotion } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    document.querySelectorAll<HTMLElement>('[data-growth-reveal]').forEach((element) => {
+      gsap.from(element, { autoAlpha: 0, y: 24, duration: 0.85, ease: 'power3.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
+    })
+    const panel = document.querySelector('.ready-panel')
+    if (panel)
+      gsap.from(panel.querySelectorAll('.outcome-check'), { scale: 0.7, autoAlpha: 0, duration: 0.6, stagger: 0.14, ease: 'power3.out', scrollTrigger: { trigger: panel, start: 'top 78%', once: true } })
+  })
+})
+</script>

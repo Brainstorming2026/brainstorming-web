@@ -21,7 +21,7 @@ const stages = [
     id="whatwedo-diagram"
     src={doing}
     alt="Metodología doble diamante y mejora constante"
-    class="hidden w-full md:block"
+    class="mx-auto mt-8 hidden w-full max-w-[1512px] md:block"
     loading="lazy"
   />
 
@@ -46,7 +46,7 @@ const stages = [
       ></div>
 
       <ol class="relative space-y-4" aria-label="Etapas del proceso de diseño">
-        {stages.map((stage) => (
+        {stages.map(stage => (
           <li class="whatwedo-mobile-step relative flex gap-4 rounded-2xl border border-white/80 bg-white/90 p-4 shadow-[0_8px_25px_rgba(34,59,121,0.08)] backdrop-blur-sm">
             <div class="relative z-10 flex h-11 w-11 shrink-0 rotate-45 items-center justify-center rounded-[12px] bg-[#212222] shadow-[0_6px_14px_rgba(33,34,34,0.2)]">
               <span class="-rotate-45 text-[12px] font-bold text-white">{stage.number}</span>
@@ -76,7 +76,7 @@ const stages = [
       </div>
       <div class="mt-4 flex items-center gap-3 border-t border-white/15 pt-4">
         <span class="inline-flex h-7 items-center rounded-full bg-highlight px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-[#212222]">Salida</span>
-        <p class="text-[13px] leading-snug text-white/80">Avanzamos cuando resultados cumplen objetivos.</p>
+        <p class="text-[13px] leading-snug text-white/80">Avanzamos cuando los resultados cumplen los objetivos.</p>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@ const stages = [
           El Doble Diamante y el MVP
         </h3>
         <p class="mt-4 text-[16px] leading-relaxed text-gray-body">
-          En Brainstorming diseñamos productos digitales acorde a tus recursos y
+          En Brainstorming diseñamos productos digitales acordes a tus recursos y
           necesidades. Empatizamos con los usuarios para identificar puntos de
           dolor en tu empresa o en tu cliente para desarrollar soluciones
           funcionales y eficaces desde su primera entrega.
@@ -108,31 +108,17 @@ const stages = [
 </section>
 
 <script>
-import { ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { ensureGsap, registerMotion } from '@/lib/motion'
 
 registerMotion(() => {
-  const headline = document.getElementById('whatwedo-headline')
-  const diagram = document.getElementById('whatwedo-diagram')
-  const mobileDiagram = document.getElementById('whatwedo-mobile')
-  const mobileLine = document.getElementById('whatwedo-mobile-line')
-  const mobileSteps = document.querySelectorAll('#whatwedo-mobile .whatwedo-mobile-step')
-  const cols = document.querySelectorAll('#whatwedo-cols .whatwedo-col')
-
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (diagram) revealClip(diagram, { direction: 'up', mode: 'scrub' })
-  if (mobileDiagram) revealClip(mobileDiagram, { direction: 'up' })
-  staggerGrid(mobileSteps, { variant: 'organic', itemStagger: 0.1 })
-
-  if (mobileLine && !prefersReducedMotion()) {
-    const { gsap, ScrollTrigger } = ensureGsap()
-    gsap.set(mobileLine, { scaleY: 0 })
-    ScrollTrigger.create({
-      trigger: mobileDiagram,
-      start: 'top 78%',
-      once: true,
-      onEnter: () => gsap.to(mobileLine, { scaleY: 1, duration: 1.4, ease: 'power2.out' }),
-    })
-  }
-  staggerGrid(cols, { variant: 'organic' })
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    for (const selector of ['#whatwedo-headline', '#whatwedo-diagram', '#whatwedo-mobile', '.whatwedo-col']) {
+      document.querySelectorAll(selector).forEach((element) => {
+        gsap.from(element, { y: 20, autoAlpha: 0, duration: 0.85, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
+      })
+    }
+  })
 })
 </script>

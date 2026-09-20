@@ -2,26 +2,83 @@
 import { Icon } from 'astro-icon/components'
 import { siteServices } from '@/data/site-navigation'
 import { homeContent } from '@/data/transversal-content'
+import StrategyArt from './StrategyArt.astro'
 
 const services = siteServices.flatMap(service => service.home ? [{ ...service.home, href: service.href }] : []).sort((a, b) => a.order - b.order)
 ---
 
-<section class="editorial-section editorial-services" aria-labelledby="home-services-title">
-  <div class="editorial-container editorial-service-layout">
-    <div>
+<section class="editorial-section premium-services" aria-labelledby="home-services-title">
+  <div class="editorial-container">
+    <div class="editorial-section-header">
       <h2 id="home-services-title" class="editorial-title" data-editorial-heading>{homeContent.services.title}</h2>
       <a class="editorial-link mt-8" href={homeContent.services.action.href}>{homeContent.services.action.label}<Icon name="automation/arrow-right" class="h-5 w-5" aria-hidden="true" /></a>
     </div>
-    <ul class="editorial-service-list">
-      {services.map(service => (
-        <li data-editorial-reveal>
-          <a href={service.href} class="editorial-service">
-            <Icon name={service.icon} class="editorial-service-icon h-8 w-8" aria-hidden="true" />
-            <div><h3>{service.label}</h3><p>{service.description}</p></div>
-            <Icon name="study/arrow-up-right" class="editorial-service-arrow h-5 w-5" aria-hidden="true" />
+    <ul class="service-showcase">
+      {services.map((service, index) => (
+        <li class:list={['service-tile', { 'service-tile--anchor': index === 0 }]}>
+          <a href={service.href}>
+            <div class="service-art"><StrategyArt index={[4, 1, 0, 2, 3][index]} /></div>
+            <div class="service-copy">
+              {index === 0 && <span class="service-kicker">EL PUNTO DE PARTIDA</span>}
+              <h3>{service.label}</h3><p>{service.description}</p>
+            </div>
+            <span class="service-arrow"><Icon name="study/arrow-up-right" aria-hidden="true" /></span>
           </a>
         </li>
       ))}
     </ul>
   </div>
 </section>
+
+<style>
+  .premium-services { background: #fff; }
+  .service-showcase { display: grid; grid-template-columns: 1.05fr 1fr 1fr; gap: 20px; }
+  .service-tile { min-width: 0; border-radius: 18px; background: #223b79; color: white; }
+  .service-tile > a { display: flex; flex-direction: column; position: relative; height: 100%; overflow: hidden; padding: 24px 28px 64px; border-radius: inherit; }
+  .service-tile > a:focus-visible { outline: 3px solid #8244ed; outline-offset: 5px; }
+  .service-tile--anchor { grid-row: span 2; }
+  .service-art { width: 136px; align-self: end; margin-top: -24px; margin-right: -16px; margin-bottom: -10px; }
+  .service-tile--anchor .service-art { width: 115%; max-width: none; align-self: center; margin: 20px 0 auto; }
+  .service-copy { position: relative; }
+  .service-kicker { display: block; color: #c6b3f4; font-size: 10px; letter-spacing: .14em; margin-bottom: 20px; }
+  .service-copy h3 { font: 600 clamp(21px, 2vw, 28px)/1.15 var(--font-heading); letter-spacing: -.035em; }
+  .service-copy p { margin-top: 14px; font-size: 15px; line-height: 1.75; color: #dce4f7; }
+  .service-tile--anchor h3 { font-size: clamp(30px, 3vw, 42px); }
+  .service-tile--anchor p { font-size: 17px; }
+  .service-arrow { position: absolute; right: 26px; bottom: 22px; width: 30px; height: 30px; border-radius: 50%; background: #ffffff12; display: grid; place-items: center; }
+  .service-arrow svg { width: 18px; height: 18px; }
+  @media (max-width: 1023px) { .service-showcase { grid-template-columns: 1fr 1fr; } .service-tile--anchor { grid-column: span 2; grid-row: auto; } .service-tile--anchor > a { min-height: 300px; justify-content: center; } .service-tile--anchor .service-art { position: absolute; width: 42%; right: 0; margin: 0; } .service-tile--anchor .service-copy { width: 54%; } }
+  @media (max-width: 639px) { .service-showcase { grid-template-columns: 1fr; gap: 16px; } .service-tile--anchor { grid-column: auto; } .service-tile > a { padding: 24px 24px 60px; } .service-tile--anchor > a { min-height: 350px; justify-content: end; } .service-tile--anchor .service-copy { width: 100%; } .service-tile--anchor .service-art { top: -16px; width: 190px; right: -6px; } .service-art { width: 120px; } }
+</style>
+
+<script>
+import { registerMotion } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    document.querySelectorAll('.service-tile').forEach((tile) => {
+      gsap.from(tile, { y: 28, autoAlpha: 0, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: tile, start: 'top 90%', once: true } })
+    })
+  })
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups: (() => void)[] = []
+    document.querySelectorAll<HTMLElement>('.service-tile > a').forEach((link) => {
+      const animation = gsap.timeline({ paused: true, defaults: { duration: 0.4, ease: 'power2.out' } })
+        .to(link.querySelector('.service-art'), { y: -5 }, 0)
+        .to(link.querySelector('.service-arrow'), { x: 2, y: -2 }, 0)
+      const enter = () => animation.play()
+      const leave = () => animation.reverse()
+      link.addEventListener('pointerenter', enter)
+      link.addEventListener('pointerleave', leave)
+      cleanups.push(() => {
+        link.removeEventListener('pointerenter', enter)
+        link.removeEventListener('pointerleave', leave)
+      })
+    })
+    return () => cleanups.forEach(cleanup => cleanup())
+  })
+})
+</script>

@@ -1,5 +1,6 @@
 ---
 import { newProjectLogos, newProjects, newProjectServices } from '@/data/new-projects'
+import ProjectCover from './ProjectCover.astro'
 import ProjectListCard from './ProjectListCard.astro'
 ---
 
@@ -15,13 +16,16 @@ import ProjectListCard from './ProjectListCard.astro'
       newProjects.map((project, i) => (
         <ProjectListCard
           first={i === 0}
+          customCover={['ait-capital', 'senati', 'nordic', 'etna', 'futura-wealth'].includes(project.slug)}
           href={`/proyectos/${project.slug}`}
           icons={project.services.map(key => newProjectServices[key].icon)}
           title={project.client}
           subtitle={project.services.map(key => newProjectServices[key].label).join(' / ')}
           image={project.hero.src ? { src: project.hero.src, alt: project.hero.alt } : undefined}
           logo={newProjectLogos[project.slug]}
-        />
+        >
+          {['ait-capital', 'senati', 'nordic', 'etna', 'futura-wealth'].includes(project.slug) && <ProjectCover slot="cover" project={project} />}
+        </ProjectListCard>
       ))
     }
   </div>

@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
-import { newProjectLogos } from '@/data/new-projects'
+import ProjectCover from '@/components/projects/ProjectCover.astro'
+import { newProjects } from '@/data/new-projects'
 import { homeContent } from '@/data/transversal-content'
 
 const content = homeContent.results
@@ -15,9 +15,9 @@ const content = homeContent.results
     </div>
     <div class="editorial-results">
       {content.items.map(item => (
-        <a href={`/proyectos/${item.slug}`} class="editorial-result" data-editorial-reveal>
-          <div class="editorial-result-logo">
-            <Image src={newProjectLogos[item.slug]} alt="" widths={[160, 240, 320]} sizes="160px" quality={80} loading="lazy" />
+        <a href={`/proyectos/${item.slug}`} class="editorial-result editorial-result--visual" data-editorial-reveal>
+          <div class="result-cover">
+            <ProjectCover project={newProjects.find(project => project.slug === item.slug)!} compact />
           </div>
           <h3>{item.client}</h3>
           <p>{item.text}</p>
@@ -27,3 +27,14 @@ const content = homeContent.results
     </div>
   </div>
 </section>
+
+<style>
+  .editorial-result--visual { padding: 0 0 64px; overflow: hidden; }
+  .result-cover { width: 100%; border-bottom: 1px solid var(--color-mist-200); }
+  .editorial-result--visual > h3 { margin: 24px 26px 0; }
+  .editorial-result--visual > p { margin: 12px 26px 0; font-size: clamp(22px, 1.8vw, 27px); }
+  @media (max-width: 767px) {
+    .editorial-result--visual > h3 { margin-inline: 24px; }
+    .editorial-result--visual > p { margin-inline: 24px; }
+  }
+</style>

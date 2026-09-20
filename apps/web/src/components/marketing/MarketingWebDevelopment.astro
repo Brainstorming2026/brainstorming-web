@@ -58,7 +58,7 @@ import WebClientCarousel from './WebClientCarousel.astro'
 </style>
 
 <script>
-import { ensureGsap, registerMotion } from '@/lib/motion'
+import { ensureGsap, registerMotion, revealWindow } from '@/lib/motion'
 
 registerMotion(() => {
   const root = document.querySelector<HTMLElement>('[data-web-development]')
@@ -82,7 +82,34 @@ registerMotion(() => {
         }),
       })
     }
-    root.querySelectorAll('[data-web-reveal], [data-web-visual]').forEach((element) => {
+    // El carrusel de clientes no tenía entrada: la cabecera entra y el
+    // viewport se descubre como ventana. El auto-scroll lo maneja su propio
+    // script, este gesto solo lo presenta.
+    const clients = document.querySelector<HTMLElement>('[data-web-clients]')
+    if (clients) {
+      const heading = clients.querySelector<HTMLElement>('.clients-heading')
+      if (heading) {
+        gsap.from(heading.querySelectorAll('h3, p'), {
+          autoAlpha: 0,
+          yPercent: 45,
+          duration: 0.75,
+          stagger: 0.11,
+          ease: 'expo.out',
+          clearProps: 'transform,opacity,visibility',
+          scrollTrigger: { trigger: clients, start: 'top 88%', once: true },
+        })
+      }
+      const viewport = clients.querySelector<HTMLElement>('.clients-viewport')
+      if (viewport)
+        revealWindow(viewport, { direction: 'left', zoom: 1, start: 'top 88%' })
+    }
+
+    // El marco de la imagen se abre como ventana en vez del y:22 anterior.
+    const frame = root.querySelector<HTMLElement>('.web-image-frame')
+    if (frame)
+      revealWindow(frame, { direction: 'right', zoom: 1.1, start: 'top 86%' })
+
+    root.querySelectorAll('[data-web-reveal]').forEach((element) => {
       gsap.from(element, {
         y: 22,
         opacity: 0,

@@ -1,0 +1,73 @@
+---
+/**
+ * Coreografía de scroll de la home. Vive aparte de las secciones porque su
+ * trabajo es justamente el que ninguna sección puede hacer sola: la relación
+ * entre una sección y la siguiente.
+ *
+ * Reparto de responsabilidades:
+ * - Cada sección → su propia entrada al hacer scroll (revealCards).
+ * - `data-speed` en el markup → parallax por elemento (desktop, ScrollSmoother).
+ * - Este componente → lo transversal de la home: zooms atados al scroll y el
+ *   cierre del CTA. Los hover de todo el sitio viven en common/SiteMotion.astro.
+ */
+---
+
+<script>
+import { registerMotion } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    // 1. Las portadas de los casos entran con un zoom que se resuelve solo al
+    //    quedar centradas — el gesto de "la imagen se acomoda", no de "salta".
+    document.querySelectorAll<HTMLElement>('.editorial-result--visual .result-cover').forEach((cover) => {
+      gsap.fromTo(
+        cover,
+        { scale: 1.12 },
+        {
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: cover, start: 'top bottom', end: 'top 35%', scrub: 0.8 },
+        },
+      )
+    })
+
+    // 2. El grid de logos se desliza en bloque, apenas: lo lee como plano de
+    //    fondo frente al ROAS que viene antes.
+    const logos = document.getElementById('clientes-grid')
+    if (logos) {
+      gsap.fromTo(
+        logos,
+        { yPercent: 5 },
+        {
+          yPercent: -5,
+          ease: 'none',
+          scrollTrigger: { trigger: logos, start: 'top bottom', end: 'bottom top', scrub: 1 },
+        },
+      )
+    }
+  })
+
+  // 3. Cierre: la tarjeta del CTA se "monta" con el scroll. Solo desktop — en
+  //    móvil el gesto se come demasiada pantalla.
+  media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+    const cta = document.querySelector<HTMLElement>('.editorial-cta-final')
+    if (!cta)
+      return
+
+    gsap.fromTo(
+      cta,
+      { scale: 0.93, yPercent: 4 },
+      {
+        scale: 1,
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: { trigger: cta, start: 'top 85%', end: 'top 25%', scrub: 0.9 },
+      },
+    )
+  })
+})
+</script>

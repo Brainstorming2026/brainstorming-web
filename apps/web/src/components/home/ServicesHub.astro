@@ -7,7 +7,7 @@ import StrategyArt from './StrategyArt.astro'
 const services = siteServices.flatMap(service => service.home ? [{ ...service.home, href: service.href }] : []).sort((a, b) => a.order - b.order)
 ---
 
-<section class="editorial-section premium-services" aria-labelledby="home-services-title">
+<section id="servicios" class="editorial-section premium-services" aria-labelledby="home-services-title">
   <div class="editorial-container">
     <div class="editorial-section-header">
       <h2 id="home-services-title" class="editorial-title" data-editorial-heading>{homeContent.services.title}</h2>
@@ -15,7 +15,7 @@ const services = siteServices.flatMap(service => service.home ? [{ ...service.ho
     </div>
     <ul class="service-showcase">
       {services.map((service, index) => (
-        <li class:list={['service-tile', { 'service-tile--anchor': index === 0 }]}>
+        <li class:list={['service-tile', { 'service-tile--anchor': index === 0 }]} data-speed={['1', '1.05', '0.96', '1.04', '0.97'][index]}>
           <a href={service.href}>
             <div class="service-art"><StrategyArt index={[4, 1, 0, 2, 3][index]} /></div>
             <div class="service-copy">
@@ -52,15 +52,33 @@ const services = siteServices.flatMap(service => service.home ? [{ ...service.ho
 </style>
 
 <script>
-import { registerMotion } from '@/lib/motion'
+import { registerMotion, revealCards } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    document.querySelectorAll('.service-tile').forEach((tile) => {
-      gsap.from(tile, { y: 28, autoAlpha: 0, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: tile, start: 'top 90%', once: true } })
+    // La entrada va en el <a>, no en el <li>: el <li> lleva data-speed y
+    // ScrollSmoother escribe su propio transform ahí. Animar ambos (y más aún
+    // con clearProps: 'transform') se pisaría con el parallax.
+    revealCards(document.querySelectorAll('.service-tile > a'), {
+      trigger: document.querySelector('.service-showcase'),
+      intensity: 1.15,
+      stagger: 0.1,
+      inner: '.service-kicker, h3, p',
+    })
+
+    // La ilustración de cada tile se acomoda después del card: refuerza la
+    // sensación de que la tarjeta "se arma" en pantalla.
+    gsap.from('.service-art', {
+      autoAlpha: 0,
+      scale: 0.82,
+      duration: 1,
+      stagger: 0.1,
+      ease: 'expo.out',
+      clearProps: 'transform,opacity,visibility',
+      scrollTrigger: { trigger: '.service-showcase', start: 'top 78%', once: true },
     })
   })
   media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {

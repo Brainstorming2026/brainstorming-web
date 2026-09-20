@@ -25,7 +25,15 @@ class InnovationProcess extends HTMLElement {
         if (focus)
           tabs[index].focus()
         if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          tween = gsap.fromTo(panels[index].querySelector('.in-phase-content'), { opacity: 0.4, y: 10 }, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out', clearProps: 'opacity,transform' })
+          // Por partes en vez de un bloque: el contenido de la fase "entra",
+          // no aparece.
+          const content = panels[index].querySelector<HTMLElement>('.in-phase-content')
+          const parts = content?.querySelectorAll<HTMLElement>(':scope > *')
+          tween = gsap.fromTo(
+            parts && parts.length > 0 ? parts : content,
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'expo.out', clearProps: 'opacity,transform' },
+          )
         }
       }
       this.classList.add('in-desktop-process')

@@ -8,10 +8,12 @@ import { homeContent } from '@/data/transversal-content'
 
 <section id="hero" class="bg-white">
   <div
-    class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:gap-16 lg:px-24 lg:py-24"
+    class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 pb-16 pt-6 lg:grid-cols-2 lg:gap-16 lg:px-24 lg:pb-24 lg:pt-10"
   >
     <!-- Titular -->
-    <div class="min-w-0">
+    <!-- data-speed solo lo lee ScrollSmoother (desktop): el texto avanza algo
+         más rápido que el scroll y el video se queda atrás → profundidad. -->
+    <div class="min-w-0" data-speed="1.06">
       <h1
         id="hero-headline"
         data-animate
@@ -29,6 +31,7 @@ import { homeContent } from '@/data/transversal-content'
       id="hero-video"
       data-id={youtubeId}
       data-animate="circle"
+      data-speed="0.9"
       class="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg"
     >
       <Image

@@ -10,12 +10,14 @@ import roastSiemens from '@/assets/roast/roast-siemens.webp'
 
 const youtubeId = 'm9yNCH4-MB4'
 
+// `value` se anima con countUp, así que se guarda el número y el sufijo por
+// separado: el contador necesita un elemento que contenga solo la cifra.
 const roas = [
-  { logo: roastBrainstorming, name: 'Brainstorming', value: '20:1' },
-  { logo: roastSiemens, name: 'Siemens', value: '5.50' },
-  { logo: roastGris, name: 'Grin', value: '76:1' },
-  { logo: roastAlumspazio, name: 'AlumSpazio', value: '90:1' },
-  { logo: roastHelena, name: 'Helena', value: '8:1' },
+  { logo: roastBrainstorming, name: 'Brainstorming', value: 20, suffix: ':1' },
+  { logo: roastSiemens, name: 'Siemens', value: 5.5, suffix: '', decimals: 2 },
+  { logo: roastGris, name: 'Grin', value: 76, suffix: ':1' },
+  { logo: roastAlumspazio, name: 'AlumSpazio', value: 90, suffix: ':1' },
+  { logo: roastHelena, name: 'Helena', value: 8, suffix: ':1' },
 ]
 ---
 
@@ -85,7 +87,12 @@ const roas = [
               class="w-full max-w-[220px]"
             />
             <p class="mt-5 text-center font-heading text-2xl font-bold leading-snug">
-              ROAS:<br />{r.value}
+              ROAS:<br /><span
+                class="roas-value"
+                data-roas-to={r.value}
+                data-roas-suffix={r.suffix}
+                data-roas-decimals={r.decimals ?? 0}
+                         >{r.decimals ? r.value.toFixed(r.decimals) : r.value}{r.suffix}</span>
             </p>
           </div>
         ))
@@ -93,6 +100,12 @@ const roas = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Cifras tabulares: el contador cambia de ancho en cada frame y sin esto
+     el texto "baila" mientras sube. */
+  .roas-value { font-variant-numeric: tabular-nums; }
+</style>
 
 <script>
 document.addEventListener('astro:page-load', () => {
@@ -105,10 +118,27 @@ document.addEventListener('astro:page-load', () => {
 </script>
 
 <script>
-import { registerMotion, staggerGrid } from '@/lib/motion'
+import { countUp, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
-  const items = document.querySelectorAll('#roas-grid .roas-item')
-  staggerGrid(items, { variant: 'wipe' })
+  const headline = document.querySelector<HTMLElement>('#roas h2')
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+
+  revealCards(document.querySelectorAll('#roas-grid .roas-item'), {
+    trigger: document.getElementById('roas-grid'),
+    intensity: 1.15,
+    stagger: 0.1,
+  })
+
+  document.querySelectorAll<HTMLElement>('.roas-value').forEach((value) => {
+    countUp(value, {
+      to: Number(value.dataset.roasTo),
+      decimals: Number(value.dataset.roasDecimals ?? 0),
+      suffix: value.dataset.roasSuffix ?? '',
+      duration: 1.6,
+      start: 'top 88%',
+    })
+  })
 })
 </script>

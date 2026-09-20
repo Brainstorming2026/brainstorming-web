@@ -10,19 +10,22 @@ import StrategyArt from './StrategyArt.astro'
 <section id="problemas" class="text-white">
   <!-- Ola superior: transparente arriba revela el hero blanco, navy abajo funde
        con la sección. El chevron se superpone al centro. -->
-  <div class="relative">
+  <div class="relative wave-clip">
     <Image
       src={serviceUpBg}
       alt=""
       aria-hidden="true"
+      data-wave
       class="block w-full select-none"
     />
-    <Image
-      src={serviceArrow}
-      alt=""
-      aria-hidden="true"
-      class="chevron-bob absolute left-1/2 top-[25%] w-12 select-none md:w-20"
-    />
+    <div data-speed="1.22" class="chevron-holder absolute left-1/2 top-[25%] w-12 md:w-20">
+      <Image
+        src={serviceArrow}
+        alt=""
+        aria-hidden="true"
+        class="chevron-bob block w-full select-none"
+      />
+    </div>
   </div>
 
   <div class="-mt-[2px] bg-navy">
@@ -43,7 +46,7 @@ import StrategyArt from './StrategyArt.astro'
         {
           homeContent.problems.items.map((card, index) => (
             <div class="problemas-card">
-              <div class="problem-art"><StrategyArt index={index} /></div>
+              <div class="problem-art" data-speed={index % 2 === 0 ? '0.95' : '1.05'}><StrategyArt index={index} /></div>
               <h3>{['Ventas impredecibles', 'Un equipo sin sistema', 'IA sin dirección', 'Decisiones sin datos', 'Crecimiento sin un plan'][index]}</h3>
               <p>{card.text}</p>
             </div>
@@ -52,7 +55,7 @@ import StrategyArt from './StrategyArt.astro'
       </div>
 
       <!-- Cierre -->
-      <div class="mt-16 flex flex-col items-center text-center">
+      <div class="problemas-closing mt-16 flex flex-col items-center text-center">
         <p class="max-w-3xl font-heading text-xl font-bold leading-relaxed sm:text-2xl">
           {homeContent.problems.closing}
         </p>
@@ -74,6 +77,10 @@ import StrategyArt from './StrategyArt.astro'
 </section>
 
 <style>
+  /* La ola se desplaza en contra del scroll (efecto cortina). El overflow y el
+     scale 1.16 garantizan que el recorrido nunca descubra borde blanco. */
+  .wave-clip { overflow: hidden; }
+  .wave-clip [data-wave] { will-change: transform; }
   .problem-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; margin-top: 54px; }
   .problemas-card { min-width: 0; }
   .problem-art { width: 100%; max-width: 200px; margin: 0 auto 24px; }
@@ -89,28 +96,29 @@ import StrategyArt from './StrategyArt.astro'
   }
   /* Flecha con animación de "respiración" (bob vertical). Mantiene el centrado
      horizontal dentro del propio transform. */
+  .chevron-holder { margin-left: -1.5rem; }
+  @media (min-width: 768px) { .chevron-holder { margin-left: -2.5rem; } }
   .chevron-bob {
     animation: chevron-bob 1.8s ease-in-out infinite;
   }
   @keyframes chevron-bob {
     0%,
     100% {
-      transform: translate(-50%, 0);
+      transform: translateY(0);
     }
     50% {
-      transform: translate(-50%, 8px);
+      transform: translateY(8px);
     }
   }
   @media (prefers-reduced-motion: reduce) {
     .chevron-bob {
       animation: none;
-      transform: translateX(-50%);
     }
   }
 </style>
 
 <script>
-import { registerMotion } from '@/lib/motion'
+import { parallax, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
@@ -120,12 +128,35 @@ registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    gsap.from(section.querySelector('h2'), { y: 24, autoAlpha: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: section.querySelector('h2'), start: 'top 88%', once: true } })
-    section.querySelectorAll('.problemas-card').forEach((card, index) => {
-      gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: card, start: 'top 88%', once: true } })
-        .from(card.querySelector('.problem-art'), { y: 25, scale: 0.94, autoAlpha: 0, duration: 0.9 }, index * 0.05)
-        .from(card.querySelectorAll('h3, p'), { y: 14, autoAlpha: 0, stagger: 0.09, duration: 0.65 }, '<.18')
+    const wave = section.querySelector<HTMLElement>('[data-wave]')
+    if (wave)
+      parallax(wave, { distance: 14, scaleFrom: 1.16, trigger: wave.closest('.wave-clip'), scrub: 0.7 })
+
+    const headline = section.querySelector<HTMLElement>('h2')
+    if (headline)
+      splitHeadline(headline, { by: 'lines' })
+
+    // Las 5 cards entran como una secuencia, no como 5 apariciones sueltas.
+    revealCards(section.querySelectorAll('.problemas-card'), {
+      trigger: section.querySelector('.problem-grid'),
+      intensity: 1.2,
+      stagger: 0.13,
+      inner: 'h3, p',
     })
+
+    // Cierre: el remate y el CTA entran después de las cards, no a la vez.
+    const closing = section.querySelector<HTMLElement>('.problemas-closing')
+    if (closing) {
+      gsap.from(closing.children, {
+        autoAlpha: 0,
+        yPercent: 60,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: 'expo.out',
+        clearProps: 'transform,opacity,visibility',
+        scrollTrigger: { trigger: closing, start: 'top 88%', once: true },
+      })
+    }
   })
 })
 </script>

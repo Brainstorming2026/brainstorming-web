@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets'
-import circle from '@/assets/nosotros/nosotros-circle.png'
 import figure1 from '@/assets/nosotros/nosotros-figure1.png'
 import figure2 from '@/assets/nosotros/nosotros-figure2.png'
 import figure3 from '@/assets/nosotros/nosotros-figure3.png'
@@ -28,32 +27,63 @@ const pillars = [
 ]
 ---
 
-<section>
-  <!-- Part 1: Dark section -->
-  <div class="bg-gradient-to-b from-navy to-dark">
-    <div class="mx-auto max-w-[1512px] px-6 py-20 lg:px-24">
-      <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div id="howwedo-text">
-          <h2 class="font-heading text-[40px] font-bold text-white sm:text-[50px]">
-            ¿Cómo lo hacemos?
-          </h2>
+<section aria-labelledby="how-we-do-title">
+  <div class="method-section">
+    <div class="editorial-container">
+      <header class="method-heading">
+        <h2 id="how-we-do-title" class="method-label">{aboutContent.methodology.title}</h2>
+        <p class="method-question">Cada proyecto empieza<br />con una <span>buena pregunta.</span></p>
+        <p class="method-context">¿Cuál es el problema real?</p>
+      </header>
 
-          <p class="methodology-opening">{aboutContent.methodology.opening}</p>
-          <div class="methodology-copy">
-            {aboutContent.methodology.paragraphs.map(paragraph => <p>{paragraph}</p>)}
-          </div>
-
-        </div>
-
-        <div id="howwedo-circle-wrap" class="flex justify-center">
-          <Image
-            src={circle}
-            alt="Metodologías que combinamos: Design Thinking, Lean Startup, Agile, Kanban, Scrum y Six Sigma"
-            class="methodology-wheel w-full max-w-[440px]"
-            loading="lazy"
-          />
-        </div>
-      </div>
+      <ol class="method-scenes" aria-label="Nuestra metodología">
+        {aboutContent.methodology.paragraphs.map((paragraph, index) => (
+          <li class:list={['method-scene', `method-scene-${index}`]}>
+            <div class="scene-copy">
+              <span class="scene-kicker"><span>0{index + 1}</span> {['El punto de partida', 'La decisión estratégica', 'De la estrategia a la acción'][index]}</span>
+              <h3>{['Escuchar.\nEntender.', 'Elegir dónde\nactuar.', 'Hacer que\nsuceda.'][index]}</h3>
+              <p>{paragraph}</p>
+            </div>
+            <div class="scene-art" aria-hidden="true">
+              {index === 0 && (
+<div class="diagnosis-art">
+                <span class="art-caption">Diagnóstico profundo</span>
+                <svg class="diagnosis-links" viewBox="0 0 500 340" fill="none" preserveAspectRatio="none">
+                  <path class="art-path" d="M100 68C300 68 180 170 355 170M80 170H355M100 272C300 272 180 170 355 170" />
+                </svg>
+                <span class="signal signal-market">Mercado</span>
+                <span class="signal signal-client">Clientes</span>
+                <span class="signal signal-business">Negocio</span>
+                <div class="diagnosis-focus"><span>El problema</span><strong>real.</strong><span class="focus-cross focus-cross-top">+</span><span class="focus-cross focus-cross-bottom">+</span></div>
+                <span class="art-footnote">Escuchar también lo que no se dice.</span>
+              </div>
+)}
+              {index === 1 && (
+<div class="matrix-art">
+                <span class="art-caption">Matriz Impacto–Esfuerzo</span>
+                <span class="matrix-y">Impacto</span>
+                <div class="matrix-grid">
+                  <div class="matrix-quadrant matrix-priority"><span>Priorizar</span><span class="matrix-point point-one"></span><span class="matrix-point point-two"></span><span class="matrix-point point-three"></span><span class="matrix-priority-arrow">↗</span></div>
+                  <div class="matrix-quadrant"><span>Planificar</span><span class="matrix-point point-four"></span></div>
+                  <div class="matrix-quadrant"><span>Evaluar</span></div>
+                  <div class="matrix-quadrant"><span>Reconsiderar</span><span class="matrix-point point-five"></span></div>
+                </div>
+                <span class="matrix-x">Esfuerzo <span>→</span></span>
+              </div>
+)}
+              {index === 2 && (
+<div class="execution-art">
+                <span class="art-caption">Ejecución y acompañamiento</span>
+                <div class="execution-row"><span>Estrategia</span><span class="execution-bar execution-bar-one"><i></i></span></div>
+                <div class="execution-row"><span>Implementación</span><span class="execution-bar execution-bar-two"><i></i></span></div>
+                <div class="execution-row"><span>Medición</span><span class="execution-bar execution-bar-three"><i></i></span></div>
+                <div class="execution-outcome"><span>Un diagnóstico tiene valor<br />cuando se lleva a la acción.</span><span class="execution-arrow">↗</span></div>
+              </div>
+)}
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
 
@@ -65,12 +95,14 @@ const pillars = [
         {
           pillars.map(pillar => (
             <div class="howwedo-pillar">
-              <Image
-                src={pillar.image}
-                alt={pillar.title}
-                class="pillar-image mx-auto h-[190px] w-auto object-contain"
-                loading="lazy"
-              />
+              <div class="pillar-frame" data-pillar-frame>
+                <Image
+                  src={pillar.image}
+                  alt={pillar.title}
+                  class="pillar-image mx-auto h-[190px] w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
               <h3 class="mt-6 font-heading text-[22px] font-bold text-ink">
                 {pillar.title}
               </h3>
@@ -86,34 +118,152 @@ const pillars = [
 </section>
 
 <style>
-  .methodology-opening { margin-top: 32px; max-width: 32ch; font: 500 clamp(22px, 2.2vw, 30px)/1.4 var(--font-heading); letter-spacing: -.025em; color: white; }
-  .methodology-copy { margin-top: 28px; color: #dce3f1; font-size: 16px; line-height: 1.85; }
-  .methodology-copy p + p { margin-top: 20px; }
-  .methodology-wheel { height: auto; }
+  .method-section { background: #16274e; color: white; padding-block: clamp(64px, 7vw, 104px) 32px; overflow: clip; }
+  .method-heading { position: relative; padding-bottom: clamp(48px, 6vw, 88px); }
+  .method-label { font-size: 14px; color: #d7dfee; margin-bottom: 32px; }
+  .method-question { font: 500 clamp(38px, 5.1vw, 76px)/1.08 var(--font-heading); letter-spacing: -.05em; }
+  .method-question > span { color: #cdaafc; }
+  .method-context { margin-top: 28px; color: #d7dfee; font-size: clamp(18px, 1.7vw, 24px); }
+  .method-scenes { list-style: none; }
+  .method-scene { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(48px, 8vw, 120px); padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid #ffffff30; }
+  .scene-kicker { display: flex; align-items: center; gap: 18px; font-size: 12px; color: #d7dfee; }
+  .scene-kicker > span { color: #cdaafc; font-variant-numeric: tabular-nums; }
+  .scene-copy h3 { white-space: pre-line; margin-top: 30px; font: 500 clamp(36px, 4vw, 58px)/1.05 var(--font-heading); letter-spacing: -.045em; }
+  .scene-copy > p { margin-top: 24px; max-width: 49ch; font-size: 17px; line-height: 1.8; color: #d1daeb; }
+  .scene-art { min-width: 0; }
+  .art-caption { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+  .diagnosis-art { position: relative; height: 370px; }
+  .diagnosis-art .art-caption { color: #cdaafc; }
+  .diagnosis-links { position: absolute; inset: 24px 0 0; width: 100%; height: 320px; }
+  .art-path { stroke: #b184f1; stroke-width: 1; }
+  .signal { position: absolute; left: 0; font-size: 17px; background: #16274e; padding: 12px 20px 12px 0; }
+  .signal-market { top: 64px; }
+  .signal-client { top: 158px; }
+  .signal-business { top: 254px; }
+  .diagnosis-focus { position: absolute; top: 116px; right: 0; width: 44%; padding: 26px 18px; background: #16274e; border: 1px solid #a17ac7; text-align: center; }
+  .diagnosis-focus > span:first-child { font-size: 14px; color: #d7dfee; }
+  .diagnosis-focus strong { display: block; font-size: clamp(38px, 4vw, 58px); letter-spacing: -.04em; line-height: 1.15; font-weight: 500; color: #cdaafc; }
+  .focus-cross { position: absolute; color: #cdaafc; font-size: 20px; line-height: 1; }
+  .focus-cross-top { top: -11px; right: -7px; }
+  .focus-cross-bottom { bottom: -9px; left: -7px; }
+  .art-footnote { position: absolute; bottom: 0; left: 0; font-size: 12px; color: #d7dfee; }
+  .matrix-art { position: relative; padding: 32px 30px 24px 46px; background: #e8ecf5; color: #16274e; transform: rotate(-2deg); }
+  .matrix-art .art-caption { margin-bottom: 28px; }
+  .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #aebbd2; }
+  .matrix-quadrant { position: relative; min-height: 120px; padding: 12px; font-size: 11px; }
+  .matrix-quadrant:nth-child(odd) { border-right: 1px solid #aebbd2; }
+  .matrix-quadrant:nth-child(-n+2) { border-bottom: 1px solid #aebbd2; }
+  .matrix-priority { background: #7d44e4; color: white; }
+  .matrix-point { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: #7687a8; }
+  .matrix-priority .matrix-point { background: white; }
+  .point-one { left: 26%; top: 46%; }
+  .point-two { left: 44%; top: 65%; }
+  .point-three { left: 63%; top: 40%; }
+  .point-four { left: 62%; top: 64%; }
+  .point-five { left: 39%; top: 56%; }
+  .matrix-priority-arrow { position: absolute; bottom: 7px; right: 12px; font-size: 24px; }
+  .matrix-y { position: absolute; left: 15px; top: 48%; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; }
+  .matrix-x { display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; }
+  .execution-art { padding: 36px 0; }
+  .execution-art .art-caption { margin-bottom: 44px; color: #cdaafc; }
+  .execution-row { padding-block: 20px; border-top: 1px solid #ffffff25; }
+  .execution-row > span:first-child { display: block; font-size: 12px; color: #d7dfee; margin-bottom: 14px; }
+  .execution-bar { display: block; position: relative; height: 22px; transform-origin: left; }
+  .execution-bar-one { width: 40%; background: #647ba9; }
+  .execution-bar-two { width: 55%; margin-left: 25%; background: #9c6ce8; }
+  .execution-bar-three { width: 30%; margin-left: 70%; background: #d1b7fa; }
+  .execution-bar i { position: absolute; right: 5px; top: 8px; width: 6px; height: 6px; border: 1px solid #16274e; border-radius: 50%; }
+  .execution-outcome { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 20px; font-size: 14px; line-height: 1.6; color: #d7dfee; }
+  .execution-arrow { font-size: 48px; color: #cdaafc; }
+  @media (max-width: 767px) {
+    .method-question { font-size: clamp(35px, 8.8vw, 58px); }
+    .method-question br { display: none; }
+    .method-label { margin-bottom: 24px; }
+    .method-context { font-size: 17px; }
+    .method-scene { grid-template-columns: 1fr; gap: 32px; padding-block: 40px; }
+    .scene-copy h3 { font-size: 40px; margin-top: 22px; }
+    .scene-copy > p { font-size: 16px; line-height: 1.7; margin-top: 20px; }
+    .diagnosis-art { height: 280px; }
+    .diagnosis-links { height: 240px; }
+    .signal { font-size: 15px; }
+    .signal-market { top: 46px; }
+    .signal-client { top: 116px; }
+    .signal-business { top: 190px; }
+    .diagnosis-focus { top: 83px; padding: 20px 12px; }
+    .diagnosis-focus strong { font-size: 40px; }
+    .matrix-art { margin: 8px 4px; padding: 24px 22px 18px 38px; }
+    .matrix-quadrant { min-height: 108px; padding: 10px; }
+    .execution-art { padding-block: 8px; }
+  }
   .pillars-section { padding-block: clamp(64px, 7vw, 104px); }
   .pillars-heading { margin-bottom: 48px; }
   .pillars-heading > p { font-size: 12px; color: #6740b2; margin-bottom: 16px; }
   .pillars-heading h2 { font: 600 clamp(30px, 3vw, 44px)/1.12 var(--font-heading); letter-spacing: -.04em; }
   .howwedo-pillar { border-bottom: 1px solid #dfe3eb; padding-bottom: 28px; }
-  .pillar-image { margin-bottom: 32px; max-width: 100%; }
-  @media (max-width: 767px) { .methodology-wheel { max-width: 320px; } .pillar-image { height: 160px; } }
+  /* El marco recorta el zoom del gesto "ventana" (ver revealWindow). */
+  .pillar-frame { overflow: hidden; margin-bottom: 32px; }
+  .pillar-image { max-width: 100%; }
+  @media (max-width: 767px) { .pillar-image { height: 160px; } }
 </style>
 <script>
-import { ensureGsap, registerMotion } from '@/lib/motion'
+import { ensureGsap, registerMotion, revealCards, revealWindow, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    const text = document.getElementById('howwedo-text')
-    if (text)
-      gsap.from(text.children, { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: text, start: 'top 85%', once: true } })
-    const circle = document.getElementById('howwedo-circle-wrap')
-    if (circle)
-      gsap.from(circle, { scale: 0.96, autoAlpha: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: circle, start: 'top 85%', once: true } })
-    document.querySelectorAll('.howwedo-pillar').forEach((pillar) => {
-      gsap.from(pillar, { y: 24, autoAlpha: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: pillar, start: 'top 88%', once: true } })
-    })
+    const section = document.querySelector('.method-section')
+    if (section) {
+      gsap.from(section.querySelectorAll('.method-heading > *'), { autoAlpha: 0, y: 28, stagger: 0.12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 78%', once: true } })
+      section.querySelectorAll('.method-scene').forEach((scene) => {
+        const timeline = gsap.timeline({ defaults: { duration: 0.9, ease: 'power3.out' }, scrollTrigger: { trigger: scene, start: 'top 78%', once: true } })
+        timeline.from(scene.querySelectorAll('.scene-copy > *'), { autoAlpha: 0, y: 24, stagger: 0.12 }, 0)
+        // Give each illustration its own trigger: on mobile it follows the copy.
+        const art = scene.querySelector('.scene-art')
+        if (!art)
+          return
+        const drawing = gsap.timeline({ defaults: { duration: 0.9, ease: 'power3.out' }, scrollTrigger: { trigger: art, start: 'top 85%', once: true } })
+        drawing.from(art, { autoAlpha: 0, y: 24 }, 0)
+        const signals = art.querySelectorAll('.signal')
+        if (signals.length) {
+          drawing.from(signals, { x: -16, autoAlpha: 0, stagger: 0.12 }, 0.1)
+          art.querySelectorAll<SVGPathElement>('.art-path').forEach((path) => {
+            const length = path.getTotalLength()
+            drawing.fromTo(path, { strokeDasharray: length, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1.3 }, 0.25)
+          })
+          drawing.from(art.querySelector('.diagnosis-focus'), { scale: 0.9, autoAlpha: 0 }, 0.7)
+        }
+        const matrix = art.querySelector('.matrix-art')
+        if (matrix) {
+          drawing.from(matrix, { rotation: 2, y: 16 }, 0)
+          drawing.from(art.querySelectorAll('.matrix-point'), { scale: 0, stagger: 0.1, transformOrigin: 'center' }, 0.4)
+        }
+        const bars = art.querySelectorAll('.execution-bar')
+        if (bars.length) {
+          drawing.from(bars, { scaleX: 0, stagger: 0.2, duration: 1.1 }, 0.15)
+          drawing.from(art.querySelector('.execution-outcome'), { autoAlpha: 0, y: 12 }, 0.75)
+        }
+      })
+    }
+    // Los 3 pilares entran como una secuencia y cada ilustración se descubre
+    // con el gesto "ventana": la máscara se abre mientras la imagen sale del
+    // zoom. Mismo gesto que las portadas de proyectos.
+    const pillars = document.getElementById('howwedo-pillars')
+    if (pillars) {
+      revealCards(pillars.querySelectorAll('.howwedo-pillar'), {
+        trigger: pillars,
+        intensity: 1.1,
+        stagger: 0.13,
+        inner: 'h3, p',
+      })
+      pillars.querySelectorAll<HTMLElement>('[data-pillar-frame]').forEach((frame, index) => {
+        revealWindow(frame, { direction: index % 2 === 0 ? 'left' : 'right', start: 'top 82%' })
+      })
+    }
+
+    const heading = document.querySelector<HTMLElement>('.pillars-heading h2')
+    if (heading)
+      splitHeadline(heading, { by: 'lines' })
   })
 })
 </script>

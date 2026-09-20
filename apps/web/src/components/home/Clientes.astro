@@ -6,7 +6,7 @@ import { clienteLogos } from '@/assets/clientes'
 <!-- Nuestros clientes -->
 <section class="bg-white">
   <div class="mx-auto max-w-[1512px] px-6 py-16 lg:px-24 lg:py-20">
-    <h2 class="text-center font-heading text-3xl font-bold text-ink sm:text-[35px]">
+    <h2 id="clientes-title" class="text-center font-heading text-3xl font-bold text-ink sm:text-[35px]">
       Nuestros clientes:
     </h2>
 
@@ -33,11 +33,36 @@ import { clienteLogos } from '@/assets/clientes'
   </div>
 </section>
 
+<style>
+  /* Al posarte sobre un logo, el resto se apaga: el grid deja de ser una
+     mancha uniforme y se lee cliente por cliente. */
+  /* El hover va sobre la <img>, no sobre el wrapper: el wrapper es el que
+     anima GSAP en la entrada y una transition de CSS sobre las mismas
+     propiedades arrastraría ese tween. */
+  @media (hover: hover) and (pointer: fine) {
+    #clientes-grid .cliente-logo img { transition: opacity 300ms ease-out, transform 300ms cubic-bezier(.16,1,.3,1); }
+    #clientes-grid:hover .cliente-logo img { opacity: .35; }
+    #clientes-grid .cliente-logo:hover img { opacity: 1; transform: scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #clientes-grid .cliente-logo img { transition: none; }
+  }
+</style>
+
 <script>
-import { registerMotion, staggerGrid } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
-  const logos = document.querySelectorAll('#clientes-grid .cliente-logo')
-  staggerGrid(logos, { variant: 'wipe' })
+  const headline = document.querySelector<HTMLElement>('#clientes-title')
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+
+  // Intensidad baja: son 27 logos; el mismo gesto de las cards a plena fuerza
+  // sería ruido. Aquí solo se necesita el barrido.
+  revealCards(document.querySelectorAll('#clientes-grid .cliente-logo'), {
+    trigger: document.getElementById('clientes-grid'),
+    intensity: 0.6,
+    stagger: 0.04,
+  })
 })
 </script>

@@ -1,4 +1,4 @@
-import { resourceLinks, siteServices } from './site-navigation'
+import { resourceLinks, siteRoutes, siteServices } from './site-navigation'
 
 export interface NavLink {
   label: string
@@ -22,5 +22,6 @@ export const navLinks: NavLink[] = [
     dropdown: true,
     children: resourceLinks,
   },
+  { label: 'Contacto', href: siteRoutes.contact },
   { label: 'US Site', href: 'https://us.brainstorming.la/' },
 ]

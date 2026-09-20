@@ -1,3 +1,7 @@
 ---
+// Redirección 301 del slug antiguo (briefing §1). Prerenderizada, igual que
+// inbound-sales: si no, Vercel resuelve la redirección en cada request.
+export const prerender = true
+
 return Astro.redirect('/soluciones/automatizacion-ia', 301)
 ---

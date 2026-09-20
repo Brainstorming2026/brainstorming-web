@@ -2,6 +2,8 @@
 import { ClientRouter, fade } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
 import Navbar from '@/components/common/Navbar.astro'
+import SiteMotion from '@/components/common/SiteMotion.astro'
+import SmoothScroll from '@/components/common/SmoothScroll.astro'
 import SplashScreen from '@/components/common/SplashScreen.astro'
 import SolutionMotion from '@/components/solutions/SolutionMotion.astro'
 import '@/styles/global.css'
@@ -39,12 +41,22 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
     <ClientRouter />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
+    <!-- Fuera del wrapper: ScrollSmoother transforma #smooth-content, así que
+         cualquier elemento fixed/sticky que viva dentro deja de estarlo. -->
     <SplashScreen />
     {showNavbar && <Navbar />}
-    <main data-solution-page={isSolution ? '' : undefined} transition:animate={fade({ duration: '0.4s' })}>
-      <slot />
-    </main>
-    {isSolution && <SolutionMotion />}
-    <Footer curveBg={footerCurveBg} />
+
+    <div id="smooth-wrapper">
+      <div id="smooth-content" class:list={{ 'pt-20': showNavbar }}>
+        <main data-solution-page={isSolution ? '' : undefined} transition:animate={fade({ duration: '0.4s' })}>
+          <slot />
+        </main>
+        {isSolution && <SolutionMotion />}
+        <Footer curveBg={footerCurveBg} />
+      </div>
+    </div>
+
+    <SmoothScroll />
+    <SiteMotion />
   </body>
 </html>

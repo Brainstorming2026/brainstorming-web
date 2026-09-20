@@ -3,11 +3,18 @@ const SEEN_KEY = 'bs-splash-seen'
 ---
 
 <script is:inline define:vars={{ SEEN_KEY }}>
-  try {
-    if (localStorage.getItem(SEEN_KEY)) {
-      document.documentElement.classList.add('bs-splash-seen')
-    }
-  } catch (e) {}
+ try {
+   if (localStorage.getItem(SEEN_KEY)) {
+     document.documentElement.classList.add('bs-splash-seen')
+   }
+   else {
+     // Marca inline (antes de cualquier script de módulo) para que
+     // smooth-scroll.ts sepa que debe nacer pausado: con ScrollSmoother el
+     // `body { overflow: hidden }` del splash ya no bloquea el scroll.
+     document.documentElement.classList.add('bs-splash-active')
+   }
+ }
+ catch (e) {}
 </script>
 
 <style>
@@ -36,60 +43,67 @@ const SEEN_KEY = 'bs-splash-seen'
 </div>
 
 <script>
-  import { ease } from '@/lib/motion/config'
-  import { ensureGsap } from '@/lib/motion/gsap-client'
-  import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { ease } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
-  const SEEN_KEY = 'bs-splash-seen'
-  /** Los gifs están re-encodeados a una sola reproducción (sin loop), así que
-   * congelan en su frame final. El hold es corto porque ya no hay riesgo de
-   * ver el reinicio del loop. */
-  const HOLD_DESKTOP_MS = 1800
-  const HOLD_MOBILE_MS = 1600
-  const FADE_S = 0.6
+const SEEN_KEY = 'bs-splash-seen'
+/**
+ * Los gifs están re-encodeados a una sola reproducción (sin loop), así que
+ * congelan en su frame final. El hold es corto porque ya no hay riesgo de
+ * ver el reinicio del loop.
+ */
+const HOLD_DESKTOP_MS = 1800
+const HOLD_MOBILE_MS = 1600
+const FADE_S = 0.6
 
-  const seen = () => {
+function seen() {
+  try {
+    return localStorage.getItem(SEEN_KEY)
+  }
+  catch (e) {
+    return null
+  }
+}
+
+const splash = document.getElementById('splash-screen')
+if (splash && !seen()) {
+  document.body.style.overflow = 'hidden'
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches
+  const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
+
+  const dismiss = () => {
     try {
-      return localStorage.getItem(SEEN_KEY)
-    } catch (e) {
-      return null
+      localStorage.setItem(SEEN_KEY, '1')
     }
+    catch (e) {}
+    document.body.style.overflow = ''
+    splash.style.pointerEvents = 'none'
+    document.documentElement.classList.remove('bs-splash-active')
+    document.dispatchEvent(new CustomEvent('bs:splash-done'))
   }
 
-  const splash = document.getElementById('splash-screen')
-  if (splash && !seen()) {
-    document.body.style.overflow = 'hidden'
-    const isDesktop = window.matchMedia('(min-width: 768px)').matches
-    const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
-
-    const dismiss = () => {
-      try {
-        localStorage.setItem(SEEN_KEY, '1')
-      } catch (e) {}
-      document.body.style.overflow = ''
-      splash.style.pointerEvents = 'none'
+  window.setTimeout(() => {
+    if (prefersReducedMotion()) {
+      splash.style.display = 'none'
+      dismiss()
+      return
     }
-
-    window.setTimeout(() => {
-      if (prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    gsap.set(splash, { transformOrigin: '50% 50%' })
+    gsap.to(splash, {
+      opacity: 0,
+      scale: 1.04,
+      duration: FADE_S,
+      ease: ease.out,
+      onComplete: () => {
         splash.style.display = 'none'
         dismiss()
-        return
-      }
-      const { gsap } = ensureGsap()
-      gsap.set(splash, { transformOrigin: '50% 50%' })
-      gsap.to(splash, {
-        opacity: 0,
-        scale: 1.04,
-        duration: FADE_S,
-        ease: ease.out,
-        onComplete: () => {
-          splash.style.display = 'none'
-          dismiss()
-        },
-      })
-    }, holdMs)
-  } else if (splash) {
-    splash.style.display = 'none'
-  }
+      },
+    })
+  }, holdMs)
+}
+else if (splash) {
+  splash.style.display = 'none'
+}
 </script>

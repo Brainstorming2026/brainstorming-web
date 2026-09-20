@@ -1,0 +1,26 @@
+---
+/**
+ * Monta ScrollSmoother sobre el par #smooth-wrapper / #smooth-content que
+ * define Layout.astro. No renderiza nada: solo ciclo de vida.
+ *
+ * Va fuera de `registerMotion` a propósito — ese helper envuelve todo en un
+ * gsap.context() que se revierte en cada swap, y el smoother necesita su propio
+ * kill/create explícito para no dejar el <body> con la altura congelada.
+ */
+---
+
+<script>
+import { initSmoothScroll } from '@/lib/motion/smooth-scroll'
+
+let teardown: (() => void) | undefined
+
+document.addEventListener('astro:page-load', () => {
+  teardown?.()
+  teardown = initSmoothScroll()
+})
+
+document.addEventListener('astro:before-swap', () => {
+  teardown?.()
+  teardown = undefined
+})
+</script>

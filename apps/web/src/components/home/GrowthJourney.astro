@@ -38,7 +38,6 @@ const stages = [
       <p>Primero entendemos qué necesita tu negocio. Después conectamos estrategia, marketing, ventas y tecnología para hacerlo avanzar.</p>
     </div>
     <div class="journey-map">
-
       <ol>{stages.map((stage, index) => <li class="journey-stage" data-growth-reveal><a href={stage.href}><div class="stage-mark"><Icon name={stage.icon} aria-hidden="true" /><span>0{index + 1}</span></div><h3>{stage.title}</h3><p>{stage.text}</p><span class="stage-service">{stage.service}<Icon name="study/arrow-up-right" aria-hidden="true" /></span></a></li>)}</ol>
     </div>
     <p class="journey-note">El punto de partida y las soluciones se definen según el diagnóstico de tu empresa.</p>
@@ -85,19 +84,62 @@ const stages = [
 </style>
 
 <script>
-import { registerMotion } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    document.querySelectorAll<HTMLElement>('[data-growth-reveal]').forEach((element) => {
-      gsap.from(element, { autoAlpha: 0, y: 24, duration: 0.85, ease: 'power3.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
+    // Bloques de texto: entrada por líneas enmascaradas, más presente que un fade.
+    document.querySelectorAll<HTMLElement>('.ready-intro h2, #growth-journey-title').forEach((headline) => {
+      splitHeadline(headline, { by: 'lines' })
     })
-    const panel = document.querySelector('.ready-panel')
-    if (panel)
-      gsap.from(panel.querySelectorAll('.outcome-check'), { scale: 0.7, autoAlpha: 0, duration: 0.6, stagger: 0.14, ease: 'power3.out', scrollTrigger: { trigger: panel, start: 'top 78%', once: true } })
+
+    // .journey-stage y .ready-panel se excluyen porque tienen su propia entrada
+    // más abajo. Dos gsap.from() sobre el mismo elemento se pisan: el segundo
+    // toma como estado final el autoAlpha:0 que dejó el primero y el elemento
+    // se queda invisible.
+    document.querySelectorAll<HTMLElement>('[data-growth-reveal]:not(.journey-stage):not(.ready-panel)').forEach((element) => {
+      gsap.from(element, { autoAlpha: 0, yPercent: 8, duration: 0.95, ease: 'expo.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
+    })
+
+    // Las 5 etapas son el corazón de la sección: entran en cascada, con el
+    // icono desplegándose un poco después de la tarjeta.
+    revealCards(document.querySelectorAll('.journey-stage'), {
+      trigger: document.querySelector('.journey-map'),
+      intensity: 1.1,
+      stagger: 0.12,
+      inner: 'h3, p, .stage-service',
+    })
+
+    const marks = document.querySelectorAll('.journey-stage .stage-mark > svg')
+    if (marks.length > 0) {
+      gsap.from(marks, {
+        autoAlpha: 0,
+        scale: 0.55,
+        rotate: -8,
+        transformOrigin: '50% 50%',
+        duration: 0.85,
+        stagger: 0.12,
+        ease: 'back.out(1.6)',
+        clearProps: 'transform,opacity,visibility',
+        scrollTrigger: { trigger: '.journey-map', start: 'top 82%', once: true },
+      })
+    }
+
+    // El panel es la pieza con más peso visual de la sección: entra como una
+    // tarjeta que se arma — primero la lámina, después sus filas, y al final
+    // los checks con un rebote corto.
+    const panel = document.querySelector<HTMLElement>('.ready-panel')
+    if (panel) {
+      gsap.timeline({ defaults: { ease: 'expo.out' }, scrollTrigger: { trigger: panel, start: 'top 82%', once: true } })
+        .from(panel, { autoAlpha: 0, yPercent: 6, scale: 0.96, transformOrigin: '50% 0%', duration: 1 })
+        .from(panel.querySelector('.panel-heading'), { autoAlpha: 0, yPercent: 40, duration: 0.6 }, 0.2)
+        .from(panel.querySelectorAll('.ready-outcome'), { autoAlpha: 0, x: 32, duration: 0.8, stagger: 0.13, clearProps: 'transform,opacity,visibility' }, 0.28)
+        .from(panel.querySelectorAll('.outcome-check'), { scale: 0.6, autoAlpha: 0, duration: 0.6, stagger: 0.13, ease: 'back.out(1.8)' }, 0.38)
+        .from(panel.querySelector('.panel-footer'), { autoAlpha: 0, yPercent: 30, duration: 0.6 }, 0.6)
+    }
   })
 })
 </script>

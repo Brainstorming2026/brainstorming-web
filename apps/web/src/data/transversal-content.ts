@@ -45,8 +45,14 @@ export const aboutContent = {
     title: '¿Quiénes somos?',
     paragraphs: [
       'Somos una consultora estratégica que combina diagnóstico profundo, metodologías propias y tecnología de punta para ayudar a empresas medianas de LATAM a crecer de forma inteligente y sostenible.',
-      'No somos una agencia de marketing. No somos una empresa de software. Somos el socio estratégico que se sienta con el equipo directivo, entiende el negocio desde adentro y define — junto a ellos — qué hacer, en qué orden y por qué.',
+      'Somos el socio estratégico que se sienta con el equipo directivo, entiende el negocio desde adentro y define — junto a ellos — qué hacer, en qué orden y por qué.',
     ],
+    /**
+     * Las dos negaciones del briefing (§11.2). Van en su propio campo, no
+     * dentro del párrafo, porque el contraste ES el mensaje: se descartan en
+     * pantalla antes de que aterrice lo que sí somos.
+     */
+    contrast: ['una agencia de marketing', 'una empresa de software'],
   },
   methodology: {
     title: '¿Cómo lo hacemos?',

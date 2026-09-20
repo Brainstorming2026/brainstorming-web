@@ -17,13 +17,16 @@ const stages = [
     </h2>
   </div>
 
-  <Image
-    id="whatwedo-diagram"
-    src={doing}
-    alt="Metodología doble diamante y mejora constante"
-    class="mx-auto mt-8 hidden w-full max-w-[1512px] md:block"
-    loading="lazy"
-  />
+  <!-- El marco recorta el zoom del gesto "ventana" (ver revealWindow). -->
+  <div id="whatwedo-diagram-frame" class="mx-auto mt-8 hidden w-full max-w-[1512px] overflow-hidden md:block">
+    <Image
+      id="whatwedo-diagram"
+      src={doing}
+      alt="Metodología doble diamante y mejora constante"
+      class="w-full"
+      loading="lazy"
+    />
+  </div>
 
   <div
     id="whatwedo-mobile"
@@ -108,17 +111,31 @@ const stages = [
 </section>
 
 <script>
-import { ensureGsap, registerMotion } from '@/lib/motion'
+import { ensureGsap, registerMotion, revealCards, revealWindow, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    for (const selector of ['#whatwedo-headline', '#whatwedo-diagram', '#whatwedo-mobile', '.whatwedo-col']) {
-      document.querySelectorAll(selector).forEach((element) => {
-        gsap.from(element, { y: 20, autoAlpha: 0, duration: 0.85, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
-      })
+    const headline = document.getElementById('whatwedo-headline')
+    if (headline)
+      splitHeadline(headline, { by: 'lines' })
+
+    // El diagrama es la pieza central: se descubre como una ventana que se
+    // abre de izquierda a derecha, siguiendo la lectura del doble diamante.
+    const diagram = document.getElementById('whatwedo-diagram-frame')
+    if (diagram)
+      revealWindow(diagram, { direction: 'left', zoom: 1.06, start: 'top 88%' })
+
+    const mobile = document.getElementById('whatwedo-mobile')
+    if (mobile) {
+      gsap.from(mobile, { y: 24, autoAlpha: 0, duration: 0.9, ease: 'expo.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: mobile, start: 'top 88%', once: true } })
+      revealCards(mobile.querySelectorAll('.whatwedo-mobile-step'), { trigger: mobile, intensity: 0.9, stagger: 0.1 })
     }
+
+    const cols = document.getElementById('whatwedo-cols')
+    if (cols)
+      revealCards(cols.querySelectorAll('.whatwedo-col'), { trigger: cols, intensity: 1, stagger: 0.14, inner: 'h3, p' })
   })
 })
 </script>

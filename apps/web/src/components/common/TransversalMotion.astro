@@ -1,10 +1,32 @@
 <script>
-import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { registerMotion, revealCards, revealWindow, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   document.querySelectorAll<HTMLElement>('[data-editorial-heading]').forEach((headline) => {
     splitHeadline(headline, { by: 'lines' })
   })
-  staggerGrid(document.querySelectorAll('[data-editorial-reveal]'), { variant: 'wipe', itemDuration: 0.5, itemStagger: 0.08 })
+
+  // Los items se agrupan por contenedor: así cada grilla entra como UNA
+  // secuencia en cascada. Uno por uno se leía como apariciones sueltas.
+  const groups = new Map<Element, HTMLElement[]>()
+  document.querySelectorAll<HTMLElement>('[data-editorial-reveal]').forEach((item) => {
+    const parent = item.parentElement
+    if (!parent)
+      return
+    const group = groups.get(parent)
+    if (group)
+      group.push(item)
+    else
+      groups.set(parent, [item])
+  })
+
+  groups.forEach((items, parent) => {
+    revealCards(items, { trigger: parent, intensity: 1.1, stagger: 0.11 })
+  })
+
+  // Gesto "ventana" para cualquier media marcada en el markup.
+  document.querySelectorAll<HTMLElement>('[data-editorial-window]').forEach((frame) => {
+    revealWindow(frame, { direction: (frame.dataset.editorialWindow as 'up' | 'down' | 'left' | 'right') || 'up' })
+  })
 })
 </script>

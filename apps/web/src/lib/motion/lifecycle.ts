@@ -13,6 +13,9 @@ export function registerMotion(setup: () => void) {
   const onLoad = () => {
     // Revertir antes de reinicializar evita capturar estilos de otra ejecución.
     ctx?.revert()
+    // If loading timed out, keep the readable static page; never replay a late entrance.
+    if (document.documentElement.dataset.motionStartup === 'fallback')
+      return
     ctx = gsap.context(() => {
       if (!document.querySelector('[data-solution-page]'))
         return setup()

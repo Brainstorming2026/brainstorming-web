@@ -1,6 +1,7 @@
 ---
-import { ClientRouter, fade } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import Footer from '@/components/common/Footer.astro'
+import MotionStartup from '@/components/common/MotionStartup.astro'
 import Navbar from '@/components/common/Navbar.astro'
 import SiteMotion from '@/components/common/SiteMotion.astro'
 import SmoothScroll from '@/components/common/SmoothScroll.astro'
@@ -38,6 +39,7 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
     <meta property="og:type" content="website" />
 
     <!-- Navegación suave entre páginas, sin recarga completa -->
+    <MotionStartup />
     <ClientRouter />
   </head>
   <body class="font-body text-ink antialiased overflow-x-hidden">
@@ -48,7 +50,7 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
 
     <div id="smooth-wrapper">
       <div id="smooth-content" class:list={{ 'pt-20': showNavbar }}>
-        <main data-solution-page={isSolution ? '' : undefined} transition:animate={fade({ duration: '0.4s' })}>
+        <main data-solution-page={isSolution ? '' : undefined} transition:animate="none">
           <slot />
         </main>
         {isSolution && <SolutionMotion />}

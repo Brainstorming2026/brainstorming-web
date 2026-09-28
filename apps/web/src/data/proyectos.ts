@@ -5,12 +5,10 @@ import logoAlumspazio from '@/assets/projects-logos/proyecto-logo-alumspazio.png
 import logoAruma from '@/assets/projects-logos/proyecto-logo-aruma.png'
 import logoAtsa from '@/assets/projects-logos/proyecto-logo-atsa.png'
 import logoBeauty from '@/assets/projects/beauty/logo.png'
-import logoDfactoring from '@/assets/projects-logos/proyecto-logo-digitalfactoring.png'
 import logoBlack from '@/assets/projects-logos/proyecto-logo-gordini.png'
 import logoHelena from '@/assets/projects-logos/proyecto-logo-helena.png'
 import logoIrwin from '@/assets/projects/irwin/logo.png'
 import logoLatin from '@/assets/projects-logos/proyecto-logo-latinamerican.png'
-import logoDholding from '@/assets/projects-logos/proyecto-logo-lorenzee.png'
 import logoLimagas from '@/assets/projects-logos/proyecto-logo-limagas.png'
 import logoMikio from '@/assets/projects-logos/proyecto-logo-mikio.png'
 import logoMusicalma from '@/assets/projects-logos/proyecto-logo-musikalma.png'
@@ -20,10 +18,7 @@ import logoNote from '@/assets/projects-logos/proyecto-logonote.png'
 import logoPringles from '@/assets/projects/pringles/logo.png'
 import logoStanley from '@/assets/projects/stanley/logo.png'
 import logoRenace from '@/assets/projects-logos/proyecto-logo-renace.png'
-import logoRetyg from '@/assets/projects-logos/proyecto-logo-retyg.png'
 import logoStyla from '@/assets/projects-logos/proyecto-logo-styla.png'
-import logoSubasta from '@/assets/projects-logos/proyecto-logo-subasta.png'
-import logoVendeFactura from '@/assets/projects/vende/logo.png'
 
 import imgAguaclara from '@/assets/projects/proyecto-aguaclara.png'
 import imgAlumspazio from '@/assets/projects/proyecto-alumspazio.png'
@@ -31,8 +26,6 @@ import imgAruma from '@/assets/projects/proyecto-aruma.png'
 import imgAtsa from '@/assets/projects/proyecto-atsaairlines.png'
 import imgBlack from '@/assets/projects/proyecto-black.png'
 import imgDewalt from '@/assets/projects/proyecto-dewalt.png'
-import imgDfactoring from '@/assets/projects/proyecto-digitalfactory.png'
-import imgDholding from '@/assets/projects/proyecto-digitalholding.png'
 import imgHelena from '@/assets/projects/proyecto-helena.png'
 import imgIrwin from '@/assets/projects/proyecto-irwin.png'
 import imgLatin from '@/assets/projects/proyecto-latin.png'
@@ -42,12 +35,9 @@ import imgMusicalma from '@/assets/projects/proyecto-musicalma.png'
 import imgNote from '@/assets/projects/proyecto-note.png'
 import imgPringles from '@/assets/projects/proyecto-pringles.png'
 import imgRenaceFest from '@/assets/projects/proyecto-renacefest.png'
-import imgRetyg from '@/assets/projects/proyecto-retyg.png'
 import imgStanley from '@/assets/projects/proyecto-stanley.png'
 import imgStyla from '@/assets/projects/proyecto-styla.png'
-import imgSubastaFactura from '@/assets/projects/proyecto-subastafactura.png'
 import imgBeauty from '@/assets/projects/proyecto-beauty.png'
-import imgVendeFactura from '@/assets/projects/proyecto-vendetufactura.png'
 import imgWalon from '@/assets/projects/proyecto-walon.png'
 
 export type CategoriaTipo = 'branding' | 'desarrollo-web' | 'inbound-marketing'
@@ -102,20 +92,6 @@ export const proyectos: Proyecto[] = [
     categorias: ['inbound-marketing'],
     imagen: imgDewalt,
     logo: logoSgs,
-  },
-  {
-    slug: 'digital-factoring',
-    nombre: 'Digital Factoring',
-    categorias: ['desarrollo-web'],
-    imagen: imgDfactoring,
-    logo: logoDfactoring,
-  },
-  {
-    slug: 'digital-holding',
-    nombre: 'Digital Holding',
-    categorias: ['desarrollo-web'],
-    imagen: imgDholding,
-    logo: logoDholding,
   },
   {
     slug: 'helena-chocolatier',
@@ -181,13 +157,6 @@ export const proyectos: Proyecto[] = [
     logo: logoRenace,
   },
   {
-    slug: 'retyg',
-    nombre: 'Retyg',
-    categorias: ['branding', 'desarrollo-web'],
-    imagen: imgRetyg,
-    logo: logoRetyg,
-  },
-  {
     slug: 'stanley',
     nombre: 'Stanley',
     categorias: ['inbound-marketing'],
@@ -202,25 +171,11 @@ export const proyectos: Proyecto[] = [
     logo: logoStyla,
   },
   {
-    slug: 'subasta-tu-factura',
-    nombre: 'Subasta tu Factura',
-    categorias: ['branding'],
-    imagen: imgSubastaFactura,
-    logo: logoSubasta,
-  },
-  {
     slug: 'the-beauty-trust',
     nombre: 'The Beauty Trust',
     categorias: ['branding', 'desarrollo-web'],
     imagen: imgBeauty,
     logo: logoBeauty,
-  },
-  {
-    slug: 'vende-tu-factura',
-    nombre: 'Vende tu Factura',
-    categorias: ['branding'],
-    imagen: imgVendeFactura,
-    logo: logoVendeFactura,
   },
   {
     slug: 'walon',

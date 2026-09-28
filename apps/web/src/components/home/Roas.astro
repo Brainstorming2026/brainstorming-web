@@ -2,22 +2,17 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import backgroundVideo from '@/assets/backgrounds/background-video.webp'
-import roastAlumspazio from '@/assets/roast/roast-alumspazio.webp'
-import roastBrainstorming from '@/assets/roast/roast-brainstorming.webp'
-import roastGris from '@/assets/roast/roast-gris.webp'
-import roastHelena from '@/assets/roast/roast-helena.webp'
-import roastSiemens from '@/assets/roast/roast-siemens.webp'
+import grinLogo from '@/assets/roast/roast-gris.webp'
+import stanleyLogo from '@/assets/clientes/customer-stanley.webp'
+import { newProjectLogos } from '@/data/new-projects'
 
 const youtubeId = 'm9yNCH4-MB4'
-
-// `value` se anima con countUp, así que se guarda el número y el sufijo por
-// separado: el contador necesita un elemento que contenga solo la cifra.
-const roas = [
-  { logo: roastBrainstorming, name: 'Brainstorming', value: 20, suffix: ':1' },
-  { logo: roastSiemens, name: 'Siemens', value: 5.5, suffix: '', decimals: 2 },
-  { logo: roastGris, name: 'Grin', value: 76, suffix: ':1' },
-  { logo: roastAlumspazio, name: 'AlumSpazio', value: 90, suffix: ':1' },
-  { logo: roastHelena, name: 'Helena', value: 8, suffix: ':1' },
+const clients = [
+  { logo: newProjectLogos.nordic, name: 'Nordic International School' },
+  { logo: newProjectLogos.senati, name: 'SENATI' },
+  { logo: newProjectLogos.pastipan, name: 'Pastipan' },
+  { logo: grinLogo, name: 'Grin', full: true },
+  { logo: stanleyLogo, name: 'Stanley Black & Decker' },
 ]
 ---
 
@@ -75,8 +70,8 @@ const roas = [
       class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5"
     >
       {
-        roas.map(r => (
-          <div class="roas-item flex flex-col items-center">
+        clients.map(r => (
+          <div class="roas-item mx-auto flex aspect-square w-full max-w-[220px] items-center justify-center overflow-hidden rounded-full bg-[#f8f8fc]">
             <Image
               src={r.logo}
               alt={r.name}
@@ -84,16 +79,9 @@ const roas = [
               sizes="220px"
               quality={80}
               loading="lazy"
-              class="w-full max-w-[220px]"
+              class:list={['max-h-full w-full object-contain', r.full ? 'p-0' : 'p-6']}
             />
-            <p class="mt-5 text-center font-heading text-2xl font-bold leading-snug">
-              ROAS:<br /><span
-                class="roas-value"
-                data-roas-to={r.value}
-                data-roas-suffix={r.suffix}
-                data-roas-decimals={r.decimals ?? 0}
-                         >{r.decimals ? r.value.toFixed(r.decimals) : r.value}{r.suffix}</span>
-            </p>
+
           </div>
         ))
       }
@@ -101,11 +89,7 @@ const roas = [
   </div>
 </section>
 
-<style>
-  /* Cifras tabulares: el contador cambia de ancho en cada frame y sin esto
-     el texto "baila" mientras sube. */
-  .roas-value { font-variant-numeric: tabular-nums; }
-</style>
+
 
 <script>
 document.addEventListener('astro:page-load', () => {
@@ -118,7 +102,7 @@ document.addEventListener('astro:page-load', () => {
 </script>
 
 <script>
-import { countUp, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const headline = document.querySelector<HTMLElement>('#roas h2')
@@ -131,14 +115,5 @@ registerMotion(() => {
     stagger: 0.1,
   })
 
-  document.querySelectorAll<HTMLElement>('.roas-value').forEach((value) => {
-    countUp(value, {
-      to: Number(value.dataset.roasTo),
-      decimals: Number(value.dataset.roasDecimals ?? 0),
-      suffix: value.dataset.roasSuffix ?? '',
-      duration: 1.6,
-      start: 'top 88%',
-    })
-  })
 })
 </script>

@@ -1,9 +1,10 @@
 ---
-import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
-import heroVideo from '@/assets/logos/hero-video.webp'
-import { heroYoutubeId as youtubeId } from '@/data'
+import { getImage } from 'astro:assets'
+import heroPoster from '@/assets/video/smart-selling-cover-editorial.png'
+import heroVideo from '@/assets/video/Smart_Selling_Brainstorming_1080p_final.mp4?url'
 import { homeContent } from '@/data/transversal-content'
+
+const poster = await getImage({ src: heroPoster, width: 1280, format: 'webp', quality: 85 })
 ---
 
 <section id="hero" class="bg-white">
@@ -26,48 +27,29 @@ import { homeContent } from '@/data/transversal-content'
       </p>
     </div>
 
-    <!-- Video con facade -->
     <div
       id="hero-video"
-      data-id={youtubeId}
       data-animate="circle"
       data-speed="0.9"
-      class="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg"
+      class="relative aspect-video w-full overflow-hidden rounded-3xl bg-dark shadow-lg"
     >
-      <Image
+      <video
         src={heroVideo}
-        alt="Video de presentación de Brainstorming"
-        widths={[480, 720, 1080]}
-        sizes="(min-width: 1024px) 42vw, 100vw"
-        quality={75}
-        loading="eager"
-        fetchpriority="high"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-      <div
-        class="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20"
+        poster={poster.src}
+        controls
+        playsinline
+        preload="none"
+        aria-label="Smart Selling: crecimiento comercial y automatización — Brainstorming"
+        class="h-full w-full object-contain"
       >
-        <button
-          type="button"
-          aria-label="Reproducir video"
-          class="text-white/90 transition-transform group-hover:scale-110"
-        >
-          <Icon name="play" class="h-20 w-20 drop-shadow-lg" />
-        </button>
-      </div>
+        Tu navegador no permite reproducir este video.
+        <a href={heroVideo}>Ver video de Smart Selling</a>
+      </video>
     </div>
   </div>
 </section>
 
-<script>
-document.addEventListener('astro:page-load', () => {
-  const holder = document.getElementById('hero-video')
-  holder?.addEventListener('click', () => {
-    const id = holder.dataset.id
-    holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video Brainstorming" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-  }, { once: true })
-})
-</script>
+
 
 <script>
 import { registerMotion, revealCircle, splitHeadline } from '@/lib/motion'

@@ -41,7 +41,7 @@ export const siteServices: SiteService[] = [
     label: 'Automatización de Procesos con IA',
     href: '/soluciones/automatizacion-ia',
     footerLabel: 'Automatización con IA',
-    home: { label: 'Automatización con IA', description: 'Haz que tu empresa produzca más sin contratar más.', icon: 'automation/brain-circuit', order: 3 },
+    home: { label: 'Automatización con IA', description: 'Haz que tu empresa produzca más sin contratar más.', icon: 'automation/bot', order: 3 },
   },
   {
     id: 'innovacion-estrategica',

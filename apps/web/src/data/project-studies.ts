@@ -114,7 +114,7 @@ export const projectStudies: Record<StudySlug, ProjectStudy> = {
       ],
       images: [{ src: atsa.features![0].imagen, alt: atsa.features![0].imagenAlt, caption: 'Pillar page · Una guía para descubrir Huánuco' }],
     }],
-    next: 'retyg',
+    next: 'aruma',
   },
   'retyg': {
     client: 'Retyg SAC',

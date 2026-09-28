@@ -95,7 +95,7 @@ export const newProjects: NewProject[] = [
         text: 'CRM con nutrición por email y WhatsApp para mantener el contacto con cada prospecto.',
       },
       {
-        icon: 'automation/brain-circuit',
+        icon: 'automation/bot',
         title: 'Integrar inteligencia artificial',
         text: 'IA aplicada a la prospección, la calificación de leads y el seguimiento post-reunión.',
       },

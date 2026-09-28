@@ -4,11 +4,9 @@ import customerAlumspazio from './customer-alumspazio.webp'
 import customerAmadocacao from './customer-amadocacao.webp'
 import customerAruma from './customer-aruma.webp'
 import customerAtsaairlines from './customer-atsaairlines.webp'
-import customerBeauty from './customer-beauty.webp'
 import customerDigital from './customer-digital.webp'
 import customerGodini from './customer-godini.webp'
 import customerLatinamerican from './customer-latinamerican.webp'
-import customerLawash from './customer-lawash.webp'
 import customerLimagas from './customer-limagas.webp'
 import customerLorenzee from './customer-lorenzee.webp'
 import customerMikio from './customer-mikio.webp'
@@ -23,11 +21,10 @@ import customerSiemens from './customer-siemens.webp'
 import customerSonqo from './customer-sonqo.webp'
 import customerStanley from './customer-stanley.webp'
 import customerStyla from './customer-styla.png'
-import customerSubasta from './customer-subasta.png'
-import customerVendefactura from './customer-vendefactura.webp'
 import customerWalon from './customer-walon.webp'
 import officialAguaclara from './official/aguaclara.png'
-import officialGrin from './official/grin.png'
+import customerGrin from './customer-gris.webp'
+import { newProjectLogos } from '@/data/new-projects'
 import officialHelena from './official/helena.png'
 import officialRetyg from './official/retyg.svg'
 import officialSgs from './official/sgs.png'
@@ -41,13 +38,19 @@ export interface ClienteLogo {
 }
 
 export const clienteLogos: ClienteLogo[] = [
+  { slug: 'senati', name: 'SENATI', image: newProjectLogos.senati, source: 'portfolio' },
+  { slug: 'pastipan', name: 'Pastipan', image: newProjectLogos.pastipan, source: 'portfolio' },
+  { slug: 'ait-capital', name: 'AIT Capital', image: newProjectLogos['ait-capital'], source: 'portfolio' },
+  { slug: 'nordic', name: 'Nordic International School', image: newProjectLogos.nordic, source: 'portfolio' },
+  { slug: 'etna', name: 'ETNA', image: newProjectLogos.etna, source: 'portfolio' },
+  { slug: 'futura-wealth', name: 'Futura Wealth Management', image: newProjectLogos['futura-wealth'], source: 'portfolio', className: 'rounded bg-[#182b38] p-2' },
   { slug: 'aguaclara', name: 'Aguaclara', image: officialAguaclara, source: 'official' },
   { slug: 'alumspazio', name: 'Alumspazio', image: customerAlumspazio, source: 'portfolio' },
   { slug: 'amado-cacao', name: 'Amado Cacao', image: customerAmadocacao, source: 'portfolio' },
   { slug: 'aruma', name: 'Aruma', image: customerAruma, source: 'portfolio' },
   { slug: 'atsa-airlines', name: 'ATSA Airlines', image: customerAtsaairlines, source: 'portfolio' },
   { slug: 'digital-factoring', name: 'Digital Factoring', image: customerDigital, source: 'portfolio' },
-  { slug: 'grin', name: 'Grin', image: officialGrin, source: 'official', className: 'max-w-[125px]' },
+  { slug: 'grin', name: 'Grin', image: customerGrin, source: 'portfolio', className: 'max-w-[125px]' },
   { slug: 'gordini', name: 'Gordini', image: customerGodini, source: 'portfolio' },
   { slug: 'helena', name: 'Helena', image: officialHelena, source: 'official' },
   { slug: 'latin-american-outdoors', name: 'Latin American Outdoors', image: customerLatinamerican, source: 'portfolio' },
@@ -67,9 +70,5 @@ export const clienteLogos: ClienteLogo[] = [
   { slug: 'sociedad-geografica-lima', name: 'Sociedad Geográfica de Lima', image: customerSocgeo, source: 'portfolio' },
   { slug: 'sonqo', name: 'Sonqo', image: customerSonqo, source: 'portfolio' },
   { slug: 'styla', name: 'Styla', image: customerStyla, source: 'portfolio', className: 'invert' },
-  { slug: 'subasta-tus-facturas', name: 'Subasta tus Facturas', image: customerSubasta, source: 'portfolio', className: 'invert' },
-  { slug: 'the-beauty-trust', name: 'The Beauty Trust', image: customerBeauty, source: 'portfolio' },
-  { slug: 'vende-tu-factura', name: 'Vende tu Factura', image: customerVendefactura, source: 'portfolio' },
   { slug: 'walon', name: 'Walon', image: customerWalon, source: 'portfolio' },
-  { slug: 'la-wash', name: 'La Wash', image: customerLawash, source: 'portfolio' },
 ]

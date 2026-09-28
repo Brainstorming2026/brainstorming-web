@@ -18,7 +18,7 @@ export const homeContent = {
     items: [
       { icon: 'automation/chart-no-axes-combined', text: 'Vendes, pero de forma impredecible. Los resultados fluctúan y no tienes control sobre las variables que los mueven.' },
       { icon: 'automation/users-round', text: 'Tu equipo comercial trabaja mucho pero los números no reflejan el esfuerzo. El proceso depende de personas, no de un sistema.' },
-      { icon: 'automation/brain-circuit', text: 'Escuchas hablar de inteligencia artificial en todos lados, pero no tienes claro qué implementar ni por dónde empezar.' },
+      { icon: 'automation/bot', text: 'Escuchas hablar de inteligencia artificial en todos lados, pero no tienes claro qué implementar ni por dónde empezar.' },
       { icon: 'automation/sliders-horizontal', text: 'Tomas decisiones por intuición porque no tienes la data ordenada ni los procesos documentados.' },
       { icon: 'automation/route', text: 'Sabes que tu empresa tiene potencial para crecer más, pero no tienes un plan claro ni priorizado de cómo hacerlo.' },
     ],
@@ -29,7 +29,7 @@ export const homeContent = {
     items: [
       { slug: 'ait-capital', client: 'AIT Capital', text: 'De S/ 100K a S/ 1.5M en facturación — en 4 meses.' },
       { slug: 'senati', client: 'SENATI', text: 'S/ 10M adicionales por mes reactivando una base de 350,000 personas.' },
-      { slug: 'nordic', client: 'Nordic International School', text: 'Flujo de leads automatizado con mejora sustancial en ratio de conversión a matrícula.' },
+      { slug: 'futura-wealth', client: 'Futura Wealth Management', text: 'Orden comercial y automatización para que los asesores se concentren en clientes potenciales calificados.' },
     ],
     action: { label: 'VER TODOS LOS PROYECTOS', href: siteRoutes.projects },
   },

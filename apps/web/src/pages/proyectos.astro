@@ -1,6 +1,6 @@
 ---
+import ClientWall from '@/components/common/ClientWall.astro'
 import Conversemos from '@/components/common/Conversemos.astro'
-import Empresas from '@/components/projects/Empresas.astro'
 import NewProjectsList from '@/components/projects/NewProjectsList.astro'
 import ProyectosHero from '@/components/projects/ProyectosHero.astro'
 import ProyectosList from '@/components/projects/ProyectosList.astro'
@@ -13,6 +13,6 @@ export const prerender = true;
   <ProyectosHero />
   <NewProjectsList />
   <ProyectosList />
-  <Empresas />
+  <ClientWall id="empresas" curve />
   <Conversemos />
 </Layout>

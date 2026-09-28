@@ -1,5 +1,3 @@
-export { clientes } from './clientes'
-
 export { desarrolloBenefits, desarrolloSteps } from './desarrollo'
 
 export { embudoPasos } from './embudo'

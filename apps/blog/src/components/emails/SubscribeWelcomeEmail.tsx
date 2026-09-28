@@ -1,4 +1,4 @@
-import { Heading, Text } from '@react-email/components'
+import { Heading, Text } from 'react-email'
 import { emailColors, EmailLayout } from '@/components/emails/EmailLayout'
 
 export interface SubscribeWelcomeEmailProps {

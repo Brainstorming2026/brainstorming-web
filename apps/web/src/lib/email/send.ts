@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import { render } from '@react-email/render'
+import { render } from 'react-email'
 import { captureError } from '@/lib/observability'
 import { EMAIL_FROM, resend } from '@/lib/resend'
 

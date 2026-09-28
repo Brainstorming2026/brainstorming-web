@@ -10,6 +10,7 @@ import nordicEducationLevels from '@/assets/projects/new/nordic/education-levels
 import pastipanStorefront from '@/assets/projects/new/pastipan/storefront.png'
 import senatiJourneyConcept from '@/assets/projects/new/senati/nurturing-journey-concept-v2.png'
 import senatiTrainingConcept from '@/assets/projects/new/senati/technical-training-concept.png'
+import { aitSales, aitSalesPeriod, aitSalesPeriodWord } from '@/data/case-metrics'
 
 export const newProjectServices = {
   'smart-selling': { label: 'Smart Selling', icon: 'automation/workflow' },
@@ -101,7 +102,7 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
-      summary: 'De 10 a 30 reuniones calificadas por mes y de 1 a 11 cierres mensuales. La facturación pasó de S/ 100K a S/ 1.5M en 4 meses.',
+      summary: `De 10 a 30 reuniones calificadas por mes y de 1 a 11 cierres mensuales. Las ventas pasaron de ${aitSales.before} a ${aitSales.after} en ${aitSalesPeriod}.`,
       metrics: [
         {
           label: 'Reuniones calificadas por mes',
@@ -114,20 +115,20 @@ export const newProjects: NewProject[] = [
           value: '11',
         },
         {
-          label: 'Facturación',
-          before: 'S/ 100K',
-          value: 'S/ 1.5M',
-          note: 'Evolución en 4 meses',
+          label: 'Ventas',
+          before: aitSales.before,
+          value: aitSales.after,
+          note: `Evolución en ${aitSalesPeriod}`,
         },
       ],
     },
     hero: {
       id: 'ait-portada',
-      title: 'Evolución de la facturación en cuatro meses',
+      title: `Evolución de las ventas en ${aitSalesPeriodWord}`,
       request: '',
       ratio: '16/9',
       visual: 'ait-impact',
-      alt: 'Comparación de facturación: de S/ 100 mil a S/ 1.5 millones en cuatro meses.',
+      alt: `Comparación de ventas: ${aitSales.spoken} en ${aitSalesPeriodWord}.`,
       source: 'Documento original del proyecto, página 22.',
     },
     media: [

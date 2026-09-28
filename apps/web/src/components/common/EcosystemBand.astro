@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+
+import { ecosystem } from '@/data/ecosystem'
+
+---
+
+<section class="ecosystem-band bg-white" aria-labelledby="ecosystem-title">
+  <div class="mx-auto max-w-[1512px] px-6 pb-16 lg:px-24 lg:pb-24">
+    <div class="eco-inner flex flex-col items-center border-t border-dark-100 pt-16 text-center lg:pt-20">
+      <p lang="en" class="eco-reveal text-lg font-semibold text-ink-500 sm:text-xl">{ecosystem.eyebrow}</p>
+
+      <a
+        href={ecosystem.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="eco-reveal eco-lockup group mt-8 flex max-w-full flex-col items-center gap-5 rounded-2xl px-2 py-2 transition-colors hover:bg-[#fafbf0] sm:px-6"
+        aria-label={`${ecosystem.name} (abre en otra pestaña)`}
+      >
+        <Image
+          src={ecosystem.symbol}
+          alt=""
+          widths={[112, 224]}
+          sizes="112px"
+          class="h-24 w-24 object-contain lg:h-28 lg:w-28"
+        />
+        <h2 id="ecosystem-title" class="font-heading text-[24px] leading-tight font-bold tracking-tight text-ink uppercase sm:text-[34px]">
+          {ecosystem.name}
+        </h2>
+      </a>
+
+      <p class="eco-reveal mt-6 max-w-xl text-[15px] leading-relaxed text-ink-500">{ecosystem.text}</p>
+
+      <ul class="eco-members mt-12 grid w-full max-w-6xl grid-cols-2 items-center justify-items-center gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-6" role="list">
+        {ecosystem.members.map(member => (
+          <li class="eco-member flex h-28 w-full min-w-0 items-center justify-center">
+            {member.name === 'Brainstorming' ? (
+              <div class="flex flex-col items-center gap-2" role="img" aria-label="Brainstorming">
+                <img src="/brainstorming-icon-file.png" alt="" width="60" height="60" loading="lazy" class="h-[60px] w-[60px] object-contain" />
+                <span class="font-heading text-[18px] tracking-tight text-ink">Brainstorming</span>
+              </div>
+            ) : (
+            <div class="flex h-28 max-w-full items-center justify-center overflow-hidden" style={`width:${member.width}px`}>
+            <Image
+              src={member.logo}
+              alt={member.name}
+              widths={[member.width * 3, member.width * 6]}
+              sizes={`${member.width * ('scale' in member ? member.scale ?? 1 : 1)}px`}
+              quality={85}
+              loading="lazy"
+              style={`width:100%;transform:scale(${'scale' in member ? member.scale ?? 1 : 1})`}
+              class="h-auto max-h-28 object-contain"
+            />
+            </div>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <a
+        href={ecosystem.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="eco-reveal group mt-12 inline-flex items-center gap-2 text-sm font-semibold text-ink underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary"
+      >
+        {ecosystem.linkLabel}
+        <Icon name="arrow-right" class="h-4 w-4 -rotate-45 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+        <span class="sr-only">(abre en otra pestaña)</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ecosystem-band a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+</style>
+
+<script>
+import { registerMotion, revealCards } from '@/lib/motion'
+
+registerMotion(() => {
+  const band = document.querySelector<HTMLElement>('.ecosystem-band')
+  if (!band)
+    return
+  // Pre-oculta en la carga (revealCards usa gsap.set), nunca en onEnter.
+  revealCards(band.querySelectorAll('.eco-reveal'), {
+    trigger: band.querySelector('.eco-inner'),
+    intensity: 0.5,
+    stagger: 0.08,
+  })
+  revealCards(band.querySelectorAll('.eco-member'), {
+    trigger: band.querySelector('.eco-members'),
+    intensity: 0.5,
+    stagger: 0.06,
+  })
+})
+</script>

@@ -54,7 +54,7 @@ const logoWidth = (width: number, scale = SCALE) => Math.round(width * scale)
     </header>
 
     <div id={`${id}-wall`} class="client-collapse relative mt-12 overflow-hidden lg:mt-16" data-collapsed>
-      <ul id={`${id}-grid`} class="client-grid -mr-px -mb-px grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8" role="list">
+      <ul id={`${id}-grid`} class="client-grid grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8" role="list">
         {
           clienteLogos.map(logo => (
             <li class="client-cell flex h-24 items-center justify-center px-3 lg:h-28">
@@ -94,11 +94,10 @@ const logoWidth = (width: number, scale = SCALE) => Math.round(width * scale)
 </section>
 
 <style>
-  /* Líneas de 1px solo hacia dentro: cada celda dibuja su borde derecho e
-     inferior, y el -1px de la grilla + overflow-hidden del contenedor recortan
-     los del borde exterior. Así una última fila incompleta no deja huecos grises. */
+  /* Sin líneas de grilla: el ritmo lo dan las celdas de alto fijo. El hover
+     tiñe la celda para que se lea cuál estás señalando. */
   .client-cell {
-    box-shadow: 1px 0 0 var(--color-dark-100), 0 1px 0 var(--color-dark-100);
+    border-radius: 12px;
     transition: background-color 300ms ease-out;
   }
 

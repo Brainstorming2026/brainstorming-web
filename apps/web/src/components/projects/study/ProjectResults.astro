@@ -2,6 +2,7 @@
 import type { NewProject } from '@/data/new-projects'
 import { Image } from 'astro:assets'
 import salesSource from '@/assets/projects/new/ait-capital/sales-source.webp'
+import { aitSalesPeriodTitle, aitSalesPeriodWord } from '@/data/case-metrics'
 
 interface Props { project: NewProject }
 const { project } = Astro.props
@@ -22,14 +23,14 @@ const supporting = metrics?.filter((_, index) => index !== leadIndex)
         {lead.before && <p class="result-baseline">Desde <span>{lead.before}</span></p>}
         {lead.note && <p class="result-note">{lead.note}</p>}
         <div class="result-rule" aria-hidden="true"></div>
-        <p class="result-context">{project.slug === 'ait-capital' ? 'Cuatro meses de evolución comercial.' : 'Volver a conectar con una base que ya había mostrado interés.'}</p>
+        <p class="result-context">{project.slug === 'ait-capital' ? `${aitSalesPeriodTitle} de evolución comercial.` : 'Volver a conectar con una base que ya había mostrado interés.'}</p>
       </div>
       <dl class="result-support">
         {supporting.map(metric => (
           <div><dt>{metric.label}</dt><dd><strong>{metric.value}</strong>{metric.before && <span>Antes: {metric.before}</span>}{metric.note && <small>{metric.note}</small>}</dd></div>
         ))}
       </dl>
-      <p class="result-board-note">{project.slug === 'ait-capital' ? 'Facturación en soles. Evolución en cuatro meses; reuniones y cierres expresados por mes.' : 'Reactivación, conversión e ingresos son indicadores independientes del proyecto.'}</p>
+      <p class="result-board-note">{project.slug === 'ait-capital' ? `Ventas en soles. Evolución en ${aitSalesPeriodWord}; reuniones y cierres expresados por mes.` : 'Reactivación, conversión e ingresos son indicadores independientes del proyecto.'}</p>
     </div>
   )
 : (

@@ -64,6 +64,19 @@ async function contentBox(input) {
   return { left: x0, top: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 }
 }
 
+// Un logo con las cuatro esquinas opacas y de color (ni blanco ni transparente)
+// viene dentro de un bloque sólido: en el muro gris pesa más que el resto.
+async function isBoxed(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+  const { width: w, height: h } = info
+  return [[1, 1], [w - 2, 1], [1, h - 2], [w - 2, h - 2]].every(([x, y]) => {
+    const i = (y * w + x) * 4
+    return data[i + 3] > 200 && Math.min(data[i], data[i + 1], data[i + 2]) < 240
+  })
+}
+
+const boxed = []
+
 await rm(outDir, { recursive: true, force: true })
 await mkdir(outDir, { recursive: true })
 
@@ -88,4 +101,10 @@ for (const file of (await readdir(srcDir)).sort()) {
     .webp({ quality: 90, alphaQuality: 100 })
     .toFile(join(outDir, `${slug}.webp`))
   console.log(`${slug.padEnd(26)} ${out.width}x${out.height}`)
+  if (await isBoxed(join(outDir, `${slug}.webp`)))
+    boxed.push(slug)
+}
+
+if (boxed.length > 0) {
+  console.warn(`\nCon fondo sólido (pedir versión transparente o sumar a BOXED en src/assets/clientes/index.ts):\n  ${boxed.join(', ')}`)
 }

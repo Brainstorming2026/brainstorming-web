@@ -49,27 +49,43 @@ const RECENT: Record<string, { name: string, className?: string }> = {
   'futura-wealth': { name: 'Futura Wealth Management', className: 'rounded bg-[#182b38] p-2' },
 }
 
+// Logos que vienen dentro de un bloque de color sólido (no transparente ni
+// blanco). Un bloque lleno pesa más que un trazo, así que se achican un poco.
+// `build-client-logos.mjs` avisa cuando aparece uno nuevo; lo ideal es pedir
+// la versión transparente a diseño y sacarlo de esta lista.
+const BOXED = new Set([
+  'dewalt',
+  'ferreyros',
+  'gg-joyeros',
+  'irwin',
+  'peugeot',
+  'stanley',
+  'stanley-black-decker',
+  'tedx-lima',
+])
+
 // Área visual objetivo (px²). Con ancho = √(área · proporción) un wordmark
 // de 6:1 y un isotipo cuadrado pesan parecido en la grilla.
 const AREA = 4200
 const MAX_WIDTH = 108
 
-function visualWidth({ width, height }: ImageMetadata) {
-  return Math.round(Math.min(MAX_WIDTH, Math.sqrt(AREA * (width / height))))
+function visualWidth({ width, height }: ImageMetadata, slug: string) {
+  const area = BOXED.has(slug) ? AREA * 0.6 : AREA
+  return Math.round(Math.min(MAX_WIDTH, Math.sqrt(area * (width / height))))
 }
 
 const titleCase = (slug: string) => slug.replace(/(^|-)(\w)/g, (_, sep, c) => `${sep ? ' ' : ''}${c.toUpperCase()}`)
 
 const fromFolder = Object.entries(files).map(([path, mod]): ClienteLogo => {
   const slug = path.slice(path.lastIndexOf('/') + 1, -'.webp'.length)
-  return { slug, name: NAMES[slug] ?? titleCase(slug), image: mod.default, width: visualWidth(mod.default) }
+  return { slug, name: NAMES[slug] ?? titleCase(slug), image: mod.default, width: visualWidth(mod.default, slug) }
 })
 
 const recent = Object.entries(RECENT)
   .filter(([slug]) => !fromFolder.some(c => c.slug === slug))
   .map(([slug, { name, className }]): ClienteLogo => {
     const image = newProjectLogos[slug as keyof typeof newProjectLogos]
-    return { slug, name, image, width: visualWidth(image), className }
+    return { slug, name, image, width: visualWidth(image, slug), className }
   })
 
 export const clienteLogos: ClienteLogo[] = [...fromFolder, ...recent]

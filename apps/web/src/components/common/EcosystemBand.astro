@@ -35,12 +35,14 @@ import { ecosystem } from '@/data/ecosystem'
       <ul class="eco-members mt-12 grid w-full max-w-6xl grid-cols-2 items-center justify-items-center gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-6" role="list">
         {ecosystem.members.map(member => (
           <li class="eco-member flex h-28 w-full min-w-0 items-center justify-center">
-            {member.name === 'Brainstorming' ? (
+            {member.name === 'Brainstorming'
+? (
               <div class="flex flex-col items-center gap-2" role="img" aria-label="Brainstorming">
                 <img src="/brainstorming-icon-file.png" alt="" width="60" height="60" loading="lazy" class="h-[60px] w-[60px] object-contain" />
                 <span class="font-heading text-[18px] tracking-tight text-ink">Brainstorming</span>
               </div>
-            ) : (
+            )
+: (
             <div class="flex h-28 max-w-full items-center justify-center overflow-hidden" style={`width:${member.width}px`}>
             <Image
               src={member.logo}

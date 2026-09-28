@@ -12,7 +12,7 @@ import {
   Row,
   Section,
   Text,
-} from '@react-email/components'
+} from 'react-email'
 import { redes } from '@/data/footer'
 import { BRAINSTORMING_LOGO_URL, SOCIAL_ICON_URLS } from '@/lib/email/assets'
 

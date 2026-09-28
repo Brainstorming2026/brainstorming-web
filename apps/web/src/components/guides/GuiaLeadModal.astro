@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import guidesContact from '@/assets/guides/guides-contact.png'
 import iconClose from '@/icons/close.svg'
 ---
@@ -52,6 +53,8 @@ import iconClose from '@/icons/close.svg'
           <input type="text" name="website" tabindex="-1" autocomplete="off" />
         </label>
 
+        {TURNSTILE_SITE_KEY && <div id="guia-lead-turnstile" class="min-h-[65px]" data-sitekey={TURNSTILE_SITE_KEY}></div>}
+
         <label class="flex items-start gap-2 text-left text-xs text-dark/70">
           <input
             type="checkbox"
@@ -88,12 +91,16 @@ import iconClose from '@/icons/close.svg'
   </div>
 </div>
 
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <script>
 import { ensureGsap } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { portalToBody } from '@/lib/portal'
+import { whenTurnstileReady } from '@/lib/turnstile-client'
 
-const overlay = document.querySelector<HTMLDivElement>('#guia-lead-overlay')
+const overlay = portalToBody(document.querySelector<HTMLDivElement>('#guia-lead-overlay'))
 const modal = document.querySelector<HTMLDivElement>('#guia-lead-modal')
 const closeBtn = document.querySelector<HTMLButtonElement>('#guia-lead-close')
 const form = document.querySelector<HTMLFormElement>('#guia-lead-form')
@@ -114,7 +121,23 @@ privacyCheckbox?.addEventListener('invalid', () => {
   privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
 })
 
+const turnstileBox = document.querySelector<HTMLDivElement>('#guia-lead-turnstile')
+let turnstileWidget: string | undefined
 let pendingSlug: string | null = null
+
+// El widget se dibuja al abrir el modal (no al cargar la pagina): un iframe de
+// Turnstile dentro de un contenedor `hidden` no puede mostrar un desafio.
+async function mountTurnstile() {
+  if (!turnstileBox?.dataset.sitekey)
+    return
+  const api = await whenTurnstileReady()
+  if (!api)
+    return
+  if (turnstileWidget)
+    api.reset(turnstileWidget)
+  else
+    turnstileWidget = api.render(turnstileBox, { sitekey: turnstileBox.dataset.sitekey, action: 'guia' })
+}
 
 function resetResult() {
   resultBox?.classList.add('hidden')
@@ -172,6 +195,7 @@ function openModal(slug: string) {
     return
   overlay.classList.remove('hidden')
   overlay.classList.add('flex')
+  void mountTurnstile()
 
   if (prefersReducedMotion()) {
     return
@@ -216,6 +240,12 @@ form?.addEventListener('submit', async (event) => {
   }
 
   const data = new FormData(form)
+  const turnstileToken = data.get('cf-turnstile-response')
+  // Con widget configurado, sin token no se envia: el servidor lo rechazaria.
+  if (turnstileBox?.dataset.sitekey && (typeof turnstileToken !== 'string' || !turnstileToken)) {
+    showResult(false, 'Espera un momento a que termine la verificación.')
+    return
+  }
   resetResult()
   submitBtn.disabled = true
 
@@ -229,6 +259,7 @@ form?.addEventListener('submit', async (event) => {
         slug: pendingSlug,
         privacyConsent: data.get('privacyConsent') === 'on',
         website: data.get('website'),
+        turnstileToken,
       }),
     })
 
@@ -245,6 +276,9 @@ form?.addEventListener('submit', async (event) => {
   }
   finally {
     submitBtn.disabled = false
+    // El token es de un solo uso: hay que pedir uno nuevo tras cada intento.
+    if (turnstileWidget)
+      window.turnstile?.reset(turnstileWidget)
   }
 })
 </script>

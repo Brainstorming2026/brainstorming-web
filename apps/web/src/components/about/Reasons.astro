@@ -1,0 +1,18 @@
+---
+import { Icon } from 'astro-icon/components'
+import { aboutContent } from '@/data/transversal-content'
+---
+
+<section class="editorial-section editorial-reasons" aria-labelledby="reasons-title">
+  <div class="editorial-container editorial-split">
+    <h2 id="reasons-title" class="editorial-title" data-editorial-heading>{aboutContent.reasons.title}</h2>
+    <ul class="editorial-reasons-list">
+      {aboutContent.reasons.items.map(reason => (
+        <li data-editorial-reveal>
+          <Icon name="automation/circle-check" class="h-6 w-6 text-primary" aria-hidden="true" />
+          <div><h3>{reason.title}</h3><p>{reason.text}</p></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

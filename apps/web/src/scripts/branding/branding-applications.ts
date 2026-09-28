@@ -1,5 +1,8 @@
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
+/** Partes de cada mockup, en el orden en que deben armarse en pantalla. */
+const MOCKUP_PARTS = '.br-browser-bar, .br-digital-nav, .br-digital-body > *, .br-social-card, .br-letterhead, .br-business-card'
+
 class BrandApplications extends HTMLElement {
   private dispose?: () => void
 
@@ -21,8 +24,16 @@ class BrandApplications extends HTMLElement {
       })
       if (focus)
         tabs[index].focus()
-      if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches)
-        tween = gsap.fromTo(panels[index], { opacity: 0.4, y: 12 }, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out', clearProps: 'opacity,transform' })
+      if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // El panel no se cruza de golpe: se arma por partes, igual que en su
+        // entrada al scroll. Mantiene el gesto de la página al cambiar de tab.
+        const parts = panels[index].querySelectorAll<HTMLElement>(MOCKUP_PARTS)
+        tween = gsap.fromTo(
+          parts.length > 0 ? parts : panels[index],
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: 'expo.out', clearProps: 'opacity,transform' },
+        )
+      }
     }
     tabs.forEach((tab, i) => {
       tab.setAttribute('role', 'tab')

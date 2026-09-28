@@ -1,0 +1,24 @@
+---
+import { Icon } from 'astro-icon/components'
+import { aboutContent, conversationCta } from '@/data/transversal-content'
+
+interface Props {
+  id: string
+  final?: boolean
+  projects?: boolean
+}
+const { id, final = false, projects = false } = Astro.props
+---
+
+<section class:list={['editorial-cta', { 'editorial-cta-final': final }]} aria-labelledby={`${id}-title`}>
+  <div class="editorial-container editorial-cta-inner" data-editorial-reveal>
+    <h2 id={`${id}-title`} class="editorial-cta-title">{conversationCta.title}</h2>
+    <div class="editorial-actions">
+      <a class="editorial-button" href={conversationCta.href}>
+        {conversationCta.label}
+        <Icon name="study/arrow-up-right" aria-hidden="true" class="h-5 w-5" />
+      </a>
+      {projects && <a class="editorial-link" href={aboutContent.projectsAction.href}>{aboutContent.projectsAction.label}<Icon name="automation/arrow-right" aria-hidden="true" class="h-5 w-5" /></a>}
+    </div>
+  </div>
+</section>

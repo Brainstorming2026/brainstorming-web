@@ -19,15 +19,6 @@ export const solutions: Solution[] = [
     href: '/soluciones/growth-planning',
   },
   {
-    slug: 'branding',
-    title: 'Branding',
-    desc: 'Posicionamiento, personalidad e identidad visual en un Manual de Marca listo para usar.',
-    process: 'Posicionar · Sistematizar · Aplicar',
-    accent: '#223b79',
-    tint: '#eef2f8',
-    href: '/soluciones/branding',
-  },
-  {
     slug: 'inbound-marketing',
     title: 'Inbound Marketing',
     desc: 'Atrae prospectos, conviértelos en clientes y deléitalos con contenidos relevantes.',
@@ -62,5 +53,14 @@ export const solutions: Solution[] = [
     accent: '#7d44e4',
     tint: '#f4eefe',
     href: '/soluciones/innovacion-estrategica',
+  },
+  {
+    slug: 'branding',
+    title: 'Branding',
+    desc: 'Posicionamiento, personalidad e identidad visual en un Manual de Marca listo para usar.',
+    process: 'Posicionar · Sistematizar · Aplicar',
+    accent: '#223b79',
+    tint: '#eef2f8',
+    href: '/soluciones/branding',
   },
 ]

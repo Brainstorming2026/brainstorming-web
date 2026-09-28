@@ -1,5 +1,6 @@
+import type { Language, Namespace } from './dictionaries'
 import { defaultLang } from './config'
-import { dictionaries, type Language, type Namespace } from './dictionaries'
+import { dictionaries } from './dictionaries'
 
 /** Language from pathname: "/es/…" → es, else default (en, unprefixed). */
 export function getLang(url: URL): Language {

@@ -27,17 +27,19 @@ const {
 </section>
 
 <script>
+import { registerMotion, splitHeadline } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
-import { registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   document.querySelectorAll<HTMLElement>('.conversemos-section').forEach((section) => {
     const headline = section.querySelector<HTMLElement>('.conversemos-headline')
     const btn = section.querySelector<HTMLElement>('.conversemos-btn')
-    if (headline) splitHeadline(headline, { by: 'words' })
-    if (!btn || prefersReducedMotion()) return
+    if (headline)
+      splitHeadline(headline, { by: 'words' })
+    if (!btn || prefersReducedMotion())
+      return
 
     const { gsap } = ensureGsap()
     gsap.set(btn, { scale: 0.9, opacity: 0 })

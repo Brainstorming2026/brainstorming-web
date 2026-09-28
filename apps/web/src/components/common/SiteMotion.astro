@@ -1,0 +1,45 @@
+---
+/**
+ * Micro-interacciones de hover para TODO el sitio. Va en Layout.astro, no en
+ * una página: son el mismo gesto en cualquier card o CTA, y repetirlo por
+ * página multiplicaría listeners sin ganar nada.
+ *
+ * Las entradas al scroll NO viven aquí — esas son de cada sección.
+ */
+---
+
+<script>
+import { magnetic, registerMotion, tiltCards } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+
+/** Cards que se inclinan hacia el cursor, en cualquier página. */
+const TILT = [
+  ['.problemas-card', 6],
+  ['.journey-stage', 5],
+  ['.editorial-result--visual', 4],
+  ['.service-tile', 4],
+  ['.editorial-principles li', 5],
+  ['.howwedo-pillar', 5],
+  ['.proyecto-card', 3],
+  ['[data-case-card]', 4],
+] as const
+
+/**
+ * CTAs que persiguen al cursor. Incluye los de cada página de solución, que
+ * antes solo tenían el `scale: .97` al presionar.
+ */
+const MAGNETIC = '.editorial-button, .br-button, .ai-button, .in-button, .cta-btn, .hero-cta'
+
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+
+  // Solo con mouse: en táctil el tilt se dispara al tocar y se queda torcido.
+  gsap.matchMedia().add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups = [
+      ...TILT.map(([selector, amplitude]) => tiltCards(document.querySelectorAll(selector), amplitude)),
+      ...Array.from(document.querySelectorAll<HTMLElement>(MAGNETIC)).map(button => magnetic(button, 0.22)),
+    ]
+    return () => cleanups.forEach(cleanup => cleanup())
+  })
+})
+</script>

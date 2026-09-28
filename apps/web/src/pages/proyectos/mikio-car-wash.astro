@@ -8,7 +8,7 @@ import { proyectos } from '@/data/proyectos'
 import { proyectosDetalle } from '@/data/proyectosDetalle'
 import Layout from '@/layouts/Layout.astro'
 
-export const prerender = true;
+export const prerender = true
 
 const proyecto = proyectos.find(p => p.slug === 'mikio-car-wash')!
 const detalle = proyectosDetalle['mikio-car-wash']

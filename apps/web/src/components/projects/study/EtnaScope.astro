@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets'
+import logo from '@/assets/projects/new/logos/etna.png'
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props
+---
+
+<div class:list={['etna-scope', { 'etna-scope--compact': compact }]}>
+  <div class="etna-identity"><Image src={logo} alt="ETNA" loading="lazy" /><span>Branding · Manufactura</span></div>
+  <div class="etna-statement"><p>El alcance del proyecto</p><strong>Una marca.<br /><span>Distintas líneas.</span></strong></div>
+  <div class="etna-work"><p>Investigación de categoría, identidad visual y diferenciación por línea de producto.</p><ol><li>Investigar la categoría</li><li>Definir cada identidad</li><li>Dar coherencia al conjunto</li></ol></div>
+</div>
+
+<style>
+  .etna-scope { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px 8%; padding: clamp(26px, 5vw, 70px); border-radius: 8px; color: #fff; background: #074665; }
+  .etna-identity { grid-column: 1/-1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+  .etna-identity img { width: 150px; height: auto; padding: 10px; border-radius: 4px; background: #fff; }
+  .etna-identity > span, .etna-statement > p { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #c6e0ef; }
+  .etna-statement strong { display: block; margin-top: 20px; font: 500 clamp(34px, 4.4vw, 64px)/1.07 var(--font-heading); letter-spacing: -.05em; }
+  .etna-statement strong span { color: #b4d4e7; }
+  .etna-work { align-self: end; }
+  .etna-work > p { max-width: 35ch; color: #d3e5ef; font-size: 16px; line-height: 1.7; }
+  .etna-work ol { margin-top: 24px; padding: 0; list-style: none; }
+  .etna-work li { padding-block: 13px; border-top: 1px solid #ffffff40; font-size: 12px; }
+  .etna-scope--compact { width: 100%; height: 100%; grid-template-columns: 1fr; gap: 20px; padding: 24px; border-radius: 0; }
+  .etna-scope--compact .etna-identity img { width: 90px; }
+  .etna-scope--compact .etna-statement strong { margin: 0; font-size: 32px; }
+  .etna-scope--compact .etna-work, .etna-scope--compact .etna-statement > p { display: none; }
+  @media(max-width: 767px) { .etna-scope { grid-template-columns: 1fr; gap: 30px; } }
+</style>

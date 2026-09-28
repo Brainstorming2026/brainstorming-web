@@ -8,7 +8,7 @@ export const innovationPhases = [
 
 export const innovationBoard = [
   { name: 'Manuel Acevedo', specialty: 'Estrategia de crecimiento', icon: 'target', bio: 'Estrategia de crecimiento, metodologías Smart Selling y Growth Planning, liderazgo del proceso con el equipo directivo del cliente.' },
-  { name: 'Diego Ganoza', specialty: 'IA y transformación digital', icon: 'brain-circuit', bio: 'Inteligencia artificial aplicada, modelos de negocio escalables, gobernanza de IA y transformación digital.' },
+  { name: 'Diego Ganoza', specialty: 'IA y transformación digital', icon: 'bot', bio: 'Inteligencia artificial aplicada, modelos de negocio escalables, gobernanza de IA y transformación digital.' },
   { name: 'Manuel Acevedo Riquelme', specialty: 'Finanzas y valoración', icon: 'chart-column-increasing', bio: 'Ph.D. en Ciencias Económicas y Comerciales. 40+ años en finanzas corporativas, valoración de empresas y análisis financiero forense. Fractional CFO y catedrático de posgrado en ESAN, UP y USIL.' },
   { name: 'Mauricio Bock', specialty: 'Neurociencia y liderazgo', icon: 'users-round', bio: 'Neurociencia Aplicada al Liderazgo. Managing Director del Institute of Neurocoaching. PhD(c) en Psicología (UBA). Ha sido Gerente Corporativo en Great Place to Work, Belcorp, DHL y Manpower.' },
   { name: 'Jimena Ramírez Vinatea', specialty: 'Innovación y nuevos negocios', icon: 'route', bio: 'Innovación Estratégica y desarrollo de nuevos negocios. MBA IE Business School. Innovation Manager certificada (GIMI). 17+ años en Belcorp liderando portafolios de producto con lanzamientos que superaron estimados de venta hasta en 217%.' },

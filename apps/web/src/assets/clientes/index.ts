@@ -1,68 +1,76 @@
-import customerAguaclara from './customer-aguaclara.webp'
-import customerAlumspazio from './customer-alumspazio.webp'
-import customerAmadocacao from './customer-amadocacao.webp'
-import customerAruma from './customer-aruma.webp'
-import customerAtsaairlines from './customer-atsaairlines.webp'
-import customerBeauty from './customer-beauty.webp'
-import customerDigital from './customer-digital.webp'
-import customerGodini from './customer-godini.webp'
-import customerGris from './customer-gris.webp'
-import customerHelena from './customer-helena.webp'
-import customerLatinamerican from './customer-latinamerican.webp'
-import customerLawash from './customer-lawash.webp'
-import customerLimagas from './customer-limagas.webp'
-import customerLorenzee from './customer-lorenzee.webp'
-import customerMikio from './customer-mikio.webp'
-import customerMoneda from './customer-moneda.webp'
-import customerMusicalma from './customer-musicalma.webp'
-import customerNote from './customer-note.webp'
-import customerOrquidea from './customer-orquidea.webp'
-import customerPringles from './customer-pringles.webp'
-import customerRenace from './customer-renace.webp'
-import customerRetyg from './customer-retyg.webp'
-import customerRua from './customer-rua.webp'
-import customerSgs from './customer-sgs.webp'
-import customerSiemens from './customer-siemens.webp'
-import customerSonqo from './customer-sonqo.webp'
-import customerStanley from './customer-stanley.webp'
-import customerVendefactura from './customer-vendefactura.webp'
-import customerWalon from './customer-walon.webp'
-
 import type { ImageMetadata } from 'astro'
+
+import { newProjectLogos } from '@/data/new-projects'
+
+// Logos procesados por `scripts/build-client-logos.mjs` (recortados, webp).
+// El slug es el nombre del archivo: para sumar un cliente basta con generar su
+// logo y, si el nombre no se deduce del slug, registrarlo en NAMES.
+const files = import.meta.glob<{ default: ImageMetadata }>('./logos/*.webp', { eager: true })
 
 export interface ClienteLogo {
   slug: string
+  name: string
   image: ImageMetadata
+  /** Ancho en px que iguala el peso visual entre logos anchos y cuadrados. */
+  width: number
+  className?: string
 }
 
-export const clienteLogos: ClienteLogo[] = [
-  { slug: 'aguaclara', image: customerAguaclara },
-  { slug: 'alumspazio', image: customerAlumspazio },
-  { slug: 'amadocacao', image: customerAmadocacao },
-  { slug: 'aruma', image: customerAruma },
-  { slug: 'atsaairlines', image: customerAtsaairlines },
-  { slug: 'digital', image: customerDigital },
-  { slug: 'godini', image: customerGodini },
-  { slug: 'gris', image: customerGris },
-  { slug: 'helena', image: customerHelena },
-  { slug: 'latinamerican', image: customerLatinamerican },
-  { slug: 'lawash', image: customerLawash },
-  { slug: 'limagas', image: customerLimagas },
-  { slug: 'lorenzee', image: customerLorenzee },
-  { slug: 'mikio', image: customerMikio },
-  { slug: 'moneda', image: customerMoneda },
-  { slug: 'musicalma', image: customerMusicalma },
-  { slug: 'note', image: customerNote },
-  { slug: 'orquidea', image: customerOrquidea },
-  { slug: 'pringles', image: customerPringles },
-  { slug: 'renace', image: customerRenace },
-  { slug: 'retyg', image: customerRetyg },
-  { slug: 'rua', image: customerRua },
-  { slug: 'sgs', image: customerSgs },
-  { slug: 'siemens', image: customerSiemens },
-  { slug: 'sonqo', image: customerSonqo },
-  { slug: 'stanley', image: customerStanley },
-  { slug: 'vendefactura', image: customerVendefactura },
-  { slug: 'walon', image: customerWalon },
-  { slug: 'beauty', image: customerBeauty },
-]
+// Nombre visible cuando difiere del slug ("Title Case" del slug por defecto).
+const NAMES: Record<string, string> = {
+  'amado-cacao': 'Amado Cacao',
+  'atsa': 'ATSA Airlines',
+  'black-decker': 'Black+Decker',
+  'dewalt': 'DeWalt',
+  'dg': 'DG',
+  'esan': 'ESAN',
+  'ferreyros': 'Ferreyros CAT',
+  'gg-joyeros': 'G&G Joyeros',
+  'gsk': 'GSK',
+  'jw-marriott': 'JW Marriott',
+  'lorenzetti': 'Lorenzetti Ink',
+  'mi-banco': 'mibanco',
+  'mikio': 'Mikio Car Wash',
+  'note': 'Note Vapor',
+  'orquidea': 'Orquídea Mezzanine Fund',
+  'pall-mall': 'Pall Mall',
+  'siderperu': 'Siderperú',
+  'stanley-black-decker': 'Stanley Black & Decker',
+  'tedx': 'TEDx',
+  'tedx-lima': 'TEDxLima',
+  'usaid': 'USAID',
+}
+
+// Proyectos recientes que aún no están en la carpeta de logos histórica.
+const RECENT: Record<string, { name: string, className?: string }> = {
+  'ait-capital': { name: 'AIT Capital' },
+  'nordic': { name: 'Nordic International School' },
+  'etna': { name: 'ETNA' },
+  'futura-wealth': { name: 'Futura Wealth Management', className: 'rounded bg-[#182b38] p-2' },
+}
+
+// Área visual objetivo (px²). Con ancho = √(área · proporción) un wordmark
+// de 6:1 y un isotipo cuadrado pesan parecido en la grilla.
+const AREA = 4200
+const MAX_WIDTH = 108
+
+function visualWidth({ width, height }: ImageMetadata) {
+  return Math.round(Math.min(MAX_WIDTH, Math.sqrt(AREA * (width / height))))
+}
+
+const titleCase = (slug: string) => slug.replace(/(^|-)(\w)/g, (_, sep, c) => `${sep ? ' ' : ''}${c.toUpperCase()}`)
+
+const fromFolder = Object.entries(files).map(([path, mod]): ClienteLogo => {
+  const slug = path.slice(path.lastIndexOf('/') + 1, -'.webp'.length)
+  return { slug, name: NAMES[slug] ?? titleCase(slug), image: mod.default, width: visualWidth(mod.default) }
+})
+
+const recent = Object.entries(RECENT)
+  .filter(([slug]) => !fromFolder.some(c => c.slug === slug))
+  .map(([slug, { name, className }]): ClienteLogo => {
+    const image = newProjectLogos[slug as keyof typeof newProjectLogos]
+    return { slug, name, image, width: visualWidth(image), className }
+  })
+
+export const clienteLogos: ClienteLogo[] = [...fromFolder, ...recent]
+  .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))

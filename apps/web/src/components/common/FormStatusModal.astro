@@ -43,6 +43,7 @@ import iconClose from '@/icons/close.svg'
 import { ensureGsap } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { portalToBody } from '@/lib/portal'
 
 export type FormStatusState = 'loading' | 'success' | 'error'
 
@@ -52,7 +53,7 @@ interface FormStatusDetail {
   message?: string
 }
 
-const overlay = document.querySelector<HTMLDivElement>('#form-status-overlay')
+const overlay = portalToBody(document.querySelector<HTMLDivElement>('#form-status-overlay'))
 const modal = document.querySelector<HTMLDivElement>('#form-status-modal')
 const spinner = document.querySelector<HTMLDivElement>('#form-status-spinner')
 const badge = document.querySelector<HTMLDivElement>('#form-status-badge')

@@ -1,4 +1,4 @@
-import { Heading, Hr, Link, Section, Text } from '@react-email/components'
+import { Heading, Hr, Link, Section, Text } from 'react-email'
 import { emailColors, EmailLayout } from '@/components/emails/EmailLayout'
 
 export interface InternalLeadEmailProps {

@@ -1,5 +1,5 @@
-import { ensureGsap } from './gsap-client'
 import { duration, ease } from './config'
+import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
 const CLIP_FROM: Record<'up' | 'down' | 'left' | 'right', string> = {
@@ -21,7 +21,7 @@ interface RevealOptions {
 }
 
 // Evita traer el tipo completo de ScrollTrigger solo para esta firma.
-type GSAPScrollTriggerVars = { trigger: Element; start: string; end: string; scrub: boolean | number }
+interface GSAPScrollTriggerVars { trigger: Element, start: string, end: string, scrub: boolean | number }
 
 /** Revela un elemento (imagen, card, video) con clip-path. Ver RevealOptions. */
 export function revealClip(el: HTMLElement, options: RevealOptions = {}) {
@@ -69,6 +69,57 @@ export function revealClip(el: HTMLElement, options: RevealOptions = {}) {
       },
     )
   }
+}
+
+/**
+ * Gesto "ventana": la máscara del contenedor se abre desde un lado mientras la
+ * imagen de adentro sale de un zoom. Las dos cosas a la vez son lo que hace
+ * que se lea como una ventana abriéndose y no como un simple fade.
+ *
+ * Es el mismo gesto que usa apps/us (revealClip + zoom del <img>), empaquetado
+ * en una sola llamada porque se repite en toda la web.
+ *
+ * El contenedor DEBE tener `overflow: hidden`, o el zoom se desborda.
+ */
+export function revealWindow(
+  el: HTMLElement,
+  { direction = 'up', zoom = 1.12, start = 'top 85%', mediaSelector = 'img, video, picture, svg' }: {
+    direction?: 'up' | 'down' | 'left' | 'right'
+    /** Escala inicial del media interno. 1 desactiva el zoom. */
+    zoom?: number
+    start?: string
+    mediaSelector?: string
+  } = {},
+) {
+  const { gsap } = ensureGsap()
+
+  if (prefersReducedMotion()) {
+    gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+    return
+  }
+
+  const timeline = gsap.timeline({ scrollTrigger: { trigger: el, start, once: true } })
+
+  timeline.fromTo(
+    el,
+    { clipPath: CLIP_FROM[direction] },
+    { clipPath: CLIP_FULL, duration: duration.reveal, ease: ease.out },
+    0,
+  )
+
+  const media = el.querySelector<HTMLElement>(mediaSelector)
+  if (media && zoom !== 1) {
+    // Arranca junto con la máscara y dura más: la imagen sigue asentándose
+    // cuando la ventana ya terminó de abrirse.
+    timeline.fromTo(
+      media,
+      { scale: zoom },
+      { scale: 1, duration: duration.reveal * 1.25, ease: 'power2.out' },
+      0,
+    )
+  }
+
+  return timeline
 }
 
 /** Dibuja una línea/barra (scaleX 0→1) — firma visual bajo un titular o card. */

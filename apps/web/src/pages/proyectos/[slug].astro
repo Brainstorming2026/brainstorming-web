@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { NewProject } from '@/data/new-projects'
+import NewProjectStudy from '@/components/projects/study/NewProjectStudy.astro'
+import { newProjects } from '@/data/new-projects'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
+export const getStaticPaths = (() => newProjects.map(project => ({ params: { slug: project.slug }, props: { project } }))) satisfies GetStaticPaths
+interface Props { project: NewProject }
+const { project } = Astro.props
+---
+
+<Layout title={`${project.client} — Brainstorming`} description={project.summary} footerCurveBg="bg-white">
+  <NewProjectStudy project={project} />
+</Layout>

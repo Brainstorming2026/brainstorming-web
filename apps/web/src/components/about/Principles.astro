@@ -1,0 +1,19 @@
+---
+import { Icon } from 'astro-icon/components'
+import { aboutContent } from '@/data/transversal-content'
+---
+
+<section class="editorial-section" aria-labelledby="principles-title">
+  <div class="editorial-container">
+    <h2 id="principles-title" class="editorial-title" data-editorial-heading>{aboutContent.principles.title}</h2>
+    <ul class="editorial-principles">
+      {aboutContent.principles.items.map(principle => (
+        <li data-editorial-reveal>
+          <Icon name={principle.icon} class="h-8 w-8 text-primary" aria-hidden="true" />
+          <h3>{principle.title}</h3>
+          <p>{principle.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

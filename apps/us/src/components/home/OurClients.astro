@@ -1,15 +1,15 @@
 ---
 import { Image } from 'astro:assets'
-import pracda from '@/assets/clients/pracda.png'
-import viveparacas from '@/assets/clients/viveparacas.png'
-import pringles from '@/assets/clients/pringles.png'
-import siemens from '@/assets/clients/siemens.png'
-import nadira from '@/assets/clients/nadira.png'
-import stanley from '@/assets/clients/stanley.png'
-import gris from '@/assets/clients/gris.png'
-import sgs from '@/assets/clients/sgs.png'
 import atsa from '@/assets/clients/atsa.png'
 import construplan from '@/assets/clients/construplan.png'
+import gris from '@/assets/clients/gris.png'
+import nadira from '@/assets/clients/nadira.png'
+import pracda from '@/assets/clients/pracda.png'
+import pringles from '@/assets/clients/pringles.png'
+import sgs from '@/assets/clients/sgs.png'
+import siemens from '@/assets/clients/siemens.png'
+import stanley from '@/assets/clients/stanley.png'
+import viveparacas from '@/assets/clients/viveparacas.png'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
@@ -70,7 +70,8 @@ registerMotion(() => {
   const tagline = document.getElementById('clients-tagline')
   const { gsap } = ensureGsap()
 
-  if (headline) splitHeadline(headline, { by: 'words' })
+  if (headline)
+    splitHeadline(headline, { by: 'words' })
   staggerGrid(logos, { variant: 'wipe' })
 
   if (tagline) {

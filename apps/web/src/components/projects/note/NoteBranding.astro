@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 import brandingBg from '@/assets/projects/note/bg2.png'
 import colorsImg from '@/assets/projects/note/colors.png'
 import stepsImg from '@/assets/projects/note/steps.png'
@@ -88,19 +88,24 @@ registerMotion(() => {
     return
   }
 
-  if (bg) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 10, ease: 'none' })
-  if (label) gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  if (bg)
+    gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 10, ease: 'none' })
+  if (label)
+    gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
   if (lines.length > 0) {
     gsap.set(lines, { opacity: 0, y: '100%' })
     gsap.to(lines, { opacity: 1, y: '0%', duration: 1.0, ease: ease.out, stagger: 0.12, delay: 0.2 })
   }
-  if (heroImgWrap) revealClip(heroImgWrap, { direction: 'up' })
-  if (heroImg) gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
+  if (heroImgWrap)
+    revealClip(heroImgWrap, { direction: 'up' })
+  if (heroImg)
+    gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
 
   if (desc) {
     gsap.set(desc, { opacity: 0, y: 16 })
     gsap.to(desc, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, scrollTrigger: { trigger: '#branding-detail', start: 'top 85%' } })
   }
-  if (colorsWrap) revealClip(colorsWrap, { direction: 'up' })
+  if (colorsWrap)
+    revealClip(colorsWrap, { direction: 'up' })
 })
 </script>

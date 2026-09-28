@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import workspace from '@/assets/projects/new/futura-wealth/workspace-source.png'
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props
+---
+
+<section class:list={['futura-operation', { 'futura-operation--compact': compact }]} aria-label="Organización comercial de Futura">
+  <header>
+    <p class="eyebrow">Futura · Organización comercial</p>
+    <h3>El sistema detrás<br />de cada relación.</h3>
+    <p class="intro">La gestión de oportunidades y la preparación del equipo comparten un espacio de trabajo.</p>
+  </header>
+  <div class="workspace-layout">
+    <figure class="workspace-document">
+      <div class="document-label"><span>monday CRM</span><span>Espacio Futura</span></div>
+      <Image src={workspace} alt="Recorte original del espacio Futura en Monday: CRM con Actividades, Leads y Asesores; Onboarding y Entrenamiento con Plan de Capacitación." widths={[340, 510]} sizes="(min-width: 768px) 340px, 85vw" loading="lazy" />
+      <figcaption>Detalle del espacio de trabajo original</figcaption>
+    </figure>
+    <div class="workspace-reading">
+      <article>
+        <span class="section-number">01 / GESTIÓN COMERCIAL</span>
+        <h4>Oportunidades con contexto.</h4>
+        <p>Leads, actividades y asesores en una misma estructura. El tablero documenta estados y reuniones para organizar el seguimiento.</p>
+        <ul aria-label="Módulos comerciales"><li>Leads</li><li>Actividades</li><li>Asesores</li></ul>
+      </article>
+      <article>
+        <span class="section-number">02 / ADOPCIÓN DEL EQUIPO</span>
+        <h4>El proceso también se aprende.</h4>
+        <p>El espacio incluye onboarding, contenidos de entrenamiento y un plan de capacitación. La implementación contempla tanto la herramienta como su uso por el equipo.</p>
+        <ul aria-label="Módulos del equipo"><li>Onboarding</li><li>Entrenamiento</li><li>Capacitación</li></ul>
+      </article>
+      <div class="workspace-conclusion"><span>CRM + EQUIPO</span><p>Una operación que se puede seguir.<br />Un proceso que se puede compartir.</p></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .futura-operation { padding: clamp(26px, 5vw, 64px); border-radius: 8px; background: #182b38; color: #f7f1e7; }
+  header { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px 8%; align-items: end; margin-bottom: 48px; }
+  .eyebrow { grid-column: 1/-1; color: #d2b16f; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
+  h3 { font: 500 clamp(32px, 4.1vw, 56px)/1.03 var(--font-heading); letter-spacing: -.045em; }
+  .intro { max-width: 36ch; color: #c5d0d5; font-size: 16px; line-height: 1.7; }
+  .workspace-layout { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 90px); align-items: center; }
+  .workspace-document { max-width: 390px; margin: 0; padding: 16px; border: 1px solid #49606c; border-radius: 12px; background: #223845; box-shadow: 0 28px 60px rgb(0 0 0 / 18%); }
+  .document-label { display: flex; justify-content: space-between; gap: 8px; padding-bottom: 14px; font-size: 10px; color: #d4e0e6; }
+  .workspace-document img { display: block; width: 100%; height: auto; border-radius: 5px; }
+  .workspace-document figcaption { margin-top: 12px; color: #c5d0d5; font-size: 10px; }
+  .workspace-reading article { padding-block: 28px; border-top: 1px solid #49606c; }
+  .section-number { font-size: 10px; letter-spacing: .14em; color: #d2b16f; }
+  h4 { margin-block: 16px 12px; font: 500 clamp(24px, 2.7vw, 34px)/1.12 var(--font-heading); letter-spacing: -.03em; }
+  .workspace-reading article > p { max-width: 49ch; color: #c5d0d5; font-size: 14px; line-height: 1.8; }
+  ul { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; padding: 0; list-style: none; }
+  li { font-size: 12px; color: #ede1c5; }
+  li::before { display: inline-block; width: 4px; height: 4px; margin-right: 8px; border-radius: 50%; background: #d2b16f; content: ''; vertical-align: middle; }
+  .workspace-conclusion { margin-top: 12px; padding: 24px 0 0 22px; border-left: 2px solid #d2b16f; }
+  .workspace-conclusion span { font-size: 9px; letter-spacing: .16em; color: #d2b16f; }
+  .workspace-conclusion p { margin-top: 10px; font-size: 17px; line-height: 1.5; }
+  .futura-operation--compact { display: grid; grid-template-columns: 1fr 120px; gap: 20px; width: 100%; height: 100%; padding: 24px; border-radius: 0; overflow: hidden; }
+  .futura-operation--compact header { display: flex; flex-direction: column; align-items: start; justify-content: center; gap: 16px; margin: 0; }
+  .futura-operation--compact h3 { font-size: clamp(22px, 3vw, 32px); }
+  .futura-operation--compact .intro, .futura-operation--compact .workspace-reading, .futura-operation--compact .document-label, .futura-operation--compact figcaption { display: none; }
+  .futura-operation--compact .workspace-layout { display: block; align-self: center; }
+  .futura-operation--compact .workspace-document { padding: 5px; border-radius: 5px; }
+  @media(max-width: 767px) {
+    header, .workspace-layout { grid-template-columns: 1fr; }
+    header { margin-bottom: 30px; }
+    .workspace-document { width: 100%; margin-inline: auto; }
+  }
+</style>

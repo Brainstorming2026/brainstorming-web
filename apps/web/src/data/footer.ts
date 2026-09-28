@@ -1,6 +1,9 @@
+import { resourceLinks, siteServices } from './site-navigation'
+
 export interface FooterLink {
   label: string
   href: string
+  complementary?: boolean
 }
 
 export interface FooterRed {
@@ -9,14 +12,11 @@ export interface FooterRed {
   label: string
 }
 
-export const soluciones: FooterLink[] = [
-  { label: 'Growth Planning', href: '/soluciones/growth-planning' },
-  { label: 'Branding', href: '/soluciones/branding' },
-  { label: 'Inbound Marketing', href: '/soluciones/inbound-marketing' },
-  { label: 'Smart Selling', href: '/soluciones/smart-selling' },
-  { label: 'Automatización de Procesos con IA', href: '/soluciones/automatizacion-ia' },
-  { label: 'Innovación Estratégica', href: '/soluciones/innovacion-estrategica' },
-]
+export const soluciones: FooterLink[] = siteServices.map(service => ({
+  label: service.footerLabel ?? service.label,
+  href: service.href,
+  complementary: service.complementary,
+}))
 
 export const empresa: FooterLink[] = [
   { label: 'Nosotros', href: '/nosotros' },
@@ -25,8 +25,7 @@ export const empresa: FooterLink[] = [
 ]
 
 export const recursos: FooterLink[] = [
-  { label: 'Blog', href: '/blog' },
-  { label: 'Guías Prácticas', href: '/guias' },
+  ...resourceLinks,
   { label: 'Políticas de privacidad', href: '/politica-de-privacidad' },
 ]
 

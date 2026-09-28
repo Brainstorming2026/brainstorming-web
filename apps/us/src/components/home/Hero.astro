@@ -74,12 +74,14 @@ registerMotion(() => {
   const text = document.getElementById('hero-text')
   const { gsap } = ensureGsap()
 
-  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+  if (text && !prefersReducedMotion())
+    gsap.set(text, { opacity: 0, y: 10 })
 
   if (headline) {
     // 'lines' preserva el <span class="text-gold"> intacto dentro del split.
     splitHeadline(headline, { by: 'lines', scrollTrigger: false, onComplete: () => {
-      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+      if (text)
+        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
     } })
   }
   if (backgrounds.length > 0 && !prefersReducedMotion())

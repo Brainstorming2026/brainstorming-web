@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets'
+import illustrations from '@/assets/home/strategy-illustrations.png'
+
+interface Props { index: number }
+const { index } = Astro.props
+---
+<div class="strategy-art" aria-hidden="true">
+  <Image src={illustrations} alt="" width={2079} format="webp" quality={100} loading="lazy" style={`left: -${index * 100}%`} />
+</div>
+<style>
+  .strategy-art { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent), linear-gradient(to bottom, transparent, black 5%, black 95%, transparent); mask-composite: intersect; }
+  .strategy-art img { position: absolute; width: 500%; max-width: none; height: auto; top: 50%; transform: translateY(-50%); }
+</style>

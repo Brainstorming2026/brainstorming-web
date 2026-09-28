@@ -3,9 +3,12 @@ const SEEN_KEY = 'bs-splash-seen'
 ---
 
 <script is:inline define:vars={{ SEEN_KEY }}>
-  if (sessionStorage.getItem(SEEN_KEY)) {
-    document.documentElement.classList.add('bs-splash-seen')
+  try {
+    if (localStorage.getItem(SEEN_KEY)) {
+      document.documentElement.classList.add('bs-splash-seen')
+    }
   }
+  catch {}
 </script>
 
 <style>
@@ -34,49 +37,63 @@ const SEEN_KEY = 'bs-splash-seen'
 </div>
 
 <script>
-  import { ease } from '@/lib/motion/config'
-  import { ensureGsap } from '@/lib/motion/gsap-client'
-  import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+ import { ease } from '@/lib/motion/config'
+ import { ensureGsap } from '@/lib/motion/gsap-client'
+ import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
-  const SEEN_KEY = 'bs-splash-seen'
-  /** Duración real de cada gif (81/71 frames @ 25fps) — el hold coincide con
-   * el frame final en vez de cortar el loop a mitad de animación. */
-  const HOLD_DESKTOP_MS = 3240
-  const HOLD_MOBILE_MS = 2840
-  const FADE_S = 0.6
+ const SEEN_KEY = 'bs-splash-seen'
+ // Los gifs están re-encodeados a una sola reproducción (sin loop), así que
+ // congelan en su frame final. El hold es corto porque ya no hay riesgo de
+ // ver el reinicio del loop.
+ const HOLD_DESKTOP_MS = 1800
+ const HOLD_MOBILE_MS = 1600
+ const FADE_S = 0.6
 
-  const splash = document.getElementById('splash-screen')
-  if (splash && !sessionStorage.getItem(SEEN_KEY)) {
-    document.body.style.overflow = 'hidden'
-    const isDesktop = window.matchMedia('(min-width: 768px)').matches
-    const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
+ function seen() {
+   try {
+     return localStorage.getItem(SEEN_KEY)
+   }
+   catch {
+     return null
+   }
+ }
 
-    const dismiss = () => {
-      sessionStorage.setItem(SEEN_KEY, '1')
-      document.body.style.overflow = ''
-      splash.style.pointerEvents = 'none'
-    }
+ const splash = document.getElementById('splash-screen')
+ if (splash && !seen()) {
+   document.body.style.overflow = 'hidden'
+   const isDesktop = window.matchMedia('(min-width: 768px)').matches
+   const holdMs = isDesktop ? HOLD_DESKTOP_MS : HOLD_MOBILE_MS
 
-    window.setTimeout(() => {
-      if (prefersReducedMotion()) {
-        splash.style.display = 'none'
-        dismiss()
-        return
-      }
-      const { gsap } = ensureGsap()
-      gsap.set(splash, { transformOrigin: '50% 50%' })
-      gsap.to(splash, {
-        opacity: 0,
-        scale: 1.04,
-        duration: FADE_S,
-        ease: ease.out,
-        onComplete: () => {
-          splash.style.display = 'none'
-          dismiss()
-        },
-      })
-    }, holdMs)
-  } else if (splash) {
-    splash.style.display = 'none'
-  }
+   const dismiss = () => {
+     try {
+       localStorage.setItem(SEEN_KEY, '1')
+     }
+     catch {}
+     document.body.style.overflow = ''
+     splash.style.pointerEvents = 'none'
+   }
+
+   window.setTimeout(() => {
+     if (prefersReducedMotion()) {
+       splash.style.display = 'none'
+       dismiss()
+       return
+     }
+     const { gsap } = ensureGsap()
+     gsap.set(splash, { transformOrigin: '50% 50%' })
+     gsap.to(splash, {
+       opacity: 0,
+       scale: 1.04,
+       duration: FADE_S,
+       ease: ease.out,
+       onComplete: () => {
+         splash.style.display = 'none'
+         dismiss()
+       },
+     })
+   }, holdMs)
+ }
+ else if (splash) {
+   splash.style.display = 'none'
+ }
 </script>

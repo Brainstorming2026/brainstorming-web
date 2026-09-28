@@ -1,0 +1,13 @@
+---
+/**
+ * Activa las columnas `[data-stick]` de la página. Va en Layout justo DESPUÉS
+ * de SmoothScroll: los listeners de `astro:page-load` corren en orden de
+ * registro y el pin necesita que el smoother ya exista (ver lib/motion/stick.ts).
+ */
+---
+
+<script>
+import { registerMotion, stickAll } from '@/lib/motion'
+
+registerMotion(stickAll)
+</script>

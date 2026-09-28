@@ -7,6 +7,13 @@ if (CORREO_TIPO !== 'resend') {
   throw new Error(`CORREO_TIPO="${CORREO_TIPO}" no soportado — solo "resend" esta implementado`)
 }
 
+// Las vars son opcionales en el schema de astro.config (el sitio compila sin
+// ellas), pero enviar correo no funciona sin ellas: se falla al cargar el
+// modulo con un mensaje claro, y de paso TypeScript las ve como `string`.
+if (!RESEND_API_KEY || !CORREO_FROM || !CORREO_REPLY_TO) {
+  throw new Error('Faltan RESEND_API_KEY, CORREO_FROM o CORREO_REPLY_TO en las variables de entorno')
+}
+
 // Cliente unico, instanciado una vez. Nunca hacer `new Resend()` en una ruta.
 export const resend = new Resend(RESEND_API_KEY)
 

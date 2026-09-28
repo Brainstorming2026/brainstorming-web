@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    turnstile?: { reset: (widget?: string | HTMLElement) => void }
+  }
+}
+
 export function wireGuideLeadForm(form: HTMLFormElement | null, slug: string): void {
   if (!form)
     return
@@ -15,6 +21,14 @@ export function wireGuideLeadForm(form: HTMLFormElement | null, slug: string): v
       return
 
     const data = new FormData(form)
+    const turnstileToken = data.get('cf-turnstile-response')
+    // Si la pagina monto el widget, sin token el servidor rechazaria el envio.
+    if (form.querySelector('.cf-turnstile') && (typeof turnstileToken !== 'string' || !turnstileToken)) {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: 'Verificación pendiente', message: 'Espera unos segundos y vuelve a intentar.' },
+      }))
+      return
+    }
 
     submitBtn.disabled = true
     document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading' } }))
@@ -31,6 +45,7 @@ export function wireGuideLeadForm(form: HTMLFormElement | null, slug: string): v
           slug,
           suscribirse: data.get('suscribirse') === 'on',
           website: data.get('website'),
+          turnstileToken,
         }),
       })
 
@@ -53,6 +68,8 @@ export function wireGuideLeadForm(form: HTMLFormElement | null, slug: string): v
     }
     finally {
       submitBtn.disabled = false
+      // El token es de un solo uso: se pide uno nuevo tras cada intento.
+      window.turnstile?.reset()
     }
   })
 }

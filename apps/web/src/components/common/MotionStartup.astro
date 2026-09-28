@@ -1,0 +1,50 @@
+---
+/** Prepare the first paint before deferred animation modules can run. */
+---
+<script is:inline>
+(() => {
+  // ClientRouter keeps these listeners across navigations.
+  if (window.__bsMotionStartup)
+    return
+  window.__bsMotionStartup = true
+  let timer
+  const release = (state) => {
+    clearTimeout(timer)
+    document.documentElement.dataset.motionStartup = state
+  }
+  const prepare = () => {
+    clearTimeout(timer)
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      release('ready')
+      return
+    }
+    document.documentElement.dataset.motionStartup = 'pending'
+    // Fail open. Late modules must not hide already-visible content again.
+    timer = setTimeout(release, 2500, 'fallback')
+  }
+  prepare()
+  document.addEventListener('astro:after-swap', prepare)
+  document.addEventListener('astro:page-load', () => {
+    // All synchronous GSAP setups (including ScrollSmoother) finish first.
+    queueMicrotask(() => {
+      if (document.documentElement.dataset.motionStartup === 'pending')
+        release('ready')
+    })
+  })
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted)
+      release('ready')
+  })
+})()
+</script>
+
+<style is:global>
+  /* Opacity preserves geometry for SplitText and ScrollTrigger measurements.
+     Without JS the attribute is absent and all content remains accessible. */
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-motion-startup='pending'] #smooth-content {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+  }
+</style>

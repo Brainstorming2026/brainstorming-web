@@ -35,8 +35,10 @@ import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 registerMotion(() => {
   const headline = document.getElementById('funnel-headline')
   const img = document.getElementById('funnel-img')
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (!img) return
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (!img)
+    return
 
   const { gsap } = ensureGsap()
 

@@ -22,6 +22,7 @@ export function makeGuideLeadSchema(m: GuideLeadMessages = DEFAULT_GUIDE_LEAD_ME
     // el PDF real desde `data/guides.ts` (single source of truth, ver lib/guide-lead.ts).
     slug: z.string().trim().min(1, m.slug).max(200, m.slug),
     suscribirse: z.boolean().optional(),
+    turnstileToken: z.string().max(2048).optional(), // validado en el servidor por verifyTurnstileToken
     website: z.string().optional(), // honeypot
   })
 }

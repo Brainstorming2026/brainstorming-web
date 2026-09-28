@@ -27,6 +27,18 @@ registerMotion(() => {
       }),
     })
 
+    // La foto se descubre como una ventana que se abre de izquierda a derecha,
+    // arrancando junto al titular. El `round 8px` va en los dos estados o el
+    // borde redondeado del marco se pierde mientras dura la máscara.
+    const frame = hero.querySelector<HTMLElement>('.hero-photo-frame')
+    if (frame) {
+      gsap.fromTo(
+        frame,
+        { clipPath: 'inset(0% 100% 0% 0% round 8px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 8px)', duration: 1.25, ease: 'expo.out', delay: 0.12 },
+      )
+    }
+
     gsap.from(hero.querySelectorAll('[data-hero-enter]'), {
       y: 14,
       opacity: 0,

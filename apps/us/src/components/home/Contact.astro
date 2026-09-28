@@ -1,6 +1,6 @@
 ---
-import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { Image } from 'astro:assets'
+import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import illustration from '@/assets/contact/hero-contact.png'
 import arrow from '@/assets/contact/right.png'
 import FormStatusModal from '@/components/common/FormStatusModal.astro'
@@ -179,8 +179,10 @@ registerMotion(() => {
   const formCard = document.getElementById('contact-form-card')
   const { gsap } = ensureGsap()
 
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (imgWrap) revealClip(imgWrap, { direction: 'up' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (imgWrap)
+    revealClip(imgWrap, { direction: 'up' })
 
   if (formCard) {
     if (prefersReducedMotion()) {

@@ -23,6 +23,7 @@ export interface SalesBenefit {
 export interface SalesCaseStudy {
   client: string
   context: string
+  href: string
   logo: ImageMetadata
   logoAlt: string
   accent: 'ait' | 'senati'
@@ -94,6 +95,7 @@ export const salesBenefits: SalesBenefit[] = [
 export const salesCaseStudies: SalesCaseStudy[] = [
   {
     client: 'AIT Capital',
+    href: '/proyectos/ait-capital',
     context: 'Un sistema comercial rediseñado para multiplicar reuniones, cierres y facturación en cuatro meses.',
     logo: aitCapitalLogo,
     logoAlt: 'AIT Capital',
@@ -106,6 +108,7 @@ export const salesCaseStudies: SalesCaseStudy[] = [
   },
   {
     client: 'SENATI',
+    href: '/proyectos/senati',
     context: 'Reactivación inteligente de una base dormida para convertir atención acumulada en nuevas matrículas.',
     logo: senatiLogo,
     logoAlt: 'SENATI',

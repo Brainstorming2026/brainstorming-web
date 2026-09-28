@@ -1,10 +1,10 @@
 ---
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 import brandingBg from '@/assets/projects/beauty/bg2.png'
+import iconsImg from '@/assets/projects/beauty/hero2.png'
 import badge1 from '@/assets/projects/beauty/img1.png'
 import badge2 from '@/assets/projects/beauty/img2.png'
-import iconsImg from '@/assets/projects/beauty/hero2.png'
 ---
 
 <section id="branding-intro" class="relative overflow-hidden bg-gray-light py-16 lg:py-20">
@@ -81,15 +81,19 @@ registerMotion(() => {
     return
   }
 
-  if (bg) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 10, ease: 'none' })
-  if (label) gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
-  if (heading) gsap.fromTo(heading, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, delay: 0.15 })
+  if (bg)
+    gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 10, ease: 'none' })
+  if (label)
+    gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  if (heading)
+    gsap.fromTo(heading, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, delay: 0.15 })
   staggerGrid(badges, { variant: 'organic' })
 
   if (desc) {
     gsap.set(desc, { opacity: 0, y: 16 })
     gsap.to(desc, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, scrollTrigger: { trigger: '#branding-detail', start: 'top 85%' } })
   }
-  if (colorsWrap) revealClip(colorsWrap, { direction: 'up' })
+  if (colorsWrap)
+    revealClip(colorsWrap, { direction: 'up' })
 })
 </script>

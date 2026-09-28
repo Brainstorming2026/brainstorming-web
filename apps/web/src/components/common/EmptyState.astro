@@ -58,15 +58,21 @@ registerMotion(() => {
     return
   }
 
-  if (bg) gsap.fromTo(bg, { scale: 1.05, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' })
-  if (eyebrow) gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-  if (desc) gsap.set(desc, { opacity: 0, y: 12 })
-  if (cta) gsap.set(cta, { opacity: 0, scale: 0.92 })
+  if (bg)
+    gsap.fromTo(bg, { scale: 1.05, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' })
+  if (eyebrow)
+    gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+  if (desc)
+    gsap.set(desc, { opacity: 0, y: 12 })
+  if (cta)
+    gsap.set(cta, { opacity: 0, scale: 0.92 })
 
   if (heading) {
     splitHeadline(heading, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (desc) gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
-      if (cta) gsap.to(cta, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.4)', delay: 0.15 })
+      if (desc)
+        gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      if (cta)
+        gsap.to(cta, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.4)', delay: 0.15 })
     } })
   }
 })

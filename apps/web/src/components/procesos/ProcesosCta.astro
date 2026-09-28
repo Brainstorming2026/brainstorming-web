@@ -26,16 +26,18 @@
 </section>
 
 <script>
+import { registerMotion, splitHeadline } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
-import { registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   const headline = document.getElementById('procesos-cta-headline')
   const buttons = document.querySelectorAll('#procesos-cta-buttons .cta-btn')
-  if (headline) splitHeadline(headline, { by: 'words' })
-  if (buttons.length === 0) return
+  if (headline)
+    splitHeadline(headline, { by: 'words' })
+  if (buttons.length === 0)
+    return
 
   const { gsap } = ensureGsap()
   if (prefersReducedMotion()) {

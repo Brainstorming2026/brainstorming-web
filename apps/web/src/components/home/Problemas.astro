@@ -1,106 +1,185 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { problemaCards as cards } from '@/data'
 import serviceUpBg from '@/assets/backgrounds/service-up-background.webp'
 import serviceArrow from '@/assets/decorative/service-up-flecha.webp'
+import { conversationCta, homeContent } from '@/data/transversal-content'
+import StrategyArt from './StrategyArt.astro'
 ---
 
 <section id="problemas" class="text-white">
   <!-- Ola superior: transparente arriba revela el hero blanco, navy abajo funde
        con la sección. El chevron se superpone al centro. -->
-  <div class="relative">
+  <div class="relative wave-clip">
     <Image
       src={serviceUpBg}
       alt=""
       aria-hidden="true"
+      data-wave
       class="block w-full select-none"
     />
-    <Image
-      src={serviceArrow}
-      alt=""
-      aria-hidden="true"
-      class="chevron-bob absolute left-1/2 top-[25%] w-12 select-none md:w-20"
-    />
+    <div data-speed="1.22" class="chevron-holder absolute left-1/2 top-[25%] w-12 md:w-20">
+      <Image
+        src={serviceArrow}
+        alt=""
+        aria-hidden="true"
+        class="chevron-bob block w-full select-none"
+      />
+    </div>
   </div>
 
-  <div class="-mt-[2px] bg-gradient-to-b from-navy from-75% to-white">
-    <div class="mx-auto max-w-[1512px] px-6 pb-30 pt-4 lg:px-24">
+  <div class="-mt-[2px] bg-navy">
+    <div class="mx-auto max-w-[1512px] px-6 pb-4 pt-4 lg:px-24 lg:pb-8">
       <!-- Título -->
       <h2
         id="problemas-headline"
         class="mx-auto max-w-4xl text-center font-heading text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl"
       >
-        Comercializas servicios o productos pero no estás llegando a tus metas
-        de ventas. ¿Por qué?
+        {homeContent.problems.title}
       </h2>
 
       <!-- Cards -->
       <div
         id="problemas-cards"
-        class="mt-16 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-5"
+        class="problem-grid"
       >
         {
-          cards.map(card => (
-            <div class="problemas-card flex flex-col items-center text-center">
-              <Icon name={card.icon} class="h-25 w-25" />
-              <p class="mt-6 text-[15px] leading-6 text-white/90">{card.text}</p>
+          homeContent.problems.items.map((card, index) => (
+            <div class="problemas-card">
+              <div class="problem-art" data-speed={index % 2 === 0 ? '0.95' : '1.05'}><StrategyArt index={index} /></div>
+              <h3>{['Ventas impredecibles', 'Un equipo sin sistema', 'IA sin dirección', 'Decisiones sin datos', 'Crecimiento sin un plan'][index]}</h3>
+              <p>{card.text}</p>
             </div>
           ))
         }
       </div>
 
       <!-- Cierre -->
-      <div class="mt-16 flex flex-col items-center text-center">
-        <h3 class="font-heading text-2xl font-bold sm:text-3xl">
-          ¿Te suena familiar alguno de los puntos anteriores?
-        </h3>
-        <p class="mt-4 max-w-2xl text-[15px] leading-6 text-white/85">
-          Si la respuesta es sí y quieres ver cómo podemos ayudarte, sigue
-          leyendo y descubre más sobre cómo trabajamos.
+      <div class="problemas-closing mt-16 flex flex-col items-center text-center">
+        <p class="max-w-3xl font-heading text-xl font-bold leading-relaxed sm:text-2xl">
+          {homeContent.problems.closing}
         </p>
-        <a
-          href="/soluciones"
-          class="mt-8 rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
-        >
-          VER SERVICIOS
-        </a>
+        <h2 id="home-conversation-title" class="mt-4 font-heading text-base text-white/80 sm:text-lg">
+          {conversationCta.title}
+        </h2>
       </div>
+    </div>
+    <div class="flex h-48 items-start justify-center bg-gradient-to-b from-navy to-white pt-4 lg:h-64 lg:pt-6">
+      <a
+        href={conversationCta.href}
+        class="group inline-flex min-h-12 items-center gap-3 rounded-lg bg-primary px-8 py-3.5 font-heading text-sm font-bold tracking-wide text-white shadow-lg shadow-navy/30 transition-colors hover:bg-primary-600 sm:text-base"
+      >
+        {conversationCta.label}
+        <Icon name="study/arrow-up-right" aria-hidden="true" class="h-5 w-5 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
+      </a>
     </div>
   </div>
 </section>
 
 <style>
+  /* La ola se desplaza en contra del scroll (efecto cortina). El overflow y el
+     scale 1.16 (desde arriba) garantizan que el recorrido nunca descubra borde blanco. */
+  .wave-clip { overflow: hidden; }
+  /* El parallax recorta el fondo de la ola antes de llegar a su último píxel;
+     este fundido lleva ese corte al navy de la sección de abajo, sin costura. */
+  .wave-clip::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 40%;
+    background: linear-gradient(to bottom, transparent, var(--color-navy));
+    pointer-events: none;
+  }
+  .wave-clip [data-wave] { will-change: transform; transform-origin: top center; }
+  .problem-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; margin-top: 54px; }
+  .problemas-card { min-width: 0; }
+  .problem-art { width: 100%; max-width: 200px; margin: 0 auto 24px; }
+  .problemas-card h3 { font: 600 18px/1.3 var(--font-heading); letter-spacing: -.02em; margin-top: 10px; }
+  .problemas-card > p { margin-top: 16px; font-size: 15px; line-height: 1.8; color: #e1e7f5; }
+  @media (max-width: 1100px) { .problem-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; } }
+  @media (max-width: 639px) {
+    .problem-grid { grid-template-columns: 1fr; gap: 28px; }
+    .problemas-card { display: grid; grid-template-columns: 110px minmax(0, 1fr); column-gap: 18px; align-items: center; }
+    .problem-art { grid-row: 1 / 3; width: calc(100% + 16px); margin: 0 0 0 -8px; }
+    .problemas-card h3 { font-size: 18px; margin-top: 0; }
+    .problemas-card > p { font-size: 14px; margin-top: 8px; }
+  }
   /* Flecha con animación de "respiración" (bob vertical). Mantiene el centrado
      horizontal dentro del propio transform. */
+  .chevron-holder { margin-left: -1.5rem; }
+  @media (min-width: 768px) { .chevron-holder { margin-left: -2.5rem; } }
   .chevron-bob {
     animation: chevron-bob 1.8s ease-in-out infinite;
   }
   @keyframes chevron-bob {
     0%,
     100% {
-      transform: translate(-50%, 0);
+      transform: translateY(0);
     }
     50% {
-      transform: translate(-50%, 8px);
+      transform: translateY(8px);
     }
   }
   @media (prefers-reduced-motion: reduce) {
     .chevron-bob {
       animation: none;
-      transform: translateX(-50%);
     }
   }
 </style>
 
 <script>
-import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
-  const headline = document.getElementById('problemas-headline')
-  const cards = document.querySelectorAll('#problemas-cards .problemas-card')
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  staggerGrid(cards, { variant: 'wipe', rotateFrom: 6 })
+  const section = document.getElementById('problemas')
+  if (!section)
+    return
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const wave = section.querySelector<HTMLElement>('[data-wave]')
+    // Escala desde arriba y solo baja (0 → 10%): así la cresta de la ola
+    // nunca sube por encima del contenedor y el overflow no la recorta. El
+    // hueco que deja arriba es transparente sobre el hero blanco.
+    if (wave) {
+      gsap.fromTo(
+        wave,
+        { yPercent: 0, scale: 1.16 },
+        {
+          yPercent: 10,
+          scale: 1.16,
+          ease: 'none',
+          scrollTrigger: { trigger: wave.closest('.wave-clip'), start: 'top bottom', end: 'bottom top', scrub: 0.7 },
+        },
+      )
+    }
+
+    const headline = section.querySelector<HTMLElement>('h2')
+    if (headline)
+      splitHeadline(headline, { by: 'lines' })
+
+    // Las 5 cards entran como una secuencia, no como 5 apariciones sueltas.
+    revealCards(section.querySelectorAll('.problemas-card'), {
+      trigger: section.querySelector('.problem-grid'),
+      intensity: 1.2,
+      stagger: 0.13,
+      inner: 'h3, p',
+    })
+
+    // Cierre: el remate y el CTA entran después de las cards, no a la vez.
+    const closing = section.querySelector<HTMLElement>('.problemas-closing')
+    if (closing) {
+      gsap.from(closing.children, {
+        autoAlpha: 0,
+        yPercent: 60,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: 'expo.out',
+        clearProps: 'transform,opacity,visibility',
+        scrollTrigger: { trigger: closing, start: 'top 88%', once: true },
+      })
+    }
+  })
 })
 </script>
-

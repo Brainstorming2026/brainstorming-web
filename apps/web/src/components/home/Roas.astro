@@ -1,10 +1,21 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { roasYoutubeId as youtubeId, roas } from '@/data'
 import backgroundVideo from '@/assets/backgrounds/background-video.webp'
-import { roasLogos } from '@/assets/roast'
+import stanleyLogo from '@/assets/clientes/customer-stanley.webp'
+import grinLogo from '@/assets/roast/roast-gris.webp'
+import { newProjectLogos } from '@/data/new-projects'
+
+const youtubeId = 'm9yNCH4-MB4'
+const clients = [
+  { logo: newProjectLogos.nordic, name: 'Nordic International School' },
+  { logo: newProjectLogos.senati, name: 'SENATI' },
+  { logo: newProjectLogos.pastipan, name: 'Pastipan' },
+  { logo: grinLogo, name: 'Grin', full: true },
+  { logo: stanleyLogo, name: 'Stanley Black & Decker' },
+]
 ---
+
 <section id="roas" class="bg-dark text-white">
   <div class="mx-auto max-w-[1512px] px-6 py-20 lg:px-24 lg:py-24">
     <!-- Bloque superior: texto + video -->
@@ -33,6 +44,10 @@ import { roasLogos } from '@/assets/roast'
         <Image
           src={backgroundVideo}
           alt="Video: ¿Qué es el ROAS?"
+          widths={[480, 720, 1080]}
+          sizes="(min-width: 1024px) 42vw, 100vw"
+          quality={75}
+          loading="lazy"
           class="absolute inset-0 h-full w-full object-cover"
         />
         <div
@@ -50,45 +65,54 @@ import { roasLogos } from '@/assets/roast'
     </div>
 
     <!-- Clientes + ROAS -->
-    <div id="roas-grid" class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+    <div
+      id="roas-grid"
+      class="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5"
+    >
       {
-        roas.map(r => {
-          const logo = roasLogos.find(l => l.slug === r.logo)
-          return (
-            <div class="roas-item flex flex-col items-center">
-              {logo && (
-                <Image
-                  src={logo.image}
-                  alt={r.name}
-                  class="w-full max-w-[220px]"
-                />
-              )}
-              <p class="mt-5 text-center font-heading text-2xl font-bold leading-snug">
-                ROAS:<br />{r.value}
-              </p>
-            </div>
-          )
-        })
+        clients.map(r => (
+          <div class="roas-item mx-auto flex aspect-square w-full max-w-[220px] items-center justify-center overflow-hidden rounded-full bg-[#f8f8fc]">
+            <Image
+              src={r.logo}
+              alt={r.name}
+              widths={[160, 220]}
+              sizes="220px"
+              quality={80}
+              loading="lazy"
+              class:list={['max-h-full w-full object-contain', r.full ? 'p-0' : 'p-6']}
+            />
+
+          </div>
+        ))
       }
     </div>
   </div>
 </section>
 
+
+
 <script>
-const holder = document.getElementById('roas-video')
-holder?.addEventListener('click', () => {
-  const id = holder.dataset.id
-  holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video ROAS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+document.addEventListener('astro:page-load', () => {
+  const holder = document.getElementById('roas-video')
+  holder?.addEventListener('click', () => {
+    const id = holder.dataset.id
+    holder.innerHTML = `<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="Video ROAS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+  }, { once: true })
 })
 </script>
 
 <script>
-import { registerMotion, revealCircle, staggerGrid } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
-  const video = document.getElementById('roas-video')
-  const logos = document.querySelectorAll('#roas-grid .roas-item')
-  if (video) revealCircle(video, { scrollTrigger: true })
-  staggerGrid(logos, { variant: 'organic' })
+  const headline = document.querySelector<HTMLElement>('#roas h2')
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+
+  revealCards(document.querySelectorAll('#roas-grid .roas-item'), {
+    trigger: document.getElementById('roas-grid'),
+    intensity: 1.15,
+    stagger: 0.1,
+  })
 })
 </script>

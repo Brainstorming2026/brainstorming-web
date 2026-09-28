@@ -1,0 +1,32 @@
+---
+import { newProjectLogos, newProjects, newProjectServices } from '@/data/new-projects'
+import ProjectCover from './ProjectCover.astro'
+import ProjectListCard from './ProjectListCard.astro'
+---
+
+<section id="new-projects-list" class="bg-section-dark" aria-labelledby="new-projects-title">
+  <div class="mx-auto max-w-[1512px] px-6 py-16 lg:px-24">
+    <header class="mb-10 max-w-[640px]">
+      <p class="font-heading text-sm font-bold text-white/70">Estrategia, tecnología y marca</p>
+      <h2 id="new-projects-title" class="mt-4 font-heading text-[35px] font-bold leading-tight text-white sm:text-5xl">Nuevos proyectos.</h2>
+      <p class="mt-4 text-[14px] leading-6 text-white/70">Retos distintos. Una forma de trabajar: entender, conectar y transformar.</p>
+    </header>
+
+    {
+      newProjects.map((project, i) => (
+        <ProjectListCard
+          first={i === 0}
+          customCover={['ait-capital', 'senati', 'nordic', 'etna', 'futura-wealth'].includes(project.slug)}
+          href={`/proyectos/${project.slug}`}
+          icons={project.services.map(key => newProjectServices[key].icon)}
+          title={project.client}
+          subtitle={project.services.map(key => newProjectServices[key].label).join(' / ')}
+          image={project.hero.src ? { src: project.hero.src, alt: project.hero.alt } : undefined}
+          logo={newProjectLogos[project.slug]}
+        >
+          {['ait-capital', 'senati', 'nordic', 'etna', 'futura-wealth'].includes(project.slug) && <ProjectCover slot="cover" project={project} />}
+        </ProjectListCard>
+      ))
+    }
+  </div>
+</section>

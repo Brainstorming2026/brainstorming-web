@@ -1,0 +1,23 @@
+---
+import { aboutContent } from '@/data/transversal-content'
+
+const content = aboutContent.methodology
+---
+
+<section class="editorial-section editorial-methodology" aria-labelledby="methodology-title">
+  <div class="editorial-container editorial-split">
+    <div>
+      <p class="editorial-eyebrow">{content.subtitle}</p>
+      <h2 id="methodology-title" class="editorial-title" data-editorial-heading>{content.title}</h2>
+      <p class="editorial-methodology-opening" data-editorial-reveal>{content.opening}</p>
+    </div>
+    <ol class="editorial-methodology-steps">
+      {content.paragraphs.map((paragraph, index) => (
+        <li data-editorial-reveal>
+          <span class="editorial-step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <p>{paragraph}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

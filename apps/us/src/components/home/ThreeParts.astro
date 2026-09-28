@@ -54,8 +54,10 @@ registerMotion(() => {
   const cards = document.querySelectorAll('#parts-cards .parts-card')
   const { gsap } = ensureGsap()
 
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (imgWrap) revealClip(imgWrap, { direction: 'left' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (imgWrap)
+    revealClip(imgWrap, { direction: 'left' })
   if (img && !prefersReducedMotion()) {
     gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: imgWrap, start: 'top 85%' } })
   }

@@ -10,6 +10,12 @@ html {
   scroll-padding-top: 80px;
 }
 
+/* ScrollSmoother maneja el scroll él mismo; el smooth nativo pelea con su
+   scrollTo y produce un doble easing. La clase la pone/quita smooth-scroll.ts. */
+html.has-smooth-scroll {
+  scroll-behavior: auto;
+}
+
 /* ============================================================
    Fuentes de marca (Figma): Nexa (títulos/botones) + Helvetica (cuerpo).
    No son fuentes de Google. Coloca los archivos en /public/fonts/

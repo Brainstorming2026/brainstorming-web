@@ -1,8 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { preguntas } from '@/data'
 import serviceBg from '@/assets/backgrounds/service-background.webp'
+import { preguntas } from '@/data'
 ---
 
 <section id="ready" class="relative overflow-hidden bg-white">
@@ -67,7 +67,8 @@ const MARK_DRAW_AT = 0.75
 registerMotion(() => {
   const card = document.getElementById('ready-card')
   const items = Array.from(document.querySelectorAll<HTMLElement>('#ready-card .ready-item'))
-  if (!card || items.length === 0) return
+  if (!card || items.length === 0)
+    return
 
   const { gsap } = ensureGsap()
 

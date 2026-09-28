@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Map, MapMarker, MarkerContent, MapPopup, MapControls, useMap } from '@/components/ui/map'
+import { Map, MapControls, MapMarker, MapPopup, MarkerContent, useMap } from '@/components/ui/map'
 import { officeLocation } from '@/data'
 
 const FLY_IN_ZOOM_OFFSET = 4
@@ -19,7 +19,8 @@ function MapFlyIn() {
   const hasFlown = useRef(false)
 
   useEffect(() => {
-    if (!map || !isLoaded || hasFlown.current) return
+    if (!map || !isLoaded || hasFlown.current)
+      return
     hasFlown.current = true
 
     map.flyTo({
@@ -152,11 +153,13 @@ export default function FooterMap() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    if (!containerRef.current || isVisible) return
+    if (!containerRef.current || isVisible)
+      return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
+        if (entry.isIntersecting)
+          setIsVisible(true)
       },
       { rootMargin: '0px 0px -10% 0px', threshold: 0.2 },
     )

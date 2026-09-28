@@ -1,10 +1,10 @@
 ---
-export const prerender = true
-
 import { Image } from 'astro:assets'
-import Layout from '@/layouts/Layout.astro'
 import guideImg from '@/assets/guides/8-secretos-crear-tu-logo.webp'
 import iconDownload from '@/icons/guias-download.svg'
+import Layout from '@/layouts/Layout.astro'
+
+export const prerender = true
 ---
 
 <Layout title="Página no encontrada — Brainstorming" showNavbar={false}>
@@ -87,16 +87,23 @@ registerMotion(() => {
     return
   }
 
-  if (eyebrow) gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-  if (desc) gsap.set(desc, { opacity: 0, y: 12 })
-  if (actions) gsap.set(actions, { opacity: 0, y: 12 })
-  if (card) gsap.set(card, { opacity: 0, y: 16 })
+  if (eyebrow)
+    gsap.fromTo(eyebrow, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+  if (desc)
+    gsap.set(desc, { opacity: 0, y: 12 })
+  if (actions)
+    gsap.set(actions, { opacity: 0, y: 12 })
+  if (card)
+    gsap.set(card, { opacity: 0, y: 16 })
 
   if (heading) {
     splitHeadline(heading, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (desc) gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
-      if (actions) gsap.to(actions, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 })
-      if (card) gsap.to(card, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.2 })
+      if (desc)
+        gsap.to(desc, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+      if (actions)
+        gsap.to(actions, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 })
+      if (card)
+        gsap.to(card, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.2 })
     } })
   }
 })

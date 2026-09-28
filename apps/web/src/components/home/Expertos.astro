@@ -1,8 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { experts } from '@/data'
 import sectionBg from '@/assets/backgrounds/section-background-black.webp'
+import { experts } from '@/data'
 ---
 
 <section id="expertos" class="relative overflow-hidden">
@@ -75,7 +75,8 @@ registerMotion(() => {
       { scale: 1.08, ease: 'none', scrollTrigger: { trigger: bg.closest('section'), start: 'top bottom', end: 'bottom top', scrub: 0.8 } },
     )
   }
-  if (card) revealClip(card, { direction: 'up' })
+  if (card)
+    revealClip(card, { direction: 'up' })
   staggerGrid(items, { variant: 'organic' })
 })
 </script>

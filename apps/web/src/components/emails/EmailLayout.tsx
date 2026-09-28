@@ -53,7 +53,9 @@ export function EmailLayout({ preview, children }: EmailLayoutProps) {
 
           <Section style={{ padding: '32px 40px', textAlign: 'center' }}>
             <Text style={{ color: COLOR.grayBody, fontSize: '13px', lineHeight: '20px', margin: '0 0 24px' }}>
-              Agencia de Marketing Digital y Desarrollo Web. <br />
+              Agencia de Marketing Digital y Desarrollo Web.
+              {' '}
+              <br />
             </Text>
 
             <Section align="center" style={{ width: `${redes.length * 44}px`, margin: '0 auto' }}>

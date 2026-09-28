@@ -28,15 +28,16 @@
 </section>
 
 <script>
+import { registerMotion, splitHeadline } from '@/lib/motion'
 import { ease } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
-import { registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   const headline = document.getElementById('ecosistema-headline')
   const cta = document.getElementById('ecosistema-cta')
-  if (headline) splitHeadline(headline, { by: 'lines' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
   if (cta && !prefersReducedMotion()) {
     const { gsap } = ensureGsap()
     gsap.fromTo(

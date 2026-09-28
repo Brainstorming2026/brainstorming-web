@@ -34,12 +34,15 @@ const SLUG = {
   'Ted X': 'tedx',
 }
 
-const slugify = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+const slugify = s => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
 async function contentBox(input) {
   const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
   const { width: w, height: h } = info
-  let x0 = w; let y0 = h; let x1 = -1; let y1 = -1
+  let x0 = w
+  let y0 = h
+  let x1 = -1
+  let y1 = -1
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       const i = (y * w + x) * 4
@@ -65,7 +68,7 @@ await rm(outDir, { recursive: true, force: true })
 await mkdir(outDir, { recursive: true })
 
 for (const file of (await readdir(srcDir)).sort()) {
-  if (SKIP.has(file) || !/\.(png|jpe?g|webp)$/i.test(file))
+  if (SKIP.has(file) || !/\.(?:png|jpe?g|webp)$/i.test(file))
     continue
   const stem = basename(file, extname(file))
   const slug = SLUG[stem] ?? slugify(stem)

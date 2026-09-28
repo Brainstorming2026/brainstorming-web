@@ -39,7 +39,8 @@ registerMotion(() => {
   const imgWrap = document.getElementById('benefit-img-wrap')
   const text = document.getElementById('benefit-text')
 
-  if (imgWrap) revealClip(imgWrap, { direction: 'left' })
+  if (imgWrap)
+    revealClip(imgWrap, { direction: 'left' })
 
   if (text) {
     const { gsap } = ensureGsap()

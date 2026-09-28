@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
 import type { ProyectoFeature } from '@/data/proyectosDetalle'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 
 interface Props {
   feature: ProyectoFeature
@@ -88,7 +88,8 @@ registerMotion(() => {
     const imgDir = root.dataset.imgDir === 'right' ? 'right' : 'left'
     const textFrom = Number(root.dataset.textFrom ?? 24)
 
-    if (imgWrap) revealClip(imgWrap, { direction: imgDir })
+    if (imgWrap)
+      revealClip(imgWrap, { direction: imgDir })
 
     if (img && !prefersReducedMotion()) {
       gsap.fromTo(img, { scale: 1.15 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: root, start: 'top 85%' } })

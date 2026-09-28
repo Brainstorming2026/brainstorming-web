@@ -1,6 +1,6 @@
 ---
-import BeautyBranding from '@/components/projects/beauty/BeautyBranding.astro'
 import Conversemos from '@/components/common/Conversemos.astro'
+import BeautyBranding from '@/components/projects/beauty/BeautyBranding.astro'
 import ProjectCampaign from '@/components/projects/ProjectCampaign.astro'
 import ProjectFeature from '@/components/projects/ProjectFeature.astro'
 import ProjectHero from '@/components/projects/ProjectHero.astro'
@@ -8,7 +8,7 @@ import { proyectos } from '@/data/proyectos'
 import { proyectosDetalle } from '@/data/proyectosDetalle'
 import Layout from '@/layouts/Layout.astro'
 
-export const prerender = true;
+export const prerender = true
 
 const proyecto = proyectos.find(p => p.slug === 'the-beauty-trust')!
 const detalle = proyectosDetalle['the-beauty-trust']

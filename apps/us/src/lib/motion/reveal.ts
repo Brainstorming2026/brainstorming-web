@@ -1,5 +1,5 @@
-import { ensureGsap } from './gsap-client'
 import { duration, ease } from './config'
+import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
 const CLIP_FROM: Record<'up' | 'down' | 'left' | 'right', string> = {
@@ -21,7 +21,7 @@ interface RevealOptions {
 }
 
 // Evita traer el tipo completo de ScrollTrigger solo para esta firma.
-type GSAPScrollTriggerVars = { trigger: Element; start: string; end: string; scrub: boolean | number }
+interface GSAPScrollTriggerVars { trigger: Element, start: string, end: string, scrub: boolean | number }
 
 /** Revela un elemento (imagen, card, video) con clip-path. Ver RevealOptions. */
 export function revealClip(el: HTMLElement, options: RevealOptions = {}) {

@@ -14,7 +14,7 @@ const SEEN_KEY = 'bs-splash-seen'
      document.documentElement.classList.add('bs-splash-active')
    }
  }
- catch (e) {}
+ catch {}
 </script>
 
 <style>
@@ -61,7 +61,7 @@ function seen() {
   try {
     return localStorage.getItem(SEEN_KEY)
   }
-  catch (e) {
+  catch {
     return null
   }
 }
@@ -76,7 +76,7 @@ if (splash && !seen()) {
     try {
       localStorage.setItem(SEEN_KEY, '1')
     }
-    catch (e) {}
+    catch {}
     document.body.style.overflow = ''
     splash.style.pointerEvents = 'none'
     document.documentElement.classList.remove('bs-splash-active')

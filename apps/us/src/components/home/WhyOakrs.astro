@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets'
-import journeyIllustration from '@/assets/okrs/figure4.png'
-import Wave from '@/components/common/Wave.astro'
 import up from '@/assets/okrs/down.png'
 import investmentBanner from '@/assets/okrs/figure3.png'
+import journeyIllustration from '@/assets/okrs/figure4.png'
+import Wave from '@/components/common/Wave.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
@@ -63,18 +63,22 @@ registerMotion(() => {
   const journeyWrap = document.getElementById('oakrs-journey-wrap')
   const { gsap } = ensureGsap()
 
-  if (bannerWrap) revealClip(bannerWrap, { direction: 'up' })
+  if (bannerWrap)
+    revealClip(bannerWrap, { direction: 'up' })
   if (bannerImg && !prefersReducedMotion()) {
     gsap.fromTo(bannerImg, { scale: 1.1 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: bannerWrap, start: 'top 85%' } })
   }
 
-  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+  if (text && !prefersReducedMotion())
+    gsap.set(text, { opacity: 0, y: 10 })
   if (headline) {
     splitHeadline(headline, { by: 'lines', onComplete: () => {
-      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+      if (text)
+        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
     } })
   }
 
-  if (journeyWrap) revealClip(journeyWrap, { direction: 'left', mode: 'scrub' })
+  if (journeyWrap)
+    revealClip(journeyWrap, { direction: 'left', mode: 'scrub' })
 })
 </script>

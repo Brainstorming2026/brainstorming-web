@@ -1,8 +1,9 @@
 ---
-import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
-import { categoriaIcons, categoriaLabels, type Proyecto } from '@/data/proyectos'
+import type { Proyecto } from '@/data/proyectos'
 import type { ProyectoDetalle } from '@/data/proyectosDetalle'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { categoriaIcons, categoriaLabels } from '@/data/proyectos'
 
 interface Props {
   proyecto: Proyecto
@@ -97,13 +98,18 @@ registerMotion(() => {
   // todo junto — cada pieza confirma la anterior, como leer una tarjeta de
   // presentación.
   const tl = gsap.timeline()
-  if (icons.length > 0) tl.fromTo(icons, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.65, ease: ease.out, stagger: 0.1 }, 0)
-  if (logo) tl.fromTo(logo, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.75, ease: ease.back }, 0.3)
-  if (category) tl.fromTo(category, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out }, 0.65)
-  if (desc) tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: ease.out }, 0.8)
+  if (icons.length > 0)
+    tl.fromTo(icons, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.65, ease: ease.out, stagger: 0.1 }, 0)
+  if (logo)
+    tl.fromTo(logo, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.75, ease: ease.back }, 0.3)
+  if (category)
+    tl.fromTo(category, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out }, 0.65)
+  if (desc)
+    tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: ease.out }, 0.8)
 
   // La imagen del producto se revela en círculo, haciendo eco del blob
   // circular de fondo — no un fade genérico.
-  if (img) revealCircle(img, { delay: 0.3 })
+  if (img)
+    revealCircle(img, { delay: 0.3 })
 })
 </script>

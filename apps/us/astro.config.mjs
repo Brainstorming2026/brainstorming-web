@@ -1,12 +1,12 @@
+import react from '@astrojs/react'
+
+import vercel from '@astrojs/vercel'
+
 import tailwindcss from '@tailwindcss/vite'
 
 import icon from 'astro-icon'
-
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
-
-import react from '@astrojs/react'
-import vercel from '@astrojs/vercel'
 
 export default defineConfig({
   site: 'https://us.brainstorming.la',

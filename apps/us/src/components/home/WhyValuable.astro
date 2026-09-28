@@ -44,8 +44,10 @@ registerMotion(() => {
   const pill = document.getElementById('valuable-pill')
   const rows = document.querySelectorAll('#valuable-pill .valuable-row')
 
-  if (headline) splitHeadline(headline, { by: 'lines' })
-  if (pill) revealClip(pill, { direction: 'right' })
+  if (headline)
+    splitHeadline(headline, { by: 'lines' })
+  if (pill)
+    revealClip(pill, { direction: 'right' })
   staggerGrid(rows, { variant: 'organic' })
 })
 </script>

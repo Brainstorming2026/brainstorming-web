@@ -44,7 +44,8 @@ import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 registerMotion(() => {
   const headline = document.getElementById('testimonials-headline')
   const cards = document.querySelectorAll('#testimonials-grid .testimonial-card')
-  if (headline) splitHeadline(headline, { by: 'words' })
+  if (headline)
+    splitHeadline(headline, { by: 'words' })
   staggerGrid(cards, { variant: 'organic' })
 })
 </script>

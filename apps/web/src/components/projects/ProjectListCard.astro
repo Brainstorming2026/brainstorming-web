@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
 import type { ImageMetadata } from 'astro'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 
 interface Props {
   href: string
@@ -19,7 +19,9 @@ const { href, icons, title, subtitle, image, logo, first = false, customCover = 
 
 <article class:list={['proyecto-card grid items-stretch gap-0 overflow-hidden rounded-lg md:grid-cols-2', !first && 'mt-6']}>
   <div class="proyecto-img-wrap relative min-h-[300px] overflow-hidden bg-black/10">
-    {customCover && Astro.slots.has('cover') ? <slot name="cover" /> : image
+    {customCover && Astro.slots.has('cover')
+? <slot name="cover" />
+: image
       ? <Image class="proyecto-img h-full w-full object-cover" src={image.src} alt={image.alt} widths={[480, 800, 1200]} sizes="(min-width: 768px) 45vw, 90vw" loading="lazy" />
       : logo && <Image class="proyecto-img h-full w-full object-contain p-10" src={logo} alt="" loading="lazy" />}
   </div>
@@ -55,7 +57,8 @@ registerMotion(() => {
     const content = card.querySelector<HTMLElement>('.proyecto-content')
     const dir = i % 2 === 0 ? 'left' : 'right'
 
-    if (imgWrap) revealClip(imgWrap, { direction: dir })
+    if (imgWrap)
+      revealClip(imgWrap, { direction: dir })
     if (img) {
       if (prefersReducedMotion()) {
         gsap.set(img, { scale: 1 })

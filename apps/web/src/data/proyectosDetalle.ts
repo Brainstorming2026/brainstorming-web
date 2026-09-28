@@ -2,156 +2,155 @@ import type { ImageMetadata } from 'astro'
 
 import logoAguaclara from '@/assets/clientes/customer-aguaclara.webp'
 import logoAlumspazio from '@/assets/clientes/customer-alumspazio.webp'
-import logoAruma from '@/assets/projects/aruma/logo.png'
+import logoAtsa from '@/assets/clientes/customer-atsaairlines.webp'
 
-import heroBgAguaclara from '@/assets/projects/aguaclara/bg.png'
+import logoSubasta from '@/assets/projects-logos/proyecto-logo-subasta.png'
 import bgWebAguaclara from '@/assets/projects/aguaclara/bg-web.png'
+import heroBgAguaclara from '@/assets/projects/aguaclara/bg.png'
 import heroImgAguaclara from '@/assets/projects/aguaclara/hero.png'
 import ig1Aguaclara from '@/assets/projects/aguaclara/ig1.png'
 import ig2Aguaclara from '@/assets/projects/aguaclara/ig2.png'
 import ig3Aguaclara from '@/assets/projects/aguaclara/ig3.png'
-import webImgAguaclara from '@/assets/projects/aguaclara/web.png'
 
+import webImgAguaclara from '@/assets/projects/aguaclara/web.png'
 import heroBgAlumspazio from '@/assets/projects/alumspazio/bg.png'
 import heroImgAlumspazio from '@/assets/projects/alumspazio/hero.png'
 import webImgAlumspazio from '@/assets/projects/alumspazio/web.png'
+
 import bgWebAlumspazio from '@/assets/projects/alumspazio/webbg.png'
-
-import campaign1Aruma from '@/assets/projects/aruma/campaign.png'
-import campaign2Aruma from '@/assets/projects/aruma/campaign2.png'
 import heroBgAruma from '@/assets/projects/aruma/bg.png'
-import heroImgAruma from '@/assets/projects/aruma/hero.png'
+import campaign2Aruma from '@/assets/projects/aruma/campaign2.png'
+import campaign1Aruma from '@/assets/projects/aruma/campaign.png'
 
-import logoAtsa from '@/assets/clientes/customer-atsaairlines.webp'
+import heroImgAruma from '@/assets/projects/aruma/hero.png'
+import logoAruma from '@/assets/projects/aruma/logo.png'
 import bgWebAtsa from '@/assets/projects/atsa/bg-web.png'
 import heroBgAtsa from '@/assets/projects/atsa/bg.png'
 import heroImgAtsa from '@/assets/projects/atsa/hero.png'
 import ig1Atsa from '@/assets/projects/atsa/ig1.png'
 import ig2Atsa from '@/assets/projects/atsa/ig2.png'
 import ig3Atsa from '@/assets/projects/atsa/ig3.png'
-import webImgAtsa from '@/assets/projects/atsa/web.png'
 
-import logoDecker from '@/assets/projects/decker/logo.png'
+import webImgAtsa from '@/assets/projects/atsa/web.png'
+import bgAppBeauty from '@/assets/projects/beauty/bg3.png'
+import heroBgBeauty from '@/assets/projects/beauty/bg.png'
+import heroImgBeauty from '@/assets/projects/beauty/hero.png'
+import logoBeauty from '@/assets/projects/beauty/logo.png'
+import webAppBeauty from '@/assets/projects/beauty/web-app.png'
+
 import heroBgDecker from '@/assets/projects/decker/bg.png'
 import heroImgDecker from '@/assets/projects/decker/hero.png'
 import ig1Decker from '@/assets/projects/decker/ig1.png'
 import ig2Decker from '@/assets/projects/decker/ig2.png'
 import ig3Decker from '@/assets/projects/decker/ig3.png'
 
-import logoDewalt from '@/assets/projects/dewalt/logo.png'
+import logoDecker from '@/assets/projects/decker/logo.png'
 import heroBgDewalt from '@/assets/projects/dewalt/bg.png'
 import heroImgDewalt from '@/assets/projects/dewalt/hero.png'
 import ig1Dewalt from '@/assets/projects/dewalt/ig1.png'
+
 import ig2Dewalt from '@/assets/projects/dewalt/ig2.png'
-
-import logoDfactoring from '@/assets/projects/digitalfactoring/logo.png'
-import heroBgDfactoring from '@/assets/projects/digitalfactoring/bg.png'
-import webImgDfactoring from '@/assets/projects/digitalfactoring/web.png'
+import logoDewalt from '@/assets/projects/dewalt/logo.png'
 import bgWebDfactoring from '@/assets/projects/digitalfactoring/bg-web.png'
+import heroBgDfactoring from '@/assets/projects/digitalfactoring/bg.png'
+import logoDfactoring from '@/assets/projects/digitalfactoring/logo.png'
 
-import logoDholding from '@/assets/projects/digitalholding/logo.png'
+import webImgDfactoring from '@/assets/projects/digitalfactoring/web.png'
+import bgWebDholding from '@/assets/projects/digitalholding/bg-web.png'
 import heroBgDholding from '@/assets/projects/digitalholding/bg.png'
 import heroImgDholding from '@/assets/projects/digitalholding/hero.png'
+import logoDholding from '@/assets/projects/digitalholding/logo.png'
 import webImgDholding from '@/assets/projects/digitalholding/web.png'
-import bgWebDholding from '@/assets/projects/digitalholding/bg-web.png'
-
-import logoHelena from '@/assets/projects/helena/logo.png'
+import bgWebHelena from '@/assets/projects/helena/bg-web.png'
 import heroBgHelena from '@/assets/projects/helena/bg.png'
+
 import heroImgHelena from '@/assets/projects/helena/hero.png'
 import ig1Helena from '@/assets/projects/helena/ig1.png'
 import ig2Helena from '@/assets/projects/helena/ig2.png'
 import ig3Helena from '@/assets/projects/helena/ig3.png'
+import logoHelena from '@/assets/projects/helena/logo.png'
 import webImgHelena from '@/assets/projects/helena/web.png'
-import bgWebHelena from '@/assets/projects/helena/bg-web.png'
 
-import logoIrwin from '@/assets/projects/irwin/logo.png'
 import heroBgIrwin from '@/assets/projects/irwin/bg.png'
 import heroImgIrwin from '@/assets/projects/irwin/hero.png'
 import ig1Irwin from '@/assets/projects/irwin/ig1.png'
 import ig2Irwin from '@/assets/projects/irwin/ig2.png'
+
 import ig3Irwin from '@/assets/projects/irwin/ig3.png'
-
-import logoLatin from '@/assets/projects/latin-american/logo.png'
-import heroBgLatin from '@/assets/projects/latin-american/bg.png'
-import webImgLatin from '@/assets/projects/latin-american/web.png'
+import logoIrwin from '@/assets/projects/irwin/logo.png'
 import bgWebLatin from '@/assets/projects/latin-american/bg-web.png'
+import heroBgLatin from '@/assets/projects/latin-american/bg.png'
+import logoLatin from '@/assets/projects/latin-american/logo.png'
 
-import logoLimagas from '@/assets/projects/lima-gas/logo.png'
+import webImgLatin from '@/assets/projects/latin-american/web.png'
 import heroBgLimagas from '@/assets/projects/lima-gas/bg.png'
 import heroImgLimagas from '@/assets/projects/lima-gas/hero.png'
 import ig1Limagas from '@/assets/projects/lima-gas/ig1.png'
 import ig2Limagas from '@/assets/projects/lima-gas/ig2.png'
+import logoLimagas from '@/assets/projects/lima-gas/logo.png'
+import bgWebMikio from '@/assets/projects/mikio/bg-web.png'
 
-import logoMikio from '@/assets/projects/mikio/logo.png'
 import heroBgMikio from '@/assets/projects/mikio/bg.png'
 import ig1Mikio from '@/assets/projects/mikio/ig1.png'
 import ig2Mikio from '@/assets/projects/mikio/ig2.png'
 import ig3Mikio from '@/assets/projects/mikio/ig3.png'
-import webImgMikio from '@/assets/projects/mikio/web.png'
-import bgWebMikio from '@/assets/projects/mikio/bg-web.png'
 
-import logoMusicalma from '@/assets/projects/musicalma/logo.png'
+import logoMikio from '@/assets/projects/mikio/logo.png'
+import webImgMikio from '@/assets/projects/mikio/web.png'
 import heroBgMusicalma from '@/assets/projects/musicalma/bg.png'
 import heroImgMusicalma from '@/assets/projects/musicalma/hero.png'
 import ig1Musicalma from '@/assets/projects/musicalma/ig1.png'
 
-import logoNote from '@/assets/projects/note/logo.png'
-import heroBgNote from '@/assets/projects/note/bg.png'
-import heroImgNote from '@/assets/projects/note/hero.png'
-import webImgNote from '@/assets/projects/note/web.png'
+import logoMusicalma from '@/assets/projects/musicalma/logo.png'
 import bgWebNote from '@/assets/projects/note/bg-web.png'
+import heroBgNote from '@/assets/projects/note/bg.png'
 
-import logoPringles from '@/assets/projects/pringles/logo.png'
+import heroImgNote from '@/assets/projects/note/hero.png'
+import logoNote from '@/assets/projects/note/logo.png'
+import webImgNote from '@/assets/projects/note/web.png'
 import heroBgPringles from '@/assets/projects/pringles/bg.png'
 import heroImgPringles from '@/assets/projects/pringles/hero.png'
 
-import logoRenace from '@/assets/projects/renace/logo.png'
+import logoPringles from '@/assets/projects/pringles/logo.png'
 import heroBgRenace from '@/assets/projects/renace/bg.png'
 import ig1Renace from '@/assets/projects/renace/ig1.png'
 import ig2Renace from '@/assets/projects/renace/ig2.png'
 import ig3Renace from '@/assets/projects/renace/ig3.png'
 
-import logoRetyg from '@/assets/projects/retyg/logo.png'
+import logoRenace from '@/assets/projects/renace/logo.png'
+import bgWebRetyg from '@/assets/projects/retyg/bg-web.png'
 import heroBgRetyg from '@/assets/projects/retyg/bg.png'
 import heroImgRetyg from '@/assets/projects/retyg/hero.png'
+import logoRetyg from '@/assets/projects/retyg/logo.png'
 import webImgRetyg from '@/assets/projects/retyg/web.png'
-import bgWebRetyg from '@/assets/projects/retyg/bg-web.png'
 
-import logoStanley from '@/assets/projects/stanley/logo.png'
 import heroBgStanley from '@/assets/projects/stanley/bg.png'
 import heroImgStanley from '@/assets/projects/stanley/hero.png'
 import ig1Stanley from '@/assets/projects/stanley/ig1.png'
 import ig2Stanley from '@/assets/projects/stanley/ig2.png'
 import ig3Stanley from '@/assets/projects/stanley/ig3.png'
 
-import logoBeauty from '@/assets/projects/beauty/logo.png'
-import heroBgBeauty from '@/assets/projects/beauty/bg.png'
-import heroImgBeauty from '@/assets/projects/beauty/hero.png'
-import webAppBeauty from '@/assets/projects/beauty/web-app.png'
-import bgAppBeauty from '@/assets/projects/beauty/bg3.png'
+import logoStanley from '@/assets/projects/stanley/logo.png'
+import heroBgStyla from '@/assets/projects/styla/bg.png'
 
-import logoVende from '@/assets/projects/vende/logo.png'
+import heroImgStyla from '@/assets/projects/styla/hero.png'
+import ig1Styla from '@/assets/projects/styla/ig1.png'
+import ig2Styla from '@/assets/projects/styla/ig2.png'
+import ig3Styla from '@/assets/projects/styla/ig3.png'
+import logoStyla from '@/assets/projects/styla/logo.png'
+import bgWebStyla from '@/assets/projects/styla/web-bg.png'
+
+import webImgStyla from '@/assets/projects/styla/web.png'
+import heroBgSubasta from '@/assets/projects/subasta/bg.png'
+
 import heroBgVende from '@/assets/projects/vende/bg.png'
-
-import logoWalon from '@/assets/projects/walon/logo.png'
+import logoVende from '@/assets/projects/vende/logo.png'
 import heroBgWalon from '@/assets/projects/walon/bg.png'
 import heroImgWalon from '@/assets/projects/walon/hero.png'
 import ig1Walon from '@/assets/projects/walon/ig1.png'
 import ig2Walon from '@/assets/projects/walon/ig2.png'
 import ig3Walon from '@/assets/projects/walon/ig3.png'
-
-import logoSubasta from '@/assets/projects-logos/proyecto-logo-subasta.png'
-import heroBgSubasta from '@/assets/projects/subasta/bg.png'
-
-import logoStyla from '@/assets/projects/styla/logo.png'
-import heroBgStyla from '@/assets/projects/styla/bg.png'
-import heroImgStyla from '@/assets/projects/styla/hero.png'
-import ig1Styla from '@/assets/projects/styla/ig1.png'
-import ig2Styla from '@/assets/projects/styla/ig2.png'
-import ig3Styla from '@/assets/projects/styla/ig3.png'
-import webImgStyla from '@/assets/projects/styla/web.png'
-import bgWebStyla from '@/assets/projects/styla/web-bg.png'
-
+import logoWalon from '@/assets/projects/walon/logo.png'
 
 export interface ProyectoCampania {
   heading: string
@@ -188,7 +187,7 @@ export interface ProyectoDetalle {
 }
 
 export const proyectosDetalle: Record<string, ProyectoDetalle> = {
-  aguaclara: {
+  'aguaclara': {
     logo: logoAguaclara,
     heroBg: heroBgAguaclara,
     heroImg: heroImgAguaclara,
@@ -229,7 +228,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  alumspazio: {
+  'alumspazio': {
     logo: logoAlumspazio,
     heroBg: heroBgAlumspazio,
     heroImg: heroImgAlumspazio,
@@ -261,7 +260,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  aruma: {
+  'aruma': {
     logo: logoAruma,
     heroBg: heroBgAruma,
     heroImg: heroImgAruma,
@@ -348,7 +347,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     },
   },
 
-  dewalt: {
+  'dewalt': {
     logo: logoDewalt,
     heroBg: heroBgDewalt,
     heroImg: heroImgDewalt,
@@ -442,7 +441,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  irwin: {
+  'irwin': {
     logo: logoIrwin,
     heroBg: heroBgIrwin,
     heroImg: heroImgIrwin,
@@ -482,7 +481,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  limagas: {
+  'limagas': {
     logo: logoLimagas,
     heroBg: heroBgLimagas,
     heroImg: heroImgLimagas,
@@ -553,7 +552,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  musicalma: {
+  'musicalma': {
     logo: logoMusicalma,
     heroBg: heroBgMusicalma,
     heroImg: heroImgMusicalma,
@@ -605,7 +604,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  pringles: {
+  'pringles': {
     logo: logoPringles,
     heroBg: heroBgPringles,
     heroImg: heroImgPringles,
@@ -656,7 +655,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     },
   },
 
-  retyg: {
+  'retyg': {
     logo: logoRetyg,
     heroBg: heroBgRetyg,
     heroImg: heroImgRetyg,
@@ -688,7 +687,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     ],
   },
 
-  stanley: {
+  'stanley': {
     logo: logoStanley,
     heroBg: heroBgStanley,
     heroImg: heroImgStanley,
@@ -716,7 +715,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     },
   },
 
-  styla: {
+  'styla': {
     logo: logoStyla,
     heroBg: heroBgStyla,
     heroImg: heroImgStyla,
@@ -804,7 +803,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       en sus usuarios manteniendo un estilo simple y minimalista un tono corporativo.`,
   },
 
-  walon: {
+  'walon': {
     logo: logoWalon,
     heroBg: heroBgWalon,
     heroImg: heroImgWalon,

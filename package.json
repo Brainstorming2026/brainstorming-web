@@ -13,6 +13,9 @@
     "build:us": "pnpm --filter @brainstorming/us build",
     "dev:blog": "pnpm --filter @brainstorming/blog dev",
     "build:blog": "pnpm --filter @brainstorming/blog build",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "check": "pnpm -r check",
+    "build": "pnpm -r build",
+    "verify": "pnpm lint && pnpm check && pnpm build"
   }
 }

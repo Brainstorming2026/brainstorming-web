@@ -1,5 +1,5 @@
-import { ensureGsap } from './gsap-client'
 import { duration, ease } from './config'
+import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
 interface StaggerGridOptions {

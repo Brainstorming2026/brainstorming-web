@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
 import colorsImg from '@/assets/projects/alumspazio/colors.png'
-import creationImg from '@/assets/projects/alumspazio/creation.png'
 import creationImageImg from '@/assets/projects/alumspazio/creation-image.png'
+import creationImg from '@/assets/projects/alumspazio/creation.png'
 ---
 
 <section id="branding-intro" class="bg-[#8c9091] pt-16 pb-32 lg:pt-20 lg:pb-40">
@@ -87,10 +87,14 @@ registerMotion(() => {
     return
   }
 
-  if (label) gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
-  if (heading) gsap.fromTo(heading, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, delay: 0.15 })
-  if (heroImgWrap) revealClip(heroImgWrap, { direction: 'up' })
-  if (heroImg) gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
+  if (label)
+    gsap.fromTo(label, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  if (heading)
+    gsap.fromTo(heading, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, delay: 0.15 })
+  if (heroImgWrap)
+    revealClip(heroImgWrap, { direction: 'up' })
+  if (heroImg)
+    gsap.fromTo(heroImg, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: heroImgWrap, start: 'top 85%' } })
 
   // Imagen con margen negativo: scale+fade, no clip-path (cortaría el solape feo).
   if (overlapImg) {
@@ -102,6 +106,7 @@ registerMotion(() => {
     gsap.set(desc, { opacity: 0, y: 16 })
     gsap.to(desc, { opacity: 1, y: 0, duration: 1.0, ease: ease.out, scrollTrigger: { trigger: '#branding-detail', start: 'top 85%' } })
   }
-  if (colorsWrap) revealClip(colorsWrap, { direction: 'up' })
+  if (colorsWrap)
+    revealClip(colorsWrap, { direction: 'up' })
 })
 </script>

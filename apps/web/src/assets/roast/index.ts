@@ -1,10 +1,10 @@
+import type { ImageMetadata } from 'astro'
 import roastAlumspazio from './roast-alumspazio.webp'
 import roastBrainstorming from './roast-brainstorming.webp'
 import roastGris from './roast-gris.webp'
 import roastHelena from './roast-helena.webp'
-import roastSiemens from './roast-siemens.webp'
 
-import type { ImageMetadata } from 'astro'
+import roastSiemens from './roast-siemens.webp'
 
 export interface RoasLogo {
   slug: string

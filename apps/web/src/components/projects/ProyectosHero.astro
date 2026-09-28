@@ -44,13 +44,16 @@ registerMotion(() => {
   const text = document.getElementById('proyectos-hero-text')
   const { gsap } = ensureGsap()
 
-  if (text && !prefersReducedMotion()) gsap.set(text, { opacity: 0, y: 10 })
+  if (text && !prefersReducedMotion())
+    gsap.set(text, { opacity: 0, y: 10 })
 
   if (headline) {
     splitHeadline(headline, { by: 'words', scrollTrigger: false, onComplete: () => {
-      if (text) gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
+      if (text)
+        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
     } })
   }
-  if (bg && !prefersReducedMotion()) gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+  if (bg && !prefersReducedMotion())
+    gsap.fromTo(bg, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
 })
 </script>

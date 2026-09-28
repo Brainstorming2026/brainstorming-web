@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
-import { embudoPasos } from '@/data'
 import keyBg from '@/assets/backgrounds/key-background.webp'
+import { embudoPasos } from '@/data'
 ---
 
 <section id="embudo" class="bg-white py-20 lg:py-24">
@@ -122,7 +122,8 @@ import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
   const infografia = document.getElementById('embudo-infografia')
-  if (infografia) revealClip(infografia, { direction: 'left', mode: 'scrub' })
+  if (infografia)
+    revealClip(infografia, { direction: 'left', mode: 'scrub' })
 
   const cards = document.querySelectorAll('#embudo .embudo-card-wrapper')
   staggerGrid(cards, { variant: 'organic' })

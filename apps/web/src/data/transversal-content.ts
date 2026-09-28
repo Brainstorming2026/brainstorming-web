@@ -27,8 +27,8 @@ export const homeContent = {
   results: {
     title: 'No hablamos de estrategia. La ejecutamos.',
     items: [
-      { slug: 'ait-capital', client: 'AIT Capital', text: 'De S/ 100K a S/ 1.5M en facturación — en 4 meses.' },
-      { slug: 'senati', client: 'SENATI', text: 'S/ 10M adicionales por mes reactivando una base de 350,000 personas.' },
+      { slug: 'ait-capital', client: 'AIT Capital', text: 'De S/ 100K a S/ 1.5M en facturación en 4 meses, con un sistema comercial que trabaja solo.' },
+      { slug: 'senati', client: 'SENATI', text: 'S/ 10M adicionales por mes al reactivar con nutrición automatizada una base dormida de 350,000 personas.' },
       { slug: 'futura-wealth', client: 'Futura Wealth Management', text: 'Orden comercial y automatización para que los asesores se concentren en clientes potenciales calificados.' },
     ],
     action: { label: 'VER TODOS LOS PROYECTOS', href: siteRoutes.projects },

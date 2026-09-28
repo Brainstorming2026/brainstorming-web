@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { getImage } from 'astro:assets'
 import heroPoster from '@/assets/video/smart-selling-cover-editorial.png'
 import heroVideo from '@/assets/video/Smart_Selling_Brainstorming_1080p_final.mp4?url'
@@ -31,12 +32,11 @@ const poster = await getImage({ src: heroPoster, width: 1280, format: 'webp', qu
       id="hero-video"
       data-animate="circle"
       data-speed="0.9"
-      class="relative aspect-video w-full overflow-hidden rounded-3xl bg-dark shadow-lg"
+      class="group relative aspect-video w-full overflow-hidden rounded-3xl bg-dark shadow-lg"
     >
       <video
         src={heroVideo}
         poster={poster.src}
-        controls
         playsinline
         preload="none"
         aria-label="Smart Selling: crecimiento comercial y automatización — Brainstorming"
@@ -45,6 +45,16 @@ const poster = await getImage({ src: heroPoster, width: 1280, format: 'webp', qu
         Tu navegador no permite reproducir este video.
         <a href={heroVideo}>Ver video de Smart Selling</a>
       </video>
+      <!-- Play propio, igual al del video de ROAS. Los controles nativos se
+           activan recién al reproducir, para que no asome la barra sobre el póster. -->
+      <button
+        type="button"
+        id="hero-video-play"
+        aria-label="Reproducir video de Smart Selling"
+        class="absolute inset-0 flex items-center justify-center bg-black/10 text-white/90 transition-colors hover:bg-black/20"
+      >
+        <Icon name="play" class="h-20 w-20 drop-shadow-lg transition-transform group-hover:scale-110" />
+      </button>
     </div>
   </div>
 </section>
@@ -61,5 +71,15 @@ registerMotion(() => {
     splitHeadline(headline, { by: 'words', scrollTrigger: false })
   if (video)
     revealCircle(video, { delay: 0.3 })
+
+  const player = video?.querySelector('video')
+  const play = document.getElementById('hero-video-play')
+  play?.addEventListener('click', () => {
+    if (!player)
+      return
+    player.controls = true
+    play.remove()
+    void player.play()
+  }, { once: true })
 })
 </script>

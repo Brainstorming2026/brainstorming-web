@@ -78,9 +78,19 @@ import StrategyArt from './StrategyArt.astro'
 
 <style>
   /* La ola se desplaza en contra del scroll (efecto cortina). El overflow y el
-     scale 1.16 garantizan que el recorrido nunca descubra borde blanco. */
+     scale 1.16 (desde arriba) garantizan que el recorrido nunca descubra borde blanco. */
   .wave-clip { overflow: hidden; }
-  .wave-clip [data-wave] { will-change: transform; }
+  /* El parallax recorta el fondo de la ola antes de llegar a su último píxel;
+     este fundido lleva ese corte al navy de la sección de abajo, sin costura. */
+  .wave-clip::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 40%;
+    background: linear-gradient(to bottom, transparent, var(--color-navy));
+    pointer-events: none;
+  }
+  .wave-clip [data-wave] { will-change: transform; transform-origin: top center; }
   .problem-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; margin-top: 54px; }
   .problemas-card { min-width: 0; }
   .problem-art { width: 100%; max-width: 200px; margin: 0 auto 24px; }
@@ -118,7 +128,7 @@ import StrategyArt from './StrategyArt.astro'
 </style>
 
 <script>
-import { parallax, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
@@ -129,8 +139,21 @@ registerMotion(() => {
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
     const wave = section.querySelector<HTMLElement>('[data-wave]')
-    if (wave)
-      parallax(wave, { distance: 14, scaleFrom: 1.16, trigger: wave.closest('.wave-clip'), scrub: 0.7 })
+    // Escala desde arriba y solo baja (0 → 10%): así la cresta de la ola
+    // nunca sube por encima del contenedor y el overflow no la recorta. El
+    // hueco que deja arriba es transparente sobre el hero blanco.
+    if (wave) {
+      gsap.fromTo(
+        wave,
+        { yPercent: 0, scale: 1.16 },
+        {
+          yPercent: 10,
+          scale: 1.16,
+          ease: 'none',
+          scrollTrigger: { trigger: wave.closest('.wave-clip'), start: 'top bottom', end: 'bottom top', scrub: 0.7 },
+        },
+      )
+    }
 
     const headline = section.querySelector<HTMLElement>('h2')
     if (headline)

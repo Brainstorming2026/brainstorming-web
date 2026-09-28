@@ -12,19 +12,20 @@ import { clienteLogos } from '@/assets/clientes'
 
     <div
       id="clientes-grid"
-      class="mt-14 grid grid-cols-3 items-center gap-x-8 gap-y-6 sm:grid-cols-5 lg:grid-cols-9"
+      class="mt-14 grid grid-cols-3 items-center gap-x-6 gap-y-4 sm:grid-cols-5 lg:grid-cols-9"
     >
       {
         clienteLogos.map(c => (
-          <div class="cliente-logo flex h-25 items-center justify-center">
+          <div class="cliente-logo flex h-[72px] items-center justify-center">
             <Image
               src={c.image}
               alt={c.name}
-              widths={[120, 180, 240]}
-              sizes="(min-width: 1024px) 110px, (min-width: 640px) 120px, 28vw"
+              widths={[108, 216]}
+              sizes="108px"
               quality={80}
               loading="lazy"
-              class:list={['max-h-30 w-full max-w-full object-contain', c.className]}
+              style={`width:${c.width}px`}
+              class:list={['h-auto max-h-14 max-w-full object-contain', c.className]}
             />
           </div>
         ))
@@ -57,7 +58,7 @@ registerMotion(() => {
   if (headline)
     splitHeadline(headline, { by: 'lines' })
 
-  // Intensidad baja: son 27 logos; el mismo gesto de las cards a plena fuerza
+  // Intensidad baja: son más de 60 logos; el mismo gesto de las cards a plena fuerza
   // sería ruido. Aquí solo se necesita el barrido.
   revealCards(document.querySelectorAll('#clientes-grid .cliente-logo'), {
     trigger: document.getElementById('clientes-grid'),

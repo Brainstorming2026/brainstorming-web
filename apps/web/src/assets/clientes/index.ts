@@ -1,74 +1,76 @@
 import type { ImageMetadata } from 'astro'
 
-import customerAlumspazio from './customer-alumspazio.webp'
-import customerAmadocacao from './customer-amadocacao.webp'
-import customerAruma from './customer-aruma.webp'
-import customerAtsaairlines from './customer-atsaairlines.webp'
-import customerDigital from './customer-digital.webp'
-import customerGodini from './customer-godini.webp'
-import customerLatinamerican from './customer-latinamerican.webp'
-import customerLimagas from './customer-limagas.webp'
-import customerLorenzee from './customer-lorenzee.webp'
-import customerMikio from './customer-mikio.webp'
-import customerSocgeo from './customer-moneda.webp'
-import customerMusicalma from './customer-musicalma.webp'
-import customerNote from './customer-note.webp'
-import customerOrquidea from './customer-orquidea.webp'
-import customerPringles from './customer-pringles.webp'
-import customerRenace from './customer-renace.webp'
-import customerRua from './customer-rua.webp'
-import customerSiemens from './customer-siemens.webp'
-import customerSonqo from './customer-sonqo.webp'
-import customerStanley from './customer-stanley.webp'
-import customerStyla from './customer-styla.png'
-import customerWalon from './customer-walon.webp'
-import officialAguaclara from './official/aguaclara.png'
-import customerGrin from './customer-gris.webp'
 import { newProjectLogos } from '@/data/new-projects'
-import officialHelena from './official/helena.png'
-import officialRetyg from './official/retyg.svg'
-import officialSgs from './official/sgs.png'
+
+// Logos procesados por `scripts/build-client-logos.mjs` (recortados, webp).
+// El slug es el nombre del archivo: para sumar un cliente basta con generar su
+// logo y, si el nombre no se deduce del slug, registrarlo en NAMES.
+const files = import.meta.glob<{ default: ImageMetadata }>('./logos/*.webp', { eager: true })
 
 export interface ClienteLogo {
   slug: string
   name: string
   image: ImageMetadata
-  source: 'official' | 'portfolio'
+  /** Ancho en px que iguala el peso visual entre logos anchos y cuadrados. */
+  width: number
   className?: string
 }
 
-export const clienteLogos: ClienteLogo[] = [
-  { slug: 'senati', name: 'SENATI', image: newProjectLogos.senati, source: 'portfolio' },
-  { slug: 'pastipan', name: 'Pastipan', image: newProjectLogos.pastipan, source: 'portfolio' },
-  { slug: 'ait-capital', name: 'AIT Capital', image: newProjectLogos['ait-capital'], source: 'portfolio' },
-  { slug: 'nordic', name: 'Nordic International School', image: newProjectLogos.nordic, source: 'portfolio' },
-  { slug: 'etna', name: 'ETNA', image: newProjectLogos.etna, source: 'portfolio' },
-  { slug: 'futura-wealth', name: 'Futura Wealth Management', image: newProjectLogos['futura-wealth'], source: 'portfolio', className: 'rounded bg-[#182b38] p-2' },
-  { slug: 'aguaclara', name: 'Aguaclara', image: officialAguaclara, source: 'official' },
-  { slug: 'alumspazio', name: 'Alumspazio', image: customerAlumspazio, source: 'portfolio' },
-  { slug: 'amado-cacao', name: 'Amado Cacao', image: customerAmadocacao, source: 'portfolio' },
-  { slug: 'aruma', name: 'Aruma', image: customerAruma, source: 'portfolio' },
-  { slug: 'atsa-airlines', name: 'ATSA Airlines', image: customerAtsaairlines, source: 'portfolio' },
-  { slug: 'digital-factoring', name: 'Digital Factoring', image: customerDigital, source: 'portfolio' },
-  { slug: 'grin', name: 'Grin', image: customerGrin, source: 'portfolio', className: 'max-w-[125px]' },
-  { slug: 'gordini', name: 'Gordini', image: customerGodini, source: 'portfolio' },
-  { slug: 'helena', name: 'Helena', image: officialHelena, source: 'official' },
-  { slug: 'latin-american-outdoors', name: 'Latin American Outdoors', image: customerLatinamerican, source: 'portfolio' },
-  { slug: 'limagas', name: 'Limagas', image: customerLimagas, source: 'portfolio' },
-  { slug: 'lorenzee-link', name: 'Lorenzee Link', image: customerLorenzee, source: 'portfolio' },
-  { slug: 'mikio', name: 'Mikio Car Wash', image: customerMikio, source: 'portfolio' },
-  { slug: 'musicalma', name: 'Musicalma', image: customerMusicalma, source: 'portfolio' },
-  { slug: 'note-vapor', name: 'Note Vapor', image: customerNote, source: 'portfolio' },
-  { slug: 'orquidea', name: 'Orquídea Mezzanine Fund', image: customerOrquidea, source: 'portfolio' },
-  { slug: 'pringles', name: 'Pringles', image: customerPringles, source: 'portfolio' },
-  { slug: 'renace-fest', name: 'Renace Fest', image: customerRenace, source: 'portfolio' },
-  { slug: 'retyg', name: 'Retyg', image: officialRetyg, source: 'official' },
-  { slug: 'rua', name: 'RUA', image: customerRua, source: 'portfolio' },
-  { slug: 'siemens', name: 'Siemens', image: customerSiemens, source: 'portfolio' },
-  { slug: 'stanley-black-decker', name: 'Stanley Black & Decker', image: customerStanley, source: 'portfolio' },
-  { slug: 'sgs', name: 'SGS', image: officialSgs, source: 'official' },
-  { slug: 'sociedad-geografica-lima', name: 'Sociedad Geográfica de Lima', image: customerSocgeo, source: 'portfolio' },
-  { slug: 'sonqo', name: 'Sonqo', image: customerSonqo, source: 'portfolio' },
-  { slug: 'styla', name: 'Styla', image: customerStyla, source: 'portfolio', className: 'invert' },
-  { slug: 'walon', name: 'Walon', image: customerWalon, source: 'portfolio' },
-]
+// Nombre visible cuando difiere del slug ("Title Case" del slug por defecto).
+const NAMES: Record<string, string> = {
+  'amado-cacao': 'Amado Cacao',
+  'atsa': 'ATSA Airlines',
+  'black-decker': 'Black+Decker',
+  'dewalt': 'DeWalt',
+  'dg': 'DG',
+  'esan': 'ESAN',
+  'ferreyros': 'Ferreyros CAT',
+  'gg-joyeros': 'G&G Joyeros',
+  'gsk': 'GSK',
+  'jw-marriott': 'JW Marriott',
+  'lorenzetti': 'Lorenzetti Ink',
+  'mi-banco': 'mibanco',
+  'mikio': 'Mikio Car Wash',
+  'note': 'Note Vapor',
+  'orquidea': 'Orquídea Mezzanine Fund',
+  'pall-mall': 'Pall Mall',
+  'siderperu': 'Siderperú',
+  'stanley-black-decker': 'Stanley Black & Decker',
+  'tedx': 'TEDx',
+  'tedx-lima': 'TEDxLima',
+  'usaid': 'USAID',
+}
+
+// Proyectos recientes que aún no están en la carpeta de logos histórica.
+const RECENT: Record<string, { name: string, className?: string }> = {
+  'ait-capital': { name: 'AIT Capital' },
+  'nordic': { name: 'Nordic International School' },
+  'etna': { name: 'ETNA' },
+  'futura-wealth': { name: 'Futura Wealth Management', className: 'rounded bg-[#182b38] p-2' },
+}
+
+// Área visual objetivo (px²). Con ancho = √(área · proporción) un wordmark
+// de 6:1 y un isotipo cuadrado pesan parecido en la grilla.
+const AREA = 4200
+const MAX_WIDTH = 108
+
+function visualWidth({ width, height }: ImageMetadata) {
+  return Math.round(Math.min(MAX_WIDTH, Math.sqrt(AREA * (width / height))))
+}
+
+const titleCase = (slug: string) => slug.replace(/(^|-)(\w)/g, (_, sep, c) => `${sep ? ' ' : ''}${c.toUpperCase()}`)
+
+const fromFolder = Object.entries(files).map(([path, mod]): ClienteLogo => {
+  const slug = path.slice(path.lastIndexOf('/') + 1, -'.webp'.length)
+  return { slug, name: NAMES[slug] ?? titleCase(slug), image: mod.default, width: visualWidth(mod.default) }
+})
+
+const recent = Object.entries(RECENT)
+  .filter(([slug]) => !fromFolder.some(c => c.slug === slug))
+  .map(([slug, { name, className }]): ClienteLogo => {
+    const image = newProjectLogos[slug as keyof typeof newProjectLogos]
+    return { slug, name, image, width: visualWidth(image), className }
+  })
+
+export const clienteLogos: ClienteLogo[] = [...fromFolder, ...recent]
+  .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))

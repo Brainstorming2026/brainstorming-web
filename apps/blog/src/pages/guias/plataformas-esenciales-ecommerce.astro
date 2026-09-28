@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import guideCover from '@/assets/guides/plataformas-esenciales-ecommerce.webp'
 import logo from '@/assets/logos/brainstorming-logo.webp'
+import TurnstileWidget from '@/components/common/TurnstileWidget.astro'
 import Layout from '@/layouts/Layout.astro'
 
 export const prerender = true
@@ -156,6 +157,9 @@ const faqs = [
           <label class="hidden" aria-hidden="true">
             <input type="text" name="website" tabindex="-1" autocomplete="off" />
           </label>
+
+          <TurnstileWidget />
+
 
           <button
             type="submit"

@@ -7,11 +7,12 @@ import { resolveGuideBySlug } from '@/lib/guide-lead'
 import { isHoneypotTriggered } from '@/lib/honeypot'
 import { EMAIL_INTERNAL_TO } from '@/lib/resend'
 import { fail, ok } from '@/lib/responses'
+import { verifyTurnstileToken } from '@/lib/turnstile'
 import { makeGuideLeadSchema } from '@/lib/validation/guide-lead'
 
 export const prerender = false
 
-export const POST: APIRoute = async ({ request, site }) => {
+export const POST: APIRoute = async ({ request, site, clientAddress }) => {
   let body: unknown
   try {
     body = await request.json()
@@ -30,7 +31,13 @@ export const POST: APIRoute = async ({ request, site }) => {
     return fail(400, 'Invalid data')
   }
 
-  const { nombre, email, slug } = parsed.data
+  const { nombre, email, slug, turnstileToken } = parsed.data
+
+  // Este endpoint manda un correo al email que escribe el visitante: sin
+  // verificacion humana seria un relay de spam a terceros.
+  if (!await verifyTurnstileToken(turnstileToken, clientAddress)) {
+    return fail(403, 'Verificación fallida. Intenta de nuevo.')
+  }
 
   // Nunca se confia en un pdf/titulo enviado por el cliente — se resuelve
   // desde `data/guides.ts` a partir del slug.

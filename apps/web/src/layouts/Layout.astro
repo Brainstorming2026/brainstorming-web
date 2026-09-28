@@ -6,6 +6,7 @@ import Navbar from '@/components/common/Navbar.astro'
 import SiteMotion from '@/components/common/SiteMotion.astro'
 import SmoothScroll from '@/components/common/SmoothScroll.astro'
 import SplashScreen from '@/components/common/SplashScreen.astro'
+import Stick from '@/components/common/Stick.astro'
 import SolutionMotion from '@/components/solutions/SolutionMotion.astro'
 import '@/styles/global.css'
 
@@ -59,6 +60,7 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
     </div>
 
     <SmoothScroll />
+    <Stick />
     <SiteMotion />
   </body>
 </html>

@@ -1,3 +1,4 @@
+import { aitSales, aitSalesHeadline, aitSalesPeriod } from './case-metrics'
 import { siteRoutes } from './site-navigation'
 
 /** Approved copy: Section 11, Camino B. Keep editorial wording intact. */
@@ -27,7 +28,7 @@ export const homeContent = {
   results: {
     title: 'No hablamos de estrategia. La ejecutamos.',
     items: [
-      { slug: 'ait-capital', client: 'AIT Capital', text: 'De S/ 100K a S/ 1.5M en facturación en 4 meses, con un sistema comercial que trabaja solo.' },
+      { slug: 'ait-capital', client: 'AIT Capital', text: `${aitSalesHeadline}, con un sistema comercial que trabaja solo.` },
       { slug: 'senati', client: 'SENATI', text: 'S/ 10M adicionales por mes al reactivar con nutrición automatizada una base dormida de 350,000 personas.' },
       { slug: 'futura-wealth', client: 'Futura Wealth Management', text: 'Orden comercial y automatización para que los asesores se concentren en clientes potenciales calificados.' },
     ],
@@ -82,7 +83,7 @@ export const aboutContent = {
     title: '¿Por qué nosotros?',
     items: [
       { title: 'Metodologías propias, no frameworks genéricos.', text: 'Smart Selling y Growth Planning son metodologías desarrolladas y refinadas en más de 80 proyectos reales con empresas medianas de LATAM. No son adaptaciones de libros — son sistemas que hemos probado, fallado, ajustado y vuelto a probar hasta que funcionan.' },
-      { title: 'Resultados con número, no con diapositivas.', text: 'AIT Capital pasó de S/ 100K a S/ 1.5M en 4 meses. SENATI generó S/ 10M adicionales por mes. Esos números son reales, están documentados y son el estándar con el que medimos nuestro trabajo.' },
+      { title: 'Resultados con número, no con diapositivas.', text: `AIT Capital pasó de ${aitSales.before} a ${aitSales.after} en ventas en ${aitSalesPeriod}. SENATI generó S/ 10M adicionales por mes. Esos números son reales, están documentados y son el estándar con el que medimos nuestro trabajo.` },
       { title: 'Board senior en cada proyecto.', text: 'No tercerizamos el pensamiento estratégico a consultores junior. Los directores del Board participan activamente en cada compromiso. Tu empresa recibe atención del nivel que merece.' },
     ],
   },

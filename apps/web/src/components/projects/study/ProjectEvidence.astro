@@ -1,17 +1,18 @@
 ---
 import type { ProjectEvidenceVisual } from '@/data/new-projects'
+import { aitSales, aitSalesPeriod } from '@/data/case-metrics'
 
 interface Props { visual: ProjectEvidenceVisual, alt: string, compact?: boolean }
 const { alt, compact = false } = Astro.props
 ---
 
 <div class:list={['case-evidence', { 'case-evidence--compact': compact }]} role="img" aria-label={alt}>
-  <header><span>AIT Capital · Smart Selling</span><span>4 meses</span></header>
+  <header><span>AIT Capital · Smart Selling</span><span>{aitSalesPeriod}</span></header>
   <div class="revenue-comparison">
-    <div class="revenue-before"><span>El punto de partida</span><strong>S/ 100K</strong><i aria-hidden="true"></i></div>
-    <div class="revenue-after"><span>La nueva escala</span><strong>S/ 1.5M</strong><i aria-hidden="true"></i></div>
+    <div class="revenue-before"><span>El punto de partida</span><strong>{aitSales.before}</strong><i aria-hidden="true"></i></div>
+    <div class="revenue-after"><span>La nueva escala</span><strong>{aitSales.after}</strong><i aria-hidden="true"></i></div>
   </div>
-  <footer><p>El proceso cambió.<br /><strong>La facturación también.</strong></p><span>Evolución de la facturación en soles</span></footer>
+  <footer><p>El proceso cambió.<br /><strong>Las ventas también.</strong></p><span>Evolución de las ventas en soles</span></footer>
 </div>
 
 <style>

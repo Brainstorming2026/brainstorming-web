@@ -62,5 +62,5 @@ export const siteContact = {
   email: 'conversemos@brainstorming.la',
   phone: '+51 992 528 363',
   whatsapp: 'https://wa.me/51992528363',
-  copyright: '© 2026 Brainstorming — Collective Intelligence',
+  copyright: '© 2026 Brainstorming',
 }

@@ -7,6 +7,7 @@ import toBeProcessIcon from '@/assets/smart-selling/process/step-03-to-be-proces
 import crmAiIcon from '@/assets/smart-selling/process/step-04-crm-ai.png'
 import playbooksIcon from '@/assets/smart-selling/process/step-05-playbooks.png'
 import adoptionIcon from '@/assets/smart-selling/process/step-06-adoption.png'
+import { aitSales, aitSalesPeriod, aitSalesPeriodWord } from '@/data/case-metrics'
 
 export interface SalesStep {
   number: string
@@ -96,14 +97,14 @@ export const salesCaseStudies: SalesCaseStudy[] = [
   {
     client: 'AIT Capital',
     href: '/proyectos/ait-capital',
-    context: 'Un sistema comercial rediseñado para multiplicar reuniones, cierres y facturación en cuatro meses.',
+    context: `Un sistema comercial rediseñado para multiplicar reuniones, cierres y ventas en ${aitSalesPeriodWord}.`,
     logo: aitCapitalLogo,
     logoAlt: 'AIT Capital',
     accent: 'ait',
     metrics: [
       { value: '10 → 30', label: 'reuniones por mes' },
       { value: '1 → 11', label: 'cierres' },
-      { value: 'S/ 100K → S/ 1.5M', label: 'facturación en 4 meses' },
+      { value: `${aitSales.before} → ${aitSales.after}`, label: `ventas en ${aitSalesPeriod}` },
     ],
   },
   {

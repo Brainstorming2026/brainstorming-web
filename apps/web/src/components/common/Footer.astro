@@ -4,6 +4,7 @@ import { Image } from 'astro:assets'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 import FooterMap from '@/components/common/FooterMap'
 import { empresa, recursos, redes, soluciones } from '@/data'
+import { ecosystem } from '@/data/ecosystem'
 import { siteContact } from '@/data/site-navigation'
 
 interface Props {
@@ -230,7 +231,10 @@ const { curveBg = 'bg-white' } = Astro.props
   <!-- Barra inferior -->
   <div class="border-t border-white/10">
     <p class="px-6 py-5 text-center text-xs text-white/80 sm:py-6 sm:text-sm">
-      {siteContact.copyright}
+      {siteContact.copyright} —
+      <a href={ecosystem.url} target="_blank" rel="noopener noreferrer" class="underline decoration-white/30 underline-offset-4 transition-colors hover:text-primary-300">
+        <span lang="en">Proud Partner of</span> {ecosystem.name}<span class="sr-only"> (abre en otra pestaña)</span>
+      </a>
     </p>
   </div>
   </div>

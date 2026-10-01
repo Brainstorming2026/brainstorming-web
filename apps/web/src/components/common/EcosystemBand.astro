@@ -80,21 +80,36 @@ import { ecosystem } from '@/data/ecosystem'
 
 <script>
 import { registerMotion, revealCards } from '@/lib/motion'
+import { tempo } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
   const band = document.querySelector<HTMLElement>('.ecosystem-band')
   if (!band)
     return
+  const { gsap } = ensureGsap()
   // Pre-oculta en la carga (revealCards usa gsap.set), nunca en onEnter.
   revealCards(band.querySelectorAll('.eco-reveal'), {
     trigger: band.querySelector('.eco-inner'),
     intensity: 0.5,
     stagger: 0.08,
   })
-  revealCards(band.querySelectorAll('.eco-member'), {
-    trigger: band.querySelector('.eco-members'),
-    intensity: 0.5,
-    stagger: 0.06,
+
+  // Las firmas se abren desde el centro hacia los lados: el ecosistema se
+  // "despliega" alrededor de CI.
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    const members = band.querySelectorAll('.eco-member')
+    gsap.set(members, { autoAlpha: 0, y: 16, scale: 0.94 })
+    gsap.to(members, {
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8 * tempo,
+      ease: 'expo.out',
+      stagger: { each: 0.07 * tempo, from: 'center' },
+      clearProps: 'opacity,visibility,transform',
+      scrollTrigger: { trigger: band.querySelector('.eco-members'), start: 'top 85%', once: true },
+    })
   })
 })
 </script>

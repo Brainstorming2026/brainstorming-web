@@ -213,9 +213,12 @@
   align-items: center;
   min-height: 44px;
   font-size: 14px;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  text-decoration-color: var(--study-line);
+  /* Underline as two layers: the resting line and an accent line that grows
+     from the left on hover. */
+  background:
+    linear-gradient(var(--study-accent), var(--study-accent)) left calc(50% + 0.85em) / 0% 1px no-repeat,
+    linear-gradient(var(--study-line), var(--study-line)) left calc(50% + 0.85em) / 100% 1px no-repeat;
+  transition: background-size 450ms cubic-bezier(0.16, 1, 0.3, 1), color 300ms ease;
 }
 
 .study-context,
@@ -270,6 +273,8 @@
 }
 
 .study-chapter-heading {
+  /* The copy enters from the right; clip keeps it from widening the page. */
+  overflow-x: clip;
   align-items: start;
   margin-bottom: 52px;
 }
@@ -459,12 +464,30 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* `scale`, not `transform`: GSAP drives transform for the parallax. */
+  transition: scale 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Idle cue on "Explorar el proyecto": the arrow nudges down now and then.
+   Uses `translate` so the hover `transform` still applies on top. */
+@keyframes study-nudge {
+  0%, 70%, 100% { translate: 0 0; }
+  80% { translate: 0 4px; }
+  90% { translate: 0 0; }
+}
+.study-text-link svg { animation: study-nudge 2.8s cubic-bezier(0.16, 1, 0.3, 1) 2s infinite; }
+
+.study-services svg { transition: color 300ms ease, scale 400ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+.study-index a:focus-visible { color: var(--study-accent); background-size: 100% 1px, 100% 1px; }
 
 @media (hover: hover) and (pointer: fine) {
   .study-text-link:hover svg { transform: translateY(3px); }
-  .study-index a:hover { text-decoration-color: var(--study-accent); }
+  .study-index a:hover { color: var(--study-accent); background-size: 100% 1px, 100% 1px; }
   .study-next-link:hover h2 svg { transform: translate(4px, -4px); }
+  .study-next-link:hover .study-next-image img { scale: 1.06; }
+  .study-services li:hover svg { color: var(--study-accent); scale: 1.12; }
+  .study-text-link:hover svg { animation-play-state: paused; }
 }
 
 @media (max-width: 1050px) {

@@ -9,13 +9,11 @@
 ---
 
 <script>
-import { magnetic, registerMotion, tiltCards } from '@/lib/motion'
+import { magnetic, pointerSpotlight, registerMotion, tiltCards } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 /** Cards que se inclinan hacia el cursor, en cualquier página. */
 const TILT = [
-  ['.problemas-card', 6],
-  ['.journey-stage', 5],
   ['.editorial-result--visual', 4],
   ['.service-tile', 4],
   ['.editorial-principles li', 5],
@@ -38,6 +36,8 @@ registerMotion(() => {
     const cleanups = [
       ...TILT.map(([selector, amplitude]) => tiltCards(document.querySelectorAll(selector), amplitude)),
       ...Array.from(document.querySelectorAll<HTMLElement>(MAGNETIC)).map(button => magnetic(button, 0.22)),
+      // Luz de cursor para todo lo marcado con la clase .spotlight (global.css).
+      ...Array.from(document.querySelectorAll<HTMLElement>('.spotlight')).map(pointerSpotlight),
     ]
     return () => cleanups.forEach(cleanup => cleanup())
   })

@@ -7,7 +7,6 @@ import pastipanLogo from '@/assets/projects/new/logos/pastipan-alternative.png'
 import senatiLogo from '@/assets/projects/new/logos/senati.svg'
 import nordicAdmissions from '@/assets/projects/new/nordic/admissions.png'
 import nordicEducationLevels from '@/assets/projects/new/nordic/education-levels.png'
-import pastipanStorefront from '@/assets/projects/new/pastipan/storefront.png'
 import senatiJourneyConcept from '@/assets/projects/new/senati/nurturing-journey-concept-v2.png'
 import senatiTrainingConcept from '@/assets/projects/new/senati/technical-training-concept.png'
 import { aitSales, aitSalesPeriod, aitSalesPeriodWord } from '@/data/case-metrics'
@@ -20,17 +19,14 @@ export const newProjectServices = {
 } as const
 
 export type NewProjectSlug = 'ait-capital' | 'senati' | 'pastipan' | 'nordic' | 'etna' | 'futura-wealth'
-export type ProjectEvidenceVisual = 'ait-impact' | 'ait-system' | 'nordic-journey' | 'futura-workspace' | 'pastipan-campaign' | 'etna-scope'
+export type ProjectEvidenceVisual = 'ait-impact' | 'ait-system' | 'nordic-journey' | 'futura-workspace' | 'pastipan-cover' | 'pastipan-campaign' | 'etna-scope'
 export type ProjectImageSlot = {
   id: string
   title: string
-  request: string
   ratio: '16/9' | '4/3'
-  source?: string
 } & (
   | { src: ImageMetadata, alt: string, visual?: never }
   | { visual: ProjectEvidenceVisual, alt: string, src?: never }
-  | { src?: undefined, visual?: undefined, alt?: never }
 )
 
 export interface NewProject {
@@ -46,8 +42,10 @@ export interface NewProject {
   logoSurface: string
   challenge: string
   response: string
+  approachTitle?: string
   approach: { icon: string, title: string, text: string }[]
   results: {
+    heading?: string
     summary: string
     metrics?: { label: string, before?: string, value: string, note?: string }[]
     outcomes?: string[]
@@ -102,7 +100,7 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
-      summary: `De 10 a 30 reuniones calificadas por mes y de 1 a 11 cierres mensuales. Las ventas pasaron de ${aitSales.before} a ${aitSales.after} en ${aitSalesPeriod}.`,
+      summary: `De 10 a 30 reuniones calificadas por mes y de 1 a 11 cierres mensuales. Las ventas mensuales pasaron de ${aitSales.before} a ${aitSales.after} en ${aitSalesPeriod}.`,
       metrics: [
         {
           label: 'Reuniones calificadas por mes',
@@ -115,7 +113,7 @@ export const newProjects: NewProject[] = [
           value: '11',
         },
         {
-          label: 'Ventas',
+          label: 'Ventas mensuales',
           before: aitSales.before,
           value: aitSales.after,
           note: `Evolución en ${aitSalesPeriod}`,
@@ -124,22 +122,18 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'ait-portada',
-      title: `Evolución de las ventas en ${aitSalesPeriodWord}`,
-      request: '',
+      title: `Evolución de las ventas mensuales en ${aitSalesPeriodWord}`,
       ratio: '16/9',
       visual: 'ait-impact',
-      alt: `Comparación de ventas: ${aitSales.spoken} en ${aitSalesPeriodWord}.`,
-      source: 'Documento original del proyecto, página 22.',
+      alt: `Comparación de ventas mensuales: ${aitSales.spoken} en ${aitSalesPeriodWord}.`,
     },
     media: [
       {
         id: 'ait-crm',
         title: 'Un sistema de seguimiento, de la oportunidad al cierre',
-        request: '',
         ratio: '4/3',
         visual: 'ait-system',
         alt: 'Esquema del sistema comercial de AIT Capital: prospección, calificación, reunión y seguimiento.',
-        source: 'Esquema explicativo basado en el alcance documentado del proyecto.',
       },
     ],
     next: 'senati',
@@ -198,7 +192,6 @@ export const newProjects: NewProject[] = [
     hero: {
       id: 'senati-portada',
       title: 'La formación técnica como siguiente oportunidad',
-      request: '',
       ratio: '16/9',
       src: senatiTrainingConcept,
       alt: 'Escena conceptual de formación técnica con estudiantes adultos en un taller de mecatrónica.',
@@ -207,7 +200,6 @@ export const newProjects: NewProject[] = [
       {
         id: 'senati-nutricion',
         title: 'Un recorrido para acompañar el interés hasta la matrícula',
-        request: '',
         ratio: '16/9',
         src: senatiJourneyConcept,
         alt: 'Ilustración del recorrido: captación, segmentación, contacto por etapa, seguimiento y matrícula.',
@@ -231,6 +223,7 @@ export const newProjects: NewProject[] = [
     logoSurface: '#ffffff',
     challenge: 'La marca necesitaba una reorientación estratégica completa: tenía producto y operación, pero sin claridad sobre hacia dónde crecer, cómo diferenciarse y qué hacer primero.',
     response: 'Investigamos la relación de distintas generaciones con la marca y encontramos una tensión útil: los públicos mayores recordaban Pastipan con cariño, mientras que para los jóvenes había perdido presencia. Ese hallazgo dio origen a Newstalgia, una dirección estratégica que recupera la memoria de la marca con un lenguaje renovado para sus canales y contenidos.',
+    approachTitle: 'Del recuerdo a una nueva conversación.',
     approach: [
       {
         icon: 'study/search',
@@ -245,10 +238,11 @@ export const newProjects: NewProject[] = [
       {
         icon: 'automation/route',
         title: 'Llevar la estrategia a los canales',
-        text: 'La dirección de comunicación se tradujo en una presencia renovada para web, tienda y redes sociales.',
+        text: 'El concepto Newstalgia dio una dirección creativa a los contenidos para redes sociales.',
       },
     ],
     results: {
+      heading: 'Una nueva dirección de marca.',
       summary: 'Reorientación estratégica completa con identidad de marca renovada, posicionamiento claro y plan de acción priorizado por impacto.',
       outcomes: [
         'Identidad de marca renovada',
@@ -258,22 +252,18 @@ export const newProjects: NewProject[] = [
     },
     hero: {
       id: 'pastipan-portada',
-      title: 'La experiencia Pastipan, del punto de venta al canal digital',
-      request: '',
+      title: 'Newstalgia: el recuerdo como punto de partida',
       ratio: '16/9',
-      src: pastipanStorefront,
-      alt: 'Sitio web de Pastipan con una vista panorámica de una de sus tiendas.',
-      source: 'Presentación Inbound 2026, página 51.',
+      visual: 'pastipan-cover',
+      alt: 'Composición editorial con una pieza real de Pastipan y el concepto Newstalgia.',
     },
     media: [
       {
         id: 'pastipan-estrategia',
-        title: 'Newstalgia aplicada a contenidos de marca',
-        request: '',
+        title: 'Newstalgia aplicada a dos momentos de consumo',
         ratio: '4/3',
         visual: 'pastipan-campaign',
-        alt: 'Newstalgia: hallazgo de investigación y tres piezas reales de Pastipan sobre encuentro, producto y experiencia.',
-        source: 'Presentación Inbound 2026, página 51.',
+        alt: 'Newstalgia: hallazgo de investigación y dos piezas reales de Pastipan sobre producto y experiencia.',
       },
     ],
     next: 'nordic',
@@ -295,6 +285,7 @@ export const newProjects: NewProject[] = [
     logoSurface: '#ffffff',
     challenge: 'La marca necesitaba una reorientación estratégica de comunicación: tiene un gran producto y operación, pero sin claridad sobre cómo diferenciarse y qué hacer primero. Además, requería un flujo de captación de leads sistematizado porque perdía prospectos por falta de seguimiento estructurado y con mayor visibilidad.',
     response: 'Ejecutamos un Growth Planning completo: investigación profunda con etnografía de consumidores y clientes, análisis de mercado y benchmark competitivo, definición de propuesta de valor diferenciada y mapeo de las nuevas rutas estratégicas. Entregamos un roadmap priorizado con quick wins y visión de mediano plazo. Luego, ordenamos el proceso comercial completo, implementamos tecnología de CRM y automatizamos los flujos de seguimiento y nutrición de leads. Primero orden, luego automatización, luego escala. El equipo pasó de gestionar leads a mano a operar un sistema que califica y avanza prospectos solo.',
+    approachTitle: 'De la propuesta a la matrícula.',
     approach: [
       {
         icon: 'study/search',
@@ -313,6 +304,7 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
+      heading: 'Una ruta más clara para las familias.',
       summary: 'Posicionamiento claro y plan de acción priorizado por impacto. Además, un flujo de captación estructurado y automatizado, con mejora significativa en el ratio de conversión de leads a matrículas.',
       outcomes: [
         'Posicionamiento y prioridades definidos',
@@ -323,30 +315,24 @@ export const newProjects: NewProject[] = [
     hero: {
       id: 'nordic-portada',
       title: 'Una propuesta educativa convertida en invitación',
-      request: '',
       ratio: '16/9',
       src: nordicAdmissions,
       alt: 'Pieza de admisión 2026–2027 de Nordic International School con invitación a una visita guiada.',
-      source: 'Campaña de admisión de Nordic International School.',
     },
     media: [
       {
         id: 'nordic-estrategia',
         title: 'Propuesta de valor y comunicación',
-        request: '',
         ratio: '4/3',
         src: nordicEducationLevels,
         alt: 'Página de Nordic International School que presenta sus niveles inicial, primaria y secundaria.',
-        source: 'Comunicación de los niveles educativos de Nordic International School.',
       },
       {
         id: 'nordic-crm',
         title: 'Del interés de la familia al proceso de admisión',
-        request: '',
         ratio: '4/3',
         visual: 'nordic-journey',
         alt: 'Recorrido explicativo del proceso: interés, visita, seguimiento, admisión y matrícula.',
-        source: 'Recorrido explicativo de las etapas de admisión.',
       },
     ],
     next: 'etna',
@@ -366,6 +352,7 @@ export const newProjects: NewProject[] = [
     logoSurface: '#ffffff',
     challenge: 'Imagen corporativa desactualizada que no reflejaba la calidad del producto ni conectaba con el consumidor moderno. Las distintas líneas de producto carecían de identidad visual diferenciada.',
     response: 'Investigación de la categoría y benchmark competitivo exhaustivo. A partir de ahí, desarrollamos propuestas de branding diferenciadas para cada línea de producto de la marca, con paleta de colores, tipografía, tono y aplicaciones visuales definidas por segmento.',
+    approachTitle: 'De la categoría a cada línea.',
     approach: [
       {
         icon: 'study/search',
@@ -384,6 +371,7 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
+      heading: 'Una identidad con estructura.',
       summary: 'Renovación completa de imagen corporativa y de cada línea de producto, con identidad visual coherente, moderna y diferenciada por categoría.',
       outcomes: [
         'Imagen corporativa renovada',
@@ -394,11 +382,9 @@ export const newProjects: NewProject[] = [
     hero: {
       id: 'etna-portada',
       title: 'Estrategia de identidad y diferenciación por línea',
-      request: '',
       ratio: '16/9',
       visual: 'etna-scope',
-      alt: 'Síntesis del alcance de branding de ETNA: investigación, identidad y coherencia entre líneas.',
-      source: 'Síntesis del alcance del proyecto. Las aplicaciones de identidad no están incluidas en esta muestra.',
+      alt: 'Etapas del trabajo de branding de ETNA: investigación, identidad y diferenciación de líneas.',
     },
     media: [],
     next: 'futura-wealth',
@@ -418,6 +404,7 @@ export const newProjects: NewProject[] = [
     logoSurface: '#182b38',
     challenge: 'Captación de clientes y proceso comercial 100% manual. Sin CRM, sin flujos definidos, sin automatización. Los asesores perdían tiempo en tareas operativas en lugar de estar frente a clientes potenciales.',
     response: 'Mapeamos el proceso comercial As-Is, identificamos los cuellos de botella e implementamos tecnología con flujos automatizados de prospección, nutrición y seguimiento. Orden primero, automatización después, escala sostenible al final.',
+    approachTitle: 'Del proceso al sistema.',
     approach: [
       {
         icon: 'automation/route',
@@ -436,6 +423,7 @@ export const newProjects: NewProject[] = [
       },
     ],
     results: {
+      heading: 'Una operación que se puede seguir.',
       summary: 'Un proceso comercial ordenado, con etapas visibles y una estructura de onboarding que permite al equipo concentrarse en el seguimiento de oportunidades.',
       outcomes: [
         'Pipeline comercial centralizado',
@@ -446,11 +434,9 @@ export const newProjects: NewProject[] = [
     hero: {
       id: 'futura-portada',
       title: 'Seguimiento comercial en un solo espacio',
-      request: '',
       ratio: '16/9',
       visual: 'futura-workspace',
       alt: 'Espacio real de Futura en Monday con módulos de CRM, onboarding y capacitación.',
-      source: 'Detalle del espacio de trabajo de Futura en Monday. Recorte de la captura original.',
     },
     media: [],
     next: 'ait-capital',

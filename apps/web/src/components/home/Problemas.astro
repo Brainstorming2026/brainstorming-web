@@ -5,6 +5,13 @@ import serviceUpBg from '@/assets/backgrounds/service-up-background.webp'
 import serviceArrow from '@/assets/decorative/service-up-flecha.webp'
 import { conversationCta, homeContent } from '@/data/transversal-content'
 import StrategyArt from './StrategyArt.astro'
+
+const { closing, closingHighlight } = homeContent.problems
+const highlightAt = closing.indexOf(closingHighlight)
+// Si el tramo no está en la frase, se muestra la frase sin subrayado.
+const closingParts = highlightAt === -1
+  ? null
+  : [closing.slice(0, highlightAt), closingHighlight, closing.slice(highlightAt + closingHighlight.length)]
 ---
 
 <section id="problemas" class="text-white">
@@ -19,12 +26,14 @@ import StrategyArt from './StrategyArt.astro'
       class="block w-full select-none"
     />
     <div data-speed="1.22" class="chevron-holder absolute left-1/2 top-[25%] w-12 md:w-20">
-      <Image
-        src={serviceArrow}
-        alt=""
-        aria-hidden="true"
-        class="chevron-bob block w-full select-none"
-      />
+      <div class="chevron-fade">
+        <Image
+          src={serviceArrow}
+          alt=""
+          aria-hidden="true"
+          class="chevron-bob block w-full select-none"
+        />
+      </div>
     </div>
   </div>
 
@@ -46,8 +55,9 @@ import StrategyArt from './StrategyArt.astro'
         {
           homeContent.problems.items.map((card, index) => (
             <div class="problemas-card">
-              <div class="problem-art" data-speed={index % 2 === 0 ? '0.95' : '1.05'}><StrategyArt index={index} /></div>
-              <h3>{['Ventas impredecibles', 'Un equipo sin sistema', 'IA sin dirección', 'Decisiones sin datos', 'Crecimiento sin un plan'][index]}</h3>
+              <div class="problem-art"><StrategyArt index={index} /></div>
+              <div class="problem-rule" aria-hidden="true"></div>
+              <h3><span class="problem-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{card.title}</h3>
               <p>{card.text}</p>
             </div>
           ))
@@ -57,7 +67,9 @@ import StrategyArt from './StrategyArt.astro'
       <!-- Cierre -->
       <div class="problemas-closing mt-16 flex flex-col items-center text-center">
         <p class="max-w-3xl font-heading text-xl font-bold leading-relaxed sm:text-2xl">
-          {homeContent.problems.closing}
+          {closingParts
+            ? <>{closingParts[0]}<span class="closing-mark">{closingParts[1]}<span class="closing-underline" aria-hidden="true"></span></span>{closingParts[2]}</>
+            : closing}
         </p>
         <h2 id="home-conversation-title" class="mt-4 font-heading text-base text-white/80 sm:text-lg">
           {conversationCta.title}
@@ -92,17 +104,38 @@ import StrategyArt from './StrategyArt.astro'
   }
   .wave-clip [data-wave] { will-change: transform; transform-origin: top center; }
   .problem-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; margin-top: 54px; }
-  .problemas-card { min-width: 0; }
+  .problemas-card { min-width: 0; transition: opacity 350ms ease-out; }
   .problem-art { width: 100%; max-width: 200px; margin: 0 auto 24px; }
-  .problemas-card h3 { font: 600 18px/1.3 var(--font-heading); letter-spacing: -.02em; margin-top: 10px; }
+  /* La ilustración trae su propio fondo: un difuminado radial lo funde con el
+     navy y desaparecen los recuadros. */
+  .problem-art :global(.strategy-art) { mask-image: radial-gradient(closest-side, #000 68%, transparent); mask-composite: add; }
+  .problem-rule { height: 1px; background: rgb(255 255 255 / .18); transform-origin: 0 50%; transition: background-color 300ms ease-out; }
+  .problemas-card h3 { font: 600 18px/1.3 var(--font-heading); letter-spacing: -.02em; margin-top: 18px; }
+  .problem-index { display: block; margin-bottom: 8px; font: 500 11px/1 var(--font-body); letter-spacing: .16em; color: var(--color-mist-300); font-variant-numeric: tabular-nums; }
   .problemas-card > p { margin-top: 16px; font-size: 15px; line-height: 1.8; color: #e1e7f5; }
+
+  /* Modo foco: la situación señalada queda al frente y el resto se apaga. Con
+     :has() y no con .problem-grid:hover, para que pasar por el hueco entre
+     columnas no apague todo. No son enlaces: el cursor no cambia. */
+  @media (hover: hover) and (pointer: fine) {
+    .problem-grid:has(.problemas-card:hover) .problemas-card:not(:hover) { opacity: .45; }
+    .problemas-card:hover .problem-rule { background: var(--color-primary-300); }
+  }
+
+  .closing-mark { position: relative; white-space: nowrap; }
+  .closing-underline { position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; border-radius: 2px; background: var(--color-primary-300); transform-origin: 0 50%; }
+
   @media (max-width: 1100px) { .problem-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; } }
   @media (max-width: 639px) {
     .problem-grid { grid-template-columns: 1fr; gap: 28px; }
     .problemas-card { display: grid; grid-template-columns: 110px minmax(0, 1fr); column-gap: 18px; align-items: center; }
-    .problem-art { grid-row: 1 / 3; width: calc(100% + 16px); margin: 0 0 0 -8px; }
-    .problemas-card h3 { font-size: 18px; margin-top: 0; }
+    .problem-art { grid-row: 1 / 4; width: calc(100% + 16px); margin: 0 0 0 -8px; }
+    .problem-rule { grid-column: 2; }
+    .problemas-card h3 { font-size: 18px; margin-top: 12px; }
     .problemas-card > p { font-size: 14px; margin-top: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .problemas-card, .problem-rule { transition: none; }
   }
   /* Flecha con animación de "respiración" (bob vertical). Mantiene el centrado
      horizontal dentro del propio transform. */
@@ -128,15 +161,23 @@ import StrategyArt from './StrategyArt.astro'
 </style>
 
 <script>
-import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { hoverLift, parallax, registerMotion, revealSequence, splitHeadline } from '@/lib/motion'
+import { ease, tempo } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
+// Capas separadas para que ninguna animación pise a otra:
+//   .problem-art    → entrada (fundido + blur) y elevación al hover
+//   .strategy-art   → parallax uniforme
+//   .problemas-card → opacidad del modo foco (CSS) y entrada en móvil
 registerMotion(() => {
   const section = document.getElementById('problemas')
   if (!section)
     return
-  const { gsap } = ensureGsap()
+  const { gsap, ScrollTrigger } = ensureGsap()
+  const grid = section.querySelector<HTMLElement>('.problem-grid')
+  const cards = Array.from(section.querySelectorAll<HTMLElement>('.problemas-card'))
   const media = gsap.matchMedia()
+
   media.add('(prefers-reduced-motion: no-preference)', () => {
     const wave = section.querySelector<HTMLElement>('[data-wave]')
     // Escala desde arriba y solo baja (0 → 10%): así la cresta de la ola
@@ -155,31 +196,89 @@ registerMotion(() => {
       )
     }
 
+    // La flecha invita a bajar solo mientras estás arriba: al empezar el
+    // scroll se desvanece y deja de rebotar.
+    const chevron = section.querySelector<HTMLElement>('.chevron-fade')
+    const bob = section.querySelector<HTMLElement>('.chevron-bob')
+    if (chevron && bob) {
+      ScrollTrigger.create({
+        start: 120,
+        end: 'max',
+        onToggle: (self) => {
+          gsap.to(chevron, { autoAlpha: self.isActive ? 0 : 1, duration: 0.4, ease: 'power2.out' })
+          bob.style.animationPlayState = self.isActive ? 'paused' : 'running'
+        },
+      })
+    }
+
     const headline = section.querySelector<HTMLElement>('h2')
     if (headline)
       splitHeadline(headline, { by: 'lines' })
 
-    // Las 5 cards entran como una secuencia, no como 5 apariciones sueltas.
-    revealCards(section.querySelectorAll('.problemas-card'), {
-      trigger: section.querySelector('.problem-grid'),
-      intensity: 1.2,
-      stagger: 0.13,
-      inner: 'h3, p',
-    })
-
-    // Cierre: el remate y el CTA entran después de las cards, no a la vez.
+    // Cierre: la frase y el CTA entran después de las columnas; luego se
+    // subraya "trabajemos juntos".
     const closing = section.querySelector<HTMLElement>('.problemas-closing')
     if (closing) {
-      gsap.from(closing.children, {
-        autoAlpha: 0,
-        yPercent: 60,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: 'expo.out',
-        clearProps: 'transform,opacity,visibility',
-        scrollTrigger: { trigger: closing, start: 'top 88%', once: true },
-      })
+      const underline = closing.querySelector('.closing-underline')
+      gsap.set(closing.children, { autoAlpha: 0, yPercent: 60 })
+      if (underline)
+        gsap.set(underline, { scaleX: 0 })
+      const timeline = gsap.timeline({ scrollTrigger: { trigger: closing, start: 'top 88%', once: true } })
+        .to(closing.children, { autoAlpha: 1, yPercent: 0, duration: 0.9 * tempo, stagger: 0.12 * tempo, ease: ease.out, clearProps: 'transform,opacity,visibility' })
+      if (underline)
+        timeline.to(underline, { scaleX: 1, duration: 0.8 * tempo, ease: ease.out }, 0.45 * tempo)
     }
+  })
+
+  // Desktop y tablet: diagnóstico en secuencia (ilustración → línea → título → texto).
+  // Pre-oculta con gsap.set() al cargar, nunca dentro del onEnter.
+  media.add('(min-width: 640px) and (prefers-reduced-motion: no-preference)', () => {
+    if (!grid)
+      return
+    revealSequence(cards, [
+      { select: card => card.querySelector('.problem-art'), from: { autoAlpha: 0, y: 24, filter: 'blur(8px)' }, duration: 1 },
+      { select: card => card.querySelector('.problem-rule'), from: { scaleX: 0 }, at: 0.2, duration: 0.8 },
+      { select: card => card.querySelector('h3'), from: { autoAlpha: 0, y: 16 }, at: 0.3, duration: 0.7 },
+      { select: card => card.querySelector(':scope > p'), from: { autoAlpha: 0, y: 16 }, at: 0.4, duration: 0.7 },
+    ], { trigger: grid, stagger: 0.1 })
+
+    // Un solo parallax, igual para las cinco: profundidad sin desalinear la fila.
+    cards.forEach((card) => {
+      const art = card.querySelector<HTMLElement>('.strategy-art')
+      if (art)
+        parallax(art, { distance: 8, trigger: grid })
+    })
+  })
+
+  // Móvil: cada situación aparece al llegar a ella.
+  media.add('(max-width: 639px) and (prefers-reduced-motion: no-preference)', () => {
+    cards.forEach((card) => {
+      gsap.set(card, { autoAlpha: 0, y: 16 })
+      gsap.to(card, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8 * tempo,
+        ease: ease.out,
+        clearProps: 'opacity,visibility,transform',
+        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+      })
+    })
+  })
+
+  media.add('(prefers-reduced-motion: reduce)', () => {
+    gsap.set(cards, { autoAlpha: 0 })
+    gsap.to(cards, {
+      autoAlpha: 1,
+      duration: 0.3,
+      clearProps: 'opacity,visibility',
+      scrollTrigger: { trigger: grid ?? section, start: 'top 85%', once: true },
+    })
+  })
+
+  // Hover con mouse: la ilustración señalada se eleva (el modo foco es CSS).
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups = cards.map(card => hoverLift(card, card.querySelector('.problem-art'), { y: -6, scale: 1.04 }))
+    return () => cleanups.forEach(cleanup => cleanup())
   })
 })
 </script>

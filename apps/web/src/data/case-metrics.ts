@@ -15,8 +15,8 @@ export const aitSales = {
 
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1)
 
-/** "De S/ 100K a S/ 1.1M en ventas en 6 meses" */
-export const aitSalesHeadline = `De ${aitSales.before} a ${aitSales.after} en ventas en ${aitSales.months} meses`
+/** La presentación muestra ventas mensuales de junio y diciembre de 2024. */
+export const aitSalesHeadline = `Ventas mensuales de ${aitSales.before} a ${aitSales.after} en ${aitSales.months} meses`
 export const aitSalesPeriod = `${aitSales.months} meses`
 export const aitSalesPeriodWord = `${aitSales.monthsWord} meses`
 export const aitSalesPeriodTitle = capitalize(aitSalesPeriodWord)

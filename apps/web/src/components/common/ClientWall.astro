@@ -84,7 +84,7 @@ const logoWidth = (width: number, scale = SCALE) => Math.round(width * scale)
         data-label-closed={`Ver las ${clienteLogos.length} marcas`}
         data-label-open="Ver menos"
       >
-        <span class="client-toggle-label">Ver las {clienteLogos.length} marcas</span>
+        <span class="client-toggle-label">Ver más marcas</span>
         <svg class="client-toggle-icon size-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
@@ -129,7 +129,8 @@ const logoWidth = (width: number, scale = SCALE) => Math.round(width * scale)
 </style>
 
 <script>
-import { ensureGsap, prefersReducedMotion, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+import { tempo } from '@/lib/motion/config'
 
 // El toggle va fuera de registerMotion: si el motion cae en fallback, la
 // lista completa tiene que seguir abriéndose.
@@ -182,18 +183,32 @@ document.addEventListener('astro:page-load', () => {
 })
 
 registerMotion(() => {
-  document.querySelectorAll<HTMLElement>('.client-wall').forEach((wall) => {
-    const headline = wall.querySelector<HTMLElement>('h2')
-    if (headline)
-      splitHeadline(headline, { by: 'lines' })
+  const { gsap } = ensureGsap()
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    document.querySelectorAll<HTMLElement>('.client-wall').forEach((wall) => {
+      const headline = wall.querySelector<HTMLElement>('h2')
+      if (headline)
+        splitHeadline(headline, { by: 'lines' })
 
-    // Intensidad baja: son más de 60 logos; el gesto de las cards a plena
-    // fuerza sería ruido. Aquí solo se necesita el barrido.
-    const grid = wall.querySelector('.client-grid')
-    revealCards(wall.querySelectorAll('.client-cell'), {
-      trigger: grid,
-      intensity: 0.5,
-      stagger: 0.02,
+      // Etiqueta y bajada acompañan al titular.
+      const intro = Array.from(wall.querySelectorAll('header p'))
+      gsap.set(intro, { autoAlpha: 0, y: 12 })
+      gsap.to(intro, { autoAlpha: 1, y: 0, duration: 0.8 * tempo, stagger: 0.12 * tempo, ease: 'expo.out', clearProps: 'opacity,visibility,transform', scrollTrigger: { trigger: wall.querySelector('header'), start: 'top 85%', once: true } })
+
+      // Los logos entran como una onda diagonal desde la esquina superior
+      // izquierda (stagger por grilla), no como un barrido de 67 items en fila.
+      const grid = wall.querySelector('.client-grid')
+      const cells = wall.querySelectorAll('.client-cell')
+      gsap.set(cells, { autoAlpha: 0, y: 12 })
+      gsap.to(cells, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8 * tempo,
+        ease: 'expo.out',
+        stagger: { each: 0.035 * tempo, grid: 'auto', from: 'start' },
+        clearProps: 'opacity,visibility,transform',
+        scrollTrigger: { trigger: grid, start: 'top 82%', once: true },
+      })
     })
   })
 })

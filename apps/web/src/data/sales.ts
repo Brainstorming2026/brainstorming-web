@@ -104,7 +104,7 @@ export const salesCaseStudies: SalesCaseStudy[] = [
     metrics: [
       { value: '10 → 30', label: 'reuniones por mes' },
       { value: '1 → 11', label: 'cierres' },
-      { value: `${aitSales.before} → ${aitSales.after}`, label: `ventas en ${aitSalesPeriod}` },
+      { value: `${aitSales.before} → ${aitSales.after}`, label: `ventas mensuales · ${aitSalesPeriod}` },
     ],
   },
   {

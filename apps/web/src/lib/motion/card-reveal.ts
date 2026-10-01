@@ -1,4 +1,4 @@
-import { duration, ease } from './config'
+import { duration, ease, tempo } from './config'
 import { ensureGsap } from './gsap-client'
 import { prefersReducedMotion } from './reduced-motion'
 
@@ -68,8 +68,8 @@ export function revealCards(items: ArrayLike<Element>, options: RevealCardsOptio
     yPercent: 0,
     scale: 1,
     rotationX: 0,
-    duration: duration.gridItem,
-    stagger,
+    duration: duration.gridItem * tempo,
+    stagger: stagger * tempo,
     ease: ease.out,
     // El transform se limpia al terminar para no pelear con el parallax de
     // ScrollSmoother ni con los hover de cada card.
@@ -83,8 +83,8 @@ export function revealCards(items: ArrayLike<Element>, options: RevealCardsOptio
       timeline.to(children, {
         autoAlpha: 1,
         yPercent: 0,
-        duration: 0.7,
-        stagger: stagger * 0.45,
+        duration: 0.7 * tempo,
+        stagger: stagger * 0.45 * tempo,
         ease: ease.out,
         clearProps: 'transform,opacity,visibility',
       }, 0.18)

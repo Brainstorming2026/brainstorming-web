@@ -1,7 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import admissions from '@/assets/projects/new/nordic/admissions.png'
-
 const stages = [
   { label: 'Interés', title: 'Una propuesta que conecta.', text: 'La familia descubre la propuesta educativa. La comunicación abre la conversación y da sentido al primer contacto.' },
   { label: 'Visita', title: 'Conocer para decidir.', text: 'La visita permite acercarse al colegio y conocer su propuesta más allá de la comunicación inicial.' },
@@ -12,20 +9,9 @@ const stages = [
 ---
 
 <section class="nordic-journey" aria-labelledby="nordic-journey-heading">
-  <div class="nordic-journey__portrait">
-    <Image
-      src={admissions}
-      alt="Familia retratada en la pieza de admisión de Nordic International School."
-      widths={[800, 1200, 1763]}
-      sizes="(min-width: 900px) 960px, 800px"
-      loading="lazy"
-    />
-    <div class="nordic-journey__photo-heading"><span>NORDIC</span><span>International School</span></div>
-    <div class="nordic-journey__photo-copy">
-      <span>La familia, en el centro.</span>
-      <p>Cada conversación.<br />Un paso más cerca.</p>
-      <small>Imagen de la campaña de admisión</small>
-    </div>
+  <div class="nordic-journey__statement">
+    <span class="nordic-journey__statement-eyebrow">Nordic · Recorrido de admisión</span>
+    <div class="nordic-journey__statement-main"><span aria-hidden="true">01 — 05</span><p>Escuchar.<br />Orientar.<br /><strong>Acompañar.</strong></p></div>
   </div>
 
   <div class="nordic-journey__content">
@@ -67,45 +53,12 @@ const stages = [
     padding-block: 32px 12px;
     color: var(--journey-navy);
   }
-  .nordic-journey__portrait {
-    position: relative;
-    isolation: isolate;
-    min-height: 650px;
-    overflow: hidden;
-    border-radius: 6px 64px 6px 6px;
-    background: #d9e5ee;
-  }
-  .nordic-journey__portrait img {
-    position: absolute;
-    inset: auto 0 0;
-    width: 100%;
-    max-width: none;
-    height: 119%;
-    object-fit: cover;
-    object-position: right bottom;
-  }
-  .nordic-journey__portrait::after {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    content: '';
-    background: linear-gradient(180deg, rgb(15 39 60 / 45%), transparent 23%, transparent 44%, rgb(15 39 60 / 94%) 100%);
-  }
-  .nordic-journey__photo-heading,
-  .nordic-journey__photo-copy {
-    position: absolute;
-    z-index: 1;
-    right: 32px;
-    left: 32px;
-    color: #fff;
-  }
-  .nordic-journey__photo-heading { top: 32px; display: grid; gap: 6px; }
-  .nordic-journey__photo-heading span:first-child { font-size: 17px; letter-spacing: .4em; }
-  .nordic-journey__photo-heading span:last-child { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
-  .nordic-journey__photo-copy { bottom: 36px; }
-  .nordic-journey__photo-copy > span { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
-  .nordic-journey__photo-copy > p { margin-top: 16px; font: 600 clamp(27px, 3vw, 42px)/1.1 var(--font-heading); letter-spacing: -.035em; }
-  .nordic-journey__photo-copy > small { display: block; margin-top: 25px; font-size: 11px; color: #dce7ee; }
+  .nordic-journey__statement { display: flex; flex-direction: column; justify-content: space-between; min-height: 560px; padding: clamp(30px, 4vw, 58px); overflow: hidden; border-radius: 6px 64px 6px 6px; background: radial-gradient(circle at 95% 8%, #466f96 0, transparent 36%), #163751; color: #fff; }
+  .nordic-journey__statement-eyebrow { color: #cbdce9; font-size: 11px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; }
+  .nordic-journey__statement-main > span { display: block; margin-bottom: 18px; color: #aecbde; font-size: 12px; font-variant-numeric: tabular-nums; letter-spacing: .2em; }
+  .nordic-journey__statement-main p { font: 500 clamp(38px, 4.5vw, 66px)/1.04 var(--font-heading); letter-spacing: -.055em; }
+  .nordic-journey__statement-main strong { color: #c8dcea; font-weight: inherit; }
+  .nordic-journey__statement small { max-width: 32ch; color: #d2e2ec; font-size: 12px; line-height: 1.5; }
   .nordic-journey__content { min-width: 0; padding-block: 8px; }
   .nordic-journey__heading > p { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
   .nordic-journey__heading > p span { flex: none; color: var(--journey-muted); font-variant-numeric: tabular-nums; letter-spacing: .08em; }
@@ -142,16 +95,12 @@ const stages = [
   }
   @media (max-width: 899px) {
     .nordic-journey { grid-template-columns: 1fr; gap: 32px; padding-top: 8px; }
-    .nordic-journey__portrait { min-height: 0; height: clamp(350px, 64vw, 500px); border-radius: 6px 40px 6px 6px; }
-    .nordic-journey__portrait img { width: 100%; height: auto; min-height: 119%; object-fit: cover; }
-    .nordic-journey__photo-heading, .nordic-journey__photo-copy { left: 24px; right: 24px; }
-    .nordic-journey__photo-heading { top: 24px; }
-    .nordic-journey__photo-copy { bottom: 24px; }
+    .nordic-journey__statement { min-height: 360px; border-radius: 6px 40px 6px 6px; }
     .nordic-journey__heading h3 { font-size: clamp(30px, 5vw, 42px); }
   }
   @media (max-width: 479px) {
-    .nordic-journey__portrait img { width: auto; height: 119%; min-width: 100%; }
-    .nordic-journey__photo-copy > p { font-size: 29px; }
+    .nordic-journey__statement { min-height: 310px; padding: 28px 24px; }
+    .nordic-journey__statement-main p { font-size: 43px; }
     .nordic-journey__description { padding-right: 0; }
   }
 </style>

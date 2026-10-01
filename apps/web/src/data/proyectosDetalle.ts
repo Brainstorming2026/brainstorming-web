@@ -3,20 +3,19 @@ import type { ImageMetadata } from 'astro'
 import logoAguaclara from '@/assets/clientes/customer-aguaclara.webp'
 import logoAlumspazio from '@/assets/clientes/customer-alumspazio.webp'
 import logoAtsa from '@/assets/clientes/customer-atsaairlines.webp'
-
 import logoSubasta from '@/assets/projects-logos/proyecto-logo-subasta.png'
 import bgWebAguaclara from '@/assets/projects/aguaclara/bg-web.png'
 import heroBgAguaclara from '@/assets/projects/aguaclara/bg.png'
 import heroImgAguaclara from '@/assets/projects/aguaclara/hero.png'
 import ig1Aguaclara from '@/assets/projects/aguaclara/ig1.png'
+
 import ig2Aguaclara from '@/assets/projects/aguaclara/ig2.png'
 import ig3Aguaclara from '@/assets/projects/aguaclara/ig3.png'
-
 import webImgAguaclara from '@/assets/projects/aguaclara/web.png'
+
 import heroBgAlumspazio from '@/assets/projects/alumspazio/bg.png'
 import heroImgAlumspazio from '@/assets/projects/alumspazio/hero.png'
 import webImgAlumspazio from '@/assets/projects/alumspazio/web.png'
-
 import bgWebAlumspazio from '@/assets/projects/alumspazio/webbg.png'
 import heroBgAruma from '@/assets/projects/aruma/bg.png'
 import campaign2Aruma from '@/assets/projects/aruma/campaign2.png'
@@ -26,6 +25,7 @@ import heroImgAruma from '@/assets/projects/aruma/hero.png'
 import logoAruma from '@/assets/projects/aruma/logo.png'
 import bgWebAtsa from '@/assets/projects/atsa/bg-web.png'
 import heroBgAtsa from '@/assets/projects/atsa/bg.png'
+
 import heroImgAtsa from '@/assets/projects/atsa/hero.png'
 import ig1Atsa from '@/assets/projects/atsa/ig1.png'
 import ig2Atsa from '@/assets/projects/atsa/ig2.png'
@@ -37,27 +37,26 @@ import heroBgBeauty from '@/assets/projects/beauty/bg.png'
 import heroImgBeauty from '@/assets/projects/beauty/hero.png'
 import logoBeauty from '@/assets/projects/beauty/logo.png'
 import webAppBeauty from '@/assets/projects/beauty/web-app.png'
-
 import heroBgDecker from '@/assets/projects/decker/bg.png'
 import heroImgDecker from '@/assets/projects/decker/hero.png'
+
 import ig1Decker from '@/assets/projects/decker/ig1.png'
 import ig2Decker from '@/assets/projects/decker/ig2.png'
 import ig3Decker from '@/assets/projects/decker/ig3.png'
-
 import logoDecker from '@/assets/projects/decker/logo.png'
 import heroBgDewalt from '@/assets/projects/dewalt/bg.png'
 import heroImgDewalt from '@/assets/projects/dewalt/hero.png'
-import ig1Dewalt from '@/assets/projects/dewalt/ig1.png'
 
-import ig2Dewalt from '@/assets/projects/dewalt/ig2.png'
+import ig1Dewalt from '@/assets/projects/dewalt/ig1.png'
 import logoDewalt from '@/assets/projects/dewalt/logo.png'
 import bgWebDfactoring from '@/assets/projects/digitalfactoring/bg-web.png'
 import heroBgDfactoring from '@/assets/projects/digitalfactoring/bg.png'
-import logoDfactoring from '@/assets/projects/digitalfactoring/logo.png'
 
+import logoDfactoring from '@/assets/projects/digitalfactoring/logo.png'
 import webImgDfactoring from '@/assets/projects/digitalfactoring/web.png'
 import bgWebDholding from '@/assets/projects/digitalholding/bg-web.png'
 import heroBgDholding from '@/assets/projects/digitalholding/bg.png'
+
 import heroImgDholding from '@/assets/projects/digitalholding/hero.png'
 import logoDholding from '@/assets/projects/digitalholding/logo.png'
 import webImgDholding from '@/assets/projects/digitalholding/web.png'
@@ -70,37 +69,36 @@ import ig2Helena from '@/assets/projects/helena/ig2.png'
 import ig3Helena from '@/assets/projects/helena/ig3.png'
 import logoHelena from '@/assets/projects/helena/logo.png'
 import webImgHelena from '@/assets/projects/helena/web.png'
-
 import heroBgIrwin from '@/assets/projects/irwin/bg.png'
 import heroImgIrwin from '@/assets/projects/irwin/hero.png'
+
 import ig1Irwin from '@/assets/projects/irwin/ig1.png'
 import ig2Irwin from '@/assets/projects/irwin/ig2.png'
-
 import ig3Irwin from '@/assets/projects/irwin/ig3.png'
 import logoIrwin from '@/assets/projects/irwin/logo.png'
 import bgWebLatin from '@/assets/projects/latin-american/bg-web.png'
 import heroBgLatin from '@/assets/projects/latin-american/bg.png'
-import logoLatin from '@/assets/projects/latin-american/logo.png'
 
+import logoLatin from '@/assets/projects/latin-american/logo.png'
 import webImgLatin from '@/assets/projects/latin-american/web.png'
 import heroBgLimagas from '@/assets/projects/lima-gas/bg.png'
 import heroImgLimagas from '@/assets/projects/lima-gas/hero.png'
+
 import ig1Limagas from '@/assets/projects/lima-gas/ig1.png'
 import ig2Limagas from '@/assets/projects/lima-gas/ig2.png'
 import logoLimagas from '@/assets/projects/lima-gas/logo.png'
 import bgWebMikio from '@/assets/projects/mikio/bg-web.png'
-
 import heroBgMikio from '@/assets/projects/mikio/bg.png'
+
 import ig1Mikio from '@/assets/projects/mikio/ig1.png'
 import ig2Mikio from '@/assets/projects/mikio/ig2.png'
 import ig3Mikio from '@/assets/projects/mikio/ig3.png'
-
 import logoMikio from '@/assets/projects/mikio/logo.png'
 import webImgMikio from '@/assets/projects/mikio/web.png'
 import heroBgMusicalma from '@/assets/projects/musicalma/bg.png'
 import heroImgMusicalma from '@/assets/projects/musicalma/hero.png'
-import ig1Musicalma from '@/assets/projects/musicalma/ig1.png'
 
+import ig1Musicalma from '@/assets/projects/musicalma/ig1.png'
 import logoMusicalma from '@/assets/projects/musicalma/logo.png'
 import bgWebNote from '@/assets/projects/note/bg-web.png'
 import heroBgNote from '@/assets/projects/note/bg.png'
@@ -114,26 +112,26 @@ import heroImgPringles from '@/assets/projects/pringles/hero.png'
 import logoPringles from '@/assets/projects/pringles/logo.png'
 import heroBgRenace from '@/assets/projects/renace/bg.png'
 import ig1Renace from '@/assets/projects/renace/ig1.png'
+
 import ig2Renace from '@/assets/projects/renace/ig2.png'
 import ig3Renace from '@/assets/projects/renace/ig3.png'
-
 import logoRenace from '@/assets/projects/renace/logo.png'
 import bgWebRetyg from '@/assets/projects/retyg/bg-web.png'
 import heroBgRetyg from '@/assets/projects/retyg/bg.png'
+
 import heroImgRetyg from '@/assets/projects/retyg/hero.png'
 import logoRetyg from '@/assets/projects/retyg/logo.png'
 import webImgRetyg from '@/assets/projects/retyg/web.png'
-
 import heroBgStanley from '@/assets/projects/stanley/bg.png'
 import heroImgStanley from '@/assets/projects/stanley/hero.png'
+
 import ig1Stanley from '@/assets/projects/stanley/ig1.png'
 import ig2Stanley from '@/assets/projects/stanley/ig2.png'
 import ig3Stanley from '@/assets/projects/stanley/ig3.png'
-
 import logoStanley from '@/assets/projects/stanley/logo.png'
 import heroBgStyla from '@/assets/projects/styla/bg.png'
-
 import heroImgStyla from '@/assets/projects/styla/hero.png'
+
 import ig1Styla from '@/assets/projects/styla/ig1.png'
 import ig2Styla from '@/assets/projects/styla/ig2.png'
 import ig3Styla from '@/assets/projects/styla/ig3.png'
@@ -145,6 +143,16 @@ import heroBgSubasta from '@/assets/projects/subasta/bg.png'
 
 import heroBgVende from '@/assets/projects/vende/bg.png'
 import logoVende from '@/assets/projects/vende/logo.png'
+import videoAtsa from '@/assets/projects/video-posters/atsa.jpg'
+import videoDewalt from '@/assets/projects/video-posters/dewalt.jpg'
+import videoHelena from '@/assets/projects/video-posters/helena.jpg'
+import videoIrwin from '@/assets/projects/video-posters/irwin.jpg'
+
+import videoMusicalmaReel from '@/assets/projects/video-posters/musicalma-reel.jpg'
+import videoMusicalmaShow from '@/assets/projects/video-posters/musicalma-show.jpg'
+
+import videoPringles from '@/assets/projects/video-posters/pringles.jpg'
+import videoStanley from '@/assets/projects/video-posters/stanley.jpg'
 import heroBgWalon from '@/assets/projects/walon/bg.png'
 import heroImgWalon from '@/assets/projects/walon/hero.png'
 import ig1Walon from '@/assets/projects/walon/ig1.png'
@@ -157,8 +165,7 @@ export interface ProyectoCampania {
   parrafo: string
   colorFondo: string
   waveIcon?: string
-  /** Recuadro de video/spot sobre colorFondo. Sin thumbnail = placeholder vacío (embed pendiente). */
-  video?: { thumbnail?: ImageMetadata, alt?: string }
+  videos?: { youtubeId: string, title: string, poster: ImageMetadata }[]
   imagenes: { src: ImageMetadata, alt: string, maxWidth?: number }[]
 }
 
@@ -233,10 +240,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     heroBg: heroBgAlumspazio,
     heroImg: heroImgAlumspazio,
     heroImgAlt: 'Sitio web de Alum Spazio en desktop y móvil',
-    descripcion: `Alum Spazio es una empresa dedicada a la comercialización de productos para construcción,
-      diseño de interior, arquitectura y remodelación. Necesitaban desarrollar una web, renovar
-      su manual de marca, mejorar su reconocimiento de marca y obtener una imagen que evocara
-      confort.`,
+    descripcion: `Alumspazio comercializa productos para construcción, interiorismo y remodelación.
+      Necesitaba renovar su identidad y su sitio web para comunicar sus productos con claridad y
+      facilitar que los clientes solicitaran una cotización.`,
     features: [
       {
         icon: 'expert-window',
@@ -248,9 +254,9 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
           Debía informar de manera rápida y fácil al cliente acerca de los productos y sus
           cualidades. Una vez que el cliente identificara su necesidad, la Web debía proporcionar la
           facilidad de contacto para que el lead pueda ser captado con rapidez.`,
-          `Combinando las sensibilidades visuales del Manual de Identidad de Marca con aspectos
-          funcionales de la experiencia del usuario, desarrollamos una Web efectiva y atractiva a la
-          vez.`,
+          `La web llevó al entorno digital el manual de identidad renovado: una paleta sobria y
+          cercana, información de producto fácil de recorrer y un camino claro para contactar al
+          equipo comercial.`,
         ],
         imagen: webImgAlumspazio,
         imagenAlt: 'Renovación de la página web de Alum Spazio en desktop y móvil',
@@ -296,12 +302,14 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       ventas, potenciando los destinos más importantes para ellos.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para atraer y retener clientes',
-      parrafo: `Desarrollamos una campaña para fidelizar a sus clientes dando a conocer su compromiso con
-        el viajero recurrente y reforzando la seguridad en sus procesos (especialmente por el
-        contexto del COVID 19). Para atraer nuevos clientes, promocionamos con fuerza sus vuelos
-        comerciales activos.`,
+      parrafo: `Después de la pandemia, ATSA necesitaba comunicar que sus vuelos comerciales
+        estaban listos para despegar de nuevo. Creamos un spot digital de un minuto y una campaña
+        que reforzó la seguridad del viaje, el vínculo con quienes ya volaban con la aerolínea y
+        la promoción de sus destinos. El sorteo y las colaboraciones con influencers lograron un
+        aumento de más de 6 000 seguidores en Instagram.`,
       colorFondo: '#d1d3d4',
       waveIcon: 'aruma-up',
+      videos: [{ youtubeId: '9mjt19aTq8U', title: 'Spot digital de ATSA Airlines · 1 minuto', poster: videoAtsa }],
       imagenes: [
         { src: ig1Atsa, alt: 'Publicación de Instagram Atsa Airlines: Aterriza en Punta Sal', maxWidth: 450 },
         { src: ig2Atsa, alt: 'Publicación de Instagram Atsa Airlines: El Norte te espera', maxWidth: 450 },
@@ -352,15 +360,15 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     heroBg: heroBgDewalt,
     heroImg: heroImgDewalt,
     heroImgAlt: 'Publicaciones de Instagram de DeWALT',
-    descripcion: `DEWALT es una marca global de herramientas motorizadas para las industrias de la construcción y la carpintería. Su core target son los profesionales industriales. Necesitaban afianzar su posicionamiento de marca y generar más conversiones en el canal digital de e-commerce a través de sus sellers locales.`,
+    descripcion: `DEWALT es una marca de herramientas para profesionales de la construcción y la carpintería. Necesitaba reforzar su posicionamiento en Perú e impulsar las ventas online a través de distribuidores locales.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para generar conversiones',
-      parrafo: `Generamos campañas recurrentes de anuncios en formato carrusel para mejorar las ventas por el canal e-commerce. Fueron un éxito comercial ya que el usuario puede elegir la herramienta que necesita como si fuese un mini catálogo. Para generar leads desarrollamos campañas integrales con formularios en landing pages para expandir nuestra base de datos. Reforzamos el posicionamiento de marca en territorio local con contenidos gráficos y videos, utilizando la pauta digital estratégicamente para lograr un alcance masivo. Además, realizamos registros audiovisuales dinámicos de productos y acciones BTL.`,
+      parrafo: `Combinamos anuncios en carrusel, pensados como un catálogo breve de herramientas, con formularios en landing pages para captar oportunidades comerciales. Para reforzar la presencia de DEWALT en Perú produjimos contenido gráfico y audiovisual, activaciones BTL y un spot de 30 segundos para presentar el rotomartillo SDS-Max en televisión y medios digitales.`,
       colorFondo: '#F5A623',
       waveIcon: 'aruma-up',
+      videos: [{ youtubeId: 'R8hW0ZWDL7k', title: 'Spot TV y digital del rotomartillo SDS-Max · 30 segundos', poster: videoDewalt }],
       imagenes: [
         { src: ig1Dewalt, alt: 'Publicación de DeWALT: Poder y Duración Sin Cable', maxWidth: 800 },
-        { src: ig2Dewalt, alt: 'Publicación de DeWALT: Stanley Cyber Days', maxWidth: 450 },
       ],
     },
   },
@@ -416,9 +424,10 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     descripcion: `Helena Chocolatier pertenece a la categoría de repostería fina y se dedica a la transformación de chocolates e insumos exóticos variados en productos gourmet como chocotejas, tejas, bombones y más. Necesitaban mejorar su reconocimiento de marca, desarrollar un ecommerce efectivo y atraer más clientes.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para atraer clientes',
-      parrafo: `Creamos una campaña de Inbound Marketing para atraer clientes nuevos a su negocio y mejorar su reconocimiento de marca. Sus objetivos de comunicación principales consistían en dar a conocer la calidad de sus productos además de reforzar su prestigio.`,
+      parrafo: `La campaña presentó la calidad y la trayectoria de Helena Chocolatier a nuevos públicos. Como pieza central, produjimos un manifiesto de 30 segundos para televisión en el que Helena, fundadora de la marca, presenta sus productos emblemáticos.`,
       colorFondo: '#8B6914',
       waveIcon: 'aruma-up',
+      videos: [{ youtubeId: 'uoZ_3HgGoM0', title: 'Manifiesto de Helena Chocolatier con su fundadora · 30 segundos', poster: videoHelena }],
       imagenes: [
         { src: ig1Helena, alt: 'Publicación de Helena Chocolatier: Delivery Gratis', maxWidth: 450 },
         { src: ig2Helena, alt: 'Publicación de Helena Chocolatier: Marca peruana', maxWidth: 450 },
@@ -431,7 +440,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
         label: 'Desarrollo web',
         heading: 'Desarrollo integral de su Ecommerce',
         parrafos: [
-          `Una tienda online de postres debe tener dos cosas principales: llamativo visual y orden funcional. Gracias a los colores armoniosos de la marca y el perfeccionamiento de sus empaques a través de los años, el aspecto visual quedó muy atractivo. El orden funcional se logro poniéndolos en el lugar del usuario al pensar en la usabilidad del sitio web.`,
+          `Diseñamos la tienda online para que los productos fueran fáciles de descubrir y comprar. Los colores de la marca y sus empaques dieron continuidad a la identidad visual; una estructura clara ordenó el recorrido de compra.`,
         ],
         imagen: webImgHelena,
         imagenAlt: 'Ecommerce de Helena Chocolatier en desktop y móvil',
@@ -446,12 +455,13 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     heroBg: heroBgIrwin,
     heroImg: heroImgIrwin,
     heroImgAlt: 'Publicaciones de Instagram de IRWIN Herramientas',
-    descripcion: `IRWIN Herramientas es un fabricante y distribuidor establecido de herramientas manuales y accesorios para herramientas eléctricas. Uno de sus productos más populares es el alicates de bloqueo Vise-Grip. Necesitaban potenciar su marca para aumentar sus ventas, ya que estaban buscando agrandar su posición del mercado y la marca no era muy conocido en territorio nacional.`,
+    descripcion: `IRWIN fabrica herramientas manuales y accesorios para profesionales. Para ampliar su presencia en Perú, necesitaba dar a conocer la marca y conectar con las personas que usan sus herramientas cada día.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para atraer clientes y generar leads',
-      parrafo: `La campaña tuvo como punto de partida un spot muy emocional que dio pie a una serie de activaciones BTL, con registro audiovisual para encontrar al equipo ídolo de profesionales IRWIN. Combinamos el canal digital con el offline para generar impacto en el usuario final y generar una gran base de datos calificados. Además, desarrollamos contenidos con diversos objetivos (engagement, tráfico, alcance) junto con el manejo de su pauta digital para potenciar la llegada masiva a nuestro público objetivo.`,
+      parrafo: `El punto de partida fue un manifiesto audiovisual de un minuto, creado para presentar IRWIN al público peruano en televisión y medios digitales. La campaña continuó con activaciones presenciales, registro audiovisual y contenidos digitales para conectar con profesionales y captar oportunidades comerciales.`,
       colorFondo: '#003366',
       waveIcon: 'aruma-up',
+      videos: [{ youtubeId: 'AG1AxwdyHCo', title: 'Manifiesto de IRWIN en Perú · 1 minuto', poster: videoIrwin }],
       imagenes: [
         { src: ig1Irwin, alt: 'Publicación de IRWIN: Herramientas y Promociones Exclusivas', maxWidth: 450 },
         { src: ig2Irwin, alt: 'Publicación de IRWIN: Alicates de Bloqueo de Refrigeración', maxWidth: 450 },
@@ -464,7 +474,7 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     logo: logoLatin,
     heroBg: heroBgLatin,
     heroImgAlt: 'Valla publicitaria de Latin American Outdoors',
-    descripcion: `Latin American Outdoors es una empresa de publicidad exterior con ubicaciones estratégicas en todas las ciudades del Perú con 22 años de trayectoria. Necesitaban una renovación de su identidad y concepto de marca, combinado con una web renovada y optimizada para generar más leads con mayor tasa de conversión.`,
+    descripcion: `Latin American Outdoors necesitaba actualizar cómo presentaba su trayectoria en publicidad exterior. Renovamos su manual de identidad y sus presentaciones comerciales, y llevamos ese lenguaje visual a una web pensada para explicar el servicio y facilitar el contacto.`,
     features: [
       {
         icon: 'expert-window',
@@ -563,13 +573,17 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       lograr la venta de entradas y aumentar el reconocimiento de marca del evento.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para vender entradas',
-      parrafo: `Creamos una campaña muy llamativa con videos impactantes que, al potenciarse con pauta en
-        medios digitales, logró un éxito rotundo en las ventas digitales del espectáculo. Con el
-        material audiovisual que editamos, pudimos darle vida al concepto creativo de que Musicalma
-        estaba trayendo un pedazo genuino de Cuba al Perú para el disfrute de todos los amantes del
-        arte y la danza.`,
+      parrafo: `Para presentar Cuba Vibra en Lima editamos un reel de descubrimiento y lo impulsamos
+        con pauta digital orientada a la venta de entradas. Durante las funciones registramos el
+        espectáculo y produjimos un segundo video como recuerdo para los asistentes, que podían
+        compartirlo en sus redes. La campaña transmitió la experiencia de traer un pedazo de Cuba
+        al público peruano.`,
       colorFondo: '#A71F36',
       waveIcon: 'aruma-up',
+      videos: [
+        { youtubeId: 'Htn6VI20PTU', title: 'Reel de descubrimiento de Cuba Vibra', poster: videoMusicalmaReel },
+        { youtubeId: 't48KI9ic-rQ', title: 'Así se vivió Cuba Vibra en Lima', poster: videoMusicalmaShow },
+      ],
       imagenes: [
         { src: ig1Musicalma, alt: 'Publicación de Facebook de Musicalma: Cuba Vibra, 5 continentes', maxWidth: 420 },
       ],
@@ -584,6 +598,13 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     descripcion: `NOTE Vapor es una empresa que busca brindar cigarrillos electrónicos descartables de la mejor
       calidad y precio. Una idea de negocio moderna y disruptiva como esta necesita la misma
       energía y onda en sus diseños, desarrollo Web y campaña de marketing digital.`,
+    campania: {
+      heading: 'Una campaña orgánica para el lanzamiento',
+      parrafo: `Para el lanzamiento sin pauta pagada, combinamos colaboraciones con influencers y
+        fotografía de producto. La campaña sumó 1 600 seguidores orgánicos durante el lanzamiento.`,
+      colorFondo: '#eeeeee',
+      imagenes: [],
+    },
     features: [
       {
         icon: 'expert-window',
@@ -609,18 +630,17 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
     heroBg: heroBgPringles,
     heroImg: heroImgPringles,
     heroImgAlt: 'Video de la campaña Pringles Challenge: Elige dónde vivir el fútbol, ganar es muy fácil',
-    descripcion: `Pringles es la marca de un aperitivo con forma de papa frita. La empresa está controlada por
-      Kellogg's desde 2012. Necesitaban una acción táctica enmarcada en una visión estratégica para
-      aprovechar al máximo el rebote y viralización digital. Por eso creamos el Pringles Challenge.`,
+    descripcion: `Pringles buscaba una acción capaz de conectar con la conversación digital sobre el
+      fútbol. Creamos Pringles Challenge como campaña para impulsar la participación y circulación
+      de contenido alrededor de la marca.`,
     campania: {
       heading: 'Desarrollo de Campaña digital Pringles Challenge',
-      parrafo: `Realizamos el rodaje de Spot para su difusión digital, creamos las piezas gráficas para POP y
-        Digital, manejamos las redes sociales Facebook e Instagram de Aldo Corzo y Joaquin De
-        Orbegoso (influencers de la campaña). Todo combinado con pauta de medios digitales para
-        lograr los objetivos de viralización de la campaña.`,
+      parrafo: `Produjimos el spot de Pringles Challenge y piezas para puntos de venta y canales
+        digitales. La campaña contó con Aldo Corzo y Joaquín de Orbegoso; coordinamos contenidos
+        para sus redes sociales y pauta digital para ampliar la difusión del reto.`,
       colorFondo: '#e51b23',
       waveIcon: 'aruma-up',
-      video: {},
+      videos: [{ youtubeId: 'hu9vqWcTugU', title: 'Pringles Challenge', poster: videoPringles }],
       imagenes: [],
     },
   },
@@ -646,7 +666,6 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
         el éxito del evento digital.`,
       colorFondo: 'var(--color-purple-dark)',
       waveIcon: 'aruma-up',
-      video: {},
       imagenes: [
         { src: ig1Renace, alt: 'Publicación de campaña de Renace Fest 1', maxWidth: 450 },
         { src: ig2Renace, alt: 'Publicación de campaña de Renace Fest 2', maxWidth: 450 },
@@ -698,15 +717,14 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       reforzar su posicionamiento de marca en el mercado local.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para generar conversiones',
-      parrafo: `Creamos conceptos creativos para campañas locales, desarrollamos piezas gráficas para Punto
-        de Venta y Digital, realizamos un registro audiovisual de productos y acciones BTL.
-        Manejamos su Facebook e implementamos landing pages por campaña para generar leads.
-        Implementamos y optimizamos su pauta de medios digitales para lograr los objetivos de la
-        marca, en especial el impulso de ventas para los distribuidores locales vía e-commerce.
-        Llevamos a cabo campañas de interacción en Punto de Venta con Difusión Digital: Sodimac,
-        Maestro, Promart.`,
+      parrafo: `Desarrollamos campañas locales para STANLEY con piezas de punto de venta y digitales,
+        registro audiovisual, activaciones presenciales y landing pages para captar leads. La pauta
+        apoyó a los distribuidores locales y las acciones en Sodimac, Maestro y Promart. El
+        manifiesto de un minuto, producido para televisión y medios digitales, presentó la marca
+        al público peruano.`,
       colorFondo: 'var(--color-highlight)',
       waveIcon: 'aruma-up',
+      videos: [{ youtubeId: 'QOobPSqaCAk', title: 'Manifiesto de STANLEY en Perú · 1 minuto', poster: videoStanley }],
       imagenes: [
         { src: ig1Stanley, alt: 'Publicación de Stanley: Especial Carpintería', maxWidth: 450 },
         { src: ig2Stanley, alt: 'Publicación de Stanley: Más Soluciones', maxWidth: 450 },
@@ -814,10 +832,10 @@ export const proyectosDetalle: Record<string, ProyectoDetalle> = {
       el manejo integral de sus activos digitales y altas dosis de creatividad.`,
     campania: {
       heading: 'Campaña de Inbound Marketing para atraer clientes',
-      parrafo: `Realizamos una sesión de fotos de productos y de branding de la marca, ejercimos labores de
-        monitoreo en Facebook para garantizar la satisfacción de sus usuarios, publicamos
-        periódicamente los contenidos y manejamos pauta de medios digitales. Generamos acciones BTL
-        como el evento Meet & Greet Ronaldinho en Cusco.`,
+      parrafo: `Producimos fotografías de producto y marca, gestionamos contenidos y comunidad en redes
+        sociales e impulsamos campañas en medios digitales. La estrategia también llegó a eventos:
+        el auspicio de Melgar de Arequipa y el encuentro con Ronaldinho en Cusco llevaron la marca
+        a espacios compartidos con los aficionados.`,
       colorFondo: '#2b2b2b',
       waveIcon: 'aruma-up',
       imagenes: [

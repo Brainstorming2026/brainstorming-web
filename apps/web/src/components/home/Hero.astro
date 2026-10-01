@@ -23,7 +23,7 @@ const poster = await getImage({ src: heroPoster, width: 1280, format: 'webp', qu
       >
         {homeContent.hero.title}
       </h1>
-      <p class="mt-7 max-w-[60ch] text-base leading-relaxed text-gray-body sm:text-lg">
+      <p id="hero-subtitle" class="mt-7 max-w-[60ch] text-base leading-relaxed text-gray-body sm:text-lg">
         {homeContent.hero.subtitle}
       </p>
     </div>
@@ -53,22 +53,54 @@ const poster = await getImage({ src: heroPoster, width: 1280, format: 'webp', qu
         aria-label="Reproducir video de Smart Selling"
         class="absolute inset-0 flex items-center justify-center bg-black/10 text-white/90 transition-colors hover:bg-black/20"
       >
-        <Icon name="play" class="h-20 w-20 drop-shadow-lg transition-transform group-hover:scale-110" />
+        <span class="hero-play-ring relative flex items-center justify-center rounded-full">
+          <Icon name="play" class="h-20 w-20 drop-shadow-lg transition-transform group-hover:scale-110" />
+        </span>
       </button>
     </div>
   </div>
 </section>
 
-
+<style>
+  /* El play "respira": un anillo que se expande y se desvanece invita a darle
+     clic sin mover el botón. Se detiene al pasar el mouse (ya tiene tu atención). */
+  .hero-play-ring::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: inherit;
+    border: 2px solid rgb(255 255 255 / .7);
+    animation: hero-play-ring 2.6s cubic-bezier(.16,1,.3,1) infinite;
+    pointer-events: none;
+  }
+  #hero-video-play:hover .hero-play-ring::after { animation-play-state: paused; opacity: 0; }
+  @keyframes hero-play-ring {
+    0% { transform: scale(.9); opacity: .8; }
+    70%, 100% { transform: scale(1.45); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-play-ring::after { animation: none; opacity: 0; }
+  }
+</style>
 
 <script>
-import { registerMotion, revealCircle, splitHeadline } from '@/lib/motion'
+import { prefersReducedMotion, registerMotion, revealCircle, splitHeadline } from '@/lib/motion'
+import { ease, tempo } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
   const headline = document.getElementById('hero-headline')
+  const subtitle = document.getElementById('hero-subtitle')
   const video = document.getElementById('hero-video')
   if (headline)
     splitHeadline(headline, { by: 'words', scrollTrigger: false })
+  // El subtítulo llega cuando el titular ya casi terminó: primero la promesa,
+  // después el detalle. Pre-oculto con gsap.set() para que no parpadee.
+  if (subtitle && !prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    gsap.set(subtitle, { autoAlpha: 0, y: 16 })
+    gsap.to(subtitle, { autoAlpha: 1, y: 0, duration: 0.9 * tempo, delay: 0.55 * tempo, ease: ease.out, clearProps: 'opacity,visibility,transform' })
+  }
   if (video)
     revealCircle(video, { delay: 0.3 })
 

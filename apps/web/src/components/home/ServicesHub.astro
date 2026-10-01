@@ -15,14 +15,17 @@ const services = siteServices.flatMap(service => service.home ? [{ ...service.ho
     </div>
     <ul class="service-showcase">
       {services.map((service, index) => (
-        <li class:list={['service-tile', { 'service-tile--anchor': index === 0 }]} data-speed={['1', '1.05', '0.96', '1.04', '0.97'][index]}>
-          <a href={service.href}>
+        <li class:list={['service-tile', { 'service-tile--anchor': index === 0 }]}>
+          <a href={service.href} class="spotlight">
             <div class="service-art"><StrategyArt index={[4, 1, 0, 2, 3][index]} /></div>
             <div class="service-copy">
               {index === 0 && <span class="service-kicker">EL PUNTO DE PARTIDA</span>}
               <h3>{service.label}</h3><p>{service.description}</p>
             </div>
-            <span class="service-arrow"><Icon name="study/arrow-up-right" aria-hidden="true" /></span>
+            <span class="service-arrow">
+              <Icon name="study/arrow-up-right" aria-hidden="true" />
+              <Icon name="study/arrow-up-right" aria-hidden="true" />
+            </span>
           </a>
         </li>
       ))}
@@ -37,65 +40,103 @@ const services = siteServices.flatMap(service => service.home ? [{ ...service.ho
   .service-tile > a { display: flex; flex-direction: column; position: relative; height: 100%; overflow: hidden; padding: 24px 28px 64px; border-radius: inherit; }
   .service-tile > a:focus-visible { outline: 3px solid #8244ed; outline-offset: 5px; }
   .service-tile--anchor { grid-row: span 2; }
-  .service-art { width: 136px; align-self: end; margin-top: -24px; margin-right: -16px; margin-bottom: -10px; }
+  .service-art { position: relative; z-index: 1; width: 136px; align-self: end; margin-top: -24px; margin-right: -16px; margin-bottom: -10px; }
   .service-tile--anchor .service-art { width: 115%; max-width: none; align-self: center; margin: 20px 0 auto; }
-  .service-copy { position: relative; }
+  .service-copy { position: relative; z-index: 1; }
   .service-kicker { display: block; color: #c6b3f4; font-size: 10px; letter-spacing: .14em; margin-bottom: 20px; }
   .service-copy h3 { font: 600 clamp(21px, 2vw, 28px)/1.15 var(--font-heading); letter-spacing: -.035em; }
   .service-copy p { margin-top: 14px; font-size: 15px; line-height: 1.75; color: #dce4f7; }
   .service-tile--anchor h3 { font-size: clamp(30px, 3vw, 42px); }
   .service-tile--anchor p { font-size: 17px; }
-  .service-arrow { position: absolute; right: 26px; bottom: 22px; width: 30px; height: 30px; border-radius: 50%; background: #ffffff12; display: grid; place-items: center; }
-  .service-arrow svg { width: 18px; height: 18px; }
+
+  /* Flecha: dos copias del ícono. Al activar la tarjeta, la primera sale en
+     diagonal y la segunda entra desde abajo a la izquierda: la flecha "avanza". */
+  .service-arrow { position: absolute; z-index: 1; right: 26px; bottom: 22px; width: 30px; height: 30px; overflow: hidden; border-radius: 50%; background: #ffffff12; color: white; transition: background-color 300ms ease-out, color 300ms ease-out; }
+  .service-arrow svg { position: absolute; inset: 6px; width: 18px; height: 18px; transition: transform 450ms cubic-bezier(.16,1,.3,1); }
+  .service-arrow svg:last-child { transform: translate(-150%, 150%); }
+
+  /* Luz del cursor: clase global .spotlight. Aquí solo el borde de 1px que se enciende. */
+  .service-tile > a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); transition: opacity 400ms ease-out; }
+
+  /* Presión al hacer clic. Va en el <a>: el <li> es el que anima GSAP en la entrada. */
+  .service-tile > a { transition: transform 160ms ease-out; }
+  .service-tile > a:active { transform: scale(.985); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-tile > a:hover::after { opacity: 1; }
+    .service-tile > a:hover .service-arrow { background: white; color: #223b79; }
+    .service-tile > a:hover .service-arrow svg:first-child { transform: translate(150%, -150%); }
+    .service-tile > a:hover .service-arrow svg:last-child { transform: none; }
+  }
+  /* Con teclado, el foco muestra lo mismo que el hover (sin la luz, que depende del cursor). */
+  .service-tile > a:focus-visible::after { opacity: 1; }
+  .service-tile > a:focus-visible .service-arrow { background: white; color: #223b79; }
+  .service-tile > a:focus-visible .service-arrow svg:first-child { transform: translate(150%, -150%); }
+  .service-tile > a:focus-visible .service-arrow svg:last-child { transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-tile > a, .service-tile > a::after, .service-arrow, .service-arrow svg { transition: none; }
+    .service-tile > a:active { transform: none; }
+  }
+
   @media (max-width: 1023px) { .service-showcase { grid-template-columns: 1fr 1fr; } .service-tile--anchor { grid-column: span 2; grid-row: auto; } .service-tile--anchor > a { min-height: 300px; justify-content: center; } .service-tile--anchor .service-art { position: absolute; width: 42%; right: 0; margin: 0; } .service-tile--anchor .service-copy { width: 54%; } }
   @media (max-width: 639px) { .service-showcase { grid-template-columns: 1fr; gap: 16px; } .service-tile--anchor { grid-column: auto; } .service-tile > a { padding: 24px 24px 60px; } .service-tile--anchor > a { min-height: 350px; justify-content: end; } .service-tile--anchor .service-copy { width: 100%; } .service-tile--anchor .service-art { top: -16px; width: 190px; right: -6px; } .service-art { width: 120px; } }
 </style>
 
 <script>
-import { registerMotion, revealCards } from '@/lib/motion'
+import { hoverLift, parallax, registerMotion, revealSequence } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
+// Capas separadas para que ninguna animación pise a otra:
+//   <li>           → entrada (máscara + desplazamiento) y tilt global (SiteMotion)
+//   .service-art   → aparición de la ilustración y elevación al hover
+//   .strategy-art  → parallax dentro de la tarjeta
+//   <a>            → luz del cursor (.spotlight) y presión (CSS)
 registerMotion(() => {
   const { gsap } = ensureGsap()
-  const media = gsap.matchMedia()
-  media.add('(prefers-reduced-motion: no-preference)', () => {
-    // La entrada va en el <a>, no en el <li>: el <li> lleva data-speed y
-    // ScrollSmoother escribe su propio transform ahí. Animar ambos (y más aún
-    // con clearProps: 'transform') se pisaría con el parallax.
-    revealCards(document.querySelectorAll('.service-tile > a'), {
-      trigger: document.querySelector('.service-showcase'),
-      intensity: 1.15,
-      stagger: 0.1,
-      inner: '.service-kicker, h3, p',
-    })
+  const showcase = document.querySelector<HTMLElement>('.service-showcase')
+  const tiles = Array.from(document.querySelectorAll<HTMLElement>('.service-tile'))
+  if (!showcase || tiles.length === 0)
+    return
 
-    // La ilustración de cada tile se acomoda después del card: refuerza la
-    // sensación de que la tarjeta "se arma" en pantalla.
-    gsap.from('.service-art', {
-      autoAlpha: 0,
-      scale: 0.82,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'expo.out',
-      clearProps: 'transform,opacity,visibility',
-      scrollTrigger: { trigger: '.service-showcase', start: 'top 78%', once: true },
+  const media = gsap.matchMedia()
+  const art = (tile: HTMLElement) => tile.querySelector('.service-art')
+  const copy = (tile: HTMLElement) => Array.from(tile.querySelectorAll('.service-kicker, h3, p'))
+
+  media.add({
+    desktop: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
+    mobile: '(max-width: 1023px) and (prefers-reduced-motion: no-preference)',
+  }, (context) => {
+    const { desktop } = context.conditions as { desktop: boolean }
+
+    // Tarjeta → ilustración → texto, tarjeta por tarjeta en orden de lectura.
+    // Sin limpiar transform del <li>: lo usa también el tilt global.
+    revealSequence(tiles, [
+      desktop
+        ? { select: tile => tile, from: { clipPath: 'inset(100% 0% 0% 0% round 18px)', y: 32 }, to: { clipPath: 'inset(0% 0% 0% 0% round 18px)', y: 0 }, duration: 1.1, clearProps: 'clipPath' }
+        : { select: tile => tile, from: { autoAlpha: 0, y: 24 }, duration: 0.8, clearProps: 'opacity,visibility' },
+      { select: art, from: { autoAlpha: 0, scale: 0.92 }, at: 0.15, duration: 1 },
+      { select: copy, from: { autoAlpha: 0, y: 16 }, at: 0.3, duration: 0.7, stagger: 0.06 },
+    ], { trigger: showcase, stagger: 0.09 })
+
+    // Parallax dentro de la tarjeta: la ilustración se desplaza en su ventana
+    // y la grilla queda siempre alineada. En móvil, solo en la tarjeta grande.
+    tiles.forEach((tile, index) => {
+      const frame = tile.querySelector<HTMLElement>('.strategy-art')
+      const anchor = index === 0
+      if (frame && (desktop || anchor))
+        parallax(frame, { distance: anchor ? 14 : 12, trigger: tile })
     })
   })
+
+  media.add('(prefers-reduced-motion: reduce)', () => {
+    gsap.set(tiles, { autoAlpha: 0 })
+    gsap.to(tiles, { autoAlpha: 1, duration: 0.3, clearProps: 'opacity,visibility', scrollTrigger: { trigger: showcase, start: 'top 85%', once: true } })
+  })
+
+  // La luz del cursor la engancha SiteMotion (.spotlight); aquí solo la ilustración.
   media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
-    const cleanups: (() => void)[] = []
-    document.querySelectorAll<HTMLElement>('.service-tile > a').forEach((link) => {
-      const animation = gsap.timeline({ paused: true, defaults: { duration: 0.4, ease: 'power2.out' } })
-        .to(link.querySelector('.service-art'), { y: -5 }, 0)
-        .to(link.querySelector('.service-arrow'), { x: 2, y: -2 }, 0)
-      const enter = () => animation.play()
-      const leave = () => animation.reverse()
-      link.addEventListener('pointerenter', enter)
-      link.addEventListener('pointerleave', leave)
-      cleanups.push(() => {
-        link.removeEventListener('pointerenter', enter)
-        link.removeEventListener('pointerleave', leave)
-      })
-    })
+    const cleanups = tiles.map(tile => hoverLift(tile, art(tile), { y: -8, scale: 1.03 }))
     return () => cleanups.forEach(cleanup => cleanup())
   })
 })

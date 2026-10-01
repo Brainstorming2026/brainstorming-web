@@ -48,3 +48,36 @@ export function magnetic(el: HTMLElement, strength = 0.25) {
     gsap.set(el, { x: 0, y: 0 })
   }
 }
+
+/**
+ * Luz que sigue al cursor: escribe --mx/--my (px) en el elemento. El dibujo lo
+ * hace la clase `.spotlight` de global.css. Llamar SOLO con puntero fino.
+ */
+export function pointerSpotlight(el: HTMLElement) {
+  const controller = new AbortController()
+  el.addEventListener('pointermove', (event) => {
+    const bounds = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${event.clientX - bounds.left}px`)
+    el.style.setProperty('--my', `${event.clientY - bounds.top}px`)
+  }, { signal: controller.signal })
+  return () => controller.abort()
+}
+
+/**
+ * Eleva un elemento mientras el cursor está sobre `area` (ej. la ilustración
+ * de una card). Usa un tween propio: el target no debe tener transition CSS de
+ * transform. Llamar SOLO con puntero fino y sin reduced-motion.
+ */
+export function hoverLift(area: HTMLElement, target: Element | null, vars: gsap.TweenVars = { y: -6, scale: 1.03 }) {
+  if (!target)
+    return () => {}
+  const { gsap } = ensureGsap()
+  const tween = gsap.to(target, { ...vars, duration: 0.65, ease: 'power2.out', paused: true })
+  const controller = new AbortController()
+  area.addEventListener('pointerenter', () => tween.play(), { signal: controller.signal })
+  area.addEventListener('pointerleave', () => tween.reverse(), { signal: controller.signal })
+  return () => {
+    controller.abort()
+    tween.kill()
+  }
+}

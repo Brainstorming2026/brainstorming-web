@@ -364,3 +364,28 @@ a[class*="bg-highlight"]:active,
     width: calc(100% - 40px);
   }
 }
+
+/*
+ * Luz que sigue al cursor. --mx/--my los escribe pointerSpotlight() (SiteMotion
+ * lo engancha a todo `.spotlight`). `isolation` + z-index -1 dejan la luz por
+ * encima del fondo del elemento y por debajo de su contenido.
+ * Color y tamaño por elemento: --spotlight-color, --spotlight-size.
+ */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+  background: radial-gradient(var(--spotlight-size, 420px) circle at var(--mx, 50%) var(--my, 50%), var(--spotlight-color, rgb(150 95 236 / .32)), transparent 60%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .spotlight:hover::before { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight::before { transition: none; }
+}

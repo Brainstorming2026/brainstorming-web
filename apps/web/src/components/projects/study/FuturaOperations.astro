@@ -15,8 +15,8 @@ const { compact = false } = Astro.props
   <div class="workspace-layout">
     <figure class="workspace-document">
       <div class="document-label"><span>monday CRM</span><span>Espacio Futura</span></div>
-      <Image src={workspace} alt="Recorte original del espacio Futura en Monday: CRM con Actividades, Leads y Asesores; Onboarding y Entrenamiento con Plan de Capacitación." widths={[340, 510]} sizes="(min-width: 768px) 340px, 85vw" loading="lazy" />
-      <figcaption>Detalle del espacio de trabajo original</figcaption>
+      <Image src={workspace} alt="Recorte original del espacio Futura en Monday: CRM con Actividades, Leads y Asesores; Onboarding y Entrenamiento con Plan de Capacitación." widths={[340, 510]} sizes="(min-width: 768px) 340px, 85vw" loading="eager" fetchpriority="high" />
+      <figcaption>CRM, onboarding y capacitación en Monday</figcaption>
     </figure>
     <div class="workspace-reading">
       <article>
@@ -46,7 +46,7 @@ const { compact = false } = Astro.props
   .workspace-document { max-width: 390px; margin: 0; padding: 16px; border: 1px solid #49606c; border-radius: 12px; background: #223845; box-shadow: 0 28px 60px rgb(0 0 0 / 18%); }
   .document-label { display: flex; justify-content: space-between; gap: 8px; padding-bottom: 14px; font-size: 10px; color: #d4e0e6; }
   .workspace-document img { display: block; width: 100%; height: auto; border-radius: 5px; }
-  .workspace-document figcaption { margin-top: 12px; color: #c5d0d5; font-size: 10px; }
+  .workspace-document figcaption { margin-top: 12px; color: #c5d0d5; font-size: 12px; line-height: 1.5; }
   .workspace-reading article { padding-block: 28px; border-top: 1px solid #49606c; }
   .section-number { font-size: 10px; letter-spacing: .14em; color: #d2b16f; }
   h4 { margin-block: 16px 12px; font: 500 clamp(24px, 2.7vw, 34px)/1.12 var(--font-heading); letter-spacing: -.03em; }
@@ -66,6 +66,7 @@ const { compact = false } = Astro.props
   @media(max-width: 767px) {
     header, .workspace-layout { grid-template-columns: 1fr; }
     header { margin-bottom: 30px; }
-    .workspace-document { width: 100%; margin-inline: auto; }
+    .workspace-document { width: min(100%, 320px); margin-inline: auto; }
+    .workspace-reading { display: none; }
   }
 </style>

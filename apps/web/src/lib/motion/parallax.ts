@@ -29,7 +29,7 @@ export function parallax(el: HTMLElement, options: ParallaxOptions = {}) {
   if (prefersReducedMotion())
     return
 
-  const { distance = 12, scaleFrom = 1, trigger = el.parentElement, scrub = 0.8 } = options
+  const { distance = 12, scaleFrom = 1, trigger = el.parentElement, scrub = 1.2 } = options
   const { gsap } = ensureGsap()
 
   gsap.fromTo(

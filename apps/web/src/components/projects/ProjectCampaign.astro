@@ -2,12 +2,14 @@
 import type { ProyectoCampania } from '@/data/proyectosDetalle'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+import ProjectVideo from './ProjectVideo.astro'
 
 interface Props {
   campania: ProyectoCampania
 }
 
 const { campania } = Astro.props
+const extraVideos = campania.videos?.slice(1) ?? []
 ---
 
 <section id="campaign-intro" class="bg-white pt-16 lg:pt-20">
@@ -42,36 +44,18 @@ const { campania } = Astro.props
 </section>
 
 {
-  campania.video && (
-    <section class="py-16 lg:py-20" style={{ backgroundColor: campania.colorFondo }}>
-      <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
-        <div id="campaign-video" class="relative mx-auto max-w-[1190px] overflow-hidden rounded-lg bg-[#eee]">
-          {
-            campania.video.thumbnail
-? (
-              <Image
-                src={campania.video.thumbnail}
-                alt={campania.video.alt ?? ''}
-                class="h-auto w-full"
-                widths={[758, 1190]}
-                sizes="(min-width: 1024px) 1190px, 90vw"
-                loading="lazy"
-              />
-            )
-: (
-              <div class="h-[300px] w-full lg:h-[468px]" />
-            )
-          }
-          {
-            campania.video.thumbnail && (
-              <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-black/40">
-                  <Icon name="play" class="h-6 w-6 text-white" />
-                </div>
-              </div>
-            )
-          }
-        </div>
+  extraVideos.length > 0 && (
+    <section id="campaign-videos" class="scroll-mt-20 py-16 lg:py-20" style={{ backgroundColor: campania.colorFondo }}>
+      <div class:list={['mx-auto grid max-w-[1190px] gap-8 px-6 lg:px-0', extraVideos.length > 1 && 'md:grid-cols-2']}>
+        {extraVideos.map(video => (
+          <figure class="campaign-video">
+            <div class="campaign-video-frame"><ProjectVideo youtubeId={video.youtubeId} title={video.title} poster={video.poster} /></div>
+            <figcaption class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm font-semibold text-dark">
+              <span>{video.title}</span>
+              <a href={`https://www.youtube.com/watch?v=${video.youtubeId}`} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4">Ver en YouTube</a>
+            </figcaption>
+          </figure>
+        ))}
       </div>
     </section>
   )
@@ -81,8 +65,8 @@ const { campania } = Astro.props
   campania.imagenes.length > 0 && (
     <section
       id="campaign-gallery"
-      class:list={[campania.video ? 'bg-white py-16 lg:py-20' : undefined]}
-      style={campania.video ? undefined : { backgroundColor: campania.colorFondo }}
+      class:list={[extraVideos.length ? 'bg-white py-16 lg:py-20' : undefined]}
+      style={extraVideos.length ? undefined : { backgroundColor: campania.colorFondo }}
     >
       <div class="mx-auto max-w-[1512px] px-6 lg:px-24">
         <div class="flex flex-wrap items-center justify-center gap-8">
@@ -111,7 +95,7 @@ import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   const intro = document.querySelectorAll('#campaign-intro .campaign-block')
-  const video = document.getElementById('campaign-video')
+  const videos = document.querySelectorAll<HTMLElement>('.campaign-video-frame')
   const galleryImgs = document.querySelectorAll('#campaign-gallery .gallery-img')
 
   if (intro.length > 0) {
@@ -125,8 +109,7 @@ registerMotion(() => {
     }
   }
 
-  if (video)
-    revealCircle(video, { scrollTrigger: true })
+  videos.forEach(video => revealCircle(video, { scrollTrigger: true }))
   staggerGrid(galleryImgs, { variant: 'organic' })
 })
 </script>

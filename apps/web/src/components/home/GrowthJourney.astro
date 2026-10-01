@@ -33,11 +33,12 @@ const stages = [
 
 <section class="growth-journey" aria-labelledby="growth-journey-title" data-growth-section>
   <div class="editorial-container">
-    <div class="journey-heading" data-growth-reveal>
-      <div><p class="growth-eyebrow">ESTRATEGIA QUE SE CONVIERTE EN ACCIÓN</p><h2 id="growth-journey-title">Cada paso tiene<br /><span>un propósito.</span></h2></div>
+    <div class="journey-heading">
+      <div class="journey-heading-main"><p class="growth-eyebrow">ESTRATEGIA QUE SE CONVIERTE EN ACCIÓN</p><h2 id="growth-journey-title">Cada paso tiene<br /><span>un propósito.</span></h2></div>
       <p>Primero entendemos qué necesita tu negocio. Después conectamos estrategia, marketing, ventas y tecnología para hacerlo avanzar.</p>
     </div>
     <div class="journey-map">
+      <div class="journey-progress" aria-hidden="true"><span></span></div>
       <ol>{stages.map((stage, index) => <li class="journey-stage" data-growth-reveal><a href={stage.href}><div class="stage-mark"><stage.icon size={48} strokeWidth={1.75} aria-hidden="true" /><span>0{index + 1}</span></div><h3>{stage.title}</h3><p>{stage.text}</p><span class="stage-service">{stage.service}<ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" /></span></a></li>)}</ol>
     </div>
     <p class="journey-note">El punto de partida y las soluciones se definen según el diagnóstico de tu empresa.</p>
@@ -76,66 +77,105 @@ const stages = [
   .stage-service { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 28px; font-size: 12px; font-weight: 500; color: #6740b2; }
   .stage-service :global(svg) { width: 16px; height: 16px; flex-shrink: 0; }
   .journey-note { margin-top: 28px; padding-top: 0; font-size: 13px; line-height: 1.7; color: #737889; }
+
+  /* Recorrido: una línea que se llena con el scroll y enciende cada etapa al
+     pasar. Llena por defecto: si el JS no corre, se ve completa. */
+  .journey-progress { position: absolute; top: -32px; left: 0; right: 0; height: 2px; overflow: hidden; border-radius: 2px; background: #e4e6ee; }
+  .journey-progress span { display: block; height: 100%; background: linear-gradient(90deg, #965fec, #6740b2); transform-origin: 0 50%; }
+
+  /* Hover de cada etapa (son enlaces): la base se tiñe y la flecha avanza. */
+  .journey-stage a { transition: border-color 300ms ease-out; }
+  .stage-service :global(svg) { transition: transform 300ms cubic-bezier(.16,1,.3,1); }
+  @media (hover: hover) and (pointer: fine) {
+    .journey-stage a:hover { border-bottom-color: #8244ed; }
+    .journey-stage a:hover .stage-service :global(svg) { transform: translate(3px, -3px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .journey-stage a, .stage-service :global(svg) { transition: none; }
+  }
   @media (max-width: 1023px) { .ready-layout { gap: 32px; } .journey-map ol { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; } }
-  @media (max-width: 767px) { .journey-heading > p { justify-self: start; } .ready-layout, .journey-heading { grid-template-columns: 1fr; } .growth-ready { padding-bottom: 64px; } .ready-panel { padding: 24px; } .growth-journey { padding-block: 64px; } .journey-map { margin-top: 36px; } .journey-map ol { grid-template-columns: 1fr; gap: 0; } .journey-stage a { padding: 24px 0 24px 80px; border-bottom: 1px solid #dfe3ed; } .stage-mark { position: absolute; left: 0; top: 24px; display: flex; flex-direction: column; gap: 12px; } .stage-service { margin-top: 16px; } }
+  @media (max-width: 767px) { .journey-progress { display: none; } .journey-heading > p { justify-self: start; } .ready-layout, .journey-heading { grid-template-columns: 1fr; } .growth-ready { padding-bottom: 64px; } .ready-panel { padding: 24px; } .growth-journey { padding-block: 64px; } .journey-map { margin-top: 36px; } .journey-map ol { grid-template-columns: 1fr; gap: 0; } .journey-stage a { padding: 24px 0 24px 80px; border-bottom: 1px solid #dfe3ed; } .stage-mark { position: absolute; left: 0; top: 24px; display: flex; flex-direction: column; gap: 12px; } .stage-service { margin-top: 16px; } }
 </style>
 
 <script>
-import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { hoverLift, registerMotion, revealSequence, sideFrom, splitHeadline } from '@/lib/motion'
+import { ease, tempo } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
   const { gsap } = ensureGsap()
   const media = gsap.matchMedia()
+  const map = document.querySelector<HTMLElement>('.journey-map')
+  const stages = Array.from(document.querySelectorAll<HTMLElement>('.journey-stage'))
+  const icon = (stage: HTMLElement) => stage.querySelector('.stage-mark > svg')
+
   media.add('(prefers-reduced-motion: no-preference)', () => {
     // Bloques de texto: entrada por líneas enmascaradas, más presente que un fade.
     document.querySelectorAll<HTMLElement>('.ready-intro h2, #growth-journey-title').forEach((headline) => {
       splitHeadline(headline, { by: 'lines' })
     })
 
-    // .journey-stage y .ready-panel se excluyen porque tienen su propia entrada
-    // más abajo. Dos gsap.from() sobre el mismo elemento se pisan: el segundo
-    // toma como estado final el autoAlpha:0 que dejó el primero y el elemento
-    // se queda invisible.
-    document.querySelectorAll<HTMLElement>('[data-growth-reveal]:not(.journey-stage):not(.ready-panel)').forEach((element) => {
-      gsap.from(element, { autoAlpha: 0, yPercent: 8, duration: 0.95, ease: 'expo.out', clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: element, start: 'top 88%', once: true } })
+    // Bloques de texto: cada uno entra desde el lado de la pantalla en que está
+    // (columna izquierda desde la izquierda, derecha desde la derecha; en móvil,
+    // al ocupar todo el ancho, desde abajo). Pre-ocultos con gsap.set().
+    const sideBlocks = [
+      document.querySelector('.ready-intro'),
+      document.querySelector('.journey-heading-main'),
+      document.querySelector('.journey-heading > p'),
+    ].filter((el): el is Element => el !== null)
+    sideBlocks.forEach((block) => {
+      gsap.set(block, sideFrom(block, 56))
+      gsap.to(block, { autoAlpha: 1, x: 0, y: 0, duration: 1.1 * tempo, ease: ease.out, clearProps: 'transform,opacity,visibility', scrollTrigger: { trigger: block, start: 'top 88%', once: true } })
     })
 
-    // Las 5 etapas son el corazón de la sección: entran en cascada, con el
-    // icono desplegándose un poco después de la tarjeta.
-    revealCards(document.querySelectorAll('.journey-stage'), {
-      trigger: document.querySelector('.journey-map'),
-      intensity: 1.1,
-      stagger: 0.12,
-      inner: 'h3, p, .stage-service',
-    })
-
-    const marks = document.querySelectorAll('.journey-stage .stage-mark > svg')
-    if (marks.length > 0) {
-      gsap.from(marks, {
-        autoAlpha: 0,
-        scale: 0.55,
-        rotate: -8,
-        transformOrigin: '50% 50%',
-        duration: 0.85,
-        stagger: 0.12,
-        ease: 'back.out(1.6)',
-        clearProps: 'transform,opacity,visibility',
-        scrollTrigger: { trigger: '.journey-map', start: 'top 82%', once: true },
-      })
-    }
+    // Las 5 etapas: ícono → número → texto, etapa por etapa. El texto de cada
+    // etapa entra desde su lado: las de la izquierda desde la izquierda, la del
+    // centro desde abajo y las de la derecha desde la derecha.
+    revealSequence(stages, [
+      { select: icon, from: { autoAlpha: 0, scale: 0.8, y: 12 }, duration: 0.9 },
+      { select: stage => stage.querySelector('.stage-mark > span'), from: { autoAlpha: 0 }, at: 0.1, duration: 0.6 },
+      { select: stage => Array.from(stage.querySelectorAll('h3, p, .stage-service')), from: stage => sideFrom(stage, 32), at: 0.2, duration: 0.8, stagger: 0.07 },
+    ], { trigger: map, stagger: 0.12 })
 
     // El panel es la pieza con más peso visual de la sección: entra como una
     // tarjeta que se arma — primero la lámina, después sus filas, y al final
     // los checks con un rebote corto.
     const panel = document.querySelector<HTMLElement>('.ready-panel')
     if (panel) {
+      // El panel está en la columna derecha: entra desde la derecha (en móvil, desde abajo).
+      const panelFrom = sideFrom(panel, 56)
       gsap.timeline({ defaults: { ease: 'expo.out' }, scrollTrigger: { trigger: panel, start: 'top 82%', once: true } })
-        .from(panel, { autoAlpha: 0, yPercent: 6, scale: 0.96, transformOrigin: '50% 0%', duration: 1 })
-        .from(panel.querySelector('.panel-heading'), { autoAlpha: 0, yPercent: 40, duration: 0.6 }, 0.2)
-        .from(panel.querySelectorAll('.ready-outcome'), { autoAlpha: 0, x: 32, duration: 0.8, stagger: 0.13, clearProps: 'transform,opacity,visibility' }, 0.28)
-        .from(panel.querySelectorAll('.outcome-check'), { scale: 0.6, autoAlpha: 0, duration: 0.6, stagger: 0.13, ease: 'back.out(1.8)' }, 0.38)
+        .from(panel, { ...panelFrom, scale: 0.97, transformOrigin: '50% 0%', duration: 1.1 * tempo })
+        .from(panel.querySelector('.panel-heading'), { autoAlpha: 0, yPercent: 40, duration: 0.6 * tempo }, 0.2 * tempo)
+        .from(panel.querySelectorAll('.ready-outcome'), { autoAlpha: 0, x: 32, duration: 0.8 * tempo, stagger: 0.13 * tempo, clearProps: 'transform,opacity,visibility' }, 0.28 * tempo)
+        .from(panel.querySelectorAll('.outcome-check'), { scale: 0.6, autoAlpha: 0, duration: 0.6 * tempo, stagger: 0.13 * tempo, ease: 'back.out(1.8)' }, 0.38 * tempo)
     }
+  })
+
+  // Recorrido atado al scroll (solo con la fila horizontal): la línea se llena
+  // y cada etapa se enciende cuando la línea la alcanza.
+  media.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    const fill = map?.querySelector('.journey-progress span')
+    if (!map || !fill)
+      return
+    const timeline = gsap.timeline({
+      scrollTrigger: { trigger: map, start: 'top 70%', end: 'bottom 55%', scrub: 1.2 },
+    })
+    timeline.fromTo(fill, { scaleX: 0 }, { scaleX: 1, ease: 'none', duration: stages.length }, 0)
+    stages.forEach((stage, index) => {
+      const number = stage.querySelector('.stage-mark > span')
+      timeline.fromTo(
+        [icon(stage), number],
+        { color: '#b8bdcb' },
+        { color: '#6740b2', duration: 0.4, ease: 'none', immediateRender: true },
+        index + 0.3,
+      )
+    })
+  })
+
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups = stages.map(stage => hoverLift(stage, icon(stage), { y: -4, scale: 1.06 }))
+    return () => cleanups.forEach(cleanup => cleanup())
   })
 })
 </script>

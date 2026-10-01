@@ -5,17 +5,35 @@ import { newProjects } from '@/data/new-projects'
 import { homeContent } from '@/data/transversal-content'
 
 const content = homeContent.results
+const { proof } = content
 ---
 
 <section class="editorial-section" aria-labelledby="home-results-title">
   <div class="editorial-container">
-    <div class="editorial-section-header">
+    <div class="editorial-section-header results-header">
       <h2 id="home-results-title" class="editorial-title" data-editorial-heading>{content.title}</h2>
+      <div class="results-proof-float" data-proof-float>
+        <div class="results-proof spotlight" data-proof>
+          <p class="results-proof__eyebrow" data-proof-fade>{proof.eyebrow}</p>
+          <p class="results-proof__body">
+            <span class="results-proof__stat">
+              <span class="results-proof__num" data-proof-num>{proof.stat}</span>
+              <span class="results-proof__of" data-proof-fade>de cada {proof.total}</span>
+            </span>
+            <span class="results-proof__text" data-proof-fade>{proof.text}</span>
+          </p>
+          <span class="results-proof__dots" aria-hidden="true">
+            {Array.from({ length: proof.total }, (_, index) => (
+              <span class:list={['results-proof__dot', index < proof.stat && 'is-on']} style={`--i: ${index}`} data-proof-dot />
+            ))}
+          </span>
+        </div>
+      </div>
       <a class="editorial-link" href={content.action.href}>{content.action.label}<Icon name="automation/arrow-right" class="h-5 w-5" aria-hidden="true" /></a>
     </div>
     <div class="editorial-results">
       {content.items.map(item => (
-        <a href={`/proyectos/${item.slug}`} class="editorial-result editorial-result--visual">
+        <a href={`/proyectos/${item.slug}`} class="editorial-result editorial-result--visual spotlight">
           <div class="result-cover">
             <ProjectCover project={newProjects.find(project => project.slug === item.slug)!} compact />
           </div>
@@ -29,7 +47,80 @@ const content = homeContent.results
 </section>
 
 <style>
-  .editorial-result--visual { padding: 0 0 64px; overflow: hidden; }
+  /* Cabecera en 3 columnas: título · prueba · link. La prueba vive en medio,
+     alineada al centro óptico del título, como una nota al margen. */
+  .results-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'title proof link'; align-items: end; column-gap: 48px; }
+  .results-header > h2 { grid-area: title; }
+  .results-header > .editorial-link { grid-area: link; }
+  .results-proof-float { grid-area: proof; justify-self: center; align-self: center; width: 100%; max-width: 380px; will-change: transform; }
+
+  /* Burbuja de diálogo: la cola apunta al título (izquierda en desktop, arriba
+     cuando la tarjeta baja de fila). Fondo blanco liso en la zona de la cola y
+     el lila solo como halo arriba a la derecha, para que la cola no "corte" el
+     degradado. El borde va en variable para que la cola lo siga en el hover. */
+  .results-proof {
+    --spotlight-color: rgb(125 68 228 / .1);
+    --spotlight-size: 300px;
+    --proof-border: var(--color-mist-200);
+    position: relative;
+    display: grid;
+    gap: 14px;
+    padding: 24px 28px 26px;
+    border: 1px solid var(--proof-border);
+    border-radius: 28px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, var(--color-purple-dark-50), transparent 60%),
+      #fff;
+    box-shadow: 0 1px 2px rgb(34 59 121 / .04), 0 18px 40px -18px rgb(99 66 200 / .28);
+    transition: box-shadow 400ms cubic-bezier(.16,1,.3,1), border-color 400ms ease-out;
+  }
+  .results-proof::after {
+    content: '';
+    position: absolute;
+    top: 58%;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    border-bottom: 1px solid var(--proof-border);
+    border-left: 1px solid var(--proof-border);
+    border-bottom-left-radius: 5px;
+    background: #fff;
+    transform: translateY(-50%) rotate(45deg);
+    transition: border-color 400ms ease-out;
+  }
+  .results-proof__eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-primary-700); }
+  .results-proof__eyebrow::before { content: ''; width: 18px; height: 2px; border-radius: 2px; background: currentColor; }
+  .results-proof__body { display: grid; gap: 6px; margin: 0; }
+  .results-proof__stat { display: flex; align-items: baseline; gap: 10px; }
+  .results-proof__num { font-family: var(--font-heading); font-size: clamp(52px, 4.4vw, 68px); font-weight: 700; line-height: .9; letter-spacing: -.05em; color: var(--color-primary); font-variant-numeric: tabular-nums; }
+  .results-proof__of { font-family: var(--font-heading); font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: var(--color-ink); }
+  .results-proof__text { font-size: 15px; line-height: 1.5; color: var(--color-ink-500); text-wrap: pretty; }
+
+  /* Los 5 clientes: 4 encendidos, 1 en contorno. La proporción se lee sin leer.
+     El hover usa `scale` (no `transform`): transform lo escribe GSAP en la entrada. */
+  .results-proof__dots { display: flex; gap: 8px; }
+  .results-proof__dot { width: 100%; max-width: 56px; height: 6px; border-radius: 999px; background: var(--color-mist-100); box-shadow: inset 0 0 0 1px var(--color-mist-300); transition: scale 500ms cubic-bezier(.34,1.56,.64,1); transition-delay: calc(var(--i) * 45ms); transform-origin: left center; }
+  .results-proof__dot.is-on { background: linear-gradient(90deg, var(--color-primary), var(--color-purple-dark-400)); box-shadow: none; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .results-proof:hover { --proof-border: var(--color-purple-dark-200); box-shadow: 0 1px 2px rgb(34 59 121 / .04), 0 26px 56px -20px rgb(99 66 200 / .4); }
+    .results-proof:hover .results-proof__dot.is-on { scale: 1 1.6; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .results-proof, .results-proof::after, .results-proof__dot { transition: none; }
+  }
+  @media (max-width: 1199px) {
+    .results-header { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'title title' 'proof link'; row-gap: 32px; }
+    .results-proof-float { justify-self: start; }
+    .results-proof::after { top: -10px; left: 44px; transform: rotate(135deg); }
+  }
+  @media (max-width: 767px) {
+    .results-header { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'title' 'proof' 'link'; row-gap: 24px; }
+    .results-proof-float { max-width: none; }
+    .results-proof { padding: 22px 22px 24px; border-radius: 24px; }
+  }
+
+  .editorial-result--visual { padding: 0 0 64px; overflow: hidden; --spotlight-color: rgb(125 68 228 / .09); --spotlight-size: 380px; }
   .result-cover { width: 100%; border-bottom: 1px solid var(--color-mist-200); }
   .editorial-result--visual > h3 { margin: 24px 26px 0; }
   .editorial-result--visual > p { margin: 12px 26px 0; font-size: clamp(22px, 1.8vw, 27px); }
@@ -50,18 +141,88 @@ const content = homeContent.results
 </style>
 
 <script>
-import { registerMotion, revealCards } from '@/lib/motion'
+import { registerMotion, revealSequence } from '@/lib/motion'
 import { ensureGsap } from '@/lib/motion/gsap-client'
+import { pointerDepth } from '@/lib/motion/pointer-depth'
 
+// Card "4 de cada 5": entra después del titular, la cifra cuenta al ritmo en que
+// se encienden las barras, flota en parallax y se inclina con el cursor.
+// Tres capas para no pisar transforms: float (parallax) > card (entrada + tilt).
 registerMotion(() => {
   const { gsap } = ensureGsap()
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    revealCards(document.querySelectorAll('.editorial-result--visual'), {
-      trigger: document.querySelector('.editorial-results'),
-      intensity: 1.25,
-      stagger: 0.14,
-      inner: 'h3, p',
+  const float = document.querySelector<HTMLElement>('[data-proof-float]')
+  const card = document.querySelector<HTMLElement>('[data-proof]')
+  const num = document.querySelector<HTMLElement>('[data-proof-num]')
+  if (!float || !card || !num)
+    return
+  const fades = card.querySelectorAll('[data-proof-fade]')
+  const dots = Array.from(card.querySelectorAll<HTMLElement>('[data-proof-dot]'))
+  const on = dots.filter(dot => dot.classList.contains('is-on'))
+  const off = dots.filter(dot => !dot.classList.contains('is-on'))
+  const target = Number(num.textContent) || 0
+  const media = gsap.matchMedia()
+
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    // Estado inicial al cargar, nunca en el onEnter.
+    // La burbuja "nace" desde la cola: el origen del scale es la punta.
+    const fromTail = window.matchMedia('(min-width: 1200px)').matches ? '0% 58%' : '54px 0%'
+    gsap.set(card, { autoAlpha: 0, scale: 0.7, y: 12, transformOrigin: fromTail })
+    gsap.set(fades, { autoAlpha: 0, y: 10 })
+    gsap.set(dots, { scaleX: 0 })
+    num.textContent = '0'
+
+    const counter = { value: 0 }
+    gsap.timeline({ scrollTrigger: { trigger: card, start: 'top 88%', once: true }, delay: 0.25 })
+      .to(card, { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'back.out(1.6)', clearProps: 'scale,opacity,visibility,transformOrigin' })
+      .to(fades, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out', clearProps: 'opacity,visibility,transform' }, 0.3)
+      .to(on, { scaleX: 1, duration: 0.55, stagger: 0.14, ease: 'power3.out', clearProps: 'transform' }, 0.45)
+      .to(counter, { value: target, duration: 0.14 * on.length + 0.2, ease: 'none', onUpdate: () => { num.textContent = String(Math.round(counter.value)) } }, 0.45)
+      .to(off, { scaleX: 1, duration: 0.5, ease: 'power2.out', clearProps: 'transform' }, '>-.1')
+      .fromTo(num, { scale: 1 }, { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: 'left bottom', clearProps: 'transform' }, '<')
+
+    return () => {
+      num.textContent = String(target)
+    }
+  })
+
+  // Parallax: la nota avanza un poco más rápido que el scroll, como primer plano.
+  media.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    gsap.fromTo(float, { y: 36 }, {
+      y: -36,
+      ease: 'none',
+      scrollTrigger: { trigger: float.closest('section'), start: 'top bottom', end: 'bottom top', scrub: 1.2 },
     })
+  })
+
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => pointerDepth(card, card, 7))
+})
+
+// La portada tiene su zoom atado al scroll en HomeMotion; aquí solo la entrada.
+// El transform de la card no se limpia: lo usa también el tilt global.
+registerMotion(() => {
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
+  const grid = document.querySelector('.editorial-results')
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.editorial-result--visual'))
+
+  media.add({
+    desktop: '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
+    mobile: '(max-width: 767px) and (prefers-reduced-motion: no-preference)',
+  }, (context) => {
+    const { desktop } = context.conditions as { desktop: boolean }
+    revealSequence(cards, [
+      desktop
+        ? { select: card => card, from: { clipPath: 'inset(100% 0% 0% 0% round 16px)', y: 32 }, to: { clipPath: 'inset(0% 0% 0% 0% round 16px)', y: 0 }, duration: 1.1, clearProps: 'clipPath' }
+        : { select: card => card, from: { autoAlpha: 0, y: 24 }, duration: 0.8, clearProps: 'opacity,visibility' },
+      { select: card => Array.from(card.querySelectorAll(':scope > h3, :scope > p')), from: { autoAlpha: 0, y: 16 }, at: 0.35, duration: 0.7, stagger: 0.07 },
+      // Solo opacidad: la flecha tiene transition CSS de transform para el hover.
+      { select: card => card.querySelector('.editorial-result-arrow'), from: { autoAlpha: 0 }, at: 0.55, duration: 0.6 },
+    ], { trigger: grid, stagger: desktop ? 0.12 : 0.08 })
+  })
+
+  media.add('(prefers-reduced-motion: reduce)', () => {
+    gsap.set(cards, { autoAlpha: 0 })
+    gsap.to(cards, { autoAlpha: 1, duration: 0.3, clearProps: 'opacity,visibility', scrollTrigger: { trigger: grid, start: 'top 85%', once: true } })
   })
 })
 </script>

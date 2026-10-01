@@ -13,9 +13,16 @@ export const ease = {
 /** Equivalente CSS, solo para el fallback de prefers-reduced-motion (opacity-only). */
 export const cssEase = 'cubic-bezier(0.16, 1, 0.3, 1)'
 
+/**
+ * Tempo de las entradas: multiplica duraciones, retrasos y staggers de
+ * revealSequence. Subirlo hace todo más lento y "premium"; bajarlo, más ágil.
+ * Es el único número a tocar para cambiar el ritmo general.
+ */
+export const tempo = 1.35
+
 export const duration = {
-  headlineWord: 0.9,
-  headlineStagger: 0.035,
+  headlineWord: 1.15,
+  headlineStagger: 0.045,
   /** Reveal genérico (revealClip, imágenes, cards individuales). Lento a propósito: fluido > snappy. */
   reveal: 1.3,
   /** Entrada individual de un card/logo en una grilla (staggerGrid). */

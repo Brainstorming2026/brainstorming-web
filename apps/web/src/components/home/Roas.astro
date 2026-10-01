@@ -25,12 +25,12 @@ const clients = [
         <h2 class="font-heading text-3xl font-bold leading-tight sm:text-4xl">
           Growth Planning: una estrategia para crecer
         </h2>
-        <p class="mt-8 font-heading text-xl font-bold">
+        <p class="roas-lead mt-8 font-heading text-xl font-bold">
           Define tus prioridades y conviértelas en un plan de acción para tu negocio.
         </p>
         <a
           href="/soluciones/growth-planning"
-          class="mt-8 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+          class="roas-cta mt-8 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
         >
           EXPLORAR GROWTH PLANNING
         </a>
@@ -89,7 +89,19 @@ const clients = [
   </div>
 </section>
 
-
+<style>
+  /* Hover de los logos: un halo claro alrededor del círculo y el logo crece
+     apenas. La elevación la hace GSAP (el círculo también anima su entrada). */
+  .roas-item { transition: box-shadow 400ms ease-out; }
+  .roas-item :global(img) { transition: transform 500ms cubic-bezier(.16,1,.3,1); }
+  @media (hover: hover) and (pointer: fine) {
+    .roas-item:hover { box-shadow: 0 0 0 8px rgb(255 255 255 / .08), 0 24px 48px -20px rgb(0 0 0 / .6); }
+    .roas-item:hover :global(img) { transform: scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .roas-item, .roas-item :global(img) { transition: none; }
+  }
+</style>
 
 <script>
 document.addEventListener('astro:page-load', () => {
@@ -117,17 +129,50 @@ document.addEventListener('astro:page-load', () => {
 </script>
 
 <script>
-import { registerMotion, revealCards, splitHeadline } from '@/lib/motion'
+import { hoverLift, registerMotion, revealSequence, revealWindow, splitHeadline } from '@/lib/motion'
+import { ease, tempo } from '@/lib/motion/config'
+import { ensureGsap } from '@/lib/motion/gsap-client'
 
 registerMotion(() => {
-  const headline = document.querySelector<HTMLElement>('#roas h2')
-  if (headline)
-    splitHeadline(headline, { by: 'lines' })
+  const { gsap } = ensureGsap()
+  const section = document.getElementById('roas')
+  if (!section)
+    return
+  const media = gsap.matchMedia()
+  const items = Array.from(section.querySelectorAll<HTMLElement>('.roas-item'))
 
-  revealCards(document.querySelectorAll('#roas-grid .roas-item'), {
-    trigger: document.getElementById('roas-grid'),
-    intensity: 1.15,
-    stagger: 0.1,
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const headline = section.querySelector<HTMLElement>('h2')
+    if (headline)
+      splitHeadline(headline, { by: 'lines' })
+
+    // Titular → bajada → CTA: llegan cuando el titular ya se leyó. El CTA solo
+    // con opacidad: tiene transition global de transform (feedback al presionar).
+    const lead = section.querySelector('.roas-lead')
+    const cta = section.querySelector('.roas-cta')
+    if (lead && cta) {
+      gsap.set(lead, { autoAlpha: 0, y: 16 })
+      gsap.set(cta, { autoAlpha: 0 })
+      gsap.timeline({ delay: 0.3 * tempo, scrollTrigger: { trigger: headline ?? section, start: 'top 85%', once: true } })
+        .to(lead, { autoAlpha: 1, y: 0, duration: 0.8 * tempo, ease: ease.out, clearProps: 'opacity,visibility,transform' })
+        .to(cta, { autoAlpha: 1, duration: 0.6 * tempo, ease: ease.out, clearProps: 'opacity,visibility' }, 0.15 * tempo)
+    }
+
+    // El video se abre como una ventana y la imagen se asienta dentro.
+    const video = document.getElementById('roas-video')
+    if (video)
+      revealWindow(video, { direction: 'up', zoom: 1.08, mediaSelector: 'video' })
+
+    // Logos: el círculo aparece y después su logo, en cascada.
+    revealSequence(items, [
+      { select: item => item, from: { autoAlpha: 0, scale: 0.9, y: 16 }, duration: 0.9 },
+      { select: item => item.querySelector('img'), from: { autoAlpha: 0 }, at: 0.2, duration: 0.6 },
+    ], { trigger: section.querySelector('#roas-grid'), stagger: 0.08 })
+  })
+
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    const cleanups = items.map(item => hoverLift(item, item, { y: -6 }))
+    return () => cleanups.forEach(cleanup => cleanup())
   })
 })
 </script>

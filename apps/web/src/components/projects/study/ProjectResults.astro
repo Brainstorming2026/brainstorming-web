@@ -13,7 +13,7 @@ const supporting = metrics?.filter((_, index) => index !== leadIndex)
 ---
 
 <section class="case-results study-container" id="resultados" aria-labelledby="case-results-title">
-  <header class="result-heading"><p>El impacto del trabajo</p><h2 id="case-results-title">Lo que cambió.</h2></header>
+  <header class="result-heading"><p>El resultado del proyecto</p><h2 id="case-results-title">{project.results.heading ?? 'Lo que cambió.'}</h2></header>
   {lead && supporting
 ? (
     <div class="result-board">
@@ -30,7 +30,7 @@ const supporting = metrics?.filter((_, index) => index !== leadIndex)
           <div><dt>{metric.label}</dt><dd><strong>{metric.value}</strong>{metric.before && <span>Antes: {metric.before}</span>}{metric.note && <small>{metric.note}</small>}</dd></div>
         ))}
       </dl>
-      <p class="result-board-note">{project.slug === 'ait-capital' ? `Ventas en soles. Evolución en ${aitSalesPeriodWord}; reuniones y cierres expresados por mes.` : 'Reactivación, conversión e ingresos son indicadores independientes del proyecto.'}</p>
+      <p class="result-board-note">{project.slug === 'ait-capital' ? `Ventas mensuales en soles. Evolución en ${aitSalesPeriodWord}; reuniones y cierres expresados por mes.` : 'Reactivación, conversión e ingresos son indicadores independientes del proyecto.'}</p>
     </div>
   )
 : (
@@ -41,7 +41,7 @@ const supporting = metrics?.filter((_, index) => index !== leadIndex)
     <details class="result-document">
       <summary><span>La evidencia del proyecto</span><strong>Explorar el gráfico original de ventas <span aria-hidden="true">↗</span></strong></summary>
       <div class="result-document-content">
-        <div><h3>La progresión registrada.</h3><p>La presentación muestra cuatro registros de 2024: junio, octubre, noviembre y diciembre. El pie original atribuye la serie a las ventas de Rafael.</p><dl><div><dt>Junio</dt><dd>1</dd></div><div><dt>Octubre</dt><dd>2</dd></div><div><dt>Noviembre</dt><dd>5</dd></div><div><dt>Diciembre</dt><dd>11</dd></div></dl><small>Smart Selling 2026 · página 12</small></div>
+        <div><h3>La progresión registrada.</h3><p>Las ventas de Rafael crecieron en los cuatro meses registrados de 2024.</p><dl><div><dt>Junio</dt><dd>1</dd></div><div><dt>Octubre</dt><dd>2</dd></div><div><dt>Noviembre</dt><dd>5</dd></div><div><dt>Diciembre</dt><dd>11</dd></div></dl></div>
         <Image src={salesSource} alt="Gráfico original de ventas de Rafael: junio 1, octubre 2, noviembre 5 y diciembre 11; incluye el desglose por producto." widths={[600, 1000, 1500]} sizes="(min-width: 900px) 620px, 90vw" loading="lazy" />
       </div>
     </details>
@@ -88,7 +88,6 @@ const supporting = metrics?.filter((_, index) => index !== leadIndex)
   .result-document-content dl { display: flex; flex-wrap: wrap; gap: 24px; margin-block: 24px; }
   .result-document-content dt { color: #61657c; font-size: 11px; }
   .result-document-content dd { margin: 8px 0 0; font-size: 26px; }
-  .result-document-content small { color: #61657c; font-size: 10px; }
   @media(max-width: 767px) {
     .result-board, .result-outcomes, .result-document-content { grid-template-columns: 1fr; }
     .result-support { margin-top: 32px; }

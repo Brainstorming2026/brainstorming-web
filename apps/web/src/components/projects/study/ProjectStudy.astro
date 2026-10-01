@@ -2,6 +2,7 @@
 import type { StudySlug } from '@/data/project-studies'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+import ProjectVideo from '@/components/projects/ProjectVideo.astro'
 import StudyContact from '@/components/projects/study/StudyContact.astro'
 import StudyMedia from '@/components/projects/study/StudyMedia.astro'
 import StudyWeb from '@/components/projects/study/StudyWeb.astro'
@@ -15,6 +16,7 @@ const study = projectStudies[slug]
 const detail = proyectosDetalle[slug]
 const next = projectStudies[study.next]
 const nextDetail = proyectosDetalle[study.next]
+const featuredVideo = detail.campania?.videos?.[0]
 ---
 
 <article class="project-study" data-study={slug} style={{ '--study-accent': study.accent, '--study-surface': study.surface }}>
@@ -41,7 +43,9 @@ const nextDetail = proyectosDetalle[study.next]
   </header>
 
   <div class="study-hero-stage study-container">
-    <StudyMedia image={{ src: detail.heroImg ?? detail.heroBg, alt: detail.heroImgAlt, caption: study.heroCaption }} priority />
+    {featuredVideo
+      ? <figure class="study-media" data-study-video><ProjectVideo youtubeId={featuredVideo.youtubeId} title={featuredVideo.title} poster={featuredVideo.poster} priority /><figcaption>{featuredVideo.title}</figcaption></figure>
+      : <StudyMedia image={{ src: detail.heroImg ?? detail.heroBg, alt: detail.heroImgAlt, caption: study.heroCaption }} priority />}
   </div>
 
   <div class="study-container">

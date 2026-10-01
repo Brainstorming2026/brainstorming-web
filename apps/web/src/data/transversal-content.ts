@@ -17,13 +17,15 @@ export const homeContent = {
   problems: {
     title: '¿Tu empresa está en alguna de estas situaciones?',
     items: [
-      { icon: 'automation/chart-no-axes-combined', text: 'Vendes, pero de forma impredecible. Los resultados fluctúan y no tienes control sobre las variables que los mueven.' },
-      { icon: 'automation/users-round', text: 'Tu equipo comercial trabaja mucho pero los números no reflejan el esfuerzo. El proceso depende de personas, no de un sistema.' },
-      { icon: 'automation/bot', text: 'Escuchas hablar de inteligencia artificial en todos lados, pero no tienes claro qué implementar ni por dónde empezar.' },
-      { icon: 'automation/sliders-horizontal', text: 'Tomas decisiones por intuición porque no tienes la data ordenada ni los procesos documentados.' },
-      { icon: 'automation/route', text: 'Sabes que tu empresa tiene potencial para crecer más, pero no tienes un plan claro ni priorizado de cómo hacerlo.' },
+      { icon: 'automation/chart-no-axes-combined', title: 'Ventas impredecibles', text: 'Vendes, pero de forma impredecible. Los resultados fluctúan y no tienes control sobre las variables que los mueven.' },
+      { icon: 'automation/users-round', title: 'Un equipo sin sistema', text: 'Tu equipo comercial trabaja mucho pero los números no reflejan el esfuerzo. El proceso depende de personas, no de un sistema.' },
+      { icon: 'automation/bot', title: 'IA sin dirección', text: 'Escuchas hablar de inteligencia artificial en todos lados, pero no tienes claro qué implementar ni por dónde empezar.' },
+      { icon: 'automation/sliders-horizontal', title: 'Decisiones sin datos', text: 'Tomas decisiones por intuición porque no tienes la data ordenada ni los procesos documentados.' },
+      { icon: 'automation/route', title: 'Crecimiento sin un plan', text: 'Sabes que tu empresa tiene potencial para crecer más, pero no tienes un plan claro ni priorizado de cómo hacerlo.' },
     ],
     closing: 'Si alguna de estas te suena familiar, trabajemos juntos.',
+    /** Tramo de `closing` que se subraya al entrar. */
+    closingHighlight: 'trabajemos juntos',
   },
   results: {
     title: 'No hablamos de estrategia. La ejecutamos.',
@@ -32,6 +34,13 @@ export const homeContent = {
       { slug: 'senati', client: 'SENATI', text: 'S/ 10M adicionales por mes al reactivar con nutrición automatizada una base dormida de 350,000 personas.' },
       { slug: 'futura-wealth', client: 'Futura Wealth Management', text: 'Orden comercial y automatización para que los asesores se concentren en clientes potenciales calificados.' },
     ],
+    /** Frase del sitio US. `stat` va como cifra; `text` completa la oración. */
+    proof: {
+      eyebrow: 'Del plan a la ejecución',
+      stat: 4,
+      total: 5,
+      text: 'clientes que llevaron el Growth Plan nos han contratado para la ejecución de su plan de proyectos.',
+    },
     action: { label: 'VER TODOS LOS PROYECTOS', href: siteRoutes.projects },
   },
   services: {
@@ -83,7 +92,7 @@ export const aboutContent = {
     title: '¿Por qué nosotros?',
     items: [
       { title: 'Metodologías propias, no frameworks genéricos.', text: 'Smart Selling y Growth Planning son metodologías desarrolladas y refinadas en más de 80 proyectos reales con empresas medianas de LATAM. No son adaptaciones de libros — son sistemas que hemos probado, fallado, ajustado y vuelto a probar hasta que funcionan.' },
-      { title: 'Resultados con número, no con diapositivas.', text: `AIT Capital pasó de ${aitSales.before} a ${aitSales.after} en ventas en ${aitSalesPeriod}. SENATI generó S/ 10M adicionales por mes. Esos números son reales, están documentados y son el estándar con el que medimos nuestro trabajo.` },
+      { title: 'Resultados con número, no con diapositivas.', text: `AIT Capital pasó de ${aitSales.before} a ${aitSales.after} en ventas mensuales en ${aitSalesPeriod}. SENATI registró S/ 10M adicionales por mes. Medimos cada proyecto por sus resultados.` },
       { title: 'Board senior en cada proyecto.', text: 'No tercerizamos el pensamiento estratégico a consultores junior. Los directores del Board participan activamente en cada compromiso. Tu empresa recibe atención del nivel que merece.' },
     ],
   },

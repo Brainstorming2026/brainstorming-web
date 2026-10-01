@@ -4,6 +4,7 @@ import type { ProyectoDetalle } from '@/data/proyectosDetalle'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { categoriaIcons, categoriaLabels } from '@/data/proyectos'
+import ProjectVideo from './ProjectVideo.astro'
 
 interface Props {
   proyecto: Proyecto
@@ -12,6 +13,7 @@ interface Props {
 
 const { proyecto, detalle } = Astro.props
 const imagenSeparada = Boolean(detalle.heroImg)
+const featuredVideo = detalle.campania?.videos?.[0]
 ---
 
 <section class="relative overflow-hidden bg-white min-h-[600px] lg:min-h-[702px] flex items-center">
@@ -49,14 +51,20 @@ const imagenSeparada = Boolean(detalle.heroImg)
     {
       imagenSeparada && (
         <div id="project-hero-img" data-animate="circle" class="relative">
-          <Image
-            src={detalle.heroImg!}
-            alt={detalle.heroImgAlt}
-            class="relative z-10 mx-auto h-auto w-full max-w-[800px]"
-            widths={[800, 1200]}
-            sizes="(min-width: 1024px) 600px, 80vw"
-            loading="eager"
-          />
+          {featuredVideo
+            ? (
+              <ProjectVideo youtubeId={featuredVideo.youtubeId} title={featuredVideo.title} poster={featuredVideo.poster} priority className="mx-auto max-w-[800px]" />
+            )
+            : (
+              <Image
+                src={detalle.heroImg!}
+                alt={detalle.heroImgAlt}
+                class="relative z-10 mx-auto h-auto w-full max-w-[800px]"
+                widths={[800, 1200]}
+                sizes="(min-width: 1024px) 600px, 80vw"
+                loading="eager"
+              />
+            )}
         </div>
       )
     }

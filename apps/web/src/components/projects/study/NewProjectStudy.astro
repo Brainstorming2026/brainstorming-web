@@ -57,7 +57,7 @@ const next = newProjects.find(candidate => candidate.slug === project.next)!
   <section class="new-case-approach" id="enfoque" aria-labelledby="case-approach-title">
     <div class="study-container">
       <p class="study-eyebrow">De la estrategia a la acción</p>
-      <h2 id="case-approach-title" data-study-heading>Las claves del proyecto.</h2>
+      <h2 id="case-approach-title" data-study-heading>{project.approachTitle ?? 'Las claves del proyecto.'}</h2>
       <div class="new-case-steps">
         {project.approach.map(step => <article data-study-reveal><Icon name={step.icon} aria-hidden="true" /><h3>{step.title}</h3><p>{step.text}</p></article>)}
       </div>

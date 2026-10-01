@@ -24,7 +24,7 @@ export const ecosystem = {
   url: 'https://www.collectiveintelligence.pe/',
   symbol: ciSymbol,
   eyebrow: 'Proud Partner of',
-  text: 'Somos parte de Collective Intelligence: especialistas en marketing, tecnología y data trabajando juntos para impulsar tu negocio.',
+  text: 'Somos parte de Collective Intelligence: Un ecosistema de especialistas en marketing, tecnología y data, que trabajan con IA como capa transversal para impulsar tu negocio.',
   linkLabel: 'Visitar Collective Intelligence',
   // Mismo orden que la firma de las propuestas.
   members: [

@@ -1,0 +1,189 @@
+---
+import { homeContent } from '@/data/transversal-content'
+
+const content = homeContent.testimonials
+// Parte la cita alrededor de la frase destacada para envolverla en <mark>.
+const items = content.items.map((item) => {
+  const at = item.quote.indexOf(item.highlight)
+  return {
+    ...item,
+    before: at >= 0 ? item.quote.slice(0, at) : item.quote,
+    mark: at >= 0 ? item.highlight : '',
+    after: at >= 0 ? item.quote.slice(at + item.highlight.length) : '',
+  }
+})
+---
+
+<section class="testimonials" aria-labelledby="home-testimonials-title" data-testimonials>
+  <div class="editorial-container">
+    <h2 id="home-testimonials-title" class="editorial-title t-title" data-editorial-heading>{content.title}</h2>
+
+    <ul class="t-grid" role="list" tabindex="0" aria-label="Testimonios de clientes">
+      {items.map(item => (
+        <li class="t-item" data-t-item>
+          <figure class="t-card spotlight" data-t-card>
+            <span class="t-mark" aria-hidden="true" data-t-mark>
+              <svg viewBox="0 0 56 40" fill="currentColor"><path d="M0 4a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v14c0 9.5-5 17-13.5 21.4a1.6 1.6 0 0 1-2.1-2.2C10.7 33 12 29 12 24H4a4 4 0 0 1-4-4Zm32 0a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v14c0 9.5-5 17-13.5 21.4a1.6 1.6 0 0 1-2.1-2.2C42.7 33 44 29 44 24h-8a4 4 0 0 1-4-4Z" /></svg>
+            </span>
+            <blockquote class="t-quote"><p data-t-text>«{item.before}{item.mark && <mark>{item.mark}</mark>}{item.after}»</p></blockquote>
+            <figcaption class="t-author" data-t-author>
+              <strong>{item.name}</strong>
+              <span>{item.role} en {item.company}</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Mismo azul del sitio US y la misma "panza": el borde inferior es una
+     elipse (border-radius), sin imágenes. --belly es su profundidad; el script
+     la hace crecer con el scroll. El padding NO depende de --belly: animarlo
+     movería el layout en cada frame. */
+  .testimonials {
+    --belly: clamp(56px, 9vw, 150px);
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(80px, 8vw, 128px) calc(clamp(56px, 9vw, 150px) + clamp(48px, 5vw, 80px));
+    color: #fff;
+    background: linear-gradient(180deg, var(--color-navy-500) 0%, #141b3d 100%);
+    border-radius: 0 0 50% 50% / 0 0 var(--belly) var(--belly);
+  }
+  .t-title { max-width: none; color: #fff; }
+
+  .t-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2vw, 32px); margin: clamp(56px, 5vw, 72px) 0 0; padding: 0; list-style: none; }
+  .t-grid:focus-visible { outline: 2px solid var(--color-primary-200); outline-offset: 8px; border-radius: 24px; }
+  .t-item { display: flex; min-width: 0; }
+
+  .t-card {
+    --spotlight-color: rgb(125 68 228 / .07);
+    --spotlight-size: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    width: 100%;
+    margin: 0;
+    padding: clamp(48px, 4.2vw, 64px) clamp(28px, 2.8vw, 42px) clamp(36px, 3.4vw, 48px);
+    border-radius: 20px;
+    color: var(--color-ink);
+    background: #fff;
+    box-shadow: 0 2px 6px rgb(8 15 40 / .18), 0 24px 48px -28px rgb(8 15 40 / .55);
+    transition: translate 500ms cubic-bezier(.23,1,.32,1), box-shadow 500ms cubic-bezier(.23,1,.32,1);
+  }
+  /* Comillas sobresaliendo del borde superior, como en US. */
+  .t-mark {
+    position: absolute;
+    top: -18px;
+    left: clamp(28px, 2.8vw, 42px);
+    width: clamp(48px, 3.6vw, 56px);
+    color: var(--color-primary);
+    transform-origin: 30% 100%;
+    transition: rotate 500ms cubic-bezier(.34,1.56,.64,1);
+  }
+  .t-mark svg { display: block; width: 100%; height: auto; }
+  .t-quote { margin: 0; }
+  .t-quote p { font-size: 16px; line-height: 1.75; color: var(--color-gray-body); text-wrap: pretty; }
+  /* La frase clave: tinta plena y un marcador lila que barre al entrar. */
+  .t-quote mark {
+    color: var(--color-ink);
+    font-weight: 600;
+    background: linear-gradient(var(--color-primary-100), var(--color-primary-100)) no-repeat 0 90% / 0% 40%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 1100ms cubic-bezier(.23,1,.32,1);
+  }
+  .t-card.is-lit mark { background-size: 100% 40%; }
+  .t-author { display: grid; gap: 4px; }
+  .t-author strong { font: 700 16px/1.35 var(--font-heading); }
+  .t-author span { font-size: 14px; line-height: 1.45; color: var(--color-gray-medium); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .t-card:hover { translate: 0 -6px; box-shadow: 0 2px 6px rgb(8 15 40 / .18), 0 36px 64px -28px rgb(8 15 40 / .7); }
+    .t-card:hover .t-mark { rotate: -8deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .t-card, .t-mark, .t-quote mark { transition: none; }
+  }
+
+  /* Tablet y móvil: carrusel deslizable con la siguiente tarjeta asomando. */
+  @media (max-width: 1023px) {
+    .t-grid {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(78%, 420px);
+      gap: 16px;
+      margin-inline: -24px;
+      padding: 28px 24px 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 24px;
+      scrollbar-width: none;
+    }
+    .t-grid::-webkit-scrollbar { display: none; }
+    .t-item { scroll-snap-align: start; }
+  }
+  @media (max-width: 639px) {
+    .t-grid { grid-auto-columns: 86%; }
+    .t-quote p { font-size: 15px; }
+  }
+</style>
+
+<script>
+import { registerMotion } from '@/lib/motion'
+import { ensureGsap } from '@/lib/motion/gsap-client'
+import { tiltCards } from '@/lib/motion/hover'
+
+// La comilla entra con yPercent y el parallax usa y: así no se pisan.
+// Entrada: cada tarjeta sube desde su máscara, la comilla cae sobre el borde
+// con un rebote corto, la cita se enfoca línea por línea y al final se subraya
+// la frase clave. Estados iniciales al cargar, nunca en el onEnter.
+registerMotion(() => {
+  const root = document.querySelector<HTMLElement>('[data-testimonials]')
+  if (!root)
+    return
+
+  const { gsap, SplitText } = ensureGsap()
+  const items = Array.from(root.querySelectorAll<HTMLElement>('[data-t-item]'))
+  const cards = items.map(item => item.querySelector<HTMLElement>('[data-t-card]')!)
+  const marks = cards.map(card => card.querySelector<HTMLElement>('[data-t-mark]')!)
+  const grid = root.querySelector('.t-grid')
+  const media = gsap.matchMedia()
+
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const splits = cards.map(card => SplitText.create(card.querySelector<HTMLElement>('[data-t-text]')!, { type: 'lines' }))
+    cards.forEach(card => card.classList.remove('is-lit'))
+
+    const intro = gsap.timeline({ scrollTrigger: { trigger: grid, start: 'top 80%', once: true } })
+    cards.forEach((card, index) => {
+      const at = index * 0.16
+      intro
+        .fromTo(card, { autoAlpha: 0, y: 56, clipPath: 'inset(100% 0% 0% 0% round 20px)' }, { autoAlpha: 1, y: 0, clipPath: 'inset(-40% -10% 0% -10% round 20px)', duration: 1.3, ease: 'expo.out', clearProps: 'opacity,visibility,clipPath' }, at)
+        .fromTo(marks[index], { autoAlpha: 0, yPercent: -60, scale: 0.8, rotation: -18 }, { autoAlpha: 1, yPercent: 0, scale: 1, rotation: 0, duration: 1, ease: 'back.out(1.8)', clearProps: 'opacity,visibility' }, at + 0.45)
+        .fromTo(splits[index].lines, { autoAlpha: 0, y: 14, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.1, stagger: 0.05, ease: 'expo.out', clearProps: 'opacity,visibility,transform,filter' }, at + 0.35)
+        .fromTo(card.querySelectorAll('[data-t-author] > *'), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.06, ease: 'expo.out', clearProps: 'opacity,visibility,transform' }, at + 0.8)
+        .add(() => card.classList.add('is-lit'), at + 1.1)
+    })
+
+    return () => {
+      splits.forEach(split => split.revert())
+      cards.forEach(card => card.classList.add('is-lit'))
+    }
+  }, root)
+
+  // Parallax (desktop): la tarjeta central flota por delante de las laterales,
+  // las comillas se adelantan a su tarjeta y la panza se ahonda al pasar.
+  media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+    const range = { trigger: root, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+    if (items[1])
+      gsap.fromTo(items[1], { y: 36 }, { y: -36, ease: 'none', scrollTrigger: range })
+    gsap.fromTo(marks, { y: 10 }, { y: -10, ease: 'none', scrollTrigger: range })
+    gsap.fromTo(root, { '--belly': '60px' }, { '--belly': '170px', 'ease': 'none', 'scrollTrigger': { trigger: root, start: 'center bottom', end: 'bottom top', scrub: 1 } })
+  }, root)
+
+  media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => tiltCards(cards, 4), root)
+})
+</script>

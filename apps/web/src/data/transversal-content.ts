@@ -43,6 +43,37 @@ export const homeContent = {
     },
     action: { label: 'VER TODOS LOS PROYECTOS', href: siteRoutes.projects },
   },
+  /**
+   * Testimonios del sitio US (versión en español aprobada por el cliente).
+   * `highlight` debe ser un tramo literal de `quote`: es la frase que se subraya.
+   */
+  testimonials: {
+    eyebrow: 'Testimonios',
+    title: '¿Qué dicen nuestros clientes?',
+    items: [
+      {
+        name: 'Omar Doria',
+        role: 'Community Development Mortgage Loan Officer',
+        company: 'Cadence Bank',
+        quote: 'Lo que más me llamó la atención fue la rapidez con la que fueron capaces de entender mi dolor, cuál era mi complicación, cuál era mi problema y hacia dónde queríamos llegar. Yo me sentí claramente identificado. Para mí fue una fotografía de lo que yo sabía, pero que estaba desordenado en mi cabeza; nunca lo había tenido tan claro.',
+        highlight: 'nunca lo había tenido tan claro',
+      },
+      {
+        name: 'Rafael Ríos',
+        role: 'Country Manager',
+        company: 'Construplan Perú',
+        quote: 'Con el Growth Plan, Brainstorming ha logrado sintetizar y absorber todas las necesidades reales que tenemos actualmente como marca y como filial, las cuales incluyen posicionamiento de marca, generación de leads, hacernos más conocidos y cómo queremos aumentar nuestra visibilidad. Hemos alcanzado el 100% del objetivo previsto.',
+        highlight: 'Hemos alcanzado el 100% del objetivo previsto',
+      },
+      {
+        name: 'Antonio Sevillano',
+        role: 'Gerente General',
+        company: 'ASD',
+        quote: 'Estaba acostumbrado a la típica empresa de marketing que ofrece algo de publicidad y listo, pero esto es completamente diferente: increíblemente valioso y sumamente interesante para impulsar un crecimiento estratégico real. Es más de lo que esperábamos, y seguimos sintiéndolo así en cada paso del camino.',
+        highlight: 'Es más de lo que esperábamos',
+      },
+    ],
+  },
   services: {
     title: '¿Por dónde quieres empezar?',
     action: { label: 'VER TODOS LOS SERVICIOS', href: siteRoutes.solutions },

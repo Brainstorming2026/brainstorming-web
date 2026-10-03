@@ -38,7 +38,8 @@ const featuredVideo = detalle.campania?.videos?.[0]
         }
       </div>
 
-      <Image id="project-hero-logo" data-animate src={detalle.logo} alt={proyecto.nombre} class="hero-piece mx-auto mt-6 h-auto w-40" />
+      {/* The client logo is the page heading; its alt text is the heading's accessible name. */}
+      <h1 class="m-0"><Image id="project-hero-logo" data-animate src={detalle.logo} alt={proyecto.nombre} class="hero-piece mx-auto mt-6 h-auto w-40" /></h1>
 
       <p id="project-hero-category" data-animate class="hero-piece mt-6 font-heading text-[15px] font-bold text-dark">
         {proyecto.categorias.map(c => categoriaLabels[c]).join(' / ')}

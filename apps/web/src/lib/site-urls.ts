@@ -9,7 +9,7 @@ const isDev = import.meta.env.DEV
  * astro.config) and builds target production.
  */
 export const siteUrls = {
-  web: WEB_URL ?? (isDev ? 'http://localhost:4321' : 'https://brainstorming.la'),
+  web: WEB_URL ?? (isDev ? 'http://localhost:4321' : 'https://www.brainstorming.la'),
   us: US_URL ?? (isDev ? 'http://localhost:4322' : 'https://us.brainstorming.la'),
   blog: BLOG_URL ?? (isDev ? 'http://localhost:4323' : 'https://blog.brainstorming.la'),
 } as const

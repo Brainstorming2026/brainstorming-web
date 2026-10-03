@@ -1,5 +1,5 @@
-import { resourceLinks, siteRoutes, siteServices } from './site-navigation'
 import { siteUrl } from '@/lib/site-urls'
+import { resourceLinks, siteRoutes, siteServices } from './site-navigation'
 
 export interface NavLink {
   label: string

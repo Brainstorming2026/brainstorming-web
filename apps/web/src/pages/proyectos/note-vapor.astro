@@ -4,9 +4,10 @@ import NoteBranding from '@/components/projects/note/NoteBranding.astro'
 import ProjectCampaign from '@/components/projects/ProjectCampaign.astro'
 import ProjectFeature from '@/components/projects/ProjectFeature.astro'
 import ProjectHero from '@/components/projects/ProjectHero.astro'
-import { proyectos } from '@/data/proyectos'
+import { categoriaLabels, proyectos } from '@/data/proyectos'
 import { proyectosDetalle } from '@/data/proyectosDetalle'
 import Layout from '@/layouts/Layout.astro'
+import { caseStudyTitle } from '@/lib/seo-title'
 
 export const prerender = true
 
@@ -14,7 +15,7 @@ const proyecto = proyectos.find(p => p.slug === 'note-vapor')!
 const detalle = proyectosDetalle['note-vapor']
 ---
 
-<Layout title="Note Vapor — Brainstorming" footerCurveBg="bg-mist">
+<Layout description={detalle.descripcion.replace(/\s+/g, ' ').trim()} image={detalle.heroBg.src} title={caseStudyTitle(proyecto.nombre, proyecto.categorias.map(c => categoriaLabels[c]))} footerCurveBg="bg-mist">
   <ProjectHero proyecto={proyecto} detalle={detalle} />
   <NoteBranding />
   {detalle.campania && <ProjectCampaign campania={detalle.campania} />}

@@ -15,7 +15,7 @@ const home = localizePath('/', lang)
 const linkClass = 'rounded-sm font-semibold text-primary-600 underline decoration-primary/30 underline-offset-4 transition-colors hover:text-navy hover:decoration-navy/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary motion-reduce:transition-none'
 ---
 
-<Layout title={meta.notFound.title}>
+<Layout title={meta.notFound.title} description={meta.notFound.description} noindex>
   <div class="flex min-h-dvh flex-col bg-white">
     <header class="mx-auto w-full max-w-[1384px] px-6 py-6 sm:px-8 lg:px-16">
       <a href={home} class="inline-block rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">

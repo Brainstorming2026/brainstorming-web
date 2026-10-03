@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+/* Nexa, con la escala de grosores del sitio US anterior (WordPress): más pesada que
+   web y blog. normal → Nexa Bold, bold → Nexa Black, 800 → Nexa XBold.
+   El cuerpo sigue en Helvetica Neue / Arial (--font-body). */
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Bold.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-Black.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-XBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;

@@ -77,6 +77,8 @@ export interface Article {
   slug: string
   kicker: string
   title: string
+  /** <title> override when `title — Brainstorming Blog` would exceed ~60 characters. */
+  seoTitle?: string
   category: string
   heroImage: ImageMetadata
   readTime: string
@@ -91,6 +93,10 @@ export interface Article {
   /** Banner generico ("CONOCE NUESTRAS SOLUCIONES") — independiente del lead magnet. */
   secondaryCta?: ArticleSecondaryCta
   publishedDate: string
+  /** Real date of a substantive editorial revision; never set automatically during builds. */
+  modifiedDate?: string
+  /** Optional human byline, only when authorship is confirmed. */
+  author?: { name: string, url: string }
 }
 
 export const articles: Article[] = [
@@ -98,6 +104,7 @@ export const articles: Article[] = [
     slug: 'marketing-turismo-peru',
     kicker: 'Estrategias para una campaña de marketing',
     title: 'Estrategias para una campaña de marketing en el sector del turismo',
+    seoTitle: 'Marketing turístico: estrategias de campaña | Brainstorming',
     category: 'Inbound Marketing',
     heroImage: card6,
     readTime: 'Léelo en 15 min.',
@@ -149,6 +156,7 @@ export const articles: Article[] = [
     slug: 'que-es-community-manager',
     kicker: 'Inbound Marketing',
     title: '¿Cuál es el rol de un Community Manager?',
+    seoTitle: '¿Qué hace un Community Manager? | Brainstorming Blog',
     category: 'Inbound Marketing',
     heroImage: card2,
     readTime: 'Léelo en 5 min.',
@@ -280,6 +288,7 @@ export const articles: Article[] = [
     slug: 'que-es-una-landing-page',
     kicker: 'Desarrollo Web, Inbound Marketing',
     title: '¿Qué es una landing page o página de aterrizaje?',
+    seoTitle: '¿Qué es una landing page? | Brainstorming Blog',
     category: 'Desarrollo Web',
     heroImage: card4,
     readTime: 'Léelo en 2 min.',
@@ -350,6 +359,7 @@ export const articles: Article[] = [
     slug: 'desafios-investigacion-de-mercado',
     kicker: 'Investigación de Mercado',
     title: 'DESCIFRANDO LOS DESAFÍOS DE LA INVESTIGACIÓN DE MERCADO',
+    seoTitle: 'Desafíos de la investigación de mercado | Brainstorming',
     category: 'Procesos',
     heroImage: card8,
     readTime: 'Léelo en 15 min.',
@@ -395,6 +405,7 @@ export const articles: Article[] = [
     slug: 'chatbots-marketing-ia',
     kicker: 'Inteligencia Artificial',
     title: 'AHORRA RECURSOS CON INTELIGENCIA ARTIFICIAL EN EL MARKETING: Cómo los chatbots y asistentes virtuales con IA están transformando las empresas',
+    seoTitle: 'Chatbots con IA en marketing: ahorra costos | Brainstorming',
     category: 'Inbound Marketing',
     heroImage: card1,
     readTime: 'Léelo en 8 min.',
@@ -438,6 +449,7 @@ export const articles: Article[] = [
     slug: 'necesito-pagina-web-para-mi-empresa',
     kicker: 'Desarrollo Web',
     title: '¿Necesito una página web para mi empresa? Sí, te explicamos por qué',
+    seoTitle: '¿Tu empresa necesita una página web? | Brainstorming',
     category: 'Desarrollo Web',
     heroImage: paginaWebHero,
     readTime: 'Léelo en 5 min.',
@@ -491,6 +503,7 @@ export const articles: Article[] = [
     slug: 'consejos-pagina-web-efectiva',
     kicker: 'Desarrollo Web',
     title: '10 Consejos para construir una página web efectiva',
+    seoTitle: '10 consejos para una página web efectiva | Brainstorming',
     category: 'Desarrollo Web',
     heroImage: card10,
     readTime: 'Léelo en 4 min.',
@@ -654,6 +667,7 @@ export const articles: Article[] = [
     slug: 'estrategia-de-marca-confianza',
     kicker: 'Branding, Estrategia',
     title: '¿La estrategia de tu marca no genera la confianza que esperabas?',
+    seoTitle: 'Estrategia de marca que genera confianza | Brainstorming',
     category: 'Branding',
     heroImage: card7,
     readTime: 'Léelo en 5 min.',

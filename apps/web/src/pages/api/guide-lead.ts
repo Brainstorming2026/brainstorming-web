@@ -46,7 +46,7 @@ export const POST: APIRoute = async ({ request, site, clientAddress }) => {
     return fail(400, 'Invalid data')
   }
 
-  const guideUrl = new URL(guide.pdf, site ?? 'https://brainstorming.la').toString()
+  const guideUrl = new URL(guide.pdf, site ?? 'https://www.brainstorming.la').toString()
 
   await Promise.all([
     sendEmail({

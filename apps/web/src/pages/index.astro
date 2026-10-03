@@ -11,14 +11,13 @@ import Results from '@/components/home/Results.astro'
 import Roas from '@/components/home/Roas.astro'
 import ServicesHub from '@/components/home/ServicesHub.astro'
 import Testimonials from '@/components/home/Testimonials.astro'
-import { homeContent } from '@/data/transversal-content'
 import Layout from '@/layouts/Layout.astro'
 import '@/styles/transversal.css'
 
 export const prerender = true;
 ---
 
-<Layout title={homeContent.title} description={homeContent.hero.subtitle}>
+<Layout title="Brainstorming | Consultoría estratégica, marketing e IA" description="Consultoría estratégica para empresas en LATAM. Conectamos crecimiento comercial, marketing, ventas y automatización con IA con un plan de acción claro.">
   <Hero />
   <Problemas />
   <GrowthJourney />

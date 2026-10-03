@@ -1,8 +1,8 @@
+import viveParacas from '@/assets/results/3.png'
 import alumspazio from '@/assets/results/alumspazio.webp'
 import grin from '@/assets/results/grin.webp'
 import senati from '@/assets/results/senati.webp'
 import stanley from '@/assets/results/stanley-black-decker.webp'
-import viveParacas from '@/assets/results/3.png'
 
 /** Source: approved PDF. Values and brands are shared by EN and ES. */
 export const executionResults = [

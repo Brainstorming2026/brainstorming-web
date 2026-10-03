@@ -9,7 +9,7 @@ import icon from 'astro-icon'
 import { defineConfig, envField } from 'astro/config'
 
 export default defineConfig({
-  site: 'https://brainstorming.la',
+  site: 'https://www.brainstorming.la',
   trailingSlash: 'never',
   // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
   server: { port: 4321 },
@@ -23,6 +23,15 @@ export default defineConfig({
     '/soluciones/desarrollo-web': {
       status: 301,
       destination: '/soluciones/inbound-marketing#desarrollo-web',
+    },
+    // Retired slugs: real 301s at the edge instead of prerendered meta-refresh pages.
+    '/soluciones/inbound-sales': {
+      status: 301,
+      destination: '/soluciones/smart-selling',
+    },
+    '/soluciones/optimizacion-procesos': {
+      status: 301,
+      destination: '/soluciones/automatizacion-ia',
     },
   },
 

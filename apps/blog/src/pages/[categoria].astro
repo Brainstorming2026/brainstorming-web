@@ -21,7 +21,25 @@ if (!category) {
   return Astro.redirect('/404')
 }
 
+const canonical = new URL(`/${category.slug}`, Astro.site).href
 const categoryPosts = allPosts.filter(post => post.category === category.label)
+
+const structuredData: Record<string, unknown>[] = [{
+  '@type': 'CollectionPage',
+'@id': `${canonical}#webpage`,
+  'mainEntity': { '@type': 'ItemList', 'itemListElement': categoryPosts.filter(post => getArticleBySlug(post.slug)).map((post, index) => ({
+    '@type': 'ListItem',
+'position': index + 1,
+'name': post.title,
+'url': new URL(`/${post.slug}`, Astro.site).href,
+  })) },
+}, {
+  '@type': 'BreadcrumbList',
+'itemListElement': [
+    { '@type': 'ListItem', 'position': 1, 'name': 'Blog', 'item': Astro.site!.href },
+    { '@type': 'ListItem', 'position': 2, 'name': category.label, 'item': canonical },
+  ],
+}]
 
 // Banner: la guia descargable propia de la categoria, si algun articulo de
 // esta categoria ya trae una (ver ArticleLeadMagnet) — evita inventar una
@@ -32,13 +50,13 @@ const featuredLeadMagnet = categoryPosts
 
 const solucionesSlugs: Record<string, string> = {
   'branding': 'branding',
-  'desarrollo-web': 'desarrollo-web',
+  'desarrollo-web': 'inbound-marketing#desarrollo-web',
   'inbound-marketing': 'inbound-marketing',
   'procesos': 'optimizacion-procesos',
 }
 ---
 
-<Layout title={`${category.label} — Brainstorming Blog`} description={category.description}>
+<Layout title={`${category.label}: artículos y guías | Brainstorming Blog`} description={category.description} {structuredData}>
   <div class="bg-mist-100 py-12 lg:py-16">
     <div id="category-header" class="mx-auto max-w-[1140px] px-6 lg:px-16">
       <p class="font-heading text-sm font-bold text-primary">Categoría</p>

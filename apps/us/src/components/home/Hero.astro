@@ -8,7 +8,12 @@ import { getLang, useTranslations } from '@/i18n/utils'
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'hero')
 
-const statement = 'block text-[length:clamp(34px,9.2vw,48px)] leading-[1.12] tracking-[-0.035em] sm:text-[length:clamp(38px,6.6vw,60px)] sm:leading-[1.09] lg:text-[length:clamp(40px,4.1vw,62px)]'
+// From md up the first line stays on one line: the size is the largest that fits the copy column
+// (100cqi) for that line's width in Nexa Black (--hero-fit, in em), capped at 62px. A plain nowrap
+// would get clipped by the SplitText line mask whenever the line is wider than the column.
+const statement = 'block text-balance text-[length:clamp(34px,9.2vw,48px)] leading-[1.12] tracking-[-0.035em] sm:text-[length:clamp(38px,6.6vw,60px)] sm:leading-[1.09] md:text-[length:min(62px,calc(100cqi/var(--hero-fit)))]'
+// Measured advance width of each locale's first line in Nexa Black, plus a small safety margin.
+const heroFit = lang === 'es' ? 10.8 : 13.2
 const action = 'inline-flex min-h-[52px] items-center justify-center gap-3.5 text-[14px] font-bold no-underline transition-[scale,translate,background-color] duration-180 ease-out focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-white active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 motion-reduce:hover:translate-y-0'
 ---
 
@@ -20,8 +25,8 @@ const action = 'inline-flex min-h-[52px] items-center justify-center gap-3.5 tex
   <div class="relative z-1">
     <Navbar />
     <div class="mx-auto max-w-[1512px] px-6 pt-6 pb-[290px] sm:px-8 sm:pt-8 sm:pb-[340px] lg:px-16 lg:pb-[150px] lg:max-[1200px]:px-12">
-      <div class="w-full max-w-[620px] lg:w-[60%] lg:max-w-[740px] lg:max-[1200px]:w-[62%]">
-        <h1 id="hero-headline" class="m-0 font-heading font-bold">
+      <div class="@container w-full max-w-[620px] lg:w-[60%] lg:max-w-[740px] lg:max-[1200px]:w-[62%]">
+        <h1 id="hero-headline" class="m-0 font-heading font-bold" style={`--hero-fit: ${heroFit}`}>
           <span class="mb-5 block text-[12px]/[1.4] tracking-[0.13em] text-white/75 uppercase sm:mb-6 sm:text-[15px]/[1.4] lg:mb-4">{t.name}<span class="sr-only">: </span></span>
           <span class:list={[statement, 'md:whitespace-nowrap']} data-hero-statement>{t.headline}</span>
           <span class:list={[statement, 'mt-1.5 text-gold']} data-hero-statement>{t.headlineAccent}</span>

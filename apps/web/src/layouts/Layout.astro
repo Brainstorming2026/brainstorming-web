@@ -7,18 +7,29 @@ import SiteMotion from '@/components/common/SiteMotion.astro'
 import SmoothScroll from '@/components/common/SmoothScroll.astro'
 import SplashScreen from '@/components/common/SplashScreen.astro'
 import Stick from '@/components/common/Stick.astro'
+import SeoHead from '@/components/seo/SeoHead.astro'
 import SolutionMotion from '@/components/solutions/SolutionMotion.astro'
 import '@/styles/global.css'
 
 interface Props {
   title: string
   description?: string
+  image?: string
+  imageAlt?: string
+  noindex?: boolean
+  type?: 'website' | 'article'
+  structuredData?: Record<string, unknown>[]
+  publishedTime?: string
+  modifiedTime?: string
   footerCurveBg?: string
   showNavbar?: boolean
 }
 
-const { title, description = 'Brainstorming — Agencia de Marketing', footerCurveBg, showNavbar = true } = Astro.props
+const { title, image, imageAlt, noindex = false, type, structuredData, publishedTime, modifiedTime, description: rawDescription = 'Brainstorming: consultoría estratégica, crecimiento comercial, marketing y automatización con IA para empresas en LATAM.', footerCurveBg, showNavbar = true } = Astro.props
 const isSolution = Astro.url.pathname.startsWith('/soluciones')
+const cleanDescription = rawDescription.replace(/\s+/g, ' ').trim()
+// Google shows ~155–160 characters; cut on a word boundary and drop dangling punctuation.
+const description = cleanDescription.length > 158 ? `${cleanDescription.slice(0, cleanDescription.lastIndexOf(' ', 156)).replace(/[\s,;:.—-]+$/, '')}…` : cleanDescription
 ---
 
 <!doctype html>
@@ -26,6 +37,8 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Headings above the fold use Nexa Bold: fetch it early to avoid a visible font swap. -->
+    <link rel="preload" href="/fonts/Nexa-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
     <link rel="icon" type="image/png" href="/brainstorming-icon-file.png?v=2" />
     <link rel="apple-touch-icon" href="/brainstorming-icon-file.png?v=2" />
@@ -34,10 +47,7 @@ const isSolution = Astro.url.pathname.startsWith('/soluciones')
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <SeoHead {title} {description} {image} {imageAlt} {noindex} {type} {structuredData} {publishedTime} {modifiedTime} />
 
     <!-- Navegación suave entre páginas, sin recarga completa -->
     <MotionStartup />

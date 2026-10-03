@@ -127,7 +127,7 @@ export interface Category {
 
 export const categories: Category[] = [
   { slug: 'branding', label: 'Branding', icon: 'expert-huella', description: 'Estrategias de marca, identidad y confianza para diferenciarte en el mercado.' },
-  { slug: 'desarrollo-web', label: 'Desarrollo Web', icon: 'expert-window', description: 'Páginas web, ecommerce y las bases técnicas para crecer online.' },
+  { slug: 'desarrollo-web', label: 'Desarrollo Web', icon: 'expert-window', description: 'Páginas web, ecommerce, landing pages y las bases técnicas que tu empresa necesita para atraer clientes y crecer online.' },
   { slug: 'inbound-marketing', label: 'Inbound Marketing', icon: 'expert-iman', description: 'Contenidos, redes y estrategias para atraer y fidelizar a tu audiencia.' },
   { slug: 'procesos', label: 'Procesos', icon: 'category-procesos', description: 'Investigación de mercado y optimización de procesos para decisiones más certeras.' },
 ]

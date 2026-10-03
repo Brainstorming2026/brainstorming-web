@@ -1,16 +1,4 @@
 ---
-import EmptyState from '@/components/common/EmptyState.astro'
-import Layout from '@/layouts/Layout.astro'
-
-export const prerender = true;
+export const prerender = false
+return Astro.redirect('https://blog.brainstorming.la/', 301)
 ---
-
-<Layout title="Blog — Brainstorming">
-  <EmptyState
-    eyebrow="Muy pronto"
-    heading="Estamos preparando nuestro blog."
-    description="Mientras tanto, puedes revisar nuestras Guías Prácticas con contenido descargable sobre Marketing Digital."
-    ctaLabel="VER GUÍAS PRÁCTICAS"
-    ctaHref="/guias-practicas-brainstorming"
-  />
-</Layout>

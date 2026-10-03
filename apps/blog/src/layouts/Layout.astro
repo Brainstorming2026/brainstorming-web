@@ -5,15 +5,26 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import Navbar from '@/components/common/Navbar.astro'
 import SplashScreen from '@/components/common/SplashScreen.astro'
 import SubscribeModal from '@/components/common/SubscribeModal.astro'
+import SeoHead from '@/components/seo/SeoHead.astro'
 import '@/styles/global.css'
 
 interface Props {
   title: string
   description?: string
+  image?: string
+  imageAlt?: string
+  noindex?: boolean
+  type?: 'website' | 'article'
+  structuredData?: Record<string, unknown>[]
+  publishedTime?: string
+  modifiedTime?: string
   showChrome?: boolean
 }
 
-const { title, description = 'Brainstorming Blog — Marketing digital, branding y crecimiento', showChrome = true } = Astro.props
+const { title, image, imageAlt, noindex = false, type, structuredData, publishedTime, modifiedTime, description: rawDescription = 'Brainstorming Blog — Marketing digital, branding y crecimiento', showChrome = true } = Astro.props
+const cleanDescription = rawDescription.replace(/\s+/g, ' ').trim()
+// Google shows ~155–160 characters; cut on a word boundary and drop dangling punctuation.
+const description = cleanDescription.length > 158 ? `${cleanDescription.slice(0, cleanDescription.lastIndexOf(' ', 156)).replace(/[\s,;:.—-]+$/, '')}…` : cleanDescription
 ---
 
 <!doctype html>
@@ -21,17 +32,18 @@ const { title, description = 'Brainstorming Blog — Marketing digital, branding
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Headings above the fold use Nexa Bold: fetch it early to avoid a visible font swap. -->
+    <link rel="preload" href="/fonts/Nexa-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" href="/brainstorming-icon-file.png" />
     <link rel="apple-touch-icon" href="/brainstorming-icon-file.png" />
+    <link rel="alternate" type="application/rss+xml" title="Brainstorming Blog" href={new URL('/rss.xml', Astro.site).href} />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <SeoHead {title} {description} {image} {imageAlt} {noindex} {type} {structuredData} {publishedTime} {modifiedTime} />
 
     <!-- Navegación suave entre páginas, sin recarga completa -->
     <ClientRouter />

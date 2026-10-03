@@ -16,26 +16,29 @@ html.has-smooth-scroll {
   scroll-behavior: auto;
 }
 
-/* ============================================================
-   Fuentes de marca (Figma): Nexa (títulos/botones) + Helvetica (cuerpo).
-   No son fuentes de Google. Coloca los archivos en /public/fonts/
-   y descomenta los @font-face. Mientras tanto usa el fallback.
-   ============================================================ */
-
-/*
+/* Nexa (títulos y botones). Archivos de la marca tomados del sitio WordPress anterior,
+   convertidos a woff2. El cuerpo sigue en Helvetica Neue / Arial (--font-body). */
 @font-face {
   font-family: "Nexa";
-  src: url("/fonts/Nexa-Book.woff2") format("woff2");
+  src: url("/fonts/Nexa-Regular.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Nexa";
   src: url("/fonts/Nexa-Bold.woff2") format("woff2");
   font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
-*/
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/Nexa-XBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   /* === Tipografía === */

@@ -144,7 +144,7 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
             </div>
 
             <div class="sm:col-span-2">
-              <div id="contacto-turnstile" class="cf-turnstile min-h-[65px]" data-sitekey={TURNSTILE_SITE_KEY} data-action="contacto"></div>
+              <div id="contacto-turnstile" class="min-h-[65px]" data-sitekey={TURNSTILE_SITE_KEY} data-action="contacto"></div>
             </div>
           </div>
 
@@ -252,10 +252,11 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
   }
 </style>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
 <script>
 import { ensureGsap, prefersReducedMotion, registerMotion } from '@/lib/motion'
+import { whenTurnstileReady } from '@/lib/turnstile-client'
 
 registerMotion(() => {
   const panel = document.querySelector<HTMLElement>('[data-contact-panel]')
@@ -266,127 +267,151 @@ registerMotion(() => {
   gsap.from(panel, { y: 28, opacity: 0, duration: 0.65, ease: 'power2.out' })
 })
 
-const form = document.querySelector<HTMLFormElement>('#contacto-form')
-const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
-const submitLabel = document.querySelector<HTMLElement>('#contacto-submit-label')
-const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
-const messageField = form?.querySelector<HTMLTextAreaElement>('textarea[name="mensaje"]')
-const messageCount = document.querySelector<HTMLElement>('[data-message-count]')
+// ClientRouter swaps the DOM without reloading: bundled scripts run only once, so the
+// form is wired on every `astro:page-load`, and Turnstile is rendered explicitly
+// (implicit `.cf-turnstile` scanning only happens on the very first load).
+let turnstileWidget: string | undefined
 
-function getValidationMessage(field: HTMLInputElement | HTMLTextAreaElement) {
-  if (field.validity.valueMissing)
-    return 'Este campo es obligatorio.'
-  if (field.validity.typeMismatch)
-    return 'Ingresa un correo válido.'
-  if (field.validity.tooShort)
-    return `Escribe al menos ${field.minLength} caracteres.`
-  return ''
-}
-
-function validateField(field: HTMLInputElement | HTMLTextAreaElement) {
-  const message = getValidationMessage(field)
-  const errorId = field.getAttribute('aria-describedby')?.split(' ').find(id => id.endsWith('-error'))
-  const error = errorId ? document.getElementById(errorId) : null
-  field.setAttribute('aria-invalid', String(Boolean(message)))
-  if (error)
-    error.textContent = message
-  return !message
-}
-
-form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control').forEach((field) => {
-  field.addEventListener('blur', () => validateField(field))
-  field.addEventListener('input', () => {
-    if (field.getAttribute('aria-invalid') === 'true')
-      validateField(field)
-  })
+document.addEventListener('astro:before-swap', () => {
+  if (turnstileWidget)
+    window.turnstile?.remove(turnstileWidget)
+  turnstileWidget = undefined
 })
 
-messageField?.addEventListener('input', () => {
-  if (messageCount)
-    messageCount.textContent = String(messageField.value.length)
-})
-
-privacyCheckbox?.addEventListener('change', () => {
-  privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
-  const error = document.getElementById('contacto-privacy-error')
-  if (error)
-    error.textContent = privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.'
-})
-
-form?.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  if (!submitBtn)
+document.addEventListener('astro:page-load', () => {
+  const form = document.querySelector<HTMLFormElement>('#contacto-form')
+  if (!form)
     return
+  const submitBtn = document.querySelector<HTMLButtonElement>('#contacto-form-submit')
+  const submitLabel = document.querySelector<HTMLElement>('#contacto-submit-label')
+  const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
+  const messageField = form?.querySelector<HTMLTextAreaElement>('textarea[name="mensaje"]')
+  const messageCount = document.querySelector<HTMLElement>('[data-message-count]')
 
-  const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control'))
-  const fieldsValid = fields.every(validateField)
-  if (privacyCheckbox && !privacyCheckbox.checked) {
-    privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
-    const privacyError = document.getElementById('contacto-privacy-error')
-    if (privacyError)
-      privacyError.textContent = 'Debes aceptar la Política de Privacidad para continuar.'
+  function getValidationMessage(field: HTMLInputElement | HTMLTextAreaElement) {
+    if (field.validity.valueMissing)
+      return 'Este campo es obligatorio.'
+    if (field.validity.typeMismatch)
+      return 'Ingresa un correo válido.'
+    if (field.validity.tooShort)
+      return `Escribe al menos ${field.minLength} caracteres.`
+    return ''
   }
 
-  if (!fieldsValid || !form.checkValidity()) {
-    form.querySelector<HTMLElement>('[aria-invalid="true"], input:invalid')?.focus()
-    return
+  function validateField(field: HTMLInputElement | HTMLTextAreaElement) {
+    const message = getValidationMessage(field)
+    const errorId = field.getAttribute('aria-describedby')?.split(' ').find(id => id.endsWith('-error'))
+    const error = errorId ? document.getElementById(errorId) : null
+    field.setAttribute('aria-invalid', String(Boolean(message)))
+    if (error)
+      error.textContent = message
+    return !message
   }
 
-  const data = new FormData(form)
-  const turnstileToken = data.get('cf-turnstile-response')
-  if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
-    document.dispatchEvent(new CustomEvent('form-status', {
-      detail: { state: 'error', title: 'Verificación pendiente', message: 'Espera unos segundos y vuelve a intentar.' },
-    }))
-    return
-  }
-
-  submitBtn.disabled = true
-  if (submitLabel)
-    submitLabel.textContent = 'ENVIANDO…'
-  document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
-
-  try {
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        nombre: data.get('nombre'),
-        telefono: data.get('telefono'),
-        email: data.get('email'),
-        mensaje: data.get('mensaje'),
-        turnstileToken,
-        privacyConsent: data.get('privacyConsent') === 'on',
-        website: data.get('website'),
-      }),
+  form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control').forEach((field) => {
+    field.addEventListener('blur', () => validateField(field))
+    field.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true')
+        validateField(field)
     })
+  })
 
-    if (!res.ok) {
+  messageField?.addEventListener('input', () => {
+    if (messageCount)
+      messageCount.textContent = String(messageField.value.length)
+  })
+
+  privacyCheckbox?.addEventListener('change', () => {
+    privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.')
+    const error = document.getElementById('contacto-privacy-error')
+    if (error)
+      error.textContent = privacyCheckbox.checked ? '' : 'Debes aceptar la Política de Privacidad para continuar.'
+  })
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!submitBtn)
+      return
+
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form-control'))
+    const fieldsValid = fields.every(validateField)
+    if (privacyCheckbox && !privacyCheckbox.checked) {
+      privacyCheckbox.setCustomValidity('Debes aceptar la Política de Privacidad para continuar.')
+      const privacyError = document.getElementById('contacto-privacy-error')
+      if (privacyError)
+        privacyError.textContent = 'Debes aceptar la Política de Privacidad para continuar.'
+    }
+
+    if (!fieldsValid || !form.checkValidity()) {
+      form.querySelector<HTMLElement>('[aria-invalid="true"], input:invalid')?.focus()
+      return
+    }
+
+    const data = new FormData(form)
+    const turnstileToken = data.get('cf-turnstile-response')
+    if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
       document.dispatchEvent(new CustomEvent('form-status', {
-        detail: { state: 'error', title: 'No se pudo enviar', message: 'Intenta de nuevo en unos minutos.' },
+        detail: { state: 'error', title: 'Verificación pendiente', message: 'Espera unos segundos y vuelve a intentar.' },
       }))
       return
     }
 
-    form.reset()
-    fields.forEach(field => field.removeAttribute('aria-invalid'))
-    form.querySelectorAll<HTMLElement>('[data-field-error]').forEach(error => error.textContent = '')
-    if (messageCount)
-      messageCount.textContent = '0'
-    document.dispatchEvent(new CustomEvent('form-status', {
-      detail: { state: 'success', title: '¡Mensaje enviado!', message: 'Te contactaremos pronto.' },
-    }))
-  }
-  catch {
-    document.dispatchEvent(new CustomEvent('form-status', {
-      detail: { state: 'error', title: 'No se pudo enviar', message: 'Revisa tu conexión e intenta de nuevo.' },
-    }))
-  }
-  finally {
-    submitBtn.disabled = false
+    submitBtn.disabled = true
     if (submitLabel)
-      submitLabel.textContent = 'ENVIAR MENSAJE'
-    window.turnstile?.reset('contacto-turnstile')
+      submitLabel.textContent = 'ENVIANDO…'
+    document.dispatchEvent(new CustomEvent('form-status', { detail: { state: 'loading', title: 'Enviando…' } }))
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          nombre: data.get('nombre'),
+          telefono: data.get('telefono'),
+          email: data.get('email'),
+          mensaje: data.get('mensaje'),
+          turnstileToken,
+          privacyConsent: data.get('privacyConsent') === 'on',
+          website: data.get('website'),
+        }),
+      })
+
+      if (!res.ok) {
+        document.dispatchEvent(new CustomEvent('form-status', {
+          detail: { state: 'error', title: 'No se pudo enviar', message: 'Intenta de nuevo en unos minutos.' },
+        }))
+        return
+      }
+
+      form.reset()
+      fields.forEach(field => field.removeAttribute('aria-invalid'))
+      form.querySelectorAll<HTMLElement>('[data-field-error]').forEach(error => error.textContent = '')
+      if (messageCount)
+        messageCount.textContent = '0'
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'success', title: '¡Mensaje enviado!', message: 'Te contactaremos pronto.' },
+      }))
+    }
+    catch {
+      document.dispatchEvent(new CustomEvent('form-status', {
+        detail: { state: 'error', title: 'No se pudo enviar', message: 'Revisa tu conexión e intenta de nuevo.' },
+      }))
+    }
+    finally {
+      submitBtn.disabled = false
+      if (submitLabel)
+        submitLabel.textContent = 'ENVIAR MENSAJE'
+      if (turnstileWidget)
+        window.turnstile?.reset(turnstileWidget)
+    }
+  })
+
+  const turnstileBox = document.querySelector<HTMLElement>('#contacto-turnstile')
+  if (turnstileBox?.dataset.sitekey) {
+    void whenTurnstileReady().then((api) => {
+      if (api && turnstileBox.isConnected && !turnstileWidget)
+        turnstileWidget = api.render(turnstileBox, { sitekey: turnstileBox.dataset.sitekey!, action: turnstileBox.dataset.action, size: 'flexible' })
+    })
   }
 })
 </script>

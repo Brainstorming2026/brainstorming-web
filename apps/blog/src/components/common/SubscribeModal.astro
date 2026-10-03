@@ -58,7 +58,7 @@ import { siteUrl } from '@/lib/site-urls'
           </label>
 
           {TURNSTILE_SITE_KEY && (
-            <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
+            <div data-turnstile data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
           )}
 
           <p id="subscribe-modal-error" class="hidden font-body text-xs font-semibold text-accent-500"></p>
@@ -87,105 +87,113 @@ import { siteUrl } from '@/lib/site-urls'
 </div>
 
 <script>
-declare global {
-  interface Window {
-    turnstile?: { reset: (widget?: string | HTMLElement) => void }
-  }
-}
+import { resetTurnstileIn } from '@/lib/turnstile-client'
 
-const overlay = document.querySelector<HTMLDivElement>('#subscribe-overlay')
-const closeBtn = document.querySelector<HTMLButtonElement>('#subscribe-close')
-const form = document.querySelector<HTMLFormElement>('#subscribe-modal-form')
-const fields = document.querySelector<HTMLDivElement>('#subscribe-modal-fields')
-const successPanel = document.querySelector<HTMLDivElement>('#subscribe-modal-success')
-const errorText = document.querySelector<HTMLParagraphElement>('#subscribe-modal-error')
-const submitBtn = document.querySelector<HTMLButtonElement>('#subscribe-modal-submit')
-const originalLabel = submitBtn?.textContent ?? 'Suscribirme'
+// ClientRouter swaps the DOM without reloading and bundled scripts run once, so the
+// modal (and the page's open buttons) are wired on every astro:page-load.
+let closeCurrent: (() => void) | undefined
 
-function openModal() {
-  overlay?.classList.remove('hidden')
-  overlay?.classList.add('flex')
-}
-
-function resetModal() {
-  fields?.classList.remove('hidden')
-  successPanel?.classList.add('hidden')
-  successPanel?.classList.remove('flex')
-  errorText?.classList.add('hidden')
-  form?.reset()
-}
-
-function closeModal() {
-  overlay?.classList.add('hidden')
-  overlay?.classList.remove('flex')
-  resetModal()
-}
-
-document.querySelectorAll<HTMLButtonElement>('[data-open-subscribe-modal]').forEach((btn) => {
-  btn.addEventListener('click', openModal)
-})
-
-closeBtn?.addEventListener('click', closeModal)
-overlay?.addEventListener('click', (event) => {
-  if (event.target === overlay)
-    closeModal()
-})
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape')
-    closeModal()
+    closeCurrent?.()
 })
 
-form?.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  if (!form.checkValidity()) {
-    form.reportValidity()
+document.addEventListener('astro:page-load', () => {
+  closeCurrent = undefined
+  const overlay = document.querySelector<HTMLDivElement>('#subscribe-overlay')
+  const closeBtn = document.querySelector<HTMLButtonElement>('#subscribe-close')
+  const form = document.querySelector<HTMLFormElement>('#subscribe-modal-form')
+  if (!overlay || !form)
     return
+  const fields = document.querySelector<HTMLDivElement>('#subscribe-modal-fields')
+  const successPanel = document.querySelector<HTMLDivElement>('#subscribe-modal-success')
+  const errorText = document.querySelector<HTMLParagraphElement>('#subscribe-modal-error')
+  const submitBtn = document.querySelector<HTMLButtonElement>('#subscribe-modal-submit')
+  const originalLabel = submitBtn?.textContent ?? 'Suscribirme'
+
+  function openModal() {
+    overlay?.classList.remove('hidden')
+    overlay?.classList.add('flex')
   }
-  if (!submitBtn)
-    return
 
-  const data = new FormData(form)
-  const topics = data.getAll('topics').map(String)
-  const turnstileToken = data.get('cf-turnstile-response')
+  function resetModal() {
+    fields?.classList.remove('hidden')
+    successPanel?.classList.add('hidden')
+    successPanel?.classList.remove('flex')
+    errorText?.classList.add('hidden')
+    form?.reset()
+  }
 
-  errorText?.classList.add('hidden')
-  submitBtn.disabled = true
-  submitBtn.textContent = 'Enviando...'
+  function closeModal() {
+    overlay?.classList.add('hidden')
+    overlay?.classList.remove('flex')
+    resetModal()
+  }
 
-  try {
-    const res = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        email: data.get('email'),
-        topics: topics.length > 0 ? topics : undefined,
-        website: data.get('website'),
-        turnstileToken,
-        source: 'Modal',
-      }),
-    })
+  document.querySelectorAll<HTMLButtonElement>('[data-open-subscribe-modal]').forEach((btn) => {
+    btn.addEventListener('click', openModal)
+  })
 
-    if (res.ok) {
-      fields?.classList.add('hidden')
-      successPanel?.classList.remove('hidden')
-      successPanel?.classList.add('flex')
-      setTimeout(closeModal, 2200)
+  closeBtn?.addEventListener('click', closeModal)
+  overlay?.addEventListener('click', (event) => {
+    if (event.target === overlay)
+      closeModal()
+  })
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
     }
-    else if (errorText) {
-      errorText.textContent = 'No se pudo suscribir. Intenta de nuevo.'
-      errorText.classList.remove('hidden')
+    if (!submitBtn)
+      return
+
+    const data = new FormData(form)
+    const topics = data.getAll('topics').map(String)
+    const turnstileToken = data.get('cf-turnstile-response')
+
+    errorText?.classList.add('hidden')
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Enviando...'
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          email: data.get('email'),
+          topics: topics.length > 0 ? topics : undefined,
+          website: data.get('website'),
+          turnstileToken,
+          source: 'Modal',
+        }),
+      })
+
+      if (res.ok) {
+        fields?.classList.add('hidden')
+        successPanel?.classList.remove('hidden')
+        successPanel?.classList.add('flex')
+        setTimeout(closeModal, 2200)
+      }
+      else if (errorText) {
+        errorText.textContent = 'No se pudo suscribir. Intenta de nuevo.'
+        errorText.classList.remove('hidden')
+      }
     }
-  }
-  catch {
-    if (errorText) {
-      errorText.textContent = 'Revisa tu conexión e intenta de nuevo.'
-      errorText.classList.remove('hidden')
+    catch {
+      if (errorText) {
+        errorText.textContent = 'Revisa tu conexión e intenta de nuevo.'
+        errorText.classList.remove('hidden')
+      }
     }
-  }
-  finally {
-    submitBtn.disabled = false
-    submitBtn.textContent = originalLabel
-    window.turnstile?.reset()
-  }
+    finally {
+      submitBtn.disabled = false
+      submitBtn.textContent = originalLabel
+      resetTurnstileIn(form)
+    }
+  })
+
+  closeCurrent = closeModal
 })
 </script>

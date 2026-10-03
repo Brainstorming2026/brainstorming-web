@@ -1,6 +1,7 @@
 export interface TurnstileApi {
   render: (container: HTMLElement, options: { sitekey: string, action?: string, size?: 'normal' | 'flexible' | 'compact' }) => string
   reset: (widget?: string | HTMLElement) => void
+  remove: (widget: string | HTMLElement) => void
 }
 
 declare global {

@@ -2,5 +2,4 @@
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 ---
 
-{TURNSTILE_SITE_KEY && <div class="cf-turnstile mx-auto min-h-[65px]" data-sitekey={TURNSTILE_SITE_KEY} data-action="guia"></div>}
-{TURNSTILE_SITE_KEY && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+{TURNSTILE_SITE_KEY && <div class="mx-auto min-h-[65px]" data-turnstile data-sitekey={TURNSTILE_SITE_KEY} data-action="guia"></div>}

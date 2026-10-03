@@ -45,7 +45,7 @@ import { siteUrl } from '@/lib/site-urls'
       </label>
 
       {TURNSTILE_SITE_KEY && (
-        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
+        <div data-turnstile data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
       )}
 
       <p class="font-body text-xs leading-relaxed text-dark/50">
@@ -67,7 +67,9 @@ import { siteUrl } from '@/lib/site-urls'
 import { registerMotion, staggerGrid } from '@/lib/motion'
 import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
 
-wireSubscribeForm(document.querySelector('#blog-newsletter-form'), 'Newsletter home')
+document.addEventListener('astro:page-load', () => {
+  wireSubscribeForm(document.querySelector('#blog-newsletter-form'), 'Newsletter home')
+})
 
 registerMotion(() => {
   staggerGrid([

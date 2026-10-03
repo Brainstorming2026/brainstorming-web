@@ -85,7 +85,7 @@ const oficinas = [
             </label>
 
             {TURNSTILE_SITE_KEY && (
-              <div class="mt-2 cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" data-theme="dark" />
+              <div class="mt-2" data-turnstile data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" data-theme="dark" />
             )}
           </form>
 
@@ -127,5 +127,7 @@ const oficinas = [
 <script>
 import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
 
-wireSubscribeForm(document.querySelector('#footer-newsletter-form'), 'Footer')
+document.addEventListener('astro:page-load', () => {
+  wireSubscribeForm(document.querySelector('#footer-newsletter-form'), 'Footer')
+})
 </script>

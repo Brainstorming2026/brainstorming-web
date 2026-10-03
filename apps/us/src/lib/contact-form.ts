@@ -122,7 +122,10 @@ export function initContactForm() {
       spinner?.classList.add('hidden')
       if (submitLabel)
         submitLabel.textContent = originalLabel
-      window.turnstile?.reset('contact-turnstile')
+      // Single-use token: reset this widget by its container (a bare id string is read as a widget id, not the element).
+      const widget = document.getElementById('contact-turnstile')
+      if (widget)
+        window.turnstile?.reset(widget)
     }
   })
 }

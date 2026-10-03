@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components'
 ---
 
-<div id="form-status-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 px-4 opacity-0 transition-opacity duration-300">
+<div id="form-status-overlay" transition:persist="form-status" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 px-4 opacity-0 transition-opacity duration-300">
   <div id="form-status-modal" class="relative w-full max-w-[360px] scale-95 rounded-[24px] bg-white px-8 py-10 text-center opacity-0 shadow-xl transition-all duration-300">
     <button
       type="button"

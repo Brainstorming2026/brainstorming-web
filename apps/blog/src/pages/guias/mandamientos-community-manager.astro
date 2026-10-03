@@ -92,7 +92,7 @@ const faqs = [
           ¡Estás a punto de agregar valor a tu marca! Completa los siguientes datos y suscríbete a nuestro Brainstorming Blog. Recuerda que al registrarte, autorizas nuestro contacto para brindarte mayor información.
         </p>
 
-        <form id="guide-lead-form" class="mt-10 flex flex-col gap-6">
+        <form id="guide-lead-form" class="mt-10 flex flex-col gap-6" data-guide-slug="mandamientos-community-manager">
           <div class="grid gap-6 sm:grid-cols-2">
             <label class="flex flex-col gap-1">
               <span class="sr-only">Nombre y Apellido</span>
@@ -178,5 +178,8 @@ const faqs = [
 <script>
 import { wireGuideLeadForm } from '@/lib/wire-guide-lead-form'
 
-wireGuideLeadForm(document.querySelector('#guide-lead-form'), 'mandamientos-community-manager')
+// Scoped by slug: each guide's listener survives navigation and must only wire its own form.
+document.addEventListener('astro:page-load', () => {
+  wireGuideLeadForm(document.querySelector('#guide-lead-form[data-guide-slug="mandamientos-community-manager"]'), 'mandamientos-community-manager')
+})
 </script>

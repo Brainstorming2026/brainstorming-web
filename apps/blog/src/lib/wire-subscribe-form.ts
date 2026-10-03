@@ -1,12 +1,10 @@
-declare global {
-  interface Window {
-    turnstile?: { reset: (widget?: string | HTMLElement) => void }
-  }
-}
+import { resetTurnstileIn } from '@/lib/turnstile-client'
 
 export function wireSubscribeForm(form: HTMLFormElement | null, source: string): void {
-  if (!form)
+  // Called on every astro:page-load; never wire the same form twice.
+  if (!form || form.dataset.wired !== undefined)
     return
+  form.dataset.wired = ''
 
   const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')
 
@@ -59,7 +57,7 @@ export function wireSubscribeForm(form: HTMLFormElement | null, source: string):
     }
     finally {
       submitBtn.disabled = false
-      window.turnstile?.reset()
+      resetTurnstileIn(form)
     }
   })
 }

@@ -121,7 +121,7 @@ const solucionesSlugs: Record<string, string> = {
             </label>
 
             {TURNSTILE_SITE_KEY && (
-              <div class="mt-4 cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
+              <div class="mt-4" data-turnstile data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible" />
             )}
 
             <button
@@ -141,7 +141,9 @@ const solucionesSlugs: Record<string, string> = {
 import { registerMotion, revealClip, staggerGrid } from '@/lib/motion'
 import { wireSubscribeForm } from '@/lib/wire-subscribe-form'
 
-wireSubscribeForm(document.querySelector('#category-newsletter-form'), 'Newsletter categoría')
+document.addEventListener('astro:page-load', () => {
+  wireSubscribeForm(document.querySelector('#category-newsletter-form'), 'Newsletter categoría')
+})
 
 registerMotion(() => {
   const header = document.querySelector<HTMLElement>('#category-header')

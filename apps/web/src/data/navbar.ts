@@ -1,4 +1,5 @@
 import { resourceLinks, siteRoutes, siteServices } from './site-navigation'
+import { siteUrl } from '@/lib/site-urls'
 
 export interface NavLink {
   label: string
@@ -23,5 +24,5 @@ export const navLinks: NavLink[] = [
     children: resourceLinks,
   },
   { label: 'Contacto', href: siteRoutes.contact },
-  { label: 'US Site', href: 'https://us.brainstorming.la/' },
+  { label: 'US Site', href: siteUrl('us') },
 ]

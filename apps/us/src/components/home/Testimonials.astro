@@ -2,50 +2,57 @@
 import Wave from '@/components/common/Wave.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
-const lang = getLang(Astro.url)
-const t = useTranslations(lang, 'testimonials')
-const testimonials = t.items
+const t = useTranslations(getLang(Astro.url), 'testimonials')
 ---
 
-<div class="relative">
-  <section class="bg-gradient-to-b from-[#223B79] to-[#111E3D] pt-16 pb-[100px] lg:pt-24 lg:pb-[140px]">
-    <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
-      <h2 id="testimonials-headline" class="font-heading text-3xl font-bold text-white sm:text-4xl">
+<section id="client-testimonials" class="relative overflow-hidden bg-navy pt-24 pb-20 text-white sm:pt-28 lg:pt-32 lg:pb-24" aria-labelledby="testimonials-headline">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-px [&>svg]:h-10 lg:[&>svg]:h-14">
+    <Wave color="text-primary" edge="bottom" />
+  </div>
+  <div class="mx-auto max-w-[1384px] px-6 sm:px-8 lg:px-16">
+    <div>
+      <p class="mb-4 font-body text-xs font-bold tracking-[0.14em] text-white/60 uppercase">{t.eyebrow}</p>
+      <h2 id="testimonials-headline" class="font-heading text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.15] font-bold tracking-[-0.03em]">
         {t.headline}
       </h2>
-
-      <div id="testimonials-grid" class="mt-12 grid gap-6 md:grid-cols-3">
-        {
-          testimonials.map(t => (
-            <div class="testimonial-card relative rounded-2xl bg-white p-8 pt-12 shadow-lg">
-              <svg
-                class="absolute -top-4 left-6 h-10 w-10 text-primary"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p class="font-body text-sm leading-relaxed text-dark/70">{t.quote}</p>
-              <p class="mt-6 font-heading text-sm font-bold text-dark">{t.author}</p>
-              <p class="font-body text-xs text-dark/60">{t.role}</p>
-            </div>
-          ))
-        }
-      </div>
     </div>
-  </section>
 
-  <Wave color="text-mist-200" edge="top" class="absolute bottom-0 left-0 w-full -scale-x-100" />
-</div>
+    <div id="testimonials-grid" class="mt-8 grid gap-4 lg:mt-9 lg:grid-cols-3">
+      {t.items.map((testimonial, index) => (
+        <figure class="testimonial-card m-0 flex flex-col rounded-xl bg-white p-6 text-dark" aria-labelledby={`testimonial-author-${index}`}>
+          <svg aria-hidden="true" class="mb-4 size-5 shrink-0 text-primary" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <blockquote class="mb-6 font-body text-base leading-relaxed text-dark/85">
+            <p>{testimonial.quote}</p>
+          </blockquote>
+          <figcaption class="mt-auto border-t border-navy/15 pt-4">
+            <p id={`testimonial-author-${index}`} class="font-heading text-sm font-bold text-navy">{testimonial.author}</p>
+            <p class="mt-1 font-body text-[13px] leading-relaxed text-dark/75">{testimonial.role}</p>
+            <p class="mt-1 font-body text-[13px] font-semibold leading-relaxed text-primary-600">{testimonial.company}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -bottom-px [&>svg]:h-10 lg:[&>svg]:h-14">
+    <Wave color="text-mist-200" edge="top" class="-scale-x-100" />
+  </div>
+</section>
 
 <script>
 import { registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
+  if (prefersReducedMotion())
+    return
+
   const headline = document.getElementById('testimonials-headline')
   const cards = document.querySelectorAll('#testimonials-grid .testimonial-card')
   if (headline)
-    splitHeadline(headline, { by: 'words' })
-  staggerGrid(cards, { variant: 'organic' })
+    splitHeadline(headline, { by: 'lines' })
+  staggerGrid(cards, { variant: 'wipe', itemDuration: 0.9, itemStagger: 0.12 })
 })
 </script>

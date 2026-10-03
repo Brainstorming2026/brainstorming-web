@@ -1,5 +1,6 @@
 ---
 import type { Article } from '@/data/articles'
+import { siteUrl } from '@/lib/site-urls'
 
 interface Props {
   article: Article
@@ -21,7 +22,7 @@ const { article } = Astro.props
       <div class="mt-8 text-center">
         <p class="font-heading text-base font-bold text-dark">{article.summaryTagline}</p>
         <a
-          href="https://brainstorming.la/contacto"
+          href={siteUrl('web', '/contacto')}
           class="mt-6 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
         >
           Contáctanos

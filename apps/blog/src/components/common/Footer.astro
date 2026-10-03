@@ -4,8 +4,9 @@ import { Image } from 'astro:assets'
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import footerLogo from '@/assets/logos/footer-brainstormiing.webp'
 import { redes } from '@/data/footer'
+import { siteUrls } from '@/lib/site-urls'
 
-const SITE_URL = 'https://brainstorming.la'
+const SITE_URL = siteUrls.web
 
 const navegando = [
   { label: 'Brainstorming', href: SITE_URL },

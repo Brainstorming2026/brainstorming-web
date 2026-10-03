@@ -1,66 +1,155 @@
 ---
 import { Image } from 'astro:assets'
-import mockup from '@/assets/okrs/figure5.png'
+import benchmark from '@/assets/method/benchmark.webp'
+import business from '@/assets/method/business.webp'
+import positioning from '@/assets/method/positioning.webp'
+import prework from '@/assets/method/prework.webp'
+import priority from '@/assets/method/priority.webp'
+import roadmap from '@/assets/method/roadmap.webp'
+import stakeholders from '@/assets/method/stakeholders.webp'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'parts')
-const parts = t.items
+const images = [prework, business, stakeholders, benchmark, positioning, priority, roadmap]
+const pad = (n: number) => String(n).padStart(2, '0')
+const last = t.items.length - 1
+
+// Editorial split from the headline: 00–03 gather context, 04–06 turn it into decisions.
+const decideFrom = 4
+const stages = t.items.map((stage, index) => ({ ...stage, index, image: images[index] }))
+const phases = [
+  { label: t.phases[0], stages: stages.slice(0, decideFrom) },
+  { label: t.phases[1], stages: stages.slice(decideFrom) },
+]
 ---
 
-<section class="bg-mist-200 pt-4 pb-20">
-  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
-    <h2 id="parts-headline" class="font-heading text-3xl font-bold text-dark sm:text-4xl">
-      {t.headline} <span class="text-primary">{t.headlineAccent}</span> {t.headlineEnd}
-    </h2>
+<section id="growth-method" class="bg-linear-to-b from-mist-200 via-[#eaf0f8] via-55% to-[#f7f8fc] pb-15 sm:pb-18 lg:pb-26" aria-labelledby="method-headline" data-method>
+  <div class="sticky top-0 z-10 h-[3px] bg-navy/10 lg:hidden" aria-hidden="true">
+    <div class="h-full origin-left bg-primary-600 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [transform:scaleX(var(--progress,0.143))] motion-reduce:transition-none" data-stage-progress></div>
+  </div>
 
-    <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-      <div id="parts-img-wrap" class="h-auto w-full overflow-hidden rounded-2xl shadow-lg">
-        <Image
-          src={mockup}
-          alt={t.imgAlt}
-          class="parts-img h-auto w-full"
-          widths={[400, 700]}
-          sizes="(min-width: 1024px) 560px, 90vw"
-          loading="lazy"
-        />
+  <div class="mx-auto grid max-w-[1384px] gap-9 px-6 pt-4 sm:px-8 sm:pt-6 lg:grid-cols-[minmax(300px,0.85fr)_minmax(0,1.35fr)] lg:gap-[clamp(64px,7vw,128px)] lg:px-16 lg:pt-8">
+    <div class="lg:sticky lg:top-10 lg:self-start lg:pt-5">
+      <p class="mb-5 text-[12px] font-bold tracking-[0.14em] text-primary-600 uppercase">{t.eyebrow}</p>
+      <h2 id="method-headline" class="font-heading text-[36px]/[1.12] font-bold tracking-[-0.035em] text-navy sm:text-[length:clamp(36px,3.3vw,48px)]">
+        {t.headline} <span class="block text-primary-600">{t.headlineAccent}</span>
+      </h2>
+      <p class="mt-6 max-w-[550px] text-[18px]/[1.65] text-[#454e62] lg:max-w-[360px] lg:[@media(max-height:640px)]:hidden">{t.text}</p>
+
+      <div class="relative mt-8 hidden h-[clamp(180px,calc(100svh-500px),400px)] overflow-hidden rounded-3xl bg-[#e9e7e3] lg:block" aria-hidden="true">
+        {stages.map(stage => (
+          <div class="group/art absolute inset-0 [clip-path:inset(100%_0_0_0)] transition-[clip-path] duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] data-shown:[clip-path:inset(0)] motion-reduce:transition-none" data-stage-art data-shown={stage.index === 0 ? '' : undefined}>
+            <Image src={stage.image} alt="" loading="lazy" widths={[480, 640]} sizes="34vw" class="size-full scale-110 object-cover transition-[scale] duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] group-data-shown/art:scale-100 motion-reduce:transition-none" />
+          </div>
+        ))}
       </div>
 
-      <div id="parts-cards" class="flex flex-col gap-4">
-        {
-          parts.map(part => (
-            <div class="parts-card rounded-2xl bg-white p-6 shadow-sm">
-              <span class="inline-block rounded-full bg-primary px-4 py-1 font-heading text-xs font-bold text-white">
-                {part.label}
-              </span>
-              <h3 class="mt-3 font-heading text-xl font-bold text-navy">{part.heading}</h3>
-              <p class="mt-2 font-body text-sm text-dark/70">{part.description}</p>
-            </div>
-          ))
-        }
-      </div>
+      <nav class="mt-5 hidden lg:block" aria-label={t.navLabel}>
+        <ol class="grid grid-cols-7 gap-1.5">
+          {stages.map(stage => (
+            <li>
+              <a href={`#growth-stage-${stage.index}`} class="group/tick flex flex-col gap-2 rounded-sm pt-3 pb-2 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" data-stage-link data-passed={stage.index === 0 ? '' : undefined} aria-current={stage.index === 0 ? 'step' : undefined}>
+                <span class="h-[3px] rounded-full bg-navy/15 transition-colors duration-500 group-data-passed/tick:bg-primary-600 motion-reduce:transition-none" aria-hidden="true"></span>
+                <span class="text-[12px] font-bold text-navy/45 tabular-nums transition-colors duration-200 group-aria-[current=step]/tick:text-primary-600 pointer-fine:group-hover/tick:text-navy" aria-hidden="true">{pad(stage.index)}</span>
+                <span class="sr-only">{stage.heading}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-2 flex items-baseline gap-3 font-heading text-[17px]/[1.3] font-bold text-navy" aria-hidden="true">
+          <span class="text-[12px] text-navy/45 tabular-nums"><span data-stage-counter>00</span> / {pad(last)}</span>
+          <span data-stage-title>{stages[0].heading}</span>
+        </p>
+      </nav>
+    </div>
+
+    <div>
+      {phases.map((phase, phaseIndex) => (
+        <div class:list={[phaseIndex > 0 && 'mt-12 lg:mt-16']}>
+          <p class="flex items-center gap-4 text-[12px] font-bold tracking-[0.14em] text-navy uppercase">
+            <span>{phase.label}</span>
+            <span class="h-px flex-1 bg-navy/15" aria-hidden="true"></span>
+            <span class="text-navy/45 tabular-nums">{pad(phase.stages[0].index)}–{pad(phase.stages.at(-1)!.index)}</span>
+          </p>
+          <ol class="mt-2" start={phase.stages[0].index}>
+            {phase.stages.map(stage => (
+              <li id={`growth-stage-${stage.index}`} class="group scroll-mt-10 border-b border-navy/10 py-9 last:border-b-0 lg:py-12 xl:py-14" aria-labelledby={`stage-heading-${stage.index}`} data-stage data-heading={stage.heading} data-active={stage.index === 0 ? '' : undefined}>
+                <div class="xl:grid xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:items-start xl:gap-x-14">
+                  <Image src={stage.image} alt="" loading="lazy" widths={[400, 640]} sizes="(min-width: 640px) 440px, 100vw" class="mb-6 aspect-[4/3] w-full max-w-[440px] rounded-2xl object-cover lg:hidden" />
+                  <div>
+                    <span class="mb-4 inline-flex rounded-full border border-primary/35 bg-white/50 px-4 py-1.5 text-[12px]/[1.2] font-bold tracking-[0.08em] text-primary uppercase select-none transition-colors duration-500 group-data-active:border-primary group-data-active:bg-primary group-data-active:text-white motion-reduce:transition-none" aria-hidden="true">{t.stageLabel} {pad(stage.index)}</span>
+                    <h3 id={`stage-heading-${stage.index}`} class="font-heading text-[23px]/[1.2] font-bold tracking-[-0.025em] text-navy sm:text-[26px]/[1.2] lg:text-[28px]/[1.2]">
+                      <span class="sr-only">{t.stageLabel} {pad(stage.index)}: </span>{stage.heading}
+                    </h3>
+                  </div>
+                  <div class="xl:pt-[46px]">
+                    <p class="mt-4 max-w-[68ch] text-[16px]/[1.7] xl:mt-0 xl:max-w-none text-pretty text-[#505663] sm:text-[17px]/[1.7]">{stage.description}</p>
+                    {stage.tags.length > 0 && (
+                      <ul class="mt-5 flex flex-wrap gap-2">
+                        {stage.tags.map(tag => (
+                          <li class="rounded-md border border-navy/12 bg-white/60 px-3 py-1.5 text-[13px]/[1.3] font-medium text-navy/80">{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
 <script>
-import { ensureGsap, registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
-import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { ensureGsap, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
-  const headline = document.getElementById('parts-headline')
-  const imgWrap = document.getElementById('parts-img-wrap')
-  const img = document.querySelector<HTMLElement>('.parts-img')
-  const cards = document.querySelectorAll('#parts-cards .parts-card')
-  const { gsap } = ensureGsap()
+  const section = document.querySelector<HTMLElement>('[data-method]')
+  if (!section)
+    return
 
+  const headline = document.getElementById('method-headline')
   if (headline)
     splitHeadline(headline, { by: 'lines' })
-  if (imgWrap)
-    revealClip(imgWrap, { direction: 'left' })
-  if (img && !prefersReducedMotion()) {
-    gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.5, ease: 'power2.out', scrollTrigger: { trigger: imgWrap, start: 'top 85%' } })
+
+  const stages = Array.from(section.querySelectorAll<HTMLElement>('[data-stage]'))
+  staggerGrid(stages, { variant: 'wipe', itemDuration: 1, itemStagger: 0.1 })
+
+  const arts = section.querySelectorAll<HTMLElement>('[data-stage-art]')
+  const links = section.querySelectorAll<HTMLElement>('[data-stage-link]')
+  const progress = section.querySelector<HTMLElement>('[data-stage-progress]')
+  const counter = section.querySelector('[data-stage-counter]')
+  const title = section.querySelector('[data-stage-title]')
+
+  // Active stage drives the sticky art, the tick rail and the mobile bar; state only, so it also runs under reduced motion.
+  const setActive = (active: number) => {
+    stages.forEach((el, i) => el.toggleAttribute('data-active', i === active))
+    arts.forEach((el, i) => el.toggleAttribute('data-shown', i <= active))
+    links.forEach((el, i) => {
+      el.toggleAttribute('data-passed', i <= active)
+      if (i === active)
+        el.setAttribute('aria-current', 'step')
+      else
+        el.removeAttribute('aria-current')
+    })
+    progress?.style.setProperty('--progress', String((active + 1) / stages.length))
+    if (counter)
+      counter.textContent = String(active).padStart(2, '0')
+    if (title)
+      title.textContent = stages[active].dataset.heading ?? ''
   }
-  staggerGrid(cards, { variant: 'wipe' })
+
+  const { ScrollTrigger } = ensureGsap()
+  stages.forEach((el, i) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 55%',
+      end: 'bottom 55%',
+      onToggle: self => self.isActive && setActive(i),
+    })
+  })
 })
 </script>

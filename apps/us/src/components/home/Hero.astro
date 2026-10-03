@@ -1,66 +1,55 @@
 ---
-import { Image } from 'astro:assets'
+import { Picture } from 'astro:assets'
 import desktopBg from '@/assets/hero/bg-us-hd.png'
 import mobileBg from '@/assets/hero/bg-us-mobile.png'
-import down from '@/assets/hero/down.png'
 import Navbar from '@/components/common/Navbar.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'hero')
+
+const statement = 'block text-[length:clamp(34px,9.2vw,48px)] leading-[1.12] tracking-[-0.035em] sm:text-[length:clamp(38px,6.6vw,60px)] sm:leading-[1.09] lg:text-[length:clamp(40px,4.1vw,62px)]'
+const action = 'inline-flex min-h-[52px] items-center justify-center gap-3.5 text-[14px] font-bold no-underline transition-[scale,translate,background-color] duration-180 ease-out focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-white active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 motion-reduce:hover:translate-y-0'
 ---
 
-<section class="relative min-h-[100svh] overflow-hidden bg-white sm:min-h-[600px] lg:min-h-[721px]">
-  <Image
-    src={mobileBg}
-    alt=""
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom lg:hidden"
-    loading="eager"
-    widths={[390, 780, 1170]}
-    sizes="(min-width: 1024px) 0px, 100vw"
-    data-hero-bg
-  />
-  <Image
-    src={desktopBg}
-    alt=""
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-bottom lg:block"
-    loading="eager"
-    widths={[1024, 1512, 3024]}
-    sizes="(min-width: 1024px) 100vw, 0px"
-    data-hero-bg
-  />
-
-  <div class="relative z-10">
+<section class="relative isolate overflow-hidden bg-navy text-white" aria-labelledby="hero-headline" data-hero>
+  <div class="absolute inset-0 -z-1 origin-[75%_65%]" aria-hidden="true" data-hero-bg>
+    <Picture src={desktopBg} alt="" formats={['avif', 'webp']} widths={[1024, 1512, 2048]} sizes="100vw" loading="eager" pictureAttributes={{ class: 'contents' }} class="hidden size-full object-cover object-[right_bottom] lg:block" />
+    <Picture src={mobileBg} alt="" formats={['avif', 'webp']} widths={[390, 780, 1170]} sizes="100vw" loading="eager" pictureAttributes={{ class: 'contents' }} class="block size-full object-cover object-bottom lg:hidden" />
+  </div>
+  <div class="relative z-1">
     <Navbar />
-
-    <div class="max-w-7xl px-5 pt-8 sm:px-8 sm:pt-12 lg:px-16 lg:pt-4">
-      <h1 id="hero-headline" class="max-w-[360px] font-heading text-4xl leading-[1.15] font-bold text-white sm:max-w-3xl sm:text-5xl lg:text-[56px]">
-        {t.headline} <span class="text-gold">{t.headlineAccent}</span>
-      </h1>
-      <p id="hero-text" class="mt-6 max-w-[330px] font-body text-base leading-relaxed text-white/90 sm:max-w-2xl">
-        {t.text}
-      </p>
-
-      <button
-        type="button"
-        aria-label="Scroll to learn more"
-        class="mt-30 hidden animate-bounce lg:inline-flex"
-        onclick="document.getElementById('why-oakrs')?.scrollIntoView({ behavior: 'smooth' })"
-      >
-        <Image src={down} alt="" class="h-auto w-70" />
-      </button>
+    <div class="mx-auto max-w-[1512px] px-6 pt-6 pb-[290px] sm:px-8 sm:pt-8 sm:pb-[340px] lg:px-16 lg:pb-[150px] lg:max-[1200px]:px-12">
+      <div class="w-full max-w-[620px] lg:w-[60%] lg:max-w-[740px] lg:max-[1200px]:w-[62%]">
+        <h1 id="hero-headline" class="m-0 font-heading font-bold">
+          <span class="mb-5 block text-[12px]/[1.4] tracking-[0.13em] text-white/75 uppercase sm:mb-6 sm:text-[15px]/[1.4] lg:mb-4">{t.name}<span class="sr-only">: </span></span>
+          <span class:list={[statement, 'md:whitespace-nowrap']} data-hero-statement>{t.headline}</span>
+          <span class:list={[statement, 'mt-1.5 text-gold']} data-hero-statement>{t.headlineAccent}</span>
+        </h1>
+        <p id="hero-text" class="mt-[22px] max-w-[550px] text-[16px]/[1.65] text-pretty text-white/92 sm:mt-7 sm:text-[17px]/[1.7] lg:mt-[22px] lg:max-w-[540px] lg:max-[1200px]:max-w-[460px]" data-hero-detail>{t.text}</p>
+        <div class="mt-6 flex flex-col items-stretch gap-2.5 sm:mt-[30px] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3 lg:mt-6">
+          <a class:list={[action, 'rounded-lg bg-gold px-[22px] py-3.5 text-dark pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:bg-[#ffe0b6]']} href="#contact">
+            {t.primaryCta}
+            <svg class="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+          </a>
+          <a class:list={[action, 'self-center border-b border-white/45 py-3 text-white sm:self-auto pointer-fine:hover:translate-y-0.5']} href="#growth-method">
+            {t.secondaryCta}
+            <svg class="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6" /></svg>
+          </a>
+        </div>
+        <ul class="mt-[26px] flex w-full max-w-full list-none border-t border-white/25 pt-5 sm:mt-9 sm:w-fit sm:pt-6 lg:mt-7 lg:pt-5" data-hero-detail>
+          {t.metrics.map(metric => (
+            <li class="flex-1 border-l border-white/25 px-3 first:border-l-0 first:pl-0 last:pr-0 sm:flex-initial sm:px-6">
+              <span class="block text-[26px]/[1.1] font-medium tracking-[-0.025em] whitespace-nowrap tabular-nums sm:text-[28px]/[1.1] sm:whitespace-normal">{metric.value}</span>
+              <span class="mt-2 block text-[11px]/[1.4] text-white/85 sm:text-[12px]/[1.4]">{metric.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </div>
-
-  <svg
-    class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] w-full"
-    viewBox="0 0 1512 120"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <path d="M0,120 H1512 V44 C1134,104 378,104 0,44 Z" fill="#fff"></path>
+  <svg class="pointer-events-none absolute -bottom-px left-0 z-2 h-8 w-full sm:h-[65px]" viewBox="0 0 1512 80" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,80 H1512 V12 C1134,80 378,80 0,12 Z" fill="#fff" />
   </svg>
 </section>
 
@@ -69,22 +58,29 @@ import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
-  const backgrounds = document.querySelectorAll('[data-hero-bg]')
-  const headline = document.getElementById('hero-headline')
-  const text = document.getElementById('hero-text')
+  const hero = document.querySelector<HTMLElement>('[data-hero]')
+  if (!hero || prefersReducedMotion())
+    return
+
   const { gsap } = ensureGsap()
-
-  if (text && !prefersReducedMotion())
-    gsap.set(text, { opacity: 0, y: 10 })
-
-  if (headline) {
-    // 'lines' preserva el <span class="text-gold"> intacto dentro del split.
-    splitHeadline(headline, { by: 'lines', scrollTrigger: false, onComplete: () => {
-      if (text)
-        gsap.to(text, { opacity: 1, y: 0, duration: 0.5 })
-    } })
+  const statements = hero.querySelectorAll<HTMLElement>('[data-hero-statement]')
+  const details = hero.querySelectorAll('[data-hero-detail]')
+  const art = hero.querySelector('[data-hero-bg]')
+  let started = false
+  const start = () => {
+    if (started)
+      return
+    started = true
+    // Wait for the splash, while keeping CTA links visible and usable.
+    statements.forEach(el => splitHeadline(el, { by: 'lines', scrollTrigger: false }))
+    gsap.fromTo(details, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, delay: 0.15, ease: 'power2.out' })
+    if (art)
+      gsap.fromTo(art, { scale: 1 }, { scale: 1.035, duration: 9, ease: 'none' })
   }
-  if (backgrounds.length > 0 && !prefersReducedMotion())
-    gsap.fromTo(backgrounds, { scale: 1 }, { scale: 1.06, duration: 9, ease: 'none' })
+  const splash = document.getElementById('splash-screen')
+  if (!splash || getComputedStyle(splash).display === 'none')
+    start()
+  else
+    document.addEventListener('bs:splash-dismissed', start, { once: true })
 })
 </script>

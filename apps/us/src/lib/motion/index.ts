@@ -1,3 +1,4 @@
+export { countUp } from './counter'
 export { ensureGsap } from './gsap-client'
 export { splitHeadline } from './headline'
 export { registerMotion } from './lifecycle'

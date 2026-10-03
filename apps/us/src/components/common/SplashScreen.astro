@@ -71,6 +71,7 @@ const SEEN_KEY = 'bs-splash-seen'
      catch {}
      document.body.style.overflow = ''
      splash.style.pointerEvents = 'none'
+     document.dispatchEvent(new Event('bs:splash-dismissed'))
    }
 
    window.setTimeout(() => {

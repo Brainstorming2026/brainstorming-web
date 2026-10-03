@@ -1,6 +1,7 @@
 ---
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { categories } from '@/data/posts'
+import { siteUrl } from '@/lib/site-urls'
 ---
 
 <section class="bg-mist-100 py-16">
@@ -52,7 +53,7 @@ import { categories } from '@/data/posts'
         únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de
         interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento.
         Obtén más información acerca de la protección de tus datos en nuestra
-        <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
+        <a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" class="underline hover:text-primary">Política de Privacidad</a>.
       </p>
 
       <label class="hidden" aria-hidden="true">

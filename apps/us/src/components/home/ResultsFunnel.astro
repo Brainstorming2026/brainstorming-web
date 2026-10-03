@@ -1,40 +1,58 @@
 ---
-import { Image } from 'astro:assets'
-import hero from '@/assets/results/hero-results.png'
+import { Picture } from 'astro:assets'
+import hero from '@/assets/results/hero-results-us-matte.png'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'funnel')
 ---
 
-<section class="bg-white py-16">
-  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
-    <h2 id="funnel-headline" class="text-center font-heading text-3xl font-bold text-dark sm:text-[48px] sm:leading-[1.2]">
-      {t.headline}
-    </h2>
-    <p class="mx-auto mt-4 max-w-[800px] text-center font-body text-dark/60">
+<section id="growth-proof" class="bg-white pt-8 pb-16 lg:pt-12 lg:pb-24" aria-labelledby="funnel-headline">
+  <div class="mx-auto max-w-[1384px] px-6 sm:px-8 lg:px-16">
+    <div class="grid items-center gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-20">
+      <div>
+        <p class="mb-6 font-body text-xs font-bold tracking-[0.14em] text-primary-600 uppercase">{t.eyebrow}</p>
+        <h2 id="funnel-headline" class="font-heading text-[clamp(2rem,3.5vw,3rem)] leading-[1.15] font-bold tracking-[-0.035em] text-navy">
+          {t.headline}<span class="mt-2 block text-primary-600">{t.headlineAccent}</span>
+        </h2>
+      </div>
+      <div id="retention-proof" class="border-t border-navy/15 pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
+        <p aria-hidden="true" class="flex items-baseline font-heading text-[clamp(5rem,9vw,8rem)] leading-none font-bold tracking-[-0.065em] text-navy tabular-nums">
+          <span data-retention-digit>4</span><span class="px-2 text-primary/40">/</span><span data-retention-digit>5</span>
+        </p>
+        <p class="mt-5 max-w-[330px] font-body text-lg leading-relaxed text-navy/80">{t.retentionText}</p>
+      </div>
+    </div>
+    <div data-proof-rule aria-hidden="true" class="mt-12 h-px w-full bg-navy/15 lg:mt-16"></div>
+    <p class="mx-auto mt-10 max-w-[760px] text-center font-body text-base leading-relaxed text-balance text-dark/75 lg:text-lg">
       {t.text}
     </p>
 
-    <Image
+    <!-- Lossless PNG master (1879px), encoded once; the largest width is the source size, never upscaled server-side. -->
+    <Picture
       id="funnel-img"
       src={hero}
       alt={t.imgAlt}
+      formats={['avif', 'webp']}
+      quality={85}
       class="mx-auto mt-10 h-auto w-full"
-      widths={[758, 1512]}
-      sizes="(min-width: 1024px) 1480px, 100vw"
+      widths={[640, 960, 1256, 1879]}
+      sizes="(min-width: 1384px) 1256px, (min-width: 1024px) calc(100vw - 128px), calc(100vw - 48px)"
       loading="lazy"
     />
   </div>
 </section>
 
 <script>
-import { ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
+import { drawLine, ensureGsap, registerMotion, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
 registerMotion(() => {
   const headline = document.getElementById('funnel-headline')
   const img = document.getElementById('funnel-img')
+  if (prefersReducedMotion())
+    return
+
   if (headline)
     splitHeadline(headline, { by: 'lines' })
   if (!img)
@@ -42,10 +60,15 @@ registerMotion(() => {
 
   const { gsap } = ensureGsap()
 
-  if (prefersReducedMotion()) {
-    gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.4 })
-    return
+  const retention = document.getElementById('retention-proof')
+  if (retention) {
+    gsap.timeline({ scrollTrigger: { trigger: retention, start: 'top 85%', once: true } })
+      .from(retention.querySelectorAll('[data-retention-digit]'), { yPercent: 25, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' })
+      .from(retention.querySelector('p:last-child'), { y: 14, opacity: 0, duration: 0.7, ease: 'power2.out' }, 0.25)
   }
+  const rule = document.querySelector<HTMLElement>('[data-proof-rule]')
+  if (rule)
+    drawLine(rule, { scrollTrigger: true })
 
   // El funnel es una forma apilada/inclinada — que "se asiente" bamboleando
   // en vez de un reveal plano encaja mejor con su propia geometría.

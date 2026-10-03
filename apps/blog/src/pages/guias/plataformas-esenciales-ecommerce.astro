@@ -4,6 +4,7 @@ import guideCover from '@/assets/guides/plataformas-esenciales-ecommerce.webp'
 import logo from '@/assets/logos/brainstorming-logo.webp'
 import TurnstileWidget from '@/components/common/TurnstileWidget.astro'
 import Layout from '@/layouts/Layout.astro'
+import { siteUrl } from '@/lib/site-urls'
 
 export const prerender = true
 
@@ -31,7 +32,7 @@ const faqs = [
 <Layout title={`${title} — Brainstorming`} description="Infografía gratuita con 4 plataformas esenciales para crear tu Ecommerce." showChrome={false}>
   <div class="bg-white">
     <div class="mx-auto max-w-[880px] px-6 pt-10 pb-16 lg:px-0">
-      <a href="https://brainstorming.la/" class="flex justify-center" aria-label="Brainstorming — inicio">
+      <a href={siteUrl('web')} class="flex justify-center" aria-label="Brainstorming — inicio">
         <Image src={logo} alt="Brainstorming" class="h-7 w-auto" />
       </a>
 
@@ -151,7 +152,7 @@ const faqs = [
           </label>
 
           <p class="font-body text-xs leading-relaxed text-white/50">
-            En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Política de Privacidad</a>.
+            En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Política de Privacidad</a>.
           </p>
 
           <label class="hidden" aria-hidden="true">

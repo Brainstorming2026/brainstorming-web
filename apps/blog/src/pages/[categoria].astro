@@ -6,6 +6,7 @@ import PostRow from '@/components/blog/PostRow.astro'
 import { getArticleBySlug } from '@/data/articles'
 import { allPosts, categories, getCategoryBySlug, popularPosts } from '@/data/posts'
 import Layout from '@/layouts/Layout.astro'
+import { siteUrl } from '@/lib/site-urls'
 
 export const prerender = true
 
@@ -68,7 +69,7 @@ const solucionesSlugs: Record<string, string> = {
           : (
               <a
                 id="category-lead-magnet"
-                href={`https://brainstorming.la/soluciones/${solucionesSlugs[category.slug]}`}
+                href={siteUrl('web', `/soluciones/${solucionesSlugs[category.slug]}`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="mt-10 flex flex-col items-center justify-center rounded-[16px] bg-gradient-to-b from-primary to-navy px-8 py-12 text-center text-white transition-opacity hover:opacity-95"
@@ -112,7 +113,7 @@ const solucionesSlugs: Record<string, string> = {
             </label>
 
             <p class="mt-4 font-body text-xs leading-relaxed text-dark/50">
-              En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
+              En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
             </p>
 
             <label class="hidden" aria-hidden="true">

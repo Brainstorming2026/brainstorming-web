@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components'
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import { categories } from '@/data/posts'
+import { siteUrl } from '@/lib/site-urls'
 ---
 
 <div id="subscribe-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-ink/60 px-4">
@@ -63,7 +64,7 @@ import { categories } from '@/data/posts'
           <p id="subscribe-modal-error" class="hidden font-body text-xs font-semibold text-accent-500"></p>
 
           <p class="font-body text-xs leading-relaxed text-dark/50">
-            En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
+            En Brainstorming cuidamos tu privacidad. Queremos que sepas que utilizaremos la información proporcionada únicamente para ponernos en contacto contigo y enviarte contenidos de productos, servicios y recursos de interés para ti. Si ya no deseas recibir estas comunicaciones, puedes darte de baja en cualquier momento. Obtén más información acerca de la protección de tus datos en nuestra <a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Política de Privacidad</a>.
           </p>
 
           <label class="hidden" aria-hidden="true">

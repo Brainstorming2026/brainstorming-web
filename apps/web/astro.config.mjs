@@ -11,6 +11,8 @@ import { defineConfig, envField } from 'astro/config'
 export default defineConfig({
   site: 'https://brainstorming.la',
   trailingSlash: 'never',
+  // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
+  server: { port: 4321 },
   output: 'server',
 
   redirects: {
@@ -46,6 +48,9 @@ export default defineConfig({
       CORREO_REPLY_TO: envField.string({ context: 'server', access: 'secret', optional: true }),
       TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
       TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      WEB_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      US_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      BLOG_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
     },
   },
 

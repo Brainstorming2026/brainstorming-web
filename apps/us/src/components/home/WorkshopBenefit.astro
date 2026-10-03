@@ -1,56 +1,131 @@
 ---
-import { Image } from 'astro:assets'
-import illustration from '@/assets/okrs/figure6.png'
+import Wave from '@/components/common/Wave.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
 
-const lang = getLang(Astro.url)
-const t = useTranslations(lang, 'benefit')
+const t = useTranslations(getLang(Astro.url), 'benefit')
+const horizonDays = Number(t.milestones.at(-1)!.day)
 ---
 
-<section class="bg-gradient-to-br from-navy to-navy-600 py-16 lg:py-24">
-  <div class="mx-auto grid max-w-[1512px] items-center gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-16">
-    <div id="benefit-img-wrap" class="mx-auto h-auto w-full max-w-[480px] overflow-hidden">
-      <Image
-        src={illustration}
-        alt={t.imgAlt}
-        class="benefit-img h-auto w-full"
-        widths={[300, 600]}
-        sizes="(min-width: 1024px) 480px, 90vw"
-        loading="lazy"
-      />
+<section id="growth-outcome" class="overflow-hidden bg-white" aria-labelledby="outcome-headline">
+  <div class="relative bg-gradient-to-br from-navy to-navy-600 text-white">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-px [&>svg]:h-10 lg:[&>svg]:h-14">
+      <Wave color="text-[#f7f8fc]" edge="bottom" />
     </div>
+    <div class="mx-auto max-w-[1384px] px-6 pt-20 pb-24 sm:px-8 sm:pt-24 sm:pb-28 lg:px-16 lg:pt-28">
+      <div class="grid items-start gap-6 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
+        <div>
+          <p class="outcome-intro mb-4 font-body text-xs font-bold tracking-[0.16em] text-white/60 uppercase">{t.eyebrow}</p>
+          <h2 id="outcome-headline" class="max-w-[650px] font-heading text-[clamp(1.75rem,3vw,2.625rem)] leading-[1.15] font-bold tracking-[-0.03em]">
+            {t.headline}<span class="mt-1 block text-mist-200">{t.headlineAccent}</span>
+          </h2>
+        </div>
+        <div class="outcome-intro max-w-[430px] lg:pt-8">
+          <p class="font-body text-base leading-relaxed text-white/80">{t.text}</p>
+          <p class="mt-5 border-l border-white/25 pl-4 font-body text-sm leading-relaxed text-white/65">
+            <span class="block text-white/90">{t.sprintLabel}</span>
+            <span class="mt-1 block">{t.horizonLabel}</span>
+          </p>
+        </div>
+      </div>
 
-    <div id="benefit-text" class="text-right">
-      <h2 class="font-heading text-2xl leading-snug font-normal text-white sm:text-[32px]">
-        {t.headline}
-      </h2>
-      <p class="mt-4 font-body text-lg text-white/85">
-        {t.text}
-      </p>
+      <div id="outcome-horizon" class="mt-14 lg:mt-16">
+        <h3 class="outcome-intro mb-8 font-body text-xs tracking-[0.12em] text-white/60 uppercase">{t.timelineLabel}</h3>
+        <!-- Each milestone fills its share of the full 180-day horizon, so the bars stay proportional while columns stay even. -->
+        <ol class="grid gap-10 sm:grid-cols-3 sm:gap-8 lg:gap-14">
+          {t.milestones.map(milestone => (
+            <li>
+              <span class="block h-1.5 overflow-hidden rounded-full bg-white/15" aria-hidden="true">
+                <span data-horizon-bar class="block h-full origin-left rounded-full bg-white" style={`width: ${(Number(milestone.day) / horizonDays) * 100}%`} />
+              </span>
+              <div data-milestone-copy class="mt-7">
+                <p class="flex items-baseline gap-2">
+                  <span class="font-heading text-[40px] leading-none font-bold tracking-[-0.035em] tabular-nums lg:text-[44px]" data-count-up>{milestone.day}</span>
+                  <span class="font-body text-xs tracking-[0.1em] text-white/60 uppercase">{t.days}</span>
+                </p>
+                <h4 class="mt-4 font-heading text-lg leading-snug font-bold">{milestone.title}</h4>
+                <p class="mt-1 font-body text-sm leading-relaxed text-white/65">{milestone.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -bottom-px [&>svg]:h-10 lg:[&>svg]:h-14">
+      <Wave color="text-white" edge="top" class="-scale-x-100" />
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-[1384px] px-6 pt-8 pb-14 sm:px-8 lg:px-16 lg:pt-10 lg:pb-20">
+    <h3 class="outcome-benefit mb-8 font-body text-xs font-bold tracking-[0.14em] text-primary-600 uppercase">{t.benefitsLabel}</h3>
+    <ul class="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-10">
+      {t.benefits.map(benefit => (
+        <li class="outcome-benefit border-t border-navy/15 pt-5 pb-6">
+          <h4 class="font-heading text-lg leading-snug font-bold tracking-[-0.02em] text-navy">{benefit.title}</h4>
+          <p class="mt-2 font-body text-sm leading-relaxed text-pretty text-navy/75">{benefit.description}</p>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
 
 <script>
-import { ensureGsap, registerMotion, revealClip } from '@/lib/motion'
-import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
+import { countUp, ensureGsap, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
-  const imgWrap = document.getElementById('benefit-img-wrap')
-  const text = document.getElementById('benefit-text')
+  const section = document.getElementById('growth-outcome')
+  const horizon = document.getElementById('outcome-horizon')
+  const headline = document.getElementById('outcome-headline')
+  if (!section || !horizon || !headline)
+    return
 
-  if (imgWrap)
-    revealClip(imgWrap, { direction: 'left' })
+  const { gsap } = ensureGsap()
+  const media = gsap.matchMedia()
 
-  if (text) {
-    const { gsap } = ensureGsap()
-    if (prefersReducedMotion()) {
-      gsap.fromTo(text, { opacity: 0 }, { opacity: 1, duration: 0.4 })
+  media.add({
+    desktop: '(min-width: 640px)',
+    mobile: '(max-width: 639px)',
+    reduced: '(prefers-reduced-motion: reduce)',
+  }, (context) => {
+    const { desktop, reduced } = context.conditions!
+    if (reduced)
+      return
+
+    splitHeadline(headline, { by: 'lines' })
+    gsap.from(section.querySelectorAll('.outcome-intro'), {
+      y: 16,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.08,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: section, start: 'top 75%', once: true },
+    })
+
+    const bars = horizon.querySelectorAll('[data-horizon-bar]')
+    const copies = horizon.querySelectorAll('[data-milestone-copy]')
+    if (desktop) {
+      const timeline = gsap.timeline({ scrollTrigger: { trigger: horizon, start: 'top 80%', once: true } })
+      timeline.from(bars, { scaleX: 0, duration: 0.9, stagger: 0.3, ease: 'power2.inOut' }, 0)
+      timeline.from(copies, { y: 18, opacity: 0, duration: 0.8, stagger: 0.3, ease: 'power3.out' }, 0.2)
+      // Days tick with the same timing and ease as their bar, so number and fill read as one motion.
+      horizon.querySelectorAll<HTMLElement>('[data-count-up]').forEach((el, index) => {
+        const tween = countUp(el, { scrollTrigger: false, duration: 0.9, ease: 'power2.inOut' })
+        if (tween)
+          timeline.add(tween, index * 0.3)
+      })
     }
     else {
-      gsap.set(text, { opacity: 0, x: 24 })
-      gsap.to(text, { opacity: 1, x: 0, duration: 1.0, ease: 'power2.out', delay: 0.15, scrollTrigger: { trigger: text, start: 'top 85%' } })
+      horizon.querySelectorAll('li').forEach((milestone) => {
+        const timeline = gsap.timeline({ scrollTrigger: { trigger: milestone, start: 'top 85%', once: true } })
+        timeline.from(milestone.querySelector('[data-horizon-bar]'), { scaleX: 0, duration: 0.8, ease: 'power2.inOut' })
+          .from(milestone.querySelector('[data-milestone-copy]'), { y: 16, opacity: 0, duration: 0.7, ease: 'power3.out' }, 0.15)
+        const day = milestone.querySelector<HTMLElement>('[data-count-up]')
+        const tween = day && countUp(day, { scrollTrigger: false, duration: 0.8, ease: 'power2.inOut' })
+        if (tween)
+          timeline.add(tween, 0)
+      })
     }
-  }
+
+    staggerGrid(section.querySelectorAll('.outcome-benefit'), { variant: 'wipe', itemDuration: 0.9, itemStagger: 0.12 })
+  })
 })
 </script>

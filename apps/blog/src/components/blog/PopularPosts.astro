@@ -1,6 +1,7 @@
 ---
 import PostRow from '@/components/blog/PostRow.astro'
 import { popularPosts } from '@/data/posts'
+import { siteUrl } from '@/lib/site-urls'
 ---
 
 <section class="mx-auto max-w-[1140px] px-6 pb-16 lg:px-16">
@@ -13,7 +14,7 @@ import { popularPosts } from '@/data/posts'
 
     <a
       id="popular-posts-cta"
-      href="https://brainstorming.la/contacto"
+      href={siteUrl('web', '/contacto')}
       class="flex flex-col items-center justify-center rounded-[16px] bg-gradient-to-b from-primary to-navy px-8 py-12 text-center text-white transition-opacity hover:opacity-95"
     >
       <p class="font-heading text-2xl font-bold leading-snug">Actuamos para lograr tus objetivos de negocio</p>

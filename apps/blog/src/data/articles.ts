@@ -31,6 +31,7 @@ import influencerMailTime from '@/assets/images/que-es-un-influencer/img-2.png'
 import influencerCrowdPhones from '@/assets/images/que-es-un-influencer/img-3.png'
 import landingRocket from '@/assets/images/que-es-una-landing-page/img-1.png'
 import landingMockup from '@/assets/images/que-es-una-landing-page/img-2.png'
+import { siteUrl } from '@/lib/site-urls'
 
 // Placeholder mientras se conecta Sanity (CMS). Cada articulo completo vive
 // aca hasta que el CMS resuelva el body real via GROQ — el template en
@@ -271,7 +272,7 @@ export const articles: Article[] = [
     secondaryCta: {
       title: 'CONOCE NUESTRAS SOLUCIONES',
       ctaLabel: 'Ver Más',
-      ctaHref: 'https://brainstorming.la/soluciones',
+      ctaHref: siteUrl('web', '/soluciones'),
     },
     publishedDate: '5 noviembre 2021',
   },
@@ -341,7 +342,7 @@ export const articles: Article[] = [
     secondaryCta: {
       title: 'CONOCE NUESTRAS SOLUCIONES',
       ctaLabel: 'Ver Más',
-      ctaHref: 'https://brainstorming.la/soluciones',
+      ctaHref: siteUrl('web', '/soluciones'),
     },
     publishedDate: '5 noviembre 2021',
   },

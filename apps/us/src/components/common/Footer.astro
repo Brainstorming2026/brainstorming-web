@@ -4,75 +4,47 @@ import { Image } from 'astro:assets'
 import logo from '@/assets/brainstorming/logo.png'
 import { redes } from '@/data/footer'
 import { getLang, localizePath, useTranslations } from '@/i18n/utils'
+import { siteUrl } from '@/lib/site-urls'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'footer')
 const year = new Date().getFullYear()
-
-const quickLinks = t.quickLinks
+const linkClass = 'inline-flex min-h-11 items-center rounded-sm font-body text-sm text-white/80 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none'
 ---
 
-<footer class="relative text-white">
-  <div class="bg-dark">
-    <div class="mx-auto grid max-w-[1512px] gap-10 px-6 py-12 lg:grid-cols-3 lg:px-16 lg:py-16">
-      <div>
-        <a href={localizePath('/', lang)}>
-          <Image src={logo} alt="Brainstorming" class="h-7 w-auto" widths={[200, 400]} sizes="200px" />
-        </a>
-        <p class="mt-4 max-w-xs font-body text-sm text-white/60">
-          {t.tagline}
-        </p>
-        <ul class="mt-6 flex items-center gap-3">
-          {
-            redes.map(r => (
-              <li>
-                <a href={r.href} target="_blank" rel="noopener noreferrer" aria-label={r.label} class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary">
-                  <Icon name={r.name} class="h-10 w-full" />
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="font-heading text-lg font-bold">{t.quickLinksTitle}</h3>
-        <ul class="mt-4 flex flex-col gap-3">
-          {
-            quickLinks.map(l => (
-              <li>
-                <a href={l.href} class="font-body text-sm text-white/70 transition-colors hover:text-primary-300">
-                  {l.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="font-heading text-lg font-bold">{t.contactTitle}</h3>
-        <ul class="mt-4 flex flex-col gap-3 text-sm">
+<footer class="bg-dark text-white">
+  <div class="mx-auto grid max-w-[1384px] gap-8 px-6 py-12 sm:grid-cols-2 sm:px-8 md:grid-cols-[minmax(0,1fr)_auto_auto] md:gap-x-16 lg:gap-x-24 lg:px-16 lg:py-16">
+    <div class="sm:col-span-2 md:col-span-1">
+      <a href={localizePath('/', lang)} class="inline-block rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+        <Image src={logo} alt="Brainstorming" class="h-7 w-auto" widths={[200, 400]} sizes="200px" />
+      </a>
+      <p class="mt-4 max-w-[290px] font-body text-sm leading-relaxed text-white/75">{t.tagline}</p>
+      <ul class="mt-4 flex flex-wrap items-center gap-2">
+        {redes.map(r => (
           <li>
-            <a href="mailto:conversemos@brainstorming.la" class="flex items-center gap-2.5 text-white/70 transition-colors hover:text-primary-300">
-              <Icon name="footer-mail" class="h-4 w-4 shrink-0" />
-              <span>conversemos@brainstorming.la</span>
+            <a href={r.href} target="_blank" rel="noopener noreferrer" aria-label={r.label} class="flex size-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-white/60 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none">
+              <Icon name={r.name} class="size-5" />
             </a>
           </li>
-          <li>
-            <a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-white/70 transition-colors hover:text-primary-300">
-              <Icon name="footer-phone" class="h-4 w-4 shrink-0" />
-              <span>+51 992 528 363</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+        ))}
+      </ul>
     </div>
-
-    <div class="border-t border-white/10">
-      <p class="flex flex-col items-center justify-center gap-2 py-5 text-center font-body text-xs text-white/60 sm:flex-row sm:gap-3 sm:py-6 sm:text-sm">
-        <span>{t.copyright.replace('{year}', String(year))}</span>
-      </p>
+    <nav aria-labelledby="footer-links-heading">
+      <h2 id="footer-links-heading" class="mb-2 font-heading text-sm font-bold text-white">{t.quickLinksTitle}</h2>
+      <ul>{t.quickLinks.map(link => <li><a href={link.href} class={linkClass}>{link.label}</a></li>)}</ul>
+    </nav>
+    <div>
+      <h2 class="mb-2 font-heading text-sm font-bold text-white">{t.contactTitle}</h2>
+      <ul>
+        <li><a href="mailto:conversemos@brainstorming.la" class:list={[linkClass, 'gap-2 break-all']}><Icon name="footer-mail" class="size-4 shrink-0" /><span>conversemos@brainstorming.la</span></a></li>
+        <li><a href="https://wa.me/51992528363" target="_blank" rel="noopener noreferrer" class:list={[linkClass, 'gap-2']}><Icon name="footer-phone" class="size-4 shrink-0" /><span>+51 992 528 363</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <div class="mx-auto flex max-w-[1384px] flex-col gap-2 px-6 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-16">
+      <p class="font-body text-xs leading-relaxed text-white/70">{t.copyright.replace('{year}', String(year))}</p>
+      <a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start rounded-sm font-body text-xs text-white/80 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">{t.privacyPolicy}{' '}{t.privacyLanguageNote}</a>
     </div>
   </div>
 </footer>

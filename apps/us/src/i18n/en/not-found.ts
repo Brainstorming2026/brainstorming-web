@@ -1,6 +1,9 @@
 export default {
-  eyebrow: 'PAGE NOT FOUND',
-  headline: 'Even the best workshops need a redirect.',
-  text: 'The page you\'re looking for doesn\'t exist. Let\'s get you back to the OAKRs Workshop.',
-  cta: 'BACK TO HOME',
+  eyebrow: 'Error 404',
+  headline: 'We couldn\'t find the page you\'re looking for.',
+  textPrefix: 'Go back to the',
+  homeLink: 'homepage',
+  textMiddle: 'or',
+  contactLink: 'contact us',
+  textSuffix: '.',
 } as const

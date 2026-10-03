@@ -2,300 +2,182 @@
 import { Image } from 'astro:assets'
 import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import illustration from '@/assets/contact/hero-contact.png'
-import arrow from '@/assets/contact/right.png'
-import FormStatusModal from '@/components/common/FormStatusModal.astro'
 import { getLang, useTranslations } from '@/i18n/utils'
+import { siteUrl } from '@/lib/site-urls'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'contact')
-const investmentRanges = t.investmentRanges
+const fields = [
+  { name: 'firstName', label: t.firstName, type: 'text', autocomplete: 'given-name', min: 1, max: 100 },
+  { name: 'lastName', label: t.lastName, type: 'text', autocomplete: 'family-name', min: 1, max: 100 },
+  { name: 'companyEmail', label: t.companyEmail, type: 'email', autocomplete: 'email', max: 150 },
+  { name: 'phone', label: t.phone, type: 'tel', autocomplete: 'tel', min: 6, max: 30 },
+] as const
+const fieldClass = 'mt-2 min-h-11 w-full rounded-lg border border-mist-200 bg-mist-100/60 px-3 py-2.5 font-body text-base text-dark transition-colors focus:border-primary focus:outline-2 focus:outline-offset-2 focus:outline-primary aria-invalid:border-primary-600 motion-reduce:transition-none'
 ---
 
-<div class="relative">
-  <svg
-    viewBox="0 0 1512 50"
-    preserveAspectRatio="none"
-    fill="none"
-    class="pointer-events-none absolute top-0 left-0 z-10 h-[50px] w-full text-white lg:h-[90px]"
-  >
-    <path
-      fill="currentColor"
-      d="M316.384 3.44999C406.123 6.09999 493.138 12.45 607.846 28.45C652.64 34.8 724.219 43.95 759.932 46.4C795.646 48.85 839.532 50.3 874.187 49.05C889.622 48.5 908.387 48.35 950.003 45.35C991.165 42.2 1038.08 37.05 1070.16 33C1132.66 25.05 1213.77 22.05 1272.94 21.7C1403.69 20.9 1512.65 37.1 1512.65 37.1V-1.14441e-05H-0.6521V17.35C-0.6521 17.35 77.2829 7.64999 160.06 4.49999C242.233 1.49999 280.67 2.39999 316.384 3.44999Z"
-    />
+<section id="contact" class="relative overflow-hidden bg-mist-100" aria-labelledby="contact-headline">
+  <svg aria-hidden="true" viewBox="0 0 1512 50" preserveAspectRatio="none" fill="none" class="pointer-events-none absolute top-0 left-0 z-10 h-[50px] w-full text-white lg:h-[90px]">
+    <path fill="currentColor" d="M316.384 3.44999C406.123 6.09999 493.138 12.45 607.846 28.45C652.64 34.8 724.219 43.95 759.932 46.4C795.646 48.85 839.532 50.3 874.187 49.05C889.622 48.5 908.387 48.35 950.003 45.35C991.165 42.2 1038.08 37.05 1070.16 33C1132.66 25.05 1213.77 22.05 1272.94 21.7C1403.69 20.9 1512.65 37.1 1512.65 37.1V-1.14441e-05H-0.6521V17.35C-0.6521 17.35 77.2829 7.64999 160.06 4.49999C242.233 1.49999 280.67 2.39999 316.384 3.44999Z" />
   </svg>
-
-  <section id="contact" class="relative overflow-hidden bg-mist-100">
-    <div
-      class="absolute inset-y-0 right-0 w-full bg-gradient-to-br from-primary to-navy-700 lg:w-1/2"
-    >
+  <div class="relative isolate mx-auto grid max-w-[1384px] items-start gap-8 px-6 pt-20 pb-12 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-0 lg:px-16 lg:pt-28 lg:pb-24">
+    <!-- Violet panel starts exactly at the form column (4rem padding + 5/12 of the content) and bleeds to the viewport edge. -->
+    <div aria-hidden="true" class="pointer-events-none absolute -inset-y-[30rem] right-[calc(50%-50vw)] left-[calc(4rem+(100%-8rem)*5/12)] -z-10 hidden bg-gradient-to-br from-primary to-navy-700 lg:block"></div>
+    <div id="contact-text" class="max-w-[440px] lg:pt-8 lg:pr-10">
+      <p class="mb-4 font-body text-xs font-bold tracking-[0.14em] text-primary-600 uppercase">{t.eyebrow}</p>
+      <h2 id="contact-headline" class="font-heading text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.17] font-bold tracking-[-0.03em] text-navy">{t.headline}</h2>
+      <p class="mt-5 font-heading text-lg leading-relaxed font-bold text-navy">{t.text}</p>
+      <p class="mt-3 max-w-[360px] font-body text-base leading-relaxed text-dark/80">{t.requestNote}</p>
+      <div id="contact-img-wrap" class="mt-6 max-w-[360px] overflow-hidden">
+        <Image src={illustration} alt="" class="h-auto w-full" widths={[360, 720]} sizes="(min-width: 640px) 360px, calc(100vw - 48px)" loading="lazy" />
+      </div>
+      <div data-contact-direct class="mt-8 border-t border-navy/20 pt-5">
+        <p class="font-body text-sm text-dark/75">{t.directLabel}</p>
+        <a href="mailto:conversemos@brainstorming.la" class="mt-1 inline-flex min-h-11 items-center font-body text-sm font-semibold break-all text-navy underline decoration-navy/30 underline-offset-4 hover:text-primary-600 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">conversemos@brainstorming.la</a>
+      </div>
     </div>
 
-    <Image
-      src={arrow}
-      alt=""
-      role="presentation"
-      class="contact-arrow pointer-events-none absolute top-[62%] left-[58%] z-30 hidden w-16 -translate-x-1/2 -translate-y-1/2 opacity-90 lg:block"
-    />
-
-    <div class="relative mx-auto grid max-w-[1512px] gap-10 px-6 pt-20 pb-12 lg:grid-cols-2 lg:gap-16 lg:px-16 lg:pt-28 lg:pb-16">
-      <div id="contact-text" class="flex flex-col lg:justify-center">
-        <h2 id="contact-headline" class="font-heading text-3xl font-bold text-navy sm:text-4xl">{t.headline}</h2>
-        <p class="mt-3 max-w-[420px] font-body text-dark/70">
-          {t.text}
-        </p>
-
-        <div id="contact-img-wrap" class="relative mt-8 max-w-md overflow-hidden">
-          <Image
-            src={illustration}
-            alt={t.illustrationAlt}
-            class="h-auto w-full object-contain"
-            widths={[400, 740]}
-            sizes="(min-width: 1024px) 480px, 90vw"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      <div id="contact-form-card" class="rounded-2xl bg-white p-8 shadow-xl lg:max-w-[540px] lg:ml-auto">
-        <h3 class="text-center font-heading text-xl font-bold text-navy">
-          {t.formTitle}
-        </h3>
-        <p class="mt-1 text-center font-body text-sm italic text-dark/60">{t.requiredNote}</p>
-
-        <form
-          id="contact-form"
-          class="mt-6 flex flex-col gap-4"
-          data-sending-title={t.sendingTitle}
-          data-success-title={t.successTitle}
-          data-success-message={t.successMessage}
-          data-error-title={t.errorTitle}
-          data-error-message={t.errorMessage}
-          data-privacy-consent-error={t.privacyConsentError}
-        >
-          <input type="hidden" name="lang" value={lang} />
-          <label class="hidden" aria-hidden="true">
-            <input type="text" name="website" tabindex="-1" autocomplete="off" />
-          </label>
-
-          <input
-            type="text"
-            name="firstName"
-            placeholder={t.firstName}
-            required
-            minlength="1"
-            maxlength="100"
-            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder={t.lastName}
-            required
-            minlength="1"
-            maxlength="100"
-            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
-          />
-          <input
-            type="email"
-            name="companyEmail"
-            placeholder={t.companyEmail}
-            required
-            maxlength="150"
-            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder={t.phone}
-            required
-            minlength="6"
-            maxlength="30"
-            class="rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
-          />
-
-          <fieldset>
-            <legend class="font-body text-sm text-dark">{t.investmentLegend}</legend>
-            <div class="mt-2 flex flex-col gap-1.5">
-              {
-                investmentRanges.map(range => (
-                  <label class="flex items-center gap-2 font-body text-sm text-dark/80">
-                    <input type="radio" name="investment" value={range} required class="accent-primary" />
-                    {range}
-                  </label>
-                ))
-              }
+    <div class="relative min-w-0 lg:pl-12 xl:pl-28">
+      <svg data-contact-arrow aria-hidden="true" class="pointer-events-none absolute top-1/2 left-9 hidden h-44 w-11 -translate-y-1/2 xl:block" viewBox="0 0 44 176">
+        <defs>
+          <linearGradient id="contact-arrow-fill" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0.04" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0.32" />
+          </linearGradient>
+        </defs>
+        <path d="M0 0 44 88 0 176 16 88Z" fill="url(#contact-arrow-fill)" />
+      </svg>
+      <div id="contact-form-card" class="min-w-0 rounded-2xl border border-navy/10 bg-white p-5 shadow-[0_28px_60px_-34px_rgb(23_41_82/0.6)] sm:p-7 lg:p-9">
+      <h3 class="font-heading text-xl leading-snug font-bold tracking-[-0.02em] text-navy">{t.formTitle}</h3>
+      <p class="mt-2 font-body text-xs leading-relaxed text-dark/70">{t.requiredNote}</p>
+      <form
+        id="contact-form"
+        class="mt-6 flex flex-col gap-5"
+        aria-busy="false"
+        data-sending-title={t.sendingTitle}
+        data-success-title={t.successTitle}
+        data-success-message={t.successMessage}
+        data-error-title={t.errorTitle}
+        data-error-message={t.errorMessage}
+        data-verification-error={t.verificationError}
+      >
+        <input type="hidden" name="lang" value={lang} />
+        <label class="hidden" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <div class="grid gap-x-4 gap-y-4 sm:grid-cols-2">
+          {fields.map(field => (
+            <div>
+              <label for={`contact-${field.name}`} class="font-body text-sm font-medium text-navy">{field.label}</label>
+              <input
+                id={`contact-${field.name}`}
+                type={field.type}
+                name={field.name}
+                autocomplete={field.autocomplete}
+                required
+                minlength={'min' in field ? field.min : undefined}
+                maxlength={field.max}
+                class={fieldClass}
+                aria-describedby={`contact-${field.name}-error`}
+                data-error-message={t.validation[field.name]}
+              />
+              <p id={`contact-${field.name}-error`} class="mt-1 hidden font-body text-xs leading-relaxed text-primary-600" aria-live="polite"></p>
             </div>
-            <p class="mt-2 font-body text-xs text-dark/50">{t.investmentNote}</p>
-          </fieldset>
+          ))}
+        </div>
 
-          <label class="font-body text-sm font-bold text-dark">
-            {t.messageLabel}
-            <textarea
-              name="message"
-              maxlength="2000"
-              rows="3"
-              class="mt-2 w-full rounded-lg border border-mist-200 bg-mist-100/60 px-4 py-3 font-body text-sm text-dark placeholder:text-dark/50 focus:border-primary focus:outline-none"
-            ></textarea>
-          </label>
+        <fieldset>
+          <legend class="font-body text-sm font-medium text-navy">{t.investmentLegend}</legend>
+          <div class="mt-3 grid gap-2 sm:grid-cols-2">
+            {t.investmentRanges.map(range => (
+              <label class="flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border border-navy/15 px-3 py-2 font-body text-[13px] leading-snug text-dark/85 transition-colors hover:border-primary/50 has-checked:border-primary has-checked:bg-primary/5 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary motion-reduce:transition-none">
+                <input
+                  type="radio"
+                  name="investment"
+                  value={range}
+                  required
+                  class="size-4 shrink-0 accent-primary"
+                  aria-describedby="contact-investment-note contact-investment-error"
+                  data-error-message={t.validation.investment}
+                />
+                {range}
+              </label>
+            ))}
+          </div>
+          <p id="contact-investment-note" class="mt-2 font-body text-xs leading-relaxed text-dark/70">{t.investmentNote}</p>
+          <p id="contact-investment-error" class="mt-1 hidden font-body text-xs leading-relaxed text-primary-600" aria-live="polite"></p>
+        </fieldset>
 
-          <label class="flex items-start gap-2 font-body text-xs text-dark/70">
+        <div>
+          <label for="contact-message" class="font-body text-sm font-medium leading-relaxed text-navy">{t.messageLabel}</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            maxlength="2000"
+            rows="3"
+            class:list={[fieldClass, 'resize-y']}
+            aria-describedby="contact-message-error"
+            data-error-message={t.validation.message}
+          ></textarea>
+          <p id="contact-message-error" class="mt-1 hidden font-body text-xs leading-relaxed text-primary-600" aria-live="polite"></p>
+        </div>
+
+        <div>
+          <label class="flex min-h-11 cursor-pointer items-start gap-3 font-body text-[13px] leading-relaxed text-dark/80">
             <input
+              id="contact-privacyConsent"
               type="checkbox"
               name="privacyConsent"
               required
-              class="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+              class="mt-0.5 size-4 shrink-0 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              aria-describedby="contact-privacyConsent-error"
+              data-error-message={t.privacyConsentError}
             />
-            <span>
-              {t.privacyConsentPrefix}
-              {' '}
-              <a href="https://brainstorming.la/politica-de-privacidad" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">{t.privacyConsentLink}</a>.
-            </span>
+            <span>{t.privacyConsentPrefix}{' '}<a href={siteUrl('web', '/politica-de-privacidad')} target="_blank" rel="noopener noreferrer" class="rounded-sm text-navy underline underline-offset-4 hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">{t.privacyConsentLink}</a>{' '}{t.privacyLanguageNote}.</span>
           </label>
+          <p id="contact-privacyConsent-error" class="mt-1 hidden font-body text-xs leading-relaxed text-primary-600" aria-live="polite"></p>
+        </div>
 
-          <div id="contact-turnstile" class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action="contact-us"></div>
-
-          <button
-            type="submit"
-            id="contact-form-submit"
-            class="mt-2 rounded-lg bg-primary py-3 font-heading text-sm font-bold tracking-wide text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {t.submit}
-          </button>
-        </form>
+        <div>
+          <div id="contact-turnstile" class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-action="contact-us" data-language={lang} data-size="flexible" data-theme="light"></div>
+          <p id="contact-verification-error" class="mt-2 hidden font-body text-xs leading-relaxed text-primary-600" aria-live="polite"></p>
+        </div>
+        <button type="submit" id="contact-form-submit" class="flex min-h-12 items-center justify-center gap-3 rounded-lg bg-primary px-4 py-3 font-heading text-sm leading-snug font-bold text-white transition-colors hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary disabled:cursor-wait disabled:opacity-70 motion-reduce:transition-none">
+          <svg data-submit-spinner aria-hidden="true" class="hidden size-4 shrink-0 animate-spin motion-reduce:animate-none" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.25" /><path d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+          <span data-submit-label>{t.submit}</span>
+        </button>
+        <div id="contact-form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1" class="hidden rounded-lg border border-navy/15 bg-mist-100/50 p-4 font-body text-sm leading-relaxed text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+          <p data-status-title class="font-semibold"></p><p data-status-message class="mt-1"></p>
+        </div>
+      </form>
       </div>
     </div>
-  </section>
-</div>
-
-<FormStatusModal />
+  </div>
+</section>
 
 <script>
+import { initContactForm } from '@/lib/contact-form'
 import { ensureGsap, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
 import { prefersReducedMotion } from '@/lib/motion/reduced-motion'
 
+initContactForm()
 registerMotion(() => {
+  if (prefersReducedMotion())
+    return
   const headline = document.getElementById('contact-headline')
-  const imgWrap = document.getElementById('contact-img-wrap')
   const formCard = document.getElementById('contact-form-card')
+  const illustrationWrap = document.getElementById('contact-img-wrap')
+  const direct = document.querySelector('[data-contact-direct]')
   const { gsap } = ensureGsap()
-
   if (headline)
     splitHeadline(headline, { by: 'lines' })
-  if (imgWrap)
-    revealClip(imgWrap, { direction: 'up' })
-
-  if (formCard) {
-    if (prefersReducedMotion()) {
-      gsap.fromTo(formCard, { opacity: 0 }, { opacity: 1, duration: 0.4 })
-    }
-    else {
-      gsap.set(formCard, { opacity: 0, y: 24, scale: 0.98 })
-      gsap.to(formCard, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power2.out', delay: 0.1, scrollTrigger: { trigger: formCard, start: 'top 85%' } })
-    }
-  }
+  if (illustrationWrap)
+    revealClip(illustrationWrap, { direction: 'up' })
+  if (direct)
+    gsap.from(direct, { y: 12, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: direct, start: 'top 90%', once: true } })
+  const arrow = document.querySelector('[data-contact-arrow]')
+  if (arrow)
+    gsap.to(arrow, { x: 8, duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+  if (formCard)
+    gsap.from(formCard, { y: 20, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: formCard, start: 'top 85%', once: true } })
 })
 </script>
-
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-<script>
-  declare global {
-    interface Window {
-      turnstile?: { reset: (widget?: string | HTMLElement) => void }
-    }
-  }
-
-  const form = document.querySelector<HTMLFormElement>('#contact-form')
-  const submitBtn = document.querySelector<HTMLButtonElement>('#contact-form-submit')
-  const privacyCheckbox = form?.querySelector<HTMLInputElement>('input[name="privacyConsent"]')
-
-  privacyCheckbox?.addEventListener('change', () => {
-    privacyCheckbox.setCustomValidity(privacyCheckbox.checked ? '' : (form?.dataset.privacyConsentError ?? ''))
-  })
-  privacyCheckbox?.addEventListener('invalid', () => {
-    privacyCheckbox.setCustomValidity(form?.dataset.privacyConsentError ?? '')
-  })
-
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault()
-    if (!submitBtn || !form)
-      return
-
-    // Verificacion explicita de campos: no depender solo del `required` nativo,
-    // que un submit programatico o un boton mal tipado podria saltarse.
-    if (!form.checkValidity()) {
-      form.reportValidity()
-      return
-    }
-
-    const data = new FormData(form)
-    const turnstileToken = data.get('cf-turnstile-response')
-    if (typeof turnstileToken !== 'string' || turnstileToken.length === 0) {
-      document.dispatchEvent(new CustomEvent('form-status', {
-        detail: { state: 'error', title: form.dataset.errorTitle, message: 'Please wait a moment and try again.' },
-      }))
-      return
-    }
-
-    submitBtn.disabled = true
-    document.dispatchEvent(new CustomEvent('form-status', {
-      detail: { state: 'loading', title: form.dataset.sendingTitle },
-    }))
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          firstName: data.get('firstName'),
-          lastName: data.get('lastName'),
-          companyEmail: data.get('companyEmail'),
-          phone: data.get('phone'),
-          investment: data.get('investment'),
-          message: data.get('message'),
-          lang: data.get('lang'),
-          turnstileToken,
-          privacyConsent: data.get('privacyConsent') === 'on',
-          website: data.get('website'),
-        }),
-      })
-
-      if (!res.ok) {
-        document.dispatchEvent(new CustomEvent('form-status', {
-          detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
-        }))
-        return
-      }
-
-      form.reset()
-      document.dispatchEvent(new CustomEvent('form-status', {
-        detail: { state: 'success', title: form.dataset.successTitle, message: form.dataset.successMessage },
-      }))
-    }
-    catch {
-      document.dispatchEvent(new CustomEvent('form-status', {
-        detail: { state: 'error', title: form.dataset.errorTitle, message: form.dataset.errorMessage },
-      }))
-    }
-    finally {
-      submitBtn.disabled = false
-      window.turnstile?.reset('contact-turnstile')
-    }
-  })
-</script>
-
-<style>
-  .contact-arrow {
-    animation: contact-arrow-bounce 1.6s ease-in-out infinite;
-  }
-
-  @keyframes contact-arrow-bounce {
-    0%,
-    100% {
-      transform: translate(-50%, -50%);
-    }
-    50% {
-      transform: translate(-35%, -50%);
-    }
-  }
-</style>

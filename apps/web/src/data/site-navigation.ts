@@ -1,3 +1,4 @@
+import { siteUrl } from '@/lib/site-urls'
 /** Shared destinations and contextual labels for the main LATAM site. */
 export const siteRoutes = {
   home: '/',
@@ -5,7 +6,7 @@ export const siteRoutes = {
   projects: '/proyectos',
   solutions: '/soluciones',
   guides: '/guias-practicas-brainstorming',
-  blog: 'https://blog.brainstorming.la/',
+  blog: siteUrl('blog'),
 } as const
 
 interface SiteService {

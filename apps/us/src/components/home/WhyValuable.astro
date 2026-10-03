@@ -1,53 +1,84 @@
 ---
-import { Image } from 'astro:assets'
-import mindsetIcon from '@/assets/okrs/figure1.png'
-import growthIcon from '@/assets/okrs/figure2.png'
 import { getLang, useTranslations } from '@/i18n/utils'
 
 const lang = getLang(Astro.url)
 const t = useTranslations(lang, 'valuable')
 ---
 
-<section id="why-oakrs" class="relative overflow-hidden bg-gradient-to-b from-white via-mist-100 to-mist-200 pt-16 pb-0">
-  <div class="mx-auto max-w-[1512px] px-6 lg:px-16">
-    <h2 id="valuable-headline" class="max-w-[666px] font-heading text-3xl font-bold text-dark sm:text-[48px] sm:leading-[1.3]">
-      {t.headlineStart} <span class="text-primary">{t.headlineAccent}</span> {t.headlineEnd}
-    </h2>
-
-    <div class="mt-8 flex justify-end pb-20 -mr-6 lg:-mr-16">
-      <div id="valuable-pill" class="w-full max-w-[900px] rounded-l-[120px] rounded-r-none bg-white/60 py-8 pr-6 pl-20 shadow-sm lg:pr-16">
-        <div class="flex flex-col gap-6">
-          <div class="valuable-row flex items-center gap-6">
-            <Image src={mindsetIcon} alt="" class="h-16 w-16 shrink-0" />
-            <p class="font-body text-dark/80">
-              {t.row1} <strong class="font-bold">{t.row1Strong}</strong>.
-            </p>
-          </div>
-          <div class="valuable-row flex items-center gap-6">
-            <Image src={growthIcon} alt="" class="h-16 w-16 shrink-0" />
-            <p class="font-body text-dark/80">
-              {t.row2Start} <strong class="font-bold text-primary">{t.row2Accent}</strong> {t.row2Middle}
-              <strong class="font-bold">{t.row2Strong}</strong>.
-            </p>
-          </div>
-        </div>
+<section id="starting-point" class="isolate overflow-x-clip bg-[#f5f6fa]" aria-labelledby="starting-headline" data-starting>
+  <div class="bg-linear-to-b from-white to-[#f5f6fa] px-6 pt-12 pb-12 text-dark sm:px-8 sm:pt-16 sm:pb-14 lg:px-16 lg:pt-22 lg:pb-16">
+    <div class="mx-auto grid max-w-[1384px] items-start gap-7 lg:grid-cols-2 lg:gap-[clamp(48px,6vw,100px)]">
+      <h2 id="starting-headline" class="font-heading font-bold">
+        <span class="mb-4.5 block text-[12px]/[1.5] tracking-[0.14em] text-primary-600 uppercase sm:mb-6">{t.eyebrow}<span class="sr-only">: </span></span>
+        <span class="block max-w-[650px] text-[34px]/[1.16] tracking-[-0.03em] text-pretty sm:text-[length:clamp(34px,3.25vw,48px)] lg:max-w-[560px]" data-starting-title>{t.headline} <span class="text-primary-600">{t.headlineAccent}</span></span>
+      </h2>
+      <div class="max-w-[680px] lg:max-w-[580px] lg:pt-10">
+        <p class="text-[18px]/[1.7] text-pretty text-navy sm:text-[19px]/[1.7]" data-starting-copy>{t.description}</p>
+        <p class="mt-6 text-[16px]/[1.8] text-pretty text-[#505663]" data-starting-copy>{t.approach}</p>
       </div>
+    </div>
+  </div>
+
+  <!-- The card straddles the seam into the method section; the pseudo-element paints the lower half full-bleed. -->
+  <div class="px-6 pb-16 sm:px-8 lg:px-16 lg:pb-20">
+    <div class="relative mx-auto max-w-[1240px] before:absolute before:top-1/2 before:-bottom-16 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-mist-200 lg:before:-bottom-20">
+      <aside aria-labelledby="starting-principle-title" data-principle>
+        <div class="grid gap-10 rounded-3xl bg-linear-to-b from-[#0c193c] to-[#2a4588] px-6 py-10 text-white sm:px-12 sm:py-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:px-16 lg:py-14">
+          <div>
+            <h3 id="starting-principle-title" class="font-heading text-[length:clamp(30px,3.4vw,46px)] leading-[1.08] font-bold tracking-[-0.035em]" data-principle-title>
+              {t.highlight} <span class="block text-mist-200">{t.highlightAccent}</span>
+            </h3>
+            <p class="mt-6 max-w-[460px] text-[16px]/[1.7] text-pretty text-white/80 sm:text-[17px]/[1.7]">{t.highlightText}</p>
+          </div>
+          <ol>
+            {t.criteria.map((label, index) => (
+              <li class="relative grid grid-cols-[2.75rem_minmax(0,1fr)] items-baseline py-4.5 sm:py-5">
+                <span class="absolute inset-x-0 top-0 h-px bg-white/20" aria-hidden="true" data-principle-line></span>
+                <span class="text-[13px] font-bold text-white/50 tabular-nums" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span class="font-heading text-[length:clamp(22px,2vw,28px)] leading-[1.2] font-bold tracking-[-0.025em]">{label}</span>
+                {index === t.criteria.length - 1 && <span class="absolute inset-x-0 bottom-0 h-px bg-white/20" aria-hidden="true" data-principle-line></span>}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div class="mx-auto -mt-px h-7 w-[calc(100%-48px)] bg-[#2a4588] [clip-path:polygon(0_0,100%_0,50%_100%)] sm:h-10 lg:h-12" aria-hidden="true"></div>
+        <!-- Soft shade cast below the point, as in the original site banner. -->
+        <svg class="mx-auto -mt-7 block h-16 w-[80%] sm:-mt-10 sm:h-20 lg:-mt-12 lg:h-26" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="principle-shade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2c458a" stop-opacity="0" />
+              <stop offset="1" stop-color="#2c458a" stop-opacity="0.3" />
+            </linearGradient>
+          </defs>
+          <path d="M0 0H100L50 100Z" fill="url(#principle-shade)" />
+        </svg>
+      </aside>
     </div>
   </div>
 </section>
 
 <script>
-import { registerMotion, revealClip, splitHeadline, staggerGrid } from '@/lib/motion'
+import { drawLine, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
-  const headline = document.getElementById('valuable-headline')
-  const pill = document.getElementById('valuable-pill')
-  const rows = document.querySelectorAll('#valuable-pill .valuable-row')
+  const section = document.querySelector<HTMLElement>('[data-starting]')
+  if (!section)
+    return
 
+  const headline = section.querySelector<HTMLElement>('[data-starting-title]')
+  const principle = section.querySelector<HTMLElement>('[data-principle-title]')
   if (headline)
     splitHeadline(headline, { by: 'lines' })
-  if (pill)
-    revealClip(pill, { direction: 'right' })
-  staggerGrid(rows, { variant: 'organic' })
+  if (principle)
+    splitHeadline(principle, { by: 'lines' })
+
+  staggerGrid(section.querySelectorAll('[data-starting-copy]'), { variant: 'organic', itemDuration: 0.9, itemStagger: 0.12 })
+  // Fade/rise instead of revealClip: a clip-path would also cut the card's drop-shadow.
+  const card = section.querySelector('[data-principle]')
+  if (card)
+    staggerGrid([card], { variant: 'organic', itemDuration: 1 })
+  section.querySelectorAll<HTMLElement>('[data-principle-line]').forEach((line, index) => {
+    drawLine(line, { delay: 0.3 + index * 0.12, scrollTrigger: true })
+  })
 })
 </script>

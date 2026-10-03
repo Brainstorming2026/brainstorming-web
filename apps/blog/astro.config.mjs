@@ -10,6 +10,8 @@ import { defineConfig, envField } from 'astro/config'
 export default defineConfig({
   site: 'https://blog.brainstorming.la',
   trailingSlash: 'never',
+  // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
+  server: { port: 4323 },
   output: 'server', // per-page `prerender = true` keeps static pages free
 
   adapter: vercel({
@@ -35,6 +37,9 @@ export default defineConfig({
       RESEND_SUBSCRIBE_AUDIENCE_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
       TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
       TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      WEB_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      US_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      BLOG_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
     },
   },
 

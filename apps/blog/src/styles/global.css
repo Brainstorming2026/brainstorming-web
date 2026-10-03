@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource-variable/geist";
 
 html {
   scroll-behavior: smooth;
@@ -134,4 +133,12 @@ html {
   /* === Texto === */
   --color-ink: #000000;
   --color-ink-500: #666666;
+}
+
+@layer base {
+  /* Brand typography by default: every heading in Nexa, so components with their own
+     <style> (or no font class) never fall back to another family. Utilities still override. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
 }

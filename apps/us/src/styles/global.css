@@ -56,3 +56,11 @@ html {
   /* === Dorado (acento propio de US) === */
   --color-gold: #f9d099;
 }
+
+@layer base {
+  /* Brand typography by default: every heading in Nexa, so components with their own
+     <style> (or no font class) never fall back to another family. Utilities still override. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}

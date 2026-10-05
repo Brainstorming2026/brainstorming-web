@@ -1,7 +1,7 @@
 .innovation-page {      color: var(--color-dark); background: white;  }
 
 
-.innovation-page h2 { font-size: clamp(32px,3.5vw,50px); font-weight: 500; line-height: 1.12; letter-spacing: -.05em; text-wrap: balance; }
+.innovation-page h2 { font-size: clamp(32px,3.5vw,50px); font-weight: 700; line-height: 1.12; letter-spacing: -.035em; text-wrap: balance; }
 .innovation-page p { font-size: 15px; line-height: 1.8; color: var(--color-gray-body); }
 .innovation-page .in-accent { color: var(--color-primary); }
 .innovation-page .in-label { font-size: 10px; line-height: 1.6; letter-spacing: .12em; font-weight: 600; }
@@ -25,7 +25,7 @@
 .in-opportunities-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
 .in-opportunities-grid article { background: var(--color-mist-50); padding: 25px; border-radius: 10px; }
 .in-opportunities-grid .in-icon { color: var(--color-primary); width: 25px; height: 25px; }
-.in-opportunities-grid h3 { font-size: 18px; font-weight: 500; margin: 22px 0 10px; letter-spacing: -.03em; }
+.in-opportunities-grid h3 { font-size: 18px; font-weight: 700; margin: 22px 0 10px; letter-spacing: -.03em; }
 .in-opportunities-grid p { font-size: 12px; }
 .in-process { background: var(--color-primary-50); padding-block: 85px; }
 .in-section-heading { display: grid; grid-template-columns: 1.4fr 1fr; gap: 70px; align-items: end; margin-bottom: 45px; }
@@ -43,7 +43,7 @@ innovation-process { display: block; }
 .in-phase-content { display: grid; grid-template-columns: 1fr 1fr; background: white; border-radius: 12px; overflow: hidden; }
 .in-phase-copy { padding: 36px; }
 .in-phase-copy > .in-label { color: var(--color-primary); font-size: 9px; }
-.in-phase-copy h3 { font-size: clamp(25px,2.5vw,35px); letter-spacing: -.04em; line-height: 1.15; font-weight: 500; margin: 24px 0; }
+.in-phase-copy h3 { font-size: clamp(25px,2.5vw,35px); letter-spacing: -.035em; line-height: 1.15; font-weight: 700; margin: 24px 0; }
 .in-phase-copy p { font-size: 13px; }
 .in-phase-focus { display: flex; align-items: center; gap: 10px; margin-top: 30px; border-top: 1px solid var(--color-primary-100); padding-top: 18px; }
 .in-phase-focus > span { font-size: 10px; line-height: 1.6; color: var(--color-gray-body); }
@@ -76,7 +76,7 @@ innovation-process { display: block; }
 .in-director-identity { display: flex; align-items: center; gap: 20px; }
 .in-director-icon { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border: 1px solid var(--color-primary-100); border-radius: 12px; background: white; color: var(--color-primary); }
 .in-director-identity .in-label { color: var(--color-gray-body); font-size: 9px; letter-spacing: .06em; }
-.in-director h3 { font-size: 24px; font-weight: 500; letter-spacing: -.04em; line-height: 1.2; margin-top: 8px; }
+.in-director h3 { font-size: 24px; font-weight: 700; letter-spacing: -.035em; line-height: 1.2; margin-top: 8px; }
 .in-director > p { font-size: 13px; }
 .in-board .in-board-note { margin-top: 25px; font-size: 11px; max-width: 600px; }
 .in-benefits { display: grid; grid-template-columns: 1fr 1.1fr; gap: 90px; padding-block: 100px; }

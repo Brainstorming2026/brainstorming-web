@@ -1,30 +1,29 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { growthBenefits } from '@/data/growth-planning'
 ---
 
 <section class="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
 
-  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
+  <div class="relative mx-auto max-w-[1512px] px-6 lg:px-24">
     <div data-benefits-panel class="benefits-layout">
-      <header>
-        <p class="relative text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Lo que cambia</p>
-        <h2 data-benefits-title class="relative mt-4 max-w-[480px] font-heading text-[clamp(2.15rem,8vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
-          Menos suposiciones.<br />Más dirección.
-        </h2>
-        <p class="relative mt-6 max-w-[480px] text-base leading-7 text-dark-500 sm:text-lg sm:leading-8">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
+      <header class="benefits-header">
+        <div>
+          <p class="benefits-eyebrow">LO QUE CAMBIA</p>
+          <h2 data-benefits-title>Menos suposiciones.<br /><span>Más dirección.</span></h2>
+        </div>
+        <p class="benefits-intro">Tu equipo deja de reaccionar a todo y empieza a avanzar sobre lo que realmente mueve el negocio.</p>
       </header>
-
-      <ol data-benefits-grid role="list">
-        {growthBenefits.map(benefit => (
-          <li data-benefit-card class="grid grid-cols-[32px_minmax(0,1fr)] gap-3 border-b border-[#e4e5e8] py-6 first:pt-0 last:border-b-0 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-5">
-            <span class="pt-1 font-heading text-sm font-semibold tabular-nums text-primary sm:text-base" aria-hidden="true">{benefit.metric}</span>
-            <div>
-              <h3 class="font-heading text-xl font-bold leading-tight text-dark sm:text-2xl">{benefit.title}</h3>
-              <p class="mt-2 max-w-[560px] text-[15px] leading-7 text-dark-500 sm:text-base">{benefit.description}</p>
-            </div>
+      <ul data-benefits-grid class="benefits-grid">
+        {growthBenefits.map((benefit, index) => (
+          <li data-benefit-card class="benefit-item">
+            <div class="benefit-icon" aria-hidden="true"><Icon name={['automation/scan-search', 'automation/chart-column-increasing', 'automation/users-round', 'automation/circle-check', 'study/arrow-up-right'][index]} class="h-7 w-7" /></div>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+            <span class="benefit-accent" aria-hidden="true"></span>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
 
     <div data-roadmap-output class="relative mt-14 overflow-hidden rounded-lg bg-[#edf1f6] px-6 py-9 sm:px-9 sm:py-11 lg:mt-20 lg:px-12 lg:py-12">
@@ -60,17 +59,40 @@ import { growthBenefits } from '@/data/growth-planning'
 </section>
 
 <style>
-  .benefits-layout { display: grid; gap: 36px; }
-  [data-benefits-title] { font-size: clamp(32px, 4vw, 48px); line-height: 1.12; }
+  .benefits-header { display: grid; grid-template-columns: 1.5fr 1fr; gap: 64px; align-items: end; }
+  .benefits-eyebrow { color: var(--color-primary); font-size: 10px; font-weight: 700; letter-spacing: .14em; }
+  [data-benefits-title] { margin-top: 24px; font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 64px); font-weight: 700; letter-spacing: -.035em; line-height: 1.08; }
+  [data-benefits-title] span { color: var(--color-primary); }
+  .benefits-intro { max-width: 43ch; color: var(--color-gray-body); font-size: 17px; line-height: 1.8; }
+  .benefits-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 40px; margin-top: 56px; }
+  .benefit-item { grid-column: span 2; position: relative; padding-block: 32px; border-top: 1px solid #ded8e5; }
+  .benefit-item:nth-child(n+4) { grid-column: span 3; }
+  .benefit-icon { margin-bottom: 24px; color: var(--color-primary); }
+  .benefit-item h3 { font-family: var(--font-heading); font-size: 25px; font-weight: 700; line-height: 1.2; letter-spacing: -.025em; }
+  .benefit-item p { max-width: 48ch; margin-top: 14px; color: var(--color-gray-body); font-size: 16px; line-height: 1.75; }
+  .benefit-accent { display: block; width: 28px; height: 2px; margin-top: 24px; background: var(--color-primary-300); transform-origin: left; transition: transform .3s ease-out; }
+  @media (hover: hover) and (pointer: fine) { .benefit-item:hover .benefit-accent { transform: scaleX(2); } }
+  @media (min-width: 768px) {
+    .benefit-item:nth-child(n+4) { text-align: center; }
+    .benefit-item:nth-child(n+4) .benefit-icon { display: flex; justify-content: center; }
+    .benefit-item:nth-child(n+4) p { margin-inline: auto; }
+    .benefit-item:nth-child(n+4) .benefit-accent { margin-inline: auto; transform-origin: center; }
+  }
+  @media (max-width: 767px) {
+    .benefits-header { grid-template-columns: 1fr; gap: 24px; }
+    .benefits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; margin-top: 36px; }
+    .benefit-item, .benefit-item:nth-child(n+4) { grid-column: span 1; }
+    .benefit-item:last-child { grid-column: 1 / -1; }
+    .benefit-item h3 { font-size: 22px; }
+  }
+  @media (max-width: 479px) { .benefits-grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .benefit-accent { transition: none; } }
   [data-roadmap-line] { content: ''; position: absolute; left: 5px; top: 25px; bottom: 70px; width: 1px; background: #c8bfd8; transform: scaleY(0); transform-origin: 50% 0; }
   @media (min-width: 640px) {
     [data-roadmap-line] { left: 16.66%; right: 16.66%; top: 31px; bottom: auto; width: auto; height: 1px; transform: scaleX(0); transform-origin: 0 50%; }
   }
   @media (prefers-reduced-motion: reduce) {
     [data-roadmap-line] { transform: none; }
-  }
-  @media (min-width: 1024px) {
-    .benefits-layout { grid-template-columns: 1fr 1.15fr; gap: 9%; align-items: start; }
   }
 </style>
 

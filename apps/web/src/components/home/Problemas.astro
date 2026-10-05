@@ -104,7 +104,7 @@ const closingParts = highlightAt === -1
   }
   .wave-clip [data-wave] { will-change: transform; transform-origin: top center; }
   .problem-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 26px; margin-top: 54px; }
-  .problemas-card { min-width: 0; transition: opacity 350ms ease-out; }
+  .problemas-card { min-width: 0; }
   .problem-art { width: 100%; max-width: 200px; margin: 0 auto 24px; }
   /* La ilustración trae su propio fondo: un difuminado radial lo funde con el
      navy y desaparecen los recuadros. */
@@ -114,11 +114,8 @@ const closingParts = highlightAt === -1
   .problem-index { display: block; margin-bottom: 8px; font: 500 11px/1 var(--font-body); letter-spacing: .16em; color: var(--color-mist-300); font-variant-numeric: tabular-nums; }
   .problemas-card > p { margin-top: 16px; font-size: 15px; line-height: 1.8; color: #e1e7f5; }
 
-  /* Modo foco: la situación señalada queda al frente y el resto se apaga. Con
-     :has() y no con .problem-grid:hover, para que pasar por el hueco entre
-     columnas no apague todo. No son enlaces: el cursor no cambia. */
+  /* El acento y la elevación destacan solo la columna señalada. */
   @media (hover: hover) and (pointer: fine) {
-    .problem-grid:has(.problemas-card:hover) .problemas-card:not(:hover) { opacity: .45; }
     .problemas-card:hover .problem-rule { background: var(--color-primary-300); }
   }
 
@@ -166,9 +163,9 @@ import { ease, tempo } from '@/lib/motion/config'
 import { ensureGsap } from '@/lib/motion/gsap-client'
 
 // Capas separadas para que ninguna animación pise a otra:
-//   .problem-art    → entrada (fundido + blur) y elevación al hover
+//   .problem-art    → entrada suave y elevación al hover
 //   .strategy-art   → parallax uniforme
-//   .problemas-card → opacidad del modo foco (CSS) y entrada en móvil
+//   .problemas-card → entrada en móvil
 registerMotion(() => {
   const section = document.getElementById('problemas')
   if (!section)
@@ -236,7 +233,7 @@ registerMotion(() => {
     if (!grid)
       return
     revealSequence(cards, [
-      { select: card => card.querySelector('.problem-art'), from: { autoAlpha: 0, y: 24, filter: 'blur(8px)' }, duration: 1 },
+      { select: card => card.querySelector('.problem-art'), from: { autoAlpha: 0, y: 20 }, duration: 0.8 },
       { select: card => card.querySelector('.problem-rule'), from: { scaleX: 0 }, at: 0.2, duration: 0.8 },
       { select: card => card.querySelector('h3'), from: { autoAlpha: 0, y: 16 }, at: 0.3, duration: 0.7 },
       { select: card => card.querySelector(':scope > p'), from: { autoAlpha: 0, y: 16 }, at: 0.4, duration: 0.7 },
@@ -275,9 +272,9 @@ registerMotion(() => {
     })
   })
 
-  // Hover con mouse: la ilustración señalada se eleva (el modo foco es CSS).
+  // Hover con mouse: elevación sutil, sin apagar las otras columnas.
   media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
-    const cleanups = cards.map(card => hoverLift(card, card.querySelector('.problem-art'), { y: -6, scale: 1.04 }))
+    const cleanups = cards.map(card => hoverLift(card, card.querySelector('.problem-art'), { y: -8, scale: 1.025 }))
     return () => cleanups.forEach(cleanup => cleanup())
   })
 })

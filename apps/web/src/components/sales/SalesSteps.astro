@@ -1,73 +1,42 @@
 ---
+import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+import adoptionScene from '@/assets/sales/smart-adoption-v2.png'
+import crmScene from '@/assets/sales/smart-crm-v2.png'
+import diagnosisScene from '@/assets/sales/smart-diagnosis-v2.png'
+import pipelineScene from '@/assets/sales/smart-pipeline-v2.png'
 import { salesBenefits, salesCaseStudies, salesSteps } from '@/data'
+
+const phases = [
+  { label: 'Diagnosticar', icon: 'scan-search', range: '01–02', title: 'Encontrar dónde se enfrían las oportunidades.', image: diagnosisScene, start: 0, end: 2 },
+  { label: 'Diseñar', icon: 'workflow', range: '03', title: 'Un proceso que sabe cómo avanzar.', image: pipelineScene, start: 2, end: 3 },
+  { label: 'Activar', icon: 'zap', range: '04–05', title: 'Conectar el sistema. Ordenar cada oportunidad.', image: crmScene, start: 3, end: 5 },
+  { label: 'Adoptar', icon: 'graduation-cap', range: '06', title: 'Un equipo que hace suyo el proceso.', image: adoptionScene, start: 5, end: 6 },
+]
 ---
 
-<section id="proceso-smart-selling" data-sales-process class="bg-white py-20 sm:py-24 lg:py-28">
-  <div class="mx-auto grid max-w-[1240px] gap-12 px-6 lg:grid-cols-[0.78fr_1.42fr] lg:gap-20 lg:px-12">
-    <aside class="self-start" data-stick="112">
-      <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">Metodología Smart Selling</p>
-      <h2 id="sales-steps-headline" class="mt-4 max-w-[500px] font-heading text-[clamp(2rem,5vw,3.35rem)] font-bold leading-[1.06] text-dark">
-        El sistema antes que la herramienta.
-      </h2>
-      <p class="mt-5 max-w-[480px] text-[16px] leading-7 text-dark-500 sm:text-[17px]">
-        Primero entendemos cómo vendes. Después diseñamos, conectamos y dejamos funcionando un proceso que tu equipo pueda repetir.
-      </p>
-
-      <nav class="mt-9 hidden max-w-[440px] border-y border-black/10 py-2 lg:block" aria-label="Fases de Smart Selling">
-        {
-          [
-            ['01–02', 'Diagnosticar'],
-            ['03', 'Diseñar'],
-            ['04–05', 'Activar'],
-            ['06', 'Adoptar'],
-          ].map(([range, label]) => (
-            <div class="flex items-center justify-between border-b border-black/[0.07] px-1 py-3.5 last:border-0">
-              <span class="text-sm font-semibold text-dark">{label}</span>
-              <span class="text-[10px] font-bold tracking-[0.18em] text-primary">{range}</span>
-            </div>
-          ))
-        }
-      </nav>
-    </aside>
-
-    <ol class="divide-y divide-black/[0.08] border-y border-black/10" aria-label="Proceso Smart Selling en seis etapas">
-      {
-        salesSteps.map(step => (
-          <li data-sales-step class="group relative py-7 sm:py-8">
-            <article class="grid gap-5 sm:grid-cols-[112px_1fr] sm:items-start sm:gap-7">
-              <div
-                data-sales-icon
-                class="flex h-[92px] w-[92px] items-center justify-center rounded-[22px] bg-[#f3f1f8] p-2.5 transition-transform duration-300 group-hover:-translate-y-1 sm:h-28 sm:w-28"
-              >
-                <Image
-                  src={step.icon}
-                  alt=""
-                  class="h-full w-full object-contain"
-                  widths={[184, 224]}
-                  sizes="(max-width: 639px) 92px, 112px"
-                  loading="lazy"
-                />
-              </div>
-
-              <div class="min-w-0 pr-12 sm:pr-16">
-                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Etapa {step.number}</span>
-                <h3 class="mt-2 font-heading text-[22px] font-bold leading-[1.2] text-dark sm:text-[26px]">
-                  {step.title}
-                </h3>
-                <p class="mt-3 text-[15px] leading-[1.7] text-dark-500 sm:text-[16px]">
-                  {step.description}
-                </p>
-              </div>
-
-              <span class="pointer-events-none absolute right-0 top-7 font-heading text-[42px] font-bold leading-none text-[#dfe2ea] sm:top-8 sm:text-[50px]" aria-hidden="true">
-                {step.number}
-              </span>
-            </article>
-          </li>
-        ))
-      }
-    </ol>
+<section id="proceso-smart-selling" data-sales-process class="sales-workbench">
+  <div class="sales-container">
+    <header class="workbench-heading">
+      <div><p class="workbench-eyebrow">METODOLOGÍA SMART SELLING</p><h2 id="sales-steps-headline">El sistema antes<br /><span>que la herramienta.</span></h2></div>
+      <p class="workbench-description">Primero entendemos cómo vendes. Después diseñamos, conectamos y dejamos funcionando un proceso que tu equipo pueda repetir.</p>
+    </header>
+    <div class="workbench-navigation" hidden aria-label="Fases de Smart Selling">
+      {phases.map((phase, index) => <button type="button" id={`sales-tab-${index}`} data-sales-tab={index} aria-controls={`sales-panel-${index}`}><span class="phase-number">0{index + 1}</span><span>{phase.label}<small>ETAPAS {phase.range}</small></span><Icon name={`automation/${phase.icon}`} class="phase-icon" aria-hidden="true" /></button>)}
+    </div>
+    <div class="workbench-panels">
+      {phases.map((phase, index) => (
+        <section id={`sales-panel-${index}`} data-sales-panel={index} class="workbench-panel" aria-labelledby={`sales-phase-title-${index}`}>
+          <figure class="workbench-photo"><Image src={phase.image} alt={`Trabajo de consultoría comercial: ${phase.label.toLowerCase()}`} widths={[480, 768, 1024, 1440]} sizes="(max-width: 767px) calc(100vw - 48px), 44vw" format="webp" quality={90} loading={index === 0 ? 'eager' : 'lazy'} /><figcaption><span>SMART SELLING / {phase.label.toUpperCase()}</span><span>{phase.range}</span></figcaption></figure>
+          <div class="workbench-copy"><p class="workbench-eyebrow">FASE 0{index + 1} / {phase.label}</p><h3 id={`sales-phase-title-${index}`}>{phase.title}</h3>
+            <ol start={phase.start + 1} aria-label={`Etapas: ${phase.label}`}>
+              {salesSteps.slice(phase.start, phase.end).map(step => <li data-sales-step><span class="step-number" aria-hidden="true">{step.number}</span><div><h4>{step.title}</h4><p>{step.description}</p></div></li>)}
+            </ol>
+          </div>
+        </section>
+      ))}
+    </div>
+    <p class="workbench-footnote">Cada oportunidad, con contexto. Cada avance, con un responsable.</p>
   </div>
 </section>
 
@@ -177,11 +146,127 @@ import { salesBenefits, salesCaseStudies, salesSteps } from '@/data'
   </div>
 </section>
 
+
+<style>
+  .sales-workbench { padding-block: clamp(64px, 7vw, 104px); background: #faf9f7; color: var(--color-dark); }
+  .sales-container { max-width: 1512px; margin-inline: auto; padding-inline: 24px; }
+  .workbench-heading { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: end; }
+  .workbench-eyebrow { font-size: 10px; line-height: 1.6; font-weight: 700; letter-spacing: .14em; color: var(--color-primary); text-transform: uppercase; }
+  .workbench-heading h2 { margin-top: 24px; font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 64px); font-weight: 700; line-height: 1.08; letter-spacing: -.035em; }
+  .workbench-heading h2 span { color: var(--color-primary); }
+  .workbench-description { max-width: 44ch; font-size: 17px; line-height: 1.8; color: var(--color-gray-body); }
+  .workbench-navigation:not([hidden]) { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 48px; border-block: 1px solid #ded8e5; }
+  .workbench-navigation button { display: flex; align-items: center; gap: 16px; padding: 24px 20px; color: var(--color-gray-body); font-family: var(--font-heading); font-size: 19px; font-weight: 700; text-align: left; cursor: pointer; border-bottom: 2px solid transparent; transition: background-color .2s, color .2s; }
+  .workbench-navigation button + button { border-left: 1px solid #ded8e5; }
+  .workbench-navigation button[aria-selected="true"] { background: #f2edf8; color: var(--color-dark); border-bottom-color: var(--color-primary); }
+  .workbench-navigation button:hover { background: #f2edf8; }
+  .workbench-navigation button:focus-visible, .workbench-panel:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+  .phase-number { font-family: var(--font-body); font-size: 11px; color: var(--color-primary); }
+  .workbench-navigation small { display: block; margin-top: 8px; font-size: 9px; font-weight: 500; letter-spacing: .1em; color: #76717e; }
+  .workbench-navigation :global(.phase-icon) { margin-left: auto; flex-shrink: 0; width: 24px; height: 24px; stroke-width: 1.6; color: var(--color-primary); }
+  .workbench-panel:not([hidden]) { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(32px, 5vw, 72px); margin-top: 40px; }
+  .workbench-photo { overflow: hidden; border-radius: 6px; }
+  .workbench-photo img { display: block; width: 100%; height: auto; }
+  .workbench-photo figcaption { display: flex; justify-content: space-between; gap: 16px; padding-block: 16px; border-bottom: 1px solid #ded8e5; font-size: 9px; letter-spacing: .1em; color: #76717e; }
+  .workbench-copy h3 { max-width: 22ch; margin-top: 16px; font-family: var(--font-heading); font-size: clamp(28px, 3vw, 42px); font-weight: 700; line-height: 1.12; letter-spacing: -.035em; }
+  .workbench-copy ol { margin-top: 32px; }
+  .workbench-copy li { display: grid; grid-template-columns: 28px 1fr; gap: 16px; padding-block: 22px; border-top: 1px solid #ded8e5; }
+  .step-number { padding-top: 4px; font-size: 11px; color: var(--color-primary); }
+  .workbench-copy h4 { font-family: var(--font-heading); font-size: 21px; font-weight: 700; line-height: 1.25; }
+  .workbench-copy li p { margin-top: 12px; font-size: 16px; line-height: 1.75; color: var(--color-gray-body); }
+  .workbench-footnote { margin-top: 32px; color: #76717e; font-size: 12px; }
+  @media (min-width: 1024px) { .sales-container { padding-inline: 96px; } }
+  @media (max-width: 767px) {
+    .workbench-heading, .workbench-panel:not([hidden]) { grid-template-columns: 1fr; gap: 28px; }
+    .workbench-navigation:not([hidden]) { grid-template-columns: repeat(2, 1fr); margin-top: 32px; }
+    .workbench-navigation button { padding: 18px 12px; font-size: 17px; gap: 10px; }
+    .workbench-navigation button:nth-child(3) { border-left: 0; }
+    .workbench-navigation button:nth-child(n+3) { border-top: 1px solid #ded8e5; }
+    .workbench-copy h3 { max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .workbench-navigation button { transition: none; } }
+</style>
+
 <script>
 import { ensureGsap, prefersReducedMotion, registerMotion, revealCards, splitHeadline } from '@/lib/motion'
 
 registerMotion(() => {
   const process = document.querySelector<HTMLElement>('[data-sales-process]')
+  if (!process)
+    return
+  const navigation = process.querySelector<HTMLElement>('.workbench-navigation')
+  const tabs = Array.from(process.querySelectorAll<HTMLButtonElement>('[data-sales-tab]'))
+  const panels = Array.from(process.querySelectorAll<HTMLElement>('[data-sales-panel]'))
+  const { gsap } = ensureGsap()
+  const abort = new AbortController()
+  const reduced = prefersReducedMotion()
+  const selectPhase = (index: number, animate = true) => {
+    tabs.forEach((tab, i) => {
+      tab.setAttribute('aria-selected', String(i === index))
+      tab.tabIndex = i === index ? 0 : -1
+    })
+    panels.forEach((panel, i) => {
+      gsap.killTweensOf(panel.children)
+      gsap.set(panel.children, { clearProps: 'opacity,visibility,transform' })
+      panel.hidden = i !== index
+    })
+    if (animate && !reduced) {
+      gsap.fromTo(panels[index].children, { autoAlpha: 0, y: 12 }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.45,
+        stagger: 0.06,
+        ease: 'power3.out',
+        clearProps: 'opacity,visibility,transform',
+      })
+    }
+  }
+  navigation?.setAttribute('role', 'tablist')
+  if (navigation)
+    navigation.hidden = false
+  tabs.forEach((tab, index) => {
+    tab.setAttribute('role', 'tab')
+    panels[index].setAttribute('role', 'tabpanel')
+    panels[index].setAttribute('aria-labelledby', tab.id)
+    panels[index].tabIndex = 0
+    tab.addEventListener('click', () => selectPhase(index), { signal: abort.signal })
+    tab.addEventListener('keydown', (event) => {
+      let next = index
+      if (event.key === 'ArrowRight')
+        next = (index + 1) % tabs.length
+      else if (event.key === 'ArrowLeft')
+        next = (index - 1 + tabs.length) % tabs.length
+      else if (event.key === 'Home')
+        next = 0
+      else if (event.key === 'End')
+        next = tabs.length - 1
+      else
+        return
+      event.preventDefault()
+      selectPhase(next)
+      tabs[next].focus()
+    }, { signal: abort.signal })
+  })
+  selectPhase(0, false)
+  if (!reduced) {
+    gsap.from(process.querySelector('.workbench-photo'), {
+      autoAlpha: 0,
+      y: 24,
+      duration: 0.9,
+      ease: 'power3.out',
+      clearProps: 'opacity,visibility,transform',
+      scrollTrigger: { trigger: process, start: 'top 80%', once: true },
+    })
+  }
+  return () => {
+    abort.abort()
+    panels.forEach(panel => panel.hidden = false)
+    if (navigation)
+      navigation.hidden = true
+  }
+})
+
+registerMotion(() => {
   const benefitsSection = document.querySelector<HTMLElement>('[data-sales-benefits]')
   const casesSection = document.querySelector<HTMLElement>('[data-sales-cases]')
   const headlines = [
@@ -197,28 +282,6 @@ registerMotion(() => {
 
   if (prefersReducedMotion())
     return
-
-  const { gsap } = ensureGsap()
-
-  if (process) {
-    const steps = process.querySelectorAll('[data-sales-step]')
-    const icons = process.querySelectorAll('[data-sales-icon]')
-    if (steps.length > 0) {
-      // Antes: x:18 / 0.42s. Casi no se percibía. Ahora el mismo gesto en
-      // cascada 3D que usa la home, para que el sitio corra a una sola
-      // velocidad.
-      revealCards(steps, { trigger: process, intensity: 1.1, stagger: 0.11 })
-      gsap.from(icons, {
-        opacity: 0,
-        scale: 0.65,
-        duration: 0.55,
-        stagger: 0.11,
-        ease: 'back.out(1.7)',
-        immediateRender: true,
-        scrollTrigger: { trigger: process, start: 'top 84%', once: true },
-      })
-    }
-  }
 
   if (benefitsSection) {
     revealCards(benefitsSection.querySelectorAll('.benefit-item'), {

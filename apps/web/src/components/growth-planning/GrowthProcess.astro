@@ -3,171 +3,108 @@ import { Image } from 'astro:assets'
 import { growthStages } from '@/data/growth-planning'
 
 const phases = [
-  ['00–01', 'Entender'],
-  ['02–03', 'Investigar'],
-  ['04–05', 'Decidir'],
-  ['06', 'Ejecutar'],
+  { label: 'Entender', title: 'El negocio, desde dentro.', range: '00–01', start: 0, end: 2, image: growthStages[1].image },
+  { label: 'Investigar', title: 'Escuchar al cliente. Leer el mercado.', range: '02–03', start: 2, end: 4, image: growthStages[2].image },
+  { label: 'Decidir', title: 'Elegir dónde generar impacto.', range: '04–05', start: 4, end: 6, image: growthStages[5].image },
+  { label: 'Ejecutar', title: 'De la claridad a la acción.', range: '06', start: 6, end: 7, image: growthStages[6].image },
 ]
 ---
 
-<section id="proceso-growth" class="relative overflow-hidden bg-[#f3f5f7] py-16 sm:py-20 lg:py-24">
-
-  <div class="relative mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-12">
-    <div class="lg:grid lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
-
-      <div class="lg:self-start" data-stick="96">
-        <header class="max-w-[790px]">
-          <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-primary sm:text-xs">El proceso · 7 etapas</p>
-          <h2 data-process-title class="mt-4 font-heading text-[clamp(2.15rem,8.5vw,3.5rem)] font-bold leading-[1.04] tracking-[-0.04em] text-dark">
-            Primero entender.<br />Después, decidir.
-          </h2>
-          <p class="mt-5 max-w-[680px] text-base leading-7 text-dark-500 sm:text-lg">Siete etapas para mirar tu negocio desde dentro y desde fuera. Cada conversación y cada análisis alimentan una decisión.</p>
-        </header>
-
-        <ol
-          data-phase-nav
-          class="mx-auto mt-8 grid max-w-[880px] grid-cols-2 divide-x divide-y divide-[#ebe7f0] overflow-hidden rounded-2xl border border-[#ded8e8] bg-white shadow-[0_14px_38px_rgba(59,39,92,0.05)] sm:mt-10 sm:grid-cols-4 sm:divide-y-0 lg:max-w-none lg:grid-cols-1 lg:divide-x-0 lg:divide-y"
-        >
-          {phases.map(([range, label], index) => (
-            <li data-phase={index} class="px-3 py-4 text-center sm:px-4 lg:px-5 lg:text-left">
-              <span class="block text-[10px] font-bold tracking-[0.18em] text-primary">{range}</span>
-              <span class="phase-label mt-1 block text-sm font-semibold text-dark">{label}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <ol data-growth-process class="process-sequence">
-        {growthStages.map((stage, index) => (
-          <li
-            id={`growth-stage-${stage.number}`}
-            data-stage-card={stage.number}
-            class="scroll-mt-28"
-          >
-            <article class="process-chapter group">
-              <div class="chapter-photo">
-                <Image
-                  src={stage.image}
-                  alt={`Etapa ${stage.number}: ${stage.title}`}
-                  class="h-full w-full object-cover transition-transform duration-700 [@media(hover:hover)]:group-hover:scale-[1.025]"
-                  widths={[480, 720, 960, 1280]}
-                  sizes={index === growthStages.length - 1 ? '(max-width: 767px) calc(100vw - 40px), 44vw' : '(max-width: 767px) calc(100vw - 40px), 48vw'}
-                  loading="lazy"
-                  quality={90}
-                />
-              </div>
-
-              <div class="chapter-copy">
-                <p class="chapter-label"><span>Etapa {stage.number}</span> {stage.shortLabel}</p>
-                <h3 data-chapter-title class="relative mt-2 max-w-[520px] font-heading text-[22px] font-bold leading-[1.2] text-dark sm:text-[26px]">{stage.title}</h3>
-                <p data-chapter-copy class="relative mt-4 max-w-[700px] text-[15px] leading-7 text-dark-500 sm:text-base">{stage.description}</p>
-              </div>
-            </article>
-          </li>
-        ))}
-      </ol>
+<section id="proceso-growth" class="inbound-method">
+  <div class="method-container">
+    <header class="method-intro">
+      <div><p class="method-eyebrow">EL PROCESO / 7 ETAPAS</p><h2 data-process-title>Primero entender.<br /><span>Después, decidir.</span></h2></div>
+      <p class="method-description">Siete etapas para mirar tu negocio desde dentro y desde fuera. Cada conversación y cada análisis alimentan una decisión.</p>
+    </header>
+    <nav class="method-index" aria-label="Fases de Growth Planning">
+      {phases.map((phase, index) => <a href={`#growth-phase-${index}`}><span>0{index + 1}</span>{phase.label}<span class="phase-range">{phase.range}</span></a>)}
+    </nav>
+    <div data-growth-process class="method-chapters">
+      {phases.map((phase, index) => (
+        <section id={`growth-phase-${index}`} class="method-chapter" aria-labelledby={`growth-phase-title-${index}`}>
+          <div class="chapter-visual">
+            <div class="chapter-heading"><p class="method-eyebrow">FASE 0{index + 1} / {phase.label}</p><h3 id={`growth-phase-title-${index}`}>{phase.title}</h3></div>
+            <div class="chapter-photo"><Image src={phase.image} alt={`Trabajo de consultoría estratégica: ${phase.label.toLowerCase()}`} widths={[480, 768, 1024, 1440]} sizes="(max-width: 767px) calc(100vw - 48px), 42vw" format="webp" quality={90} loading="lazy" /></div>
+          </div>
+          <ol class="chapter-steps" start={phase.start + 1} aria-label={`Etapas: ${phase.label}`}>
+            {growthStages.slice(phase.start, phase.end).map(stage => (
+              <li id={`growth-stage-${stage.number}`} data-stage-card={stage.number} class="method-step scroll-mt-28"><span class="step-number" aria-hidden="true">{stage.number}</span><div><h4>{stage.title}</h4><p>{stage.description}</p></div></li>
+            ))}
+          </ol>
+        </section>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .process-sequence { display: grid; gap: 48px; margin-top: 56px; }
-  .process-chapter { display: grid; gap: 24px; align-items: center; }
-  .chapter-photo { aspect-ratio: 16/10; overflow: hidden; border-radius: 6px; }
-  .chapter-label { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; color: #6742ac; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-  .chapter-label span { padding: 5px 9px; border: 1px solid #c9c5d2; border-radius: 3px; color: #525260; }
-  .chapter-copy h3 { margin-top: 18px; }
-
-  [data-phase-nav] > li { position: relative; transition: background-color .4s cubic-bezier(0.23, 1, 0.32, 1); }
-  [data-phase-nav] > li[data-active] { background: #f4eefe; }
-  [data-phase-nav] > li .phase-label { transition: color .4s cubic-bezier(0.23, 1, 0.32, 1); }
-  [data-phase-nav] > li[data-active] .phase-label { color: #7d44e4; }
-
-  @media (min-width: 768px) {
-    .process-sequence { gap: 64px; }
-    .process-chapter { grid-template-columns: 1fr 1fr; gap: 7%; }
-    .process-sequence > li:nth-child(even) .chapter-photo { order: 2; }
+  .inbound-method { background: #faf9f7; padding-block: clamp(64px, 7vw, 104px); }
+  .method-container { max-width: 1512px; margin-inline: auto; padding-inline: 24px; }
+  .method-intro { display: grid; grid-template-columns: 1.5fr 1fr; gap: 64px; align-items: end; }
+  .method-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #6740b2; }
+  .method-intro h2 { margin-top: 24px; font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 64px); font-weight: 700; line-height: 1.08; letter-spacing: -.035em; }
+  .method-intro h2 span { color: var(--color-primary); }
+  .method-description { max-width: 44ch; font-size: 17px; line-height: 1.8; color: var(--color-gray-body); }
+  .method-index { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 48px; border-block: 1px solid #ded8e5; }
+  .method-index a { display: flex; align-items: center; gap: 12px; min-height: 68px; padding: 12px 16px; font-size: 13px; font-weight: 600; transition: background-color .2s, color .2s; }
+  .method-index a + a { border-left: 1px solid #ded8e5; }
+  .method-index a > span:first-child { color: var(--color-primary); font-size: 11px; }
+  .method-index .phase-range { margin-left: auto; color: #76717e; font-size: 10px; }
+  .method-index a:hover { background: #efe8fa; color: #5628a3; }
+  .method-index a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+  .method-chapter { display: grid; grid-template-columns: 1fr 1.1fr; column-gap: clamp(40px, 6vw, 88px); row-gap: 28px; padding-block: 64px; border-bottom: 1px solid #ded8e5; scroll-margin-top: 110px; }
+  .chapter-visual { display: contents; }
+  .chapter-heading { grid-column: 1; }
+  .chapter-heading h3 { max-width: 18ch; margin-top: 16px; font-family: var(--font-heading); font-size: clamp(28px, 3vw, 42px); line-height: 1.12; letter-spacing: -.035em; font-weight: 700; }
+  .chapter-photo { grid-column: 1; grid-row: 2; align-self: start; overflow: hidden; border-radius: 8px; background: #e8e4df; }
+  .chapter-photo img { display: block; width: 100%; height: auto; }
+  .chapter-steps { grid-column: 2; grid-row: 2; align-self: start; }
+  .method-step { display: grid; grid-template-columns: 32px 1fr; gap: 20px; padding-block: 26px; border-top: 1px solid #ded8e5; }
+  .method-step:first-child { border-top: none; padding-top: 0; }
+  .step-number { padding-top: 4px; color: var(--color-primary); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .method-step h4 { font-family: var(--font-heading); font-weight: 700; font-size: 22px; letter-spacing: -.025em; line-height: 1.25; }
+  .method-step p { margin-top: 12px; font-size: 16px; line-height: 1.75; color: var(--color-gray-body); }
+  @media (min-width: 1024px) { .method-container { padding-inline: 96px; } }
+  @media (max-width: 767px) {
+    .method-intro, .method-chapter { grid-template-columns: 1fr; gap: 28px; }
+    .method-index { grid-template-columns: repeat(2, 1fr); margin-top: 32px; }
+    .method-index a:nth-child(3) { border-left: 0; }
+    .method-index a:nth-child(n+3) { border-top: 1px solid #ded8e5; }
+    .method-index a { padding-inline: 10px; font-size: 12px; }
+    .method-chapter { padding-block: 40px; }
+    .chapter-visual { display: block; }
+    .chapter-photo { margin-top: 28px; max-width: 520px; }
+    .chapter-steps { grid-column: auto; grid-row: auto; }
+    .method-step h4 { font-size: 20px; }
   }
-  @media (min-width: 1024px) {
-    .process-sequence { margin-top: 0; }
-    [data-phase-nav] > li::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: #7d44e4; transform: scaleY(0); transform-origin: 50% 0;
-      transition: transform .45s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    [data-phase-nav] > li[data-active]::before { transform: scaleY(1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    [data-phase-nav] > li, [data-phase-nav] > li::before, [data-phase-nav] > li .phase-label { transition: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .method-index a { transition: none; } }
 </style>
 
 <script>
-import { ensureGsap, prefersReducedMotion, registerMotion, revealClip, splitHeadline } from '@/lib/motion'
-
-const phaseOf = (n: number) => (n <= 1 ? 0 : n <= 3 ? 1 : n <= 5 ? 2 : 3)
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline, staggerGrid } from '@/lib/motion'
 
 registerMotion(() => {
-  const section = document.querySelector<HTMLElement>('[data-growth-process]')
-  const title = document.querySelector<HTMLElement>('[data-process-title]')
-  const phaseCells = Array.from(document.querySelectorAll<HTMLElement>('[data-phase-nav] > li'))
-
+  const section = document.getElementById('proceso-growth')
+  const title = section?.querySelector<HTMLElement>('[data-process-title]')
   if (title)
     splitHeadline(title, { by: 'lines' })
   if (!section)
     return
-
-  const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-stage-card]'))
-  const { ScrollTrigger, gsap } = ensureGsap()
-  const reduced = prefersReducedMotion()
-
-  const setActivePhase = (i: number) => {
-    phaseCells.forEach((cell, idx) => {
-      if (idx === i)
-        cell.dataset.active = ''
-      else
-        cell.removeAttribute('data-active')
+  section.querySelectorAll<HTMLElement>('.chapter-steps').forEach((chapter) => {
+    staggerGrid(chapter.querySelectorAll<HTMLElement>('.method-step'), { variant: 'organic', itemStagger: 0.08, itemDuration: 0.7 })
+  })
+  if (!prefersReducedMotion()) {
+    const { gsap } = ensureGsap()
+    section.querySelectorAll<HTMLElement>('.chapter-photo').forEach((photo) => {
+      gsap.from(photo, {
+        autoAlpha: 0,
+        y: 24,
+        duration: 1,
+        ease: 'power3.out',
+        clearProps: 'opacity,visibility,transform',
+        scrollTrigger: { trigger: photo, start: 'top 90%', once: true },
+      })
     })
   }
-
-  cards.forEach((card, index) => {
-    const stageNumber = Number.parseInt(card.dataset.stageCard ?? '0', 10)
-    const photo = card.querySelector<HTMLElement>('.chapter-photo')
-    const heading = card.querySelector<HTMLElement>('[data-chapter-title]')
-    const copy = card.querySelector<HTMLElement>('[data-chapter-copy]')
-
-    // Rastreo de fase: barato, orienta al lector — se mantiene incluso con
-    // reduced-motion (solo cambia color de fondo, sin movimiento).
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 65%',
-      end: 'bottom 45%',
-      onEnter: () => setActivePhase(phaseOf(stageNumber)),
-      onEnterBack: () => setActivePhase(phaseOf(stageNumber)),
-    })
-
-    if (reduced) {
-      if (heading)
-        gsap.fromTo(heading, { opacity: 0 }, { opacity: 1, duration: 0.4, scrollTrigger: { trigger: card, start: 'top 85%', once: true } })
-      if (copy)
-        gsap.fromTo(copy, { opacity: 0 }, { opacity: 1, duration: 0.4, scrollTrigger: { trigger: card, start: 'top 85%', once: true } })
-      return
-    }
-
-    if (photo)
-      revealClip(photo, { direction: index % 2 === 0 ? 'left' : 'right', parallax: true })
-    if (heading)
-      splitHeadline(heading, { by: 'words' })
-    if (copy) {
-      gsap.from(copy, {
-        y: 20,
-        opacity: 0,
-        duration: 1,
-        ease: 'expo.out',
-        immediateRender: true,
-        scrollTrigger: { trigger: copy, start: 'top 85%', once: true },
-      })
-    }
-  })
 })
 </script>

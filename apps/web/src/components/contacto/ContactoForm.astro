@@ -250,6 +250,14 @@ import FormStatusModal from '@/components/common/FormStatusModal.astro'
     font-size: 0.75rem;
     line-height: 1.125rem;
   }
+
+  /* El mensaje entra al aparecer (vacío → texto); corregirlo no lo re-anima. */
+  @media (prefers-reduced-motion: no-preference) {
+    .form-error:not(:empty) { animation: form-error-in 160ms ease-out; }
+  }
+  @keyframes form-error-in {
+    from { opacity: 0; transform: translateY(-4px); }
+  }
 </style>
 
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>

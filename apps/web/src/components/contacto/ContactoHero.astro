@@ -44,3 +44,29 @@ import conversation from '@/assets/growth-planning/contact-creative-conversation
   }
   @media (prefers-reduced-motion: reduce) { .hero-link-icon { transition: none; } }
 </style>
+
+<script>
+import { ensureGsap, prefersReducedMotion, registerMotion, splitHeadline } from '@/lib/motion'
+import { ease } from '@/lib/motion/config'
+
+registerMotion(() => {
+  const hero = document.querySelector<HTMLElement>('.contact-hero')
+  const headline = hero?.querySelector<HTMLElement>('#contact-heading')
+  if (!hero || !headline || prefersReducedMotion())
+    return
+
+  const { gsap } = ensureGsap()
+  const eyebrow = hero.querySelector('.eyebrow')
+  const support = hero.querySelectorAll('.intro, .hero-link')
+  const photo = hero.querySelector('.hero-photo img')
+
+  gsap.set([eyebrow, ...support], { opacity: 0, y: 10 })
+  gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.5, ease: ease.out })
+  splitHeadline(headline, { by: 'words', scrollTrigger: false })
+  gsap.to(support, { opacity: 1, y: 0, duration: 0.5, ease: ease.out, stagger: 0.08, delay: 0.35 })
+
+  // Solo escala: la foto es el LCP, ocultarla con opacity lo retrasaría.
+  if (photo)
+    gsap.fromTo(photo, { scale: 1 }, { scale: 1.06, duration: 8, ease: 'none' })
+})
+</script>

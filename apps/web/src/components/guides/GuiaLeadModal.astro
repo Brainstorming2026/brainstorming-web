@@ -206,7 +206,14 @@ document.addEventListener('astro:page-load', () => {
     }
   }
 
+  let closing = false
+
   function openModal(slug: string) {
+    // Reabrir a mitad de la salida: se corta el cierre y se vuelve a entrar.
+    if (closing) {
+      ensureGsap().gsap.killTweensOf([overlay, modal])
+      hideModal()
+    }
     pendingSlug = slug
     resetResult()
     if (!overlay || !modal)
@@ -226,13 +233,26 @@ document.addEventListener('astro:page-load', () => {
     gsap.to(modal, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' })
   }
 
-  function closeModal() {
-    if (!overlay)
-      return
-    overlay.classList.add('hidden')
-    overlay.classList.remove('flex')
+  function hideModal() {
+    closing = false
+    overlay?.classList.add('hidden')
+    overlay?.classList.remove('flex')
     pendingSlug = null
     form?.reset()
+  }
+
+  // Sale por donde entró (baja + se achica), más corto que la entrada.
+  function closeModal() {
+    if (!overlay || overlay.classList.contains('hidden') || closing)
+      return
+    if (prefersReducedMotion() || !modal) {
+      hideModal()
+      return
+    }
+    closing = true
+    const { gsap } = ensureGsap()
+    gsap.to(modal, { opacity: 0, y: 12, scale: 0.98, duration: 0.22, ease: 'power2.in' })
+    gsap.to(overlay, { opacity: 0, duration: 0.2, delay: 0.04, ease: 'power1.in', onComplete: hideModal })
   }
 
   openCurrent = openModal

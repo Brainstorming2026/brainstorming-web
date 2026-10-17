@@ -53,6 +53,12 @@ html {
   --color-mist-200: #c0cfe6;
   --color-mist-100: #dee1eb;
 
+  /* === Hero: left-edge colors of the hero photo (top → bottom), so the CSS backdrop
+     continues the art wherever the photo layer doesn't reach === */
+  --color-hero-top: #553bbb;
+  --color-hero-mid: #3a35a0;
+  --color-hero-bottom: #142d7a;
+
   /* === Dorado (acento propio de US) === */
   --color-gold: #f9d099;
 }

@@ -1,7 +1,7 @@
 export default {
   home: {
-    title: 'Growth Planning: 3-Week Strategic Diagnostic | Brainstorming',
-    description: 'Three weeks to understand what\'s holding your business back and decide what to do first. With evidence, clear owners, and a roadmap for the next six months.',
+    title: 'Growth Planning: 6-Week Strategic Diagnostic | Brainstorming',
+    description: 'Six weeks to understand what\'s holding your business back and decide what to do first. With evidence, clear owners, and a roadmap for the next six months.',
   },
   notFound: {
     title: 'Page not found | Brainstorming',

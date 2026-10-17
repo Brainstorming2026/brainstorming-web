@@ -14,17 +14,21 @@ const t = useTranslations(lang, 'hero')
 const statement = 'block text-balance text-[length:clamp(34px,9.2vw,48px)] leading-[1.12] tracking-[-0.035em] sm:text-[length:clamp(38px,6.6vw,60px)] sm:leading-[1.09] md:text-[length:min(62px,calc(100cqi/var(--hero-fit)))]'
 // Measured advance width of each locale's first line in Nexa Black, plus a small safety margin.
 const heroFit = lang === 'es' ? 10.8 : 13.2
+// The photo layers keep their own aspect ratio (no object-cover crop) and sit bottom-right, so the
+// curve lands at a predictable spot instead of sliding over the copy as the viewport narrows. Widths
+// were measured against the copy column: the curve clears the text from 360 to 2560px, and the head
+// never crops. Faded top/left edges blend the photo's purple into the section gradient behind it.
 const action = 'inline-flex min-h-[52px] items-center justify-center gap-3.5 text-[14px] font-bold no-underline transition-[scale,translate,background-color] duration-180 ease-out focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-white active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 motion-reduce:hover:translate-y-0'
 ---
 
-<section class="relative isolate overflow-hidden bg-navy text-white" aria-labelledby="hero-headline" data-hero>
+<section class="relative isolate overflow-hidden bg-linear-to-b from-hero-top via-hero-mid to-hero-bottom text-white" aria-labelledby="hero-headline" data-hero>
   <div class="absolute inset-0 -z-1 origin-[75%_65%]" aria-hidden="true" data-hero-bg>
-    <Picture src={desktopBg} alt="" formats={['avif', 'webp']} widths={[1024, 1512, 2048]} sizes="100vw" loading="eager" pictureAttributes={{ class: 'contents' }} class="hidden size-full object-cover object-[right_bottom] lg:block" />
-    <Picture src={mobileBg} alt="" formats={['avif', 'webp']} widths={[390, 780, 1170]} sizes="100vw" loading="eager" pictureAttributes={{ class: 'contents' }} class="block size-full object-cover object-bottom lg:hidden" />
+    <Picture src={desktopBg} alt="" formats={['avif', 'webp']} widths={[1024, 1512, 2048]} sizes="(min-width: 1024px) min(100vw - 100px, 1700px), 0px" loading="eager" pictureAttributes={{ class: 'contents' }} class="absolute right-0 bottom-0 hidden aspect-[3024/1442] h-auto w-[min(100%_-_100px,1700px)] max-w-none mask-t-from-85% mask-l-from-85% lg:block" />
+    <Picture src={mobileBg} alt="" formats={['avif', 'webp']} widths={[440, 680, 1000, 1170]} sizes="(min-width: 768px) 680px, clamp(440px, 100vw, 500px)" loading="eager" pictureAttributes={{ class: 'contents' }} class="absolute right-0 bottom-0 block aspect-[1170/1800] h-auto w-[clamp(440px,100%,500px)] max-w-none md:w-[680px] mask-t-from-80% mask-l-from-85% lg:hidden" />
   </div>
   <div class="relative z-1">
     <Navbar />
-    <div class="mx-auto max-w-[1512px] px-6 pt-6 pb-[290px] sm:px-8 sm:pt-8 sm:pb-[340px] lg:px-16 lg:pb-[150px] lg:max-[1200px]:px-12">
+    <div class="mx-auto max-w-[1512px] px-6 pt-6 pb-[300px] sm:px-8 sm:pt-8 sm:pb-[360px] lg:px-16 lg:pb-[150px] lg:max-[1200px]:px-12">
       <div class="@container w-full max-w-[620px] lg:w-[60%] lg:max-w-[740px] lg:max-[1200px]:w-[62%]">
         <h1 id="hero-headline" class="m-0 font-heading font-bold" style={`--hero-fit: ${heroFit}`}>
           <span class="mb-5 block text-[12px]/[1.4] tracking-[0.13em] text-white/75 uppercase sm:mb-6 sm:text-[15px]/[1.4] lg:mb-4">{t.name}<span class="sr-only">: </span></span>

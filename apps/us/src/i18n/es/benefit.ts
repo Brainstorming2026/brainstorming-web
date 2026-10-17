@@ -3,7 +3,7 @@ export default {
   headline: 'Un sistema de decisiones',
   headlineAccent: 'para los próximos 6 meses.',
   text: 'No termina con una presentación. Termina con orden, responsables y una secuencia de ejecución que todos entienden.',
-  sprintLabel: '3 semanas para definir la dirección.',
+  sprintLabel: '6 semanas para definir la dirección.',
   horizonLabel: '90–180 días para orientar los próximos pasos.',
   timelineLabel: 'Tu horizonte de ejecución',
   days: 'Días',

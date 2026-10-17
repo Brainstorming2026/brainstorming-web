@@ -1,7 +1,7 @@
 export default {
   home: {
-    title: 'Growth Planning: diagnóstico en 3 semanas | Brainstorming',
-    description: 'Tres semanas para entender qué frena tu negocio y decidir qué hacer primero. Con evidencia, responsables claros y una hoja de ruta a seis meses.',
+    title: 'Growth Planning: diagnóstico en 6 semanas | Brainstorming',
+    description: 'Seis semanas para entender qué frena tu negocio y decidir qué hacer primero. Con evidencia, responsables claros y una hoja de ruta a seis meses.',
   },
   notFound: {
     title: 'Página no encontrada | Brainstorming',

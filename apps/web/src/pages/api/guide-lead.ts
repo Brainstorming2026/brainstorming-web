@@ -39,28 +39,37 @@ export const POST: APIRoute = async ({ request, site, clientAddress }) => {
     return fail(403, 'Verificación fallida. Intenta de nuevo.')
   }
 
-  // Nunca se confia en un pdf/titulo enviado por el cliente — se resuelve
-  // desde `data/guides.ts` a partir del slug.
-  const guide = resolveGuideBySlug(slug)
+  // Siempre resolver por slug contra la fuente publicada, sin aceptar URL del visitante.
+  let guide
+  try {
+    guide = await resolveGuideBySlug(slug)
+  }
+  catch {
+    console.error('[guide-lead] catálogo de guías no disponible')
+    return fail(503, 'La guía no está disponible temporalmente. Intenta de nuevo.')
+  }
   if (!guide) {
     return fail(400, 'Invalid data')
   }
 
-  const guideUrl = new URL(guide.pdf, site ?? 'https://www.brainstorming.la').toString()
+  const guideUrl = new URL(guide.pdf, site ?? new URL(request.url)).toString()
 
-  await Promise.all([
-    sendEmail({
-      to: EMAIL_INTERNAL_TO,
-      subject: `Nuevo lead — Guía: ${nombre}`,
-      template: InternalLeadEmail({ sourceLabel: 'Guía práctica', nombre, email, guideTitle: guide.title }),
-      replyTo: email,
-    }),
-    sendEmail({
-      to: email,
-      subject: `Tu guía "${guide.title}" está lista`,
-      template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl, guideImageUrl: guideCoverEmailUrl(guide.slug) }),
-    }),
-  ])
+  const notified = await sendEmail({
+    to: EMAIL_INTERNAL_TO,
+    subject: `Nuevo lead — Guía: ${nombre}`,
+    template: InternalLeadEmail({ sourceLabel: 'Guía práctica', nombre, email, guideTitle: guide.title }),
+    replyTo: email,
+  })
+  if (!notified)
+    return fail(502, 'No se pudo procesar tu solicitud. Intenta de nuevo.')
+
+  const delivered = await sendEmail({
+    to: email,
+    subject: `Tu guía "${guide.title}" está lista`,
+    template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl, guideImageUrl: typeof guide.image === 'string' ? guide.image : guideCoverEmailUrl(guide.slug) }),
+  })
+  if (!delivered)
+    return fail(502, 'No se pudo enviar la guía. Intenta de nuevo.')
 
   return ok()
 }

@@ -1,0 +1,37 @@
+---
+import type { InlineNode } from '@/lib/cms/contract'
+
+interface Props {
+  nodes?: readonly InlineNode[]
+}
+
+const { nodes = [] } = Astro.props
+
+/** Solo se dibujan las marcas que el CMS permite; un enlace con destino no permitido se muestra como texto. */
+const isSafeHref = (href: string) => /^(?:https?:\/\/|mailto:)\S+$/i.test(href) || /^(?:\/(?!\/)|#)\S*$/.test(href)
+const isExternal = (href: string) => /^https?:\/\//i.test(href)
+
+const pieces = nodes.map((node) => {
+  if (node.type === 'hardBreak')
+    return { br: true as const }
+  const link = node.marks?.find(mark => mark.type === 'link')
+  return {
+    br: false as const,
+    text: node.text,
+    bold: node.marks?.some(mark => mark.type === 'bold') ?? false,
+    italic: node.marks?.some(mark => mark.type === 'italic') ?? false,
+    href: link && isSafeHref(link.attrs.href) ? link.attrs.href : undefined,
+  }
+})
+---
+
+{pieces.map((piece) => {
+  if (piece.br)
+    return <br />
+  let content = piece.italic ? <em>{piece.text}</em> : piece.text
+  if (piece.bold)
+    content = <strong class="font-heading font-bold text-dark">{piece.text}</strong>
+  return piece.href
+    ? <a href={piece.href} class="font-semibold text-primary underline underline-offset-4" target={isExternal(piece.href) ? '_blank' : undefined} rel={isExternal(piece.href) ? 'noopener noreferrer' : undefined}>{content}</a>
+    : content
+})}

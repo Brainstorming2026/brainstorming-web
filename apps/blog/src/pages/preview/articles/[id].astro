@@ -1,0 +1,31 @@
+---
+import ArticlePage from '@/components/blog/article/ArticlePage.astro'
+import PreviewBanner from '@/components/blog/PreviewBanner.astro'
+import Layout from '@/layouts/Layout.astro'
+import { articlePreviewSchema } from '@/lib/cms/contract'
+import { toPreviewArticle } from '@/lib/cms/mappers'
+import { loadPreview, PREVIEW_MESSAGES, privatePreviewHeaders } from '@/lib/preview/load'
+
+// Vista previa de un borrador: se genera por petición con el token del enlace, nunca se prerenderiza.
+export const prerender = false
+
+const result = await loadPreview(`/v1/preview/articles/${encodeURIComponent(Astro.params.id ?? '')}`, articlePreviewSchema, Astro.url.searchParams.get('t'))
+privatePreviewHeaders(Astro.response)
+if (!result.ok)
+  Astro.response.status = result.reason === 'unavailable' ? 503 : result.reason === 'not-found' ? 404 : 401
+---
+
+{result.ok
+  ? (
+      <ArticlePage article={toPreviewArticle(result.data)} noindex>
+        <PreviewBanner slot="banner" status={result.data.status} problems={result.data.problems} />
+      </ArticlePage>
+    )
+  : (
+      <Layout title="Vista previa" noindex>
+        <section class="mx-auto max-w-[720px] px-6 py-24 text-center">
+          <h1 class="font-heading text-2xl font-bold text-dark">Vista previa no disponible</h1>
+          <p class="mt-4 font-body text-dark/70">{PREVIEW_MESSAGES[result.reason]}</p>
+        </section>
+      </Layout>
+    )}

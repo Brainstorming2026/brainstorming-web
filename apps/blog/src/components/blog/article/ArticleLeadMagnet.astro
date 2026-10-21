@@ -1,6 +1,6 @@
 ---
 import type { ArticleLeadMagnet } from '@/data/articles'
-import { Image } from 'astro:assets'
+import SmartImage from '@/components/common/SmartImage.astro'
 
 interface Props {
   leadMagnet: ArticleLeadMagnet
@@ -27,7 +27,7 @@ const isExternal = leadMagnet.ctaHref.startsWith('http')
 
     <div class="hidden aspect-square w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:block">
       {leadMagnet.image && (
-        <Image
+        <SmartImage
           src={leadMagnet.image}
           alt=""
           class="h-full w-full object-cover"

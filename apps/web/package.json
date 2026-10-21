@@ -13,6 +13,7 @@
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test:guides": "node --test tests/guides.test.ts tests/guide-lead.test.mjs",
     "email:dev": "email dev --dir src/components/emails --port 3010"
   },
   "dependencies": {

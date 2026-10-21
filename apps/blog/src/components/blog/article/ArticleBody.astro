@@ -1,6 +1,7 @@
 ---
 import type { ArticleSection } from '@/data/articles'
-import { Image } from 'astro:assets'
+import RichText from '@/components/blog/article/RichText.astro'
+import SmartImage from '@/components/common/SmartImage.astro'
 
 interface Props {
   sections: ArticleSection[]
@@ -13,9 +14,9 @@ const { sections } = Astro.props
   <div id="article-body-sections" class="flex flex-col gap-10">
     {sections.map(section => (
       <section>
-        <h2 class="font-heading text-xl font-bold text-dark sm:text-2xl">{section.heading}</h2>
+        {section.heading && <h2 class="font-heading text-xl font-bold text-dark sm:text-2xl">{section.heading}</h2>}
 
-        <div class="mt-4 flex flex-col gap-4">
+        <div class:list={['flex flex-col gap-4', section.heading && 'mt-4']}>
           {section.blocks.map((block) => {
             if (block.type === 'paragraph') {
               return <p class="font-body text-[15px] leading-relaxed text-dark/80">{block.text}</p>
@@ -37,15 +38,62 @@ const { sections } = Astro.props
               )
             }
 
+            if (block.type === 'rich')
+              return <RichText doc={block.content} />
+
+            if (block.type === 'quote') {
+              return (
+                <blockquote class="rounded-[12px] border-l-4 border-primary bg-mist-100 px-6 py-5">
+                  <p class="font-heading text-lg font-bold leading-snug text-dark">{block.text}</p>
+                  {block.attribution && <footer class="mt-2 font-body text-sm text-dark/60">— {block.attribution}</footer>}
+                </blockquote>
+              )
+            }
+
+            if (block.type === 'cta') {
+              return (
+                <div class="rounded-[12px] bg-mist-100 px-6 py-6 text-center">
+                  <p class="font-heading text-base font-bold text-dark">{block.text}</p>
+                  <a
+                    href={block.href}
+                    class:list={['mt-4 inline-block rounded-[10px] px-6 py-2.5 font-heading text-sm font-bold transition-colors', block.variant === 'primary' ? 'bg-primary text-white hover:bg-primary-600' : 'border border-primary text-primary hover:bg-primary hover:text-white']}
+                  >
+                    {block.label}
+                  </a>
+                </div>
+              )
+            }
+
+            if (block.type === 'guide') {
+              const { leadMagnet } = block
+              return (
+                <div class="flex items-center gap-6 rounded-[16px] bg-mist-100 p-6">
+                  <div class="flex-1">
+                    <p class="font-body text-xs text-dark/60">{leadMagnet.eyebrow}</p>
+                    <p class="mt-2 font-heading text-base font-bold text-dark">{leadMagnet.title}</p>
+                    <a href={leadMagnet.ctaHref} class="mt-4 inline-block rounded-[8px] bg-primary px-5 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600">{leadMagnet.ctaLabel}</a>
+                  </div>
+                  {leadMagnet.image && (
+                    <div class="hidden aspect-square w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:block">
+                      <SmartImage src={leadMagnet.image} alt="" class="h-full w-full object-cover" widths={[160, 320]} sizes="128px" loading="lazy" />
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
             return (
-              <Image
-                src={block.image}
-                alt=""
-                class="aspect-[16/10] w-full rounded-[12px] object-cover"
-                widths={[480, 720]}
-                sizes="720px"
-                loading="lazy"
-              />
+              <figure class:list={[block.wide && 'sm:-mx-16']}>
+                <SmartImage
+                  src={block.image}
+                  alt={block.alt ?? ''}
+                  class="aspect-[16/10] w-full rounded-[12px] object-cover"
+                  widths={[480, 720, 1080]}
+                  sizes={block.wide ? '(min-width: 1024px) 840px, 90vw' : '720px'}
+                  loading="lazy"
+                />
+                {block.caption && <figcaption class="mt-2 text-center font-body text-sm text-dark/60">{block.caption}</figcaption>}
+              </figure>
             )
           })}
         </div>

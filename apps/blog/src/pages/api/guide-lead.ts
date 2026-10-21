@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro'
 import { GuideDeliveryEmail } from '@/components/emails/GuideDeliveryEmail'
 import { InternalLeadEmail } from '@/components/emails/InternalLeadEmail'
-import { guideCoverEmailUrl } from '@/lib/email/assets'
 import { sendEmail } from '@/lib/email/send'
 import { resolveGuideBySlug } from '@/lib/guide-lead'
 import { isHoneypotTriggered } from '@/lib/honeypot'
@@ -40,9 +39,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return fail(403, 'Verificación fallida. Intenta de nuevo.')
   }
 
-  // Nunca se confia en un pdf/titulo enviado por el cliente — se resuelve
-  // desde `data/guides.ts` a partir del slug.
-  const guide = resolveGuideBySlug(slug)
+  // Un fallo del CMS nunca autoriza entregar el PDF de una revisión anterior.
+  let guide
+  try {
+    guide = await resolveGuideBySlug(slug)
+  }
+  catch {
+    console.error('[guide-lead] catálogo de guías no disponible')
+    return fail(503, 'La guía no está disponible temporalmente. Intenta de nuevo.')
+  }
   if (!guide) {
     return fail(400, 'Invalid data')
   }
@@ -61,13 +66,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return fail(502, 'No se pudo procesar tu solicitud. Intenta de nuevo.')
   }
 
-  // Best-effort: el usuario ya puede reintentar la descarga si este falla,
-  // y el equipo ya fue notificado (arriba).
-  await sendEmail({
+  const delivered = await sendEmail({
     to: email,
     subject: `Tu guía "${guide.title}" está lista`,
-    template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl: guide.pdf, guideImageUrl: guideCoverEmailUrl(guide.slug) }),
+    template: GuideDeliveryEmail({ firstName: nombre, guideTitle: guide.title, guideUrl: guide.pdf, guideImageUrl: guide.coverUrl }),
   })
+  if (!delivered)
+    return fail(502, 'No se pudo enviar la guía. Intenta de nuevo.')
 
   return ok()
 }

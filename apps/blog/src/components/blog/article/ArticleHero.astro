@@ -1,8 +1,9 @@
 ---
 import type { Article } from '@/data/articles'
-import { Image } from 'astro:assets'
-import { categories } from '@/data/posts'
+import SmartImage from '@/components/common/SmartImage.astro'
+import { categories } from '@/lib/content'
 import { publicationDate } from '@/lib/editorial-seo'
+import { siteUrl } from '@/lib/site-urls'
 
 interface Props {
   article: Article
@@ -31,18 +32,20 @@ const category = categories.find(category => category.label === article.category
 
       <div id="article-hero-image" class="relative">
         <div class="absolute -inset-4 -z-10 rounded-[24px] bg-primary/90"></div>
-        <Image
-          src={article.heroImage}
-          alt={article.title}
-          class="w-full rounded-[16px] object-cover shadow-lg"
-          widths={[480, 720, 960]}
-          sizes="(min-width: 1024px) 520px, 90vw"
-          loading="eager"
-        />
+        {article.heroImage && (
+          <SmartImage
+            src={article.heroImage}
+            alt={article.title}
+            class="w-full rounded-[16px] object-cover shadow-lg"
+            widths={[480, 720, 960]}
+            sizes="(min-width: 1024px) 520px, 90vw"
+            loading="eager"
+          />
+        )}
       </div>
     </div>
 
-    <p class="mt-8 text-sm text-dark/70">Por <a href={article.author?.url ?? 'https://www.brainstorming.la/nosotros'} class="font-semibold text-primary hover:underline">{article.author?.name ?? 'Brainstorming'}</a> · <time datetime={publicationDate(article.publishedDate)}>{article.publishedDate}</time>{article.modifiedDate && <> · Actualizado: <time datetime={publicationDate(article.modifiedDate)}>{article.modifiedDate}</time></>}</p>
+    <p class="mt-8 text-sm text-dark/70">Por <a href={article.author?.url ?? siteUrl('web', '/nosotros')} class="font-semibold text-primary hover:underline">{article.author?.name ?? 'Brainstorming'}</a> · <time datetime={publicationDate(article.publishedDate)}>{article.publishedDate}</time>{article.modifiedDate && <> · Actualizado: <time datetime={publicationDate(article.modifiedDate)}>{article.modifiedDate}</time></>}</p>
     <p class="mt-3 font-heading text-sm font-bold uppercase tracking-wide text-primary">{article.readTime}</p>
     <div class="mt-4 flex max-w-[880px] flex-col gap-4">
       {article.intro.map(paragraph => (

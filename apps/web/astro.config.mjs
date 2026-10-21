@@ -7,12 +7,16 @@ import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
+import { cmsImagePatterns, defaultSiteOrigins, DEV_PORTS, loadAppEnv } from '../../config/sites.mjs'
+
+// Configuración pública únicamente: los secretos los carga astro:env/server.
+const { isDev, env } = loadAppEnv(new URL('./', import.meta.url))
 
 export default defineConfig({
-  site: 'https://www.brainstorming.la',
+  site: env.WEB_URL ?? defaultSiteOrigins(isDev).web,
   trailingSlash: 'never',
   // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
-  server: { port: 4321 },
+  server: { port: DEV_PORTS.web },
   output: 'server',
 
   redirects: {
@@ -46,6 +50,10 @@ export default defineConfig({
 
   security: { checkOrigin: true },
 
+  image: {
+    remotePatterns: cmsImagePatterns(env),
+  },
+
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [icon(), react()],
 
@@ -60,6 +68,10 @@ export default defineConfig({
       WEB_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
       US_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
       BLOG_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      CMS_API_URL: envField.string({ context: 'server', access: 'public', optional: true, url: true }),
+      CMS_FILES_URL: envField.string({ context: 'server', access: 'public', optional: true, url: true }),
+      CMS_CONTENT_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CONTENT_SOURCE: envField.enum({ context: 'server', access: 'public', optional: true, values: ['cms', 'static'] }),
     },
   },
 

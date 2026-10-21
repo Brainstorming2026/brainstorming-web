@@ -1,4 +1,4 @@
-import type { ImageMetadata } from 'astro'
+import type { ArticleImage } from '@/data/articles'
 import card1 from '@/assets/images/hero/card1.png'
 import card2 from '@/assets/images/hero/card2.png'
 import card3 from '@/assets/images/hero/card3.png'
@@ -20,7 +20,7 @@ export interface Post {
   excerpt: string
   category: string
   date?: string
-  image?: ImageMetadata
+  image?: ArticleImage
 }
 
 export const featuredPost: Post = {

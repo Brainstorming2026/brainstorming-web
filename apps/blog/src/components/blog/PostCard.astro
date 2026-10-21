@@ -1,6 +1,6 @@
 ---
 import type { Post } from '@/data/posts'
-import { Image } from 'astro:assets'
+import SmartImage from '@/components/common/SmartImage.astro'
 
 interface Props {
   post: Post
@@ -13,7 +13,7 @@ const { post, showCategory = false } = Astro.props
 <article class="flex flex-col overflow-hidden rounded-[10px] bg-mist-150">
   <a href={`/${post.slug}`} class="relative block aspect-[16/10] w-full overflow-hidden bg-mist-200">
     {post.image && (
-      <Image
+      <SmartImage
         src={post.image}
         alt=""
         class="h-full w-full object-cover"

@@ -17,3 +17,11 @@ export function excerpt(text: string, limit = 160): string {
   const end = clean.lastIndexOf(' ', limit - 1)
   return `${clean.slice(0, end > 0 ? end : limit - 1).replace(/[,:;]$/, '')}…`
 }
+
+/** "2024-03-18" → "18 marzo 2024": el formato visible que ya usan los artículos. */
+export function spanishDate(iso: string): string {
+  const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  if (!match)
+    return iso
+  return `${Number(match[3])} ${months[Number(match[2]) - 1]} ${match[1]}`
+}

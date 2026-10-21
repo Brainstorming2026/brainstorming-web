@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro'
+import type { RichText } from '@/lib/cms/contract'
 import paginaWebLeadMagnet from '@/assets/guides/construir-pagina-web-5-pasos.webp'
 import mandamientosCommunityManager from '@/assets/guides/mandamientos-community-manager.webp'
 import plataformasEcommerceLeadMagnet from '@/assets/guides/plataformas-esenciales-ecommerce.webp'
@@ -48,13 +49,22 @@ export interface ArticleListItem {
   text: string
 }
 
+/** Imagen local (importada) o del CMS (URL; su tamaño se infiere al construir). */
+export type ArticleImage = ImageMetadata | string
+
 export type ArticleBlock
   = | { type: 'paragraph', text: string }
     | { type: 'list', items: ArticleListItem[] }
-    | { type: 'image', image: ImageMetadata }
+    | { type: 'image', image: ArticleImage, alt?: string, caption?: string, wide?: boolean }
     | { type: 'subheading', text: string }
+    // Bloques que llegan del CMS:
+    | { type: 'rich', content: RichText }
+    | { type: 'quote', text: string, attribution?: string }
+    | { type: 'cta', text: string, label: string, href: string, variant: 'primary' | 'secondary' }
+    | { type: 'guide', leadMagnet: ArticleLeadMagnet }
 
 export interface ArticleSection {
+  /** Vacío cuando el CMS no define subtítulo para la sección. */
   heading: string
   blocks: ArticleBlock[]
 }
@@ -64,7 +74,7 @@ export interface ArticleLeadMagnet {
   title: string
   ctaLabel: string
   ctaHref: string
-  image?: ImageMetadata
+  image?: ArticleImage
 }
 
 export interface ArticleSecondaryCta {
@@ -80,7 +90,8 @@ export interface Article {
   /** <title> override when `title — Brainstorming Blog` would exceed ~60 characters. */
   seoTitle?: string
   category: string
-  heroImage: ImageMetadata
+  /** Siempre presente al publicar; solo falta en la vista previa de un borrador. */
+  heroImage?: ArticleImage
   readTime: string
   intro: string[]
   sections: ArticleSection[]
@@ -96,7 +107,7 @@ export interface Article {
   /** Real date of a substantive editorial revision; never set automatically during builds. */
   modifiedDate?: string
   /** Optional human byline, only when authorship is confirmed. */
-  author?: { name: string, url: string }
+  author?: { name: string, url?: string }
 }
 
 export const articles: Article[] = [

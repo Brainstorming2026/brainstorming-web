@@ -1,0 +1,29 @@
+---
+import type { RichText } from '@/lib/cms/contract'
+import RichInline from './RichInline.astro'
+
+interface Props {
+  doc: RichText
+}
+
+const { doc } = Astro.props
+---
+
+{doc.content.map((block) => {
+  if (block.type === 'paragraph') {
+    return block.content?.length ? <p class="font-body text-[15px] leading-relaxed text-dark/80"><RichInline nodes={block.content} /></p> : null
+  }
+  if (block.type === 'heading')
+    return <h3 class="font-heading text-base font-bold text-dark"><RichInline nodes={block.content} /></h3>
+
+  const Tag = block.type === 'orderedList' ? 'ol' : 'ul'
+  return (
+    <Tag class:list={['flex flex-col gap-3 border-l-2 border-mist-200', block.type === 'orderedList' ? 'list-decimal pl-9' : 'pl-5']}>
+      {block.content.map(item => (
+        <li class="font-body text-[15px] leading-relaxed text-dark/80">
+          {item.content.map(paragraph => <RichInline nodes={paragraph.content} />)}
+        </li>
+      ))}
+    </Tag>
+  )
+})}

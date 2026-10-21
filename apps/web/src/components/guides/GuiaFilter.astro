@@ -1,21 +1,27 @@
 ---
-import type { GuideCategory } from '@/data/guides'
+import type { Guide, GuideCategory } from '@/data/guides'
 import { Image } from 'astro:assets'
 import bgMiddle from '@/assets/guides/bg-middle.webp'
+import SmartImage from '@/components/common/SmartImage.astro'
 import GuiaLeadModal from '@/components/guides/GuiaLeadModal.astro'
-import { categoryLabels, guides } from '@/data/guides'
+import { categoryLabels } from '@/data/guides'
 import iconBranding from '@/icons/expert-huella.svg'
 import iconInbound from '@/icons/expert-iman.svg'
 import iconSales from '@/icons/expert-money.svg'
 import iconDesarrollo from '@/icons/expert-window.svg'
 import iconDownload from '@/icons/guias-download.svg'
+import iconOptimizacion from '@/icons/guides-optimizacion.svg'
+
+interface Props { guides: Guide[] }
+const { guides } = Astro.props
 
 const categories: { key: GuideCategory, label: string, icon: { src: string } }[] = [
   { key: 'branding', label: 'Branding', icon: iconBranding },
   { key: 'desarrollo-web', label: 'Desarrollo web', icon: iconDesarrollo },
   { key: 'inbound-marketing', label: 'Inbound Marketing', icon: iconInbound },
   { key: 'inbound-sales', label: 'Smart Selling', icon: iconSales },
-]
+  { key: 'optimizacion', label: categoryLabels.optimizacion, icon: iconOptimizacion },
+].filter(cat => guides.some(guide => guide.category === cat.key)) as { key: GuideCategory, label: string, icon: { src: string } }[]
 ---
 
 <section class="bg-white">
@@ -62,7 +68,7 @@ return null
             <div class="category-group grid grid-cols-1 items-start gap-4 sm:grid-cols-2" data-category-group={cat.key}>
               {catGuides.map(guia => (
                 <div class="guide-card rounded-[16px] bg-white p-4" data-category={guia.category}>
-                  <Image
+                  <SmartImage
                     src={guia.image}
                     alt={guia.title}
                     class="h-auto w-full rounded-[12px] object-cover"
@@ -147,7 +153,7 @@ registerMotion(() => {
   // Deep-link desde otros subdominios (ej. blog.brainstorming.la): ?abrir=<slug>
   // abre el modal directo, sin duplicar el flujo de captura de lead alli.
   const abrirSlug = new URLSearchParams(window.location.search).get('abrir')
-  if (abrirSlug && document.querySelector(`.guia-download-btn[data-guia-slug="${abrirSlug}"]`)) {
+  if (abrirSlug && Array.from(document.querySelectorAll<HTMLButtonElement>('.guia-download-btn')).some(btn => btn.dataset.guiaSlug === abrirSlug)) {
     document.dispatchEvent(new CustomEvent('open-guia-lead-modal', { detail: { slug: abrirSlug } }))
   }
 

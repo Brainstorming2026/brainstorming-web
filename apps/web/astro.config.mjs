@@ -42,6 +42,8 @@ export default defineConfig({
   adapter: vercel({
     imageService: true,
     imagesConfig: {
+      // Explícito: el adaptador 11.0.15 descarta patrones con protocol al copiarlos desde image.
+      remotePatterns: cmsImagePatterns(env),
       sizes: [300, 480, 640, 720, 960, 1080, 1280, 1600, 1920, 2560],
       formats: ['image/avif', 'image/webp'],
     },

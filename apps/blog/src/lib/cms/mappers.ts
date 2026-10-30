@@ -4,6 +4,7 @@ import type { Category, Post } from '@/data/posts'
 import { GUIDE_LANDER_SLUGS } from '@/data/guides'
 import { spanishDate } from '@/lib/editorial-seo'
 import { siteUrl } from '@/lib/site-urls'
+import { groupIntoSections } from './sections'
 
 /**
  * Capa anticorrupción: traduce el modelo del CMS al que ya consumen las plantillas del blog. Las plantillas no saben
@@ -50,21 +51,33 @@ function toBlock(block: CmsBlock): ArticleBlock | null {
     case 'guide':
       // Una guía retirada llega como null: el bloque desaparece sin dejar un hueco.
       return block.guide ? { type: 'guide', leadMagnet: guideLeadMagnet(block.guide) } : null
+    case 'stats':
+      return { type: 'stats', items: block.items.map(item => ({ value: item.value, label: item.label })) }
+    case 'steps':
+      // El título ya abrió la sección (ver `sectionHeading`): el bloque dibuja solo las tarjetas.
+      return { type: 'steps', items: block.items.map(item => ({ title: item.title, text: item.text })) }
+    case 'callout':
+      return { type: 'callout', style: block.style, title: block.title, text: block.text }
+    case 'split':
+      return block.file ? { type: 'split', image: block.file.url, alt: block.alt, heading: block.heading, text: block.text, imageSide: block.imageSide } : null
   }
 }
 
-/** Cada bloque de texto abre una sección con su subtítulo; imágenes, citas y llamadas se quedan en la sección actual. */
+/**
+ * Los bloques que traen su propio título de sección (texto, y pasos si lo tienen) abren una sección: así el título
+ * es un h2 con ancla y entra en el índice. `null`: el bloque se queda en la sección actual.
+ */
+function sectionHeading(block: CmsBlock): string | null {
+  if (block.type === 'text')
+    return block.heading
+  if (block.type === 'steps' && block.heading.trim())
+    return block.heading
+  return null
+}
+
+/** Cada bloque con título de sección abre una sección; imágenes, citas, cifras y llamadas se quedan en la actual. */
 export function toSections(blocks: readonly CmsBlock[]): ArticleSection[] {
-  const sections: ArticleSection[] = []
-  for (const block of blocks) {
-    const mapped = toBlock(block)
-    if (!mapped)
-      continue
-    if (block.type === 'text' || sections.length === 0)
-      sections.push({ heading: block.type === 'text' ? block.heading : '', blocks: [] })
-    sections.at(-1)!.blocks.push(mapped)
-  }
-  return sections
+  return groupIntoSections(blocks, toBlock, sectionHeading)
 }
 
 const readTime = (minutes: number) => `Léelo en ${minutes} min.`
@@ -77,6 +90,8 @@ export function toArticle(article: PublishedArticle): Article {
     seoTitle: article.seoTitle ?? undefined,
     category: article.category.label,
     heroImage: article.hero.url,
+    heroStyle: article.heroStyle,
+    accent: article.accent,
     readTime: readTime(article.readingMinutes),
     intro: article.intro,
     sections: toSections(article.blocks),
@@ -94,6 +109,8 @@ export function toPreviewArticle(preview: ArticlePreview): Article {
     seoTitle: preview.seoTitle ?? undefined,
     category: preview.category?.label ?? 'Sin categoría',
     heroImage: preview.hero?.url,
+    heroStyle: preview.heroStyle,
+    accent: preview.accent,
     readTime: readTime(preview.readingMinutes),
     intro: preview.intro,
     sections: toSections(preview.blocks),

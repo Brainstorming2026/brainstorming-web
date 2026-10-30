@@ -11,19 +11,27 @@ const { doc } = Astro.props
 
 {doc.content.map((block) => {
   if (block.type === 'paragraph') {
-    return block.content?.length ? <p class="font-body text-[15px] leading-relaxed text-dark/80"><RichInline nodes={block.content} /></p> : null
+    return block.content?.length ? <p class="article-text"><RichInline nodes={block.content} /></p> : null
   }
   if (block.type === 'heading')
-    return <h3 class="font-heading text-base font-bold text-dark"><RichInline nodes={block.content} /></h3>
+    return <h3 class="font-heading text-xl font-bold leading-snug text-dark sm:text-2xl"><RichInline nodes={block.content} /></h3>
 
-  const Tag = block.type === 'orderedList' ? 'ol' : 'ul'
+  if (block.type === 'orderedList') {
+    return (
+      <ol class="flex list-decimal flex-col gap-3 pl-7 marker:font-bold marker:text-art">
+        {block.content.map(item => (
+          <li class="article-text pl-1">{item.content.map(paragraph => <RichInline nodes={paragraph.content} />)}</li>
+        ))}
+      </ol>
+    )
+  }
   return (
-    <Tag class:list={['flex flex-col gap-3 border-l-2 border-mist-200', block.type === 'orderedList' ? 'list-decimal pl-9' : 'pl-5']}>
+    <ul class="flex flex-col gap-3">
       {block.content.map(item => (
-        <li class="font-body text-[15px] leading-relaxed text-dark/80">
+        <li class="article-text relative pl-7 before:absolute before:top-[0.72em] before:left-0 before:size-2.5 before:rounded-full before:bg-art">
           {item.content.map(paragraph => <RichInline nodes={paragraph.content} />)}
         </li>
       ))}
-    </Tag>
+    </ul>
   )
 })}

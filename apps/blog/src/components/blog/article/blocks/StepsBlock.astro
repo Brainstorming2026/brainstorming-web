@@ -1,0 +1,20 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'steps'>
+}
+
+const { block } = Astro.props
+const number = (index: number) => String(index + 1).padStart(2, '0')
+---
+
+<ol class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr))]">
+  {block.items.map((item, index) => (
+    <li class="rounded-3xl border border-mist bg-white p-6 sm:p-7">
+      <p aria-hidden="true" class="font-heading text-[3.25rem] leading-none font-extrabold text-art">{number(index)}</p>
+      <h3 class="mt-4 font-heading text-xl leading-snug font-bold text-dark">{item.title}</h3>
+      <p class="mt-2.5 font-body text-base leading-relaxed text-dark-400">{item.text}</p>
+    </li>
+  ))}
+</ol>

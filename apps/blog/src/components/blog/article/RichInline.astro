@@ -32,6 +32,6 @@ const pieces = nodes.map((node) => {
   if (piece.bold)
     content = <strong class="font-heading font-bold text-dark">{piece.text}</strong>
   return piece.href
-    ? <a href={piece.href} class="font-semibold text-primary underline underline-offset-4" target={isExternal(piece.href) ? '_blank' : undefined} rel={isExternal(piece.href) ? 'noopener noreferrer' : undefined}>{content}</a>
+    ? <a href={piece.href} class="font-semibold text-art-strong underline decoration-art/40 underline-offset-4 transition-colors hover:decoration-art" target={isExternal(piece.href) ? '_blank' : undefined} rel={isExternal(piece.href) ? 'noopener noreferrer' : undefined}>{content}</a>
     : content
 })}

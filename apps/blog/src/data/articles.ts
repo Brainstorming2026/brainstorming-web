@@ -62,6 +62,18 @@ export type ArticleBlock
     | { type: 'quote', text: string, attribution?: string }
     | { type: 'cta', text: string, label: string, href: string, variant: 'primary' | 'secondary' }
     | { type: 'guide', leadMagnet: ArticleLeadMagnet }
+    // Bloques visuales (cifras, pasos, recuadro, imagen con texto):
+    | { type: 'stats', items: { value: string, label: string }[] }
+    | { type: 'steps', items: { title: string, text: string }[] }
+    | { type: 'callout', style: 'tip' | 'warning' | 'idea', title: string, text: string }
+    | { type: 'split', image: ArticleImage, alt: string, heading: string, text: string, imageSide: 'left' | 'right' }
+
+/** El bloque de un tipo concreto: cada componente de `components/blog/article/blocks` recibe el suyo. */
+export type BlockOf<T extends ArticleBlock['type']> = Extract<ArticleBlock, { type: T }>
+
+/** Estilo de portada y acento que elige quien edita en el CMS; los artículos locales usan los predeterminados. */
+export type HeroStyle = 'split' | 'full' | 'centered'
+export type ArticleAccent = 'violet' | 'navy' | 'coral' | 'plum'
 
 export interface ArticleSection {
   /** Vacío cuando el CMS no define subtítulo para la sección. */
@@ -93,6 +105,10 @@ export interface Article {
   /** Siempre presente al publicar; solo falta en la vista previa de un borrador. */
   heroImage?: ArticleImage
   readTime: string
+  /** Predeterminado: 'full'. */
+  heroStyle?: HeroStyle
+  /** Predeterminado: 'violet'. */
+  accent?: ArticleAccent
   intro: string[]
   sections: ArticleSection[]
   /** No todos los articulos cierran con un bloque de resumen. */

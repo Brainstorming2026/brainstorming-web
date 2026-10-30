@@ -1,0 +1,17 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'list'>
+}
+
+const { block } = Astro.props
+---
+
+<ul class="flex flex-col gap-3">
+  {block.items.map(item => (
+    <li class="article-text relative pl-7 before:absolute before:top-[0.72em] before:left-0 before:size-2.5 before:rounded-full before:bg-art">
+      {item.label && <span class="font-heading font-bold text-dark">{item.label}:</span>} {item.text}
+    </li>
+  ))}
+</ul>

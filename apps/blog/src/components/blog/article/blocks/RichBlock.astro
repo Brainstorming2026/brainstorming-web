@@ -1,0 +1,14 @@
+---
+import type { BlockOf } from '@/data/articles'
+import RichText from '@/components/blog/article/RichText.astro'
+
+interface Props {
+  block: BlockOf<'rich'>
+}
+
+const { block } = Astro.props
+---
+
+<div class="flex flex-col gap-5">
+  <RichText doc={block.content} />
+</div>

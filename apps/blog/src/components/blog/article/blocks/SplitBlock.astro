@@ -1,0 +1,29 @@
+---
+import type { BlockOf } from '@/data/articles'
+import SmartImage from '@/components/common/SmartImage.astro'
+
+interface Props {
+  block: BlockOf<'split'>
+}
+
+const { block } = Astro.props
+// En el teléfono la imagen va siempre arriba; el lado solo cuenta desde `md`.
+const imageFirst = block.imageSide === 'left'
+---
+
+<div class="grid items-center gap-6 md:grid-cols-2 md:gap-12">
+  <div class:list={['aspect-[4/3] overflow-hidden rounded-3xl bg-art-soft', !imageFirst && 'md:order-2']}>
+    <SmartImage
+      src={block.image}
+      alt={block.alt}
+      class="size-full object-cover"
+      widths={[480, 720, 960]}
+      sizes="(min-width: 768px) 480px, 92vw"
+      loading="lazy"
+    />
+  </div>
+  <div>
+    {block.heading && <h3 class="font-heading text-2xl leading-tight font-bold text-dark sm:text-3xl">{block.heading}</h3>}
+    {block.text && <p class:list={['article-text', block.heading && 'mt-4']}>{block.text}</p>}
+  </div>
+</div>

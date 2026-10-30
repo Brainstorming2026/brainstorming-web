@@ -1,0 +1,55 @@
+---
+import type { OutlineItem } from '@/lib/article-outline'
+
+interface Props {
+  items: OutlineItem[]
+}
+
+const { items } = Astro.props
+---
+
+{items.length >= 2 && (
+  <nav id="article-toc" aria-label="En este artículo" class="border-b border-mist bg-mist-50">
+    <div class="mx-auto flex max-w-[1140px] items-center gap-3 px-5 py-2 sm:px-6 lg:px-16">
+      <p class="hidden shrink-0 font-body text-xs font-bold tracking-wider text-dark-400 uppercase sm:block">En este artículo</p>
+      {/* Una sola fila que se desliza: ocupa una línea sin importar cuántas secciones haya. El degradado de la derecha avisa que hay más. */}
+      <ul id="article-toc-list" class="flex min-w-0 flex-1 gap-2 overflow-x-auto py-1 [scrollbar-width:none] [mask-image:linear-gradient(to_right,black_calc(100%-2.5rem),transparent)] pr-10 [&::-webkit-scrollbar]:hidden">
+        {items.map(item => (
+          <li class="shrink-0">
+            <a
+              href={`#${item.id}`}
+              data-toc-link={item.id}
+              class="inline-flex min-h-11 items-center rounded-full border border-mist bg-white px-4 font-body text-sm font-semibold whitespace-nowrap text-dark-500 lg:min-h-9 transition-colors hover:border-art hover:text-art-strong aria-[current=true]:border-art aria-[current=true]:bg-art aria-[current=true]:text-white"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+<script>
+import { watchSections } from '@/lib/toc-spy'
+
+let stop = () => {}
+
+document.addEventListener('astro:page-load', () => {
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'))
+  stop()
+  if (links.length === 0)
+    return
+  const list = document.querySelector<HTMLElement>('#article-toc-list')
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const mark = (id: string) => {
+    links.forEach(link => link.setAttribute('aria-current', String(link.dataset.tocLink === id)))
+    // Desplaza solo la fila (no la página): el botón activo queda a la vista sin mover el artículo.
+    const active = links.find(link => link.dataset.tocLink === id)
+    if (list && active)
+      list.scrollTo({ left: active.offsetLeft - 24, behavior: reduced ? 'auto' : 'smooth' })
+  }
+  stop = watchSections(links.map(link => link.dataset.tocLink!), mark)
+})
+document.addEventListener('astro:before-swap', () => stop())
+</script>

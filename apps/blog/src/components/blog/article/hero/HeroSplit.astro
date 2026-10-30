@@ -1,0 +1,40 @@
+---
+import type { Article } from '@/data/articles'
+import SmartImage from '@/components/common/SmartImage.astro'
+import { heroTitleClass } from '@/lib/hero-title'
+import HeroBreadcrumb from './HeroBreadcrumb.astro'
+import HeroByline from './HeroByline.astro'
+
+interface Props {
+  article: Article
+}
+
+const { article } = Astro.props
+const titleClass = heroTitleClass(article.title, 'narrow')
+---
+
+<header class="bg-art-soft">
+  <div class="mx-auto max-w-[1140px] px-5 pt-5 pb-8 sm:px-6 lg:px-16 lg:pb-9">
+    <HeroBreadcrumb article={article} tone="light" />
+    <div class="mt-6 grid items-center gap-7 lg:grid-cols-2 lg:gap-12">
+      <div>
+        <p class="art-rise inline-flex rounded-full bg-art px-4 py-1.5 font-heading text-sm font-bold tracking-wide text-white" style="--i: 1">{article.kicker || article.category}</p>
+        <h1 class:list={['art-rise mt-4 font-heading leading-[1.1] font-extrabold tracking-tight text-art-deep', titleClass]} style="--i: 2">{article.title}</h1>
+        <HeroByline article={article} tone="light" class="art-rise mt-5" />
+      </div>
+      {article.heroImage && (
+        <div class="art-rise relative" style="--i: 3">
+          <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2rem] bg-art sm:-inset-4"></div>
+          <SmartImage
+            src={article.heroImage}
+            alt={article.title}
+            class="aspect-[4/3] w-full rounded-3xl object-cover shadow-lg"
+            widths={[480, 720, 960]}
+            sizes="(min-width: 1024px) 520px, 90vw"
+            loading="eager"
+          />
+        </div>
+      )}
+    </div>
+  </div>
+</header>

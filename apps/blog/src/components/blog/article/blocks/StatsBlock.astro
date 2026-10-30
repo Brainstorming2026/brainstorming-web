@@ -1,0 +1,22 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'stats'>
+}
+
+const { block } = Astro.props
+
+/** Alterna dos fondos de marca para que la fila tenga ritmo sin pedir más opciones a quien edita. */
+const tone = (index: number) => (index % 2 === 0 ? 'bg-art text-white' : 'bg-art-deep text-white')
+---
+
+<ul class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))]">
+  {block.items.map((item, index) => (
+    <li class:list={['rounded-3xl p-7 sm:p-9', tone(index)]}>
+      {/* `data-count`: el cliente hace subir la cifra al aparecer; sin JavaScript queda el valor final. */}
+      <p data-count class="font-heading text-[3.75rem] leading-none font-extrabold tabular-nums sm:text-[5rem]">{item.value}</p>
+      <p class="mt-4 font-body text-lg leading-snug text-white/90">{item.label}</p>
+    </li>
+  ))}
+</ul>

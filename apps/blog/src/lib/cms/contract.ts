@@ -36,6 +36,23 @@ function imageBlock<F extends z.ZodType>(f: F) {
   return z.object({ type: z.literal('image'), file: f, alt: z.string(), caption: z.string(), width: z.enum(['content', 'wide']) })
 }
 const guideBlock = z.object({ type: z.literal('guide'), guide: guideRef.nullable() })
+const statsBlock = z.object({ type: z.literal('stats'), items: z.array(z.object({ value: z.string(), label: z.string() })) })
+const stepsBlock = z.object({ type: z.literal('steps'), heading: z.string(), items: z.array(z.object({ title: z.string(), text: z.string() })) })
+const calloutBlock = z.object({ type: z.literal('callout'), style: z.enum(['tip', 'warning', 'idea']), title: z.string(), text: z.string() })
+function splitBlock<F extends z.ZodType>(f: F) {
+  return z.object({ type: z.literal('split'), file: f, alt: z.string(), heading: z.string(), text: z.string(), imageSide: z.enum(['left', 'right']) })
+}
+
+/**
+ * Opciones visuales del artículo. Con valor por defecto: si el blog se despliega frente a una API que todavía no las
+ * envía, el artículo se ve como siempre en vez de romper el build.
+ */
+export const HERO_STYLES = ['full', 'split', 'centered'] as const
+export const ACCENTS = ['violet', 'navy', 'coral', 'plum'] as const
+const look = {
+  heroStyle: z.enum(HERO_STYLES).default('full'),
+  accent: z.enum(ACCENTS).default('violet'),
+}
 
 const category = z.object({ slug: z.string(), label: z.string(), description: z.string() })
 const author = z.object({ name: z.string(), url: z.string().nullable() })
@@ -53,7 +70,8 @@ export const publishedArticleSchema = z.object({
   author: author.nullable(),
   hero: file,
   intro: z.array(z.string()),
-  blocks: z.array(z.discriminatedUnion('type', [textBlock, imageBlock(file), quoteBlock, ctaBlock, guideBlock])),
+  blocks: z.array(z.discriminatedUnion('type', [textBlock, imageBlock(file), quoteBlock, ctaBlock, guideBlock, statsBlock, stepsBlock, calloutBlock, splitBlock(file)])),
+  ...look,
 })
 export type PublishedArticle = z.infer<typeof publishedArticleSchema>
 
@@ -86,7 +104,8 @@ export const articlePreviewSchema = z.object({
   author: author.nullable(),
   hero: file.nullable(),
   intro: z.array(z.string()),
-  blocks: z.array(z.discriminatedUnion('type', [textBlock, imageBlock(file.nullable()), quoteBlock, ctaBlock, guideBlock])),
+  blocks: z.array(z.discriminatedUnion('type', [textBlock, imageBlock(file.nullable()), quoteBlock, ctaBlock, guideBlock, statsBlock, stepsBlock, calloutBlock, splitBlock(file.nullable())])),
+  ...look,
   problems: z.array(z.object({ field: z.string(), message: z.string() })),
 })
 export type ArticlePreview = z.infer<typeof articlePreviewSchema>

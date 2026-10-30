@@ -1,51 +1,24 @@
 ---
 import type { ArticleLeadMagnet } from '@/data/articles'
-import SmartImage from '@/components/common/SmartImage.astro'
+import LeadMagnetCard from '@/components/blog/article/LeadMagnetCard.astro'
 
 interface Props {
   leadMagnet: ArticleLeadMagnet
 }
 
 const { leadMagnet } = Astro.props
-const isExternal = leadMagnet.ctaHref.startsWith('http')
 ---
 
-<section class="mx-auto max-w-[720px] px-6 pt-12 lg:px-0">
-  <div id="article-lead-magnet" class="flex items-center gap-6 rounded-[16px] bg-mist-100 p-6">
-    <div class="flex-1">
-      <p class="font-body text-xs text-dark/60">{leadMagnet.eyebrow}</p>
-      <p class="mt-2 font-heading text-base font-bold text-dark">{leadMagnet.title}</p>
-      <a
-        href={leadMagnet.ctaHref}
-        target={isExternal ? '_blank' : undefined}
-        rel={isExternal ? 'noopener noreferrer' : undefined}
-        class="mt-4 inline-block rounded-[8px] bg-primary px-5 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
-      >
-        {leadMagnet.ctaLabel}
-      </a>
-    </div>
-
-    <div class="hidden aspect-square w-32 shrink-0 overflow-hidden rounded-[10px] bg-mist-200 sm:block">
-      {leadMagnet.image && (
-        <SmartImage
-          src={leadMagnet.image}
-          alt=""
-          class="h-full w-full object-cover"
-          widths={[160, 320]}
-          sizes="128px"
-          loading="lazy"
-        />
-      )}
-    </div>
+<section class="mx-auto max-w-[720px] px-5 pt-12 sm:px-6 lg:px-0">
+  <div id="article-lead-magnet">
+    <LeadMagnetCard leadMagnet={leadMagnet} />
   </div>
 </section>
 
 <script>
-import { registerMotion, revealClip } from '@/lib/motion'
+import { fadeUp, registerMotion } from '@/lib/motion'
 
 registerMotion(() => {
-  const el = document.querySelector<HTMLElement>('#article-lead-magnet')
-  if (el)
-    revealClip(el, { direction: 'up' })
+  fadeUp(document.querySelectorAll('#article-lead-magnet'))
 })
 </script>

@@ -1,0 +1,38 @@
+---
+import type { ArticleBlock } from '@/data/articles'
+import CalloutBlock from './blocks/CalloutBlock.astro'
+import CtaBlock from './blocks/CtaBlock.astro'
+import GuideBlock from './blocks/GuideBlock.astro'
+import ImageBlock from './blocks/ImageBlock.astro'
+import ListBlock from './blocks/ListBlock.astro'
+import ParagraphBlock from './blocks/ParagraphBlock.astro'
+import QuoteBlock from './blocks/QuoteBlock.astro'
+import RichBlock from './blocks/RichBlock.astro'
+import SplitBlock from './blocks/SplitBlock.astro'
+import StatsBlock from './blocks/StatsBlock.astro'
+import StepsBlock from './blocks/StepsBlock.astro'
+import SubheadingBlock from './blocks/SubheadingBlock.astro'
+
+interface Props {
+  block: ArticleBlock
+}
+
+const { block } = Astro.props
+---
+
+{/*
+  Único lugar que conoce todos los bloques: traduce el dato al componente que lo dibuja.
+  Un bloque nuevo = un componente en `blocks/` + una línea aquí + su ancho en `lib/article-layout.ts`.
+*/}
+{block.type === 'paragraph' && <ParagraphBlock block={block} />}
+{block.type === 'subheading' && <SubheadingBlock block={block} />}
+{block.type === 'list' && <ListBlock block={block} />}
+{block.type === 'rich' && <RichBlock block={block} />}
+{block.type === 'image' && <ImageBlock block={block} />}
+{block.type === 'quote' && <QuoteBlock block={block} />}
+{block.type === 'cta' && <CtaBlock block={block} />}
+{block.type === 'guide' && <GuideBlock block={block} />}
+{block.type === 'stats' && <StatsBlock block={block} />}
+{block.type === 'steps' && <StepsBlock block={block} />}
+{block.type === 'callout' && <CalloutBlock block={block} />}
+{block.type === 'split' && <SplitBlock block={block} />}

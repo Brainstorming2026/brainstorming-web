@@ -1,0 +1,11 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'subheading'>
+}
+
+const { block } = Astro.props
+---
+
+<h3 class="font-heading text-xl font-bold leading-snug text-dark sm:text-2xl">{block.text}</h3>

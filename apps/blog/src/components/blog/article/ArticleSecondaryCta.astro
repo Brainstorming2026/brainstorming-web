@@ -8,22 +8,22 @@ interface Props {
 const { cta } = Astro.props
 ---
 
-<section id="article-secondary-cta" class="mx-auto max-w-[720px] px-6 pt-12 text-center lg:px-0">
-  <h2 class="font-heading text-lg font-bold text-dark">{cta.title}</h2>
-  <a
-    href={cta.ctaHref}
-    class="mt-4 inline-block rounded-[10px] bg-primary px-6 py-2.5 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
-  >
-    {cta.ctaLabel}
-  </a>
+<section class="mx-auto max-w-[720px] px-5 pt-12 sm:px-6 lg:px-0">
+  <div id="article-secondary-cta" class="rounded-3xl bg-art-soft px-6 py-8 text-center sm:px-10">
+    <h2 class="font-heading text-xl leading-snug font-bold text-art-deep sm:text-2xl">{cta.title}</h2>
+    <a
+      href={cta.ctaHref}
+      class="mt-5 inline-flex min-h-12 items-center rounded-xl bg-art px-7 font-heading text-base font-bold text-white transition-colors hover:bg-art-strong"
+    >
+      {cta.ctaLabel}
+    </a>
+  </div>
 </section>
 
 <script>
-import { registerMotion, revealClip } from '@/lib/motion'
+import { fadeUp, registerMotion } from '@/lib/motion'
 
 registerMotion(() => {
-  const el = document.querySelector<HTMLElement>('#article-secondary-cta')
-  if (el)
-    revealClip(el, { direction: 'up' })
+  fadeUp(document.querySelectorAll('#article-secondary-cta'))
 })
 </script>

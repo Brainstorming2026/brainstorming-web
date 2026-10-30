@@ -2,13 +2,18 @@
 import type { Article } from '@/data/articles'
 import ArticleBody from '@/components/blog/article/ArticleBody.astro'
 import ArticleHero from '@/components/blog/article/ArticleHero.astro'
+import ArticleLead from '@/components/blog/article/ArticleLead.astro'
 import ArticleLeadMagnet from '@/components/blog/article/ArticleLeadMagnet.astro'
+import ArticleProgress from '@/components/blog/article/ArticleProgress.astro'
 import ArticleRelated from '@/components/blog/article/ArticleRelated.astro'
 import ArticleSecondaryCta from '@/components/blog/article/ArticleSecondaryCta.astro'
 import ArticleShare from '@/components/blog/article/ArticleShare.astro'
+import ArticleSolutionBand from '@/components/blog/article/ArticleSolutionBand.astro'
 import ArticleSummary from '@/components/blog/article/ArticleSummary.astro'
+import ArticleToc from '@/components/blog/article/ArticleToc.astro'
 import { ORGANIZATION_ID } from '@/data/organization'
 import Layout from '@/layouts/Layout.astro'
+import { outlineOf, sectionIds } from '@/lib/article-outline'
 import { allPosts, categories } from '@/lib/content'
 import { excerpt, publicationDate } from '@/lib/editorial-seo'
 import { imageUrl } from '@/lib/image-source'
@@ -59,24 +64,25 @@ const solutionPaths: Record<string, { href: string, label: string }> = {
   'Procesos': { href: '/soluciones/automatizacion-ia', label: 'Automatización de procesos con IA' },
 }
 const solution = solutionPaths[article.category]
+const ids = sectionIds(article.sections)
+const outline = outlineOf(article.sections)
 const relatedPosts = allPosts
   .filter(post => post.category === article.category && post.slug !== article.slug)
   .slice(0, 3)
 ---
 <Layout title={article.seoTitle ?? `${article.title} — Brainstorming Blog`} {description} image={article.heroImage ? imageUrl(article.heroImage) : undefined} imageAlt={article.title} type="article" {publishedTime} {modifiedTime} {structuredData} {noindex}>
   <slot name="banner" />
-  <ArticleHero article={article} />
-  <ArticleBody sections={article.sections} />
-  {article.summaryTitle && <ArticleSummary article={article} />}
-  {article.leadMagnet && <ArticleLeadMagnet leadMagnet={article.leadMagnet} />}
-  {article.secondaryCta && <ArticleSecondaryCta cta={article.secondaryCta} />}
-  <ArticleShare article={article} />
-  <ArticleRelated posts={relatedPosts} />
-  {solution && (
-<aside aria-label="Solución relacionada" class="mx-auto max-w-[1140px] px-6 pb-12 lg:px-16">
-    <div class="border-t border-dark/10 pt-6 text-sm text-dark/70">
-      ¿Quieres aplicar estas ideas a tu empresa? <a href={siteUrl('web', solution.href)} class="font-semibold text-primary underline underline-offset-4">Conoce nuestra solución de {solution.label}</a>.
-    </div>
-  </aside>
-)}
+  <div data-accent={article.accent}>
+    <ArticleProgress />
+    <ArticleHero article={article} />
+    <ArticleToc items={outline} />
+    <ArticleLead paragraphs={article.intro} />
+    <ArticleBody sections={article.sections} {ids} />
+    {article.summaryTitle && <ArticleSummary article={article} />}
+    {article.leadMagnet && <ArticleLeadMagnet leadMagnet={article.leadMagnet} />}
+    {article.secondaryCta && <ArticleSecondaryCta cta={article.secondaryCta} />}
+    {solution && <ArticleSolutionBand label={solution.label} href={siteUrl('web', solution.href)} />}
+    <ArticleShare article={article} />
+    <ArticleRelated posts={relatedPosts} />
+  </div>
 </Layout>

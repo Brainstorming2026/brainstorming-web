@@ -1,0 +1,22 @@
+---
+import type { Article } from '@/data/articles'
+import { categories } from '@/lib/content'
+
+interface Props {
+  article: Article
+  /** `dark`: sobre fondo oscuro o imagen; `light`: sobre fondo claro. */
+  tone?: 'dark' | 'light'
+}
+
+const { article, tone = 'dark' } = Astro.props
+const category = categories.find(category => category.label === article.category)
+const dark = tone === 'dark'
+---
+
+<nav aria-label="Ruta de navegación" class:list={['art-rise text-sm', dark ? 'text-white/90' : 'text-dark-400']}>
+  <ol class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+    <li><a href="/" class="underline-offset-4 hover:underline">Blog</a></li>
+    {category && <li><span aria-hidden="true" class="mr-2">/</span><a href={`/${category.slug}`} class="underline-offset-4 hover:underline">{category.label}</a></li>}
+    <li class="hidden min-w-0 items-center sm:flex"><span aria-hidden="true" class="mr-2">/</span><span aria-current="page" title={article.title} class:list={['block max-w-[36ch] truncate lg:max-w-[60ch]', dark ? 'text-white/70' : 'text-dark-300']}>{article.title}</span></li>
+  </ol>
+</nav>

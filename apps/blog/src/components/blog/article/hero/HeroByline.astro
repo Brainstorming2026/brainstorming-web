@@ -1,0 +1,25 @@
+---
+import type { Article } from '@/data/articles'
+
+interface Props {
+  article: Article
+  tone?: 'dark' | 'light'
+  class?: string
+}
+
+const { article, tone = 'dark', class: className } = Astro.props
+const name = article.author?.name ?? 'Brainstorming'
+const initial = name.trim().charAt(0).toUpperCase()
+const dark = tone === 'dark'
+---
+
+<div class:list={['flex flex-wrap items-center gap-x-5 gap-y-3 text-[15px]', dark ? 'text-white' : 'text-dark', className]}>
+  <span class="flex items-center gap-3 font-semibold">
+    <span aria-hidden="true" class:list={['grid size-10 place-items-center rounded-full font-heading font-extrabold', dark ? 'bg-white text-art-strong' : 'bg-art text-white']}>{initial}</span>
+    {article.author?.url
+      ? <>Por <a href={article.author.url} class="underline underline-offset-4">{name}</a></>
+      : <>Por {name}</>}
+  </span>
+  <span>{article.publishedDate}</span>
+  <span class:list={[dark ? 'text-white/90' : 'text-dark-400']}>{article.readTime}</span>
+</div>

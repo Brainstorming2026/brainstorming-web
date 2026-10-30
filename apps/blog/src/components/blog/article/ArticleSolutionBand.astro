@@ -1,0 +1,35 @@
+---
+interface Props {
+  /** Nombre de la solución: "Inbound Marketing". */
+  label: string
+  href: string
+}
+
+const { label, href } = Astro.props
+---
+
+<section aria-label="Solución relacionada" class="relative isolate mt-10 overflow-hidden bg-art-deep text-white">
+  <svg aria-hidden="true" class="absolute -top-24 -right-20 -z-10 size-72" viewBox="0 0 420 420"><path d="M300 40c60 30 100 100 80 170s-90 120-170 130-150-30-170-100S20 100 110 60s130-50 190-20z" fill="var(--art)" fill-opacity="0.5" /></svg>
+
+  <div id="article-solution-band" class="mx-auto flex max-w-[1000px] flex-col items-start gap-6 px-5 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-9">
+    <div class="min-w-0">
+      <h2 class="font-heading text-2xl leading-tight font-extrabold sm:text-3xl">¿Quieres aplicar estas ideas a tu empresa?</h2>
+      <p class="mt-2 font-body text-base text-white/90 sm:text-lg">Conoce nuestra solución de {label}.</p>
+    </div>
+    <a
+      {href}
+      class="inline-flex min-h-12 shrink-0 items-center gap-2.5 rounded-2xl bg-white px-7 font-heading text-base font-bold text-art-deep transition-transform duration-200 hover:-translate-y-0.5"
+    >
+      Conoce nuestra solución
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+    </a>
+  </div>
+</section>
+
+<script>
+import { fadeUp, registerMotion } from '@/lib/motion'
+
+registerMotion(() => {
+  fadeUp(document.querySelectorAll('#article-solution-band'))
+})
+</script>

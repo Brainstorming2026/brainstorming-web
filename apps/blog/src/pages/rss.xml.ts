@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { articles } from '@/data/articles'
+import { articles } from '@/lib/content'
 import { excerpt, publicationDate } from '@/lib/editorial-seo'
 
 export const prerender = true

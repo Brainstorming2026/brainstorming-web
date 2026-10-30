@@ -7,12 +7,15 @@ import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
+import { defaultSiteOrigins, DEV_PORTS, loadAppEnv } from '../../config/sites.mjs'
+
+const { isDev, env } = loadAppEnv(new URL('./', import.meta.url))
 
 export default defineConfig({
-  site: 'https://us.brainstorming.la',
+  site: env.US_URL ?? defaultSiteOrigins(isDev).us,
   trailingSlash: 'never',
   // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
-  server: { port: 4322 },
+  server: { port: DEV_PORTS.us },
   output: 'server', // per-page `prerender = true` keeps static pages free
 
   adapter: vercel({

@@ -1,0 +1,26 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'cta'>
+}
+
+const { block } = Astro.props
+const primary = block.variant === 'primary'
+const external = block.href.startsWith('http')
+---
+
+<div class:list={['rounded-3xl px-6 py-7 text-center sm:px-10 sm:py-8', primary ? 'bg-art-deep text-white' : 'bg-art-soft text-art-deep']}>
+  <p class="font-heading text-lg leading-snug font-bold sm:text-xl">{block.text}</p>
+  <a
+    href={block.href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}
+    class:list={[
+      'mt-5 inline-flex min-h-12 items-center justify-center rounded-xl px-7 font-heading text-base font-bold transition-colors',
+      primary ? 'bg-white text-art-deep hover:bg-art-soft' : 'bg-art text-white hover:bg-art-strong',
+    ]}
+  >
+    {block.label}
+  </a>
+</div>

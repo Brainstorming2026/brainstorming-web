@@ -1,17 +1,18 @@
 import { BLOG_URL, US_URL, WEB_URL } from 'astro:env/client'
+import { defaultSiteOrigins } from '../../../../config/sites.mjs'
 
-const isDev = import.meta.env.DEV
+const defaults = defaultSiteOrigins(import.meta.env.DEV)
 
 /**
  * Base URLs of the three Brainstorming sites, for links that cross between them.
  * WEB_URL / US_URL / BLOG_URL override per environment (e.g. a Vercel preview);
- * otherwise `astro dev` targets the local dev servers (fixed ports in each
- * astro.config) and builds target production.
+ * otherwise `astro dev` targets the local dev servers and builds target production
+ * (ports and origins live in config/sites.mjs).
  */
 export const siteUrls = {
-  web: WEB_URL ?? (isDev ? 'http://localhost:4321' : 'https://www.brainstorming.la'),
-  us: US_URL ?? (isDev ? 'http://localhost:4322' : 'https://us.brainstorming.la'),
-  blog: BLOG_URL ?? (isDev ? 'http://localhost:4323' : 'https://blog.brainstorming.la'),
+  web: WEB_URL ?? defaults.web,
+  us: US_URL ?? defaults.us,
+  blog: BLOG_URL ?? defaults.blog,
 } as const
 
 /** Absolute URL on another Brainstorming site: siteUrl('web', '/contacto'). */

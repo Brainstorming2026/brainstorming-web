@@ -1,0 +1,42 @@
+---
+import PreviewBanner from '@/components/blog/PreviewBanner.astro'
+import SmartImage from '@/components/common/SmartImage.astro'
+import Layout from '@/layouts/Layout.astro'
+import { guidePreviewSchema } from '@/lib/cms/contract'
+import { loadPreview, PREVIEW_MESSAGES, privatePreviewHeaders } from '@/lib/preview/load'
+
+export const prerender = false
+
+const result = await loadPreview(`/v1/preview/guides/${encodeURIComponent(Astro.params.id ?? '')}`, guidePreviewSchema, Astro.url.searchParams.get('t'))
+privatePreviewHeaders(Astro.response)
+if (!result.ok)
+  Astro.response.status = result.reason === 'unavailable' ? 503 : result.reason === 'not-found' ? 404 : 401
+---
+
+<Layout title="Vista previa de guía" noindex>
+  {result.ok
+    ? (
+        <>
+          <PreviewBanner status={result.data.status} problems={result.data.problems} />
+          <section class="mx-auto grid max-w-[900px] gap-8 px-6 py-16 sm:grid-cols-[240px_1fr] sm:items-start">
+            <div class="aspect-[3/4] overflow-hidden rounded-[12px] bg-mist-200">
+              {result.data.cover && <SmartImage src={result.data.cover.url} alt="" class="h-full w-full object-cover" widths={[240, 480]} sizes="240px" />}
+            </div>
+            <div>
+              {result.data.category && <p class="font-heading text-sm font-bold uppercase tracking-wide text-primary">{result.data.category}</p>}
+              <h1 class="mt-2 font-heading text-2xl font-bold text-dark">{result.data.title}</h1>
+              {result.data.featured && <p class="mt-2 text-sm font-bold text-primary">Destacada</p>}
+              {result.data.pdf
+                ? <a href={result.data.pdf.url} target="_blank" rel="noopener noreferrer" class="mt-6 inline-block rounded-[10px] bg-primary px-6 py-2.5 font-heading text-sm font-bold text-white">Abrir PDF ({result.data.pdf.fileName})</a>
+                : <p class="mt-6 text-sm text-dark/60">Aún no hay PDF.</p>}
+            </div>
+          </section>
+        </>
+      )
+    : (
+        <section class="mx-auto max-w-[720px] px-6 py-24 text-center">
+          <h1 class="font-heading text-2xl font-bold text-dark">Vista previa no disponible</h1>
+          <p class="mt-4 font-body text-dark/70">{PREVIEW_MESSAGES[result.reason]}</p>
+        </section>
+      )}
+</Layout>

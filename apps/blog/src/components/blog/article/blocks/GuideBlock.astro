@@ -1,0 +1,12 @@
+---
+import type { BlockOf } from '@/data/articles'
+import LeadMagnetCard from '@/components/blog/article/LeadMagnetCard.astro'
+
+interface Props {
+  block: BlockOf<'guide'>
+}
+
+const { block } = Astro.props
+---
+
+<LeadMagnetCard leadMagnet={block.leadMagnet} />

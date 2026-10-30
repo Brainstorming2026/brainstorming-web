@@ -1,0 +1,16 @@
+---
+import { splitLead } from '@/lib/article-lead'
+
+interface Props {
+  paragraphs: string[]
+}
+
+const { lead, rest } = splitLead(Astro.props.paragraphs)
+---
+
+{(lead || rest.length > 0) && (
+  <section class="mx-auto flex max-w-[720px] flex-col gap-4 px-5 pt-8 sm:px-6 lg:px-0 lg:pt-12">
+    {lead && <p class="font-body text-xl leading-[1.55] font-medium text-dark sm:text-[1.375rem]">{lead}</p>}
+    {rest.map(paragraph => <p class="article-text">{paragraph}</p>)}
+  </section>
+)}

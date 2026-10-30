@@ -3,9 +3,8 @@ import { TURNSTILE_SITE_KEY } from 'astro:env/client'
 import ArticleLeadMagnet from '@/components/blog/article/ArticleLeadMagnet.astro'
 import PostCard from '@/components/blog/PostCard.astro'
 import PostRow from '@/components/blog/PostRow.astro'
-import { getArticleBySlug } from '@/data/articles'
-import { allPosts, categories, getCategoryBySlug, popularPosts } from '@/data/posts'
 import Layout from '@/layouts/Layout.astro'
+import { allPosts, categories, getArticleBySlug, getCategoryBySlug, popularPosts } from '@/lib/content'
 import { siteUrl } from '@/lib/site-urls'
 
 export const prerender = true

@@ -20,9 +20,9 @@ const shareLinks = [
 ]
 ---
 
-<section class="mx-auto max-w-[720px] px-6 py-12 text-center lg:px-0">
-  <p class="font-body text-sm text-dark/50">Publicado el {article.publishedDate}</p>
-  <h2 class="mt-2 font-heading text-xl font-bold text-dark">Compartir es seguir aprendiendo</h2>
+<section class="mx-auto max-w-[720px] px-5 py-12 text-center sm:px-6 lg:px-0">
+  <p class="font-body text-sm text-dark-400">Publicado el {article.publishedDate}</p>
+  <h2 class="mt-2 font-heading text-2xl font-extrabold text-dark">Compartir es seguir aprendiendo</h2>
 
   <ul id="article-share-links" class="mt-5 flex items-center justify-center gap-3">
     {shareLinks.map(link => (
@@ -32,7 +32,7 @@ const shareLinks = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label={link.label}
-          class="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-600"
+          class="flex h-11 w-11 items-center justify-center rounded-full bg-art text-white transition-colors hover:bg-art-strong"
         >
           <Icon name={link.name} class="h-8 w-8" />
         </a>

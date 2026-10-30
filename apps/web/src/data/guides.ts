@@ -36,10 +36,10 @@ export type GuideCategory
 
 export interface Guide {
   slug: string
-  image: ImageMetadata
+  image: ImageMetadata | string
   category: GuideCategory
   title: string
-  /** Ruta al PDF en public/pdfs. Se sirve tal cual como href de descarga. */
+  /** Ruta local (corte estático) o URL publicada y validada del CMS. */
   pdf: string
   featured?: boolean
 }

@@ -1,66 +1,18 @@
 ---
 import type { Article } from '@/data/articles'
-import { Image } from 'astro:assets'
-import { categories } from '@/data/posts'
-import { publicationDate } from '@/lib/editorial-seo'
+import HeroCentered from './hero/HeroCentered.astro'
+import HeroFull from './hero/HeroFull.astro'
+import HeroSplit from './hero/HeroSplit.astro'
 
 interface Props {
   article: Article
 }
 
 const { article } = Astro.props
-const category = categories.find(category => category.label === article.category)
+const style = article.heroStyle ?? 'full'
 ---
 
-<header class="bg-mist-100">
-  <nav aria-label="Ruta de navegación" class="mx-auto max-w-[1140px] px-6 pt-6 text-sm text-dark/70 lg:px-16">
-    <ol class="flex flex-wrap items-center gap-2">
-      <li><a href="/" class="hover:text-primary">Blog</a></li>
-      {category && <li><span aria-hidden="true" class="mr-2">/</span><a href={`/${category.slug}`} class="hover:text-primary">{category.label}</a></li>}
-      <li><span aria-hidden="true" class="mr-2">/</span><span aria-current="page">{article.title}</span></li>
-    </ol>
-  </nav>
-  <div class="mx-auto max-w-[1140px] px-6 py-12 lg:px-16 lg:py-16">
-    <div class="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
-      <div id="article-hero-text">
-        <p class="font-heading text-sm font-bold text-primary">{article.kicker}</p>
-        <h1 class="mt-3 font-heading text-3xl font-bold leading-[1.15] text-dark sm:text-4xl">
-          {article.title}
-        </h1>
-      </div>
-
-      <div id="article-hero-image" class="relative">
-        <div class="absolute -inset-4 -z-10 rounded-[24px] bg-primary/90"></div>
-        <Image
-          src={article.heroImage}
-          alt={article.title}
-          class="w-full rounded-[16px] object-cover shadow-lg"
-          widths={[480, 720, 960]}
-          sizes="(min-width: 1024px) 520px, 90vw"
-          loading="eager"
-        />
-      </div>
-    </div>
-
-    <p class="mt-8 text-sm text-dark/70">Por <a href={article.author?.url ?? 'https://www.brainstorming.la/nosotros'} class="font-semibold text-primary hover:underline">{article.author?.name ?? 'Brainstorming'}</a> · <time datetime={publicationDate(article.publishedDate)}>{article.publishedDate}</time>{article.modifiedDate && <> · Actualizado: <time datetime={publicationDate(article.modifiedDate)}>{article.modifiedDate}</time></>}</p>
-    <p class="mt-3 font-heading text-sm font-bold uppercase tracking-wide text-primary">{article.readTime}</p>
-    <div class="mt-4 flex max-w-[880px] flex-col gap-4">
-      {article.intro.map(paragraph => (
-        <p class="font-body text-[15px] leading-relaxed text-dark/80">{paragraph}</p>
-      ))}
-    </div>
-  </div>
-</header>
-
-<script>
-import { registerMotion, revealClip } from '@/lib/motion'
-
-registerMotion(() => {
-  const text = document.querySelector<HTMLElement>('#article-hero-text')
-  const image = document.querySelector<HTMLElement>('#article-hero-image')
-  if (text)
-    revealClip(text, { direction: 'left', scrollTrigger: false })
-  if (image)
-    revealClip(image, { direction: 'right', scrollTrigger: false, parallax: true })
-})
-</script>
+{/* Único lugar que conoce los estilos de portada: cada uno es un componente que recibe el mismo artículo. */}
+{style === 'full' && <HeroFull article={article} />}
+{style === 'split' && <HeroSplit article={article} />}
+{style === 'centered' && <HeroCentered article={article} />}

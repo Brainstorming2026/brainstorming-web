@@ -1,0 +1,15 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'quote'>
+}
+
+const { block } = Astro.props
+---
+
+<blockquote class="relative overflow-hidden rounded-3xl bg-art-soft px-6 py-8 sm:px-10 sm:py-10">
+  <span aria-hidden="true" class="pointer-events-none absolute -top-4 left-5 font-heading text-[7rem] leading-none font-extrabold text-art/20 select-none">“</span>
+  <p class="relative font-heading text-xl leading-snug font-bold text-art-deep sm:text-2xl">{block.text}</p>
+  {block.attribution && <footer class="relative mt-4 font-body text-sm font-semibold text-art-strong">— {block.attribution}</footer>}
+</blockquote>

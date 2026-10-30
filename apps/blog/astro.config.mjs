@@ -2,16 +2,19 @@ import react from '@astrojs/react'
 
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
-
 import icon from 'astro-icon'
+
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
+import { cmsImagePatterns, defaultSiteOrigins, DEV_PORTS, loadAppEnv } from '../../config/sites.mjs'
+
+const { isDev, env } = loadAppEnv(new URL('./', import.meta.url))
 
 export default defineConfig({
-  site: 'https://blog.brainstorming.la',
+  site: env.BLOG_URL ?? defaultSiteOrigins(isDev).blog,
   trailingSlash: 'never',
   // Fixed per app so cross-site links in dev (src/lib/site-urls.ts) always resolve.
-  server: { port: 4323 },
+  server: { port: DEV_PORTS.blog },
   output: 'server', // per-page `prerender = true` keeps static pages free
 
   adapter: vercel({
@@ -24,6 +27,11 @@ export default defineConfig({
   }),
 
   security: { checkOrigin: true },
+
+  // Imágenes del CMS (R2). Solo ese host puede optimizarse; con un CMS local (CMS_API_URL en localhost), su Worker.
+  image: {
+    remotePatterns: cmsImagePatterns(env),
+  },
 
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [icon(), react()],
@@ -39,6 +47,11 @@ export default defineConfig({
       TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       WEB_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
       US_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      CMS_API_URL: envField.string({ context: 'server', access: 'public', optional: true, url: true }),
+      CMS_FILES_URL: envField.string({ context: 'server', access: 'public', optional: true, url: true }),
+      CMS_CONTENT_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+      // 'cms' lee el CMS; cualquier otro valor (o ninguno) usa el contenido de src/data. Se retira al terminar la migración.
+      CONTENT_SOURCE: envField.enum({ context: 'server', access: 'public', optional: true, values: ['cms', 'static'] }),
       BLOG_URL: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
     },
   },

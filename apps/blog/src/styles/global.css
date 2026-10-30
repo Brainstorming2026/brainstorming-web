@@ -142,3 +142,75 @@ html {
     font-family: var(--font-heading);
   }
 }
+
+/* ============================================================================
+   Artículo del blog: acento por artículo, texto de lectura y entrada de portada
+   ============================================================================ */
+
+/* Acento del artículo. `data-accent` en el contenedor de la página elige uno de cuatro estilos de marca
+   (conjunto cerrado: quien edita no puede salirse de la identidad). Violeta es el predeterminado. */
+:root,
+[data-accent="violet"] {
+  --art: #7d44e4;
+  --art-strong: #5628a3;
+  --art-soft: #f4eefe;
+  --art-deep: #2f1659;
+}
+[data-accent="navy"] {
+  --art: #223b79;
+  --art-strong: #16274e;
+  --art-soft: #e8edf8;
+  --art-deep: #16274e;
+}
+[data-accent="coral"] {
+  --art: #c8213f;
+  --art-strong: #94142c;
+  --art-soft: #fde6ea;
+  --art-deep: #4d0b19;
+}
+[data-accent="plum"] {
+  --art: #2f1659;
+  --art-strong: #1b0c34;
+  --art-soft: #ebe1fb;
+  --art-deep: #1b0c34;
+}
+
+/* Utilidades `bg-art`, `text-art-strong`, etc., que siguen al acento activo. */
+@theme inline {
+  --color-art: var(--art);
+  --color-art-strong: var(--art-strong);
+  --color-art-soft: var(--art-soft);
+  --color-art-deep: var(--art-deep);
+}
+
+/* Texto de lectura del artículo: una sola definición para párrafos, listas y texto enriquecido. */
+@utility article-text {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-dark-500);
+}
+
+/* Entrada de la portada solo con CSS: sin JavaScript no hay parpadeo al cargar. `--i` escalona los elementos. */
+@keyframes art-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@utility art-rise {
+  animation: art-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .art-rise {
+    animation: none;
+  }
+}
+
+/* Recuadro de advertencia: no sigue el acento del artículo (ámbar es "atención" en cualquier marca). */
+@theme {
+  --color-warn: #92400e;
+  --color-warn-soft: #fdf3e3;
+  --color-warn-deep: #4a2406;
+}

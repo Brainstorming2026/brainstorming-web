@@ -1,0 +1,17 @@
+---
+/** Barra de progreso de lectura, fija arriba de todo. Decorativa para lectores de pantalla. */
+---
+
+<div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-1">
+  <div id="article-progress" class="h-full origin-left bg-art" style="transform: scaleX(0)"></div>
+</div>
+
+<script>
+import { registerMotion, scrollProgress } from '@/lib/motion'
+
+registerMotion(() => {
+  const bar = document.querySelector<HTMLElement>('#article-progress')
+  if (bar)
+    scrollProgress(bar)
+})
+</script>

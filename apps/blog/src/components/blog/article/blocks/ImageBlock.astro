@@ -1,0 +1,22 @@
+---
+import type { BlockOf } from '@/data/articles'
+import SmartImage from '@/components/common/SmartImage.astro'
+
+interface Props {
+  block: BlockOf<'image'>
+}
+
+const { block } = Astro.props
+---
+
+<figure>
+  <SmartImage
+    src={block.image}
+    alt={block.alt ?? ''}
+    class="aspect-[16/10] w-full rounded-3xl object-cover"
+    widths={[480, 720, 1080, 1440]}
+    sizes={block.wide ? '(min-width: 1024px) 960px, 92vw' : '(min-width: 768px) 720px, 92vw'}
+    loading="lazy"
+  />
+  {block.caption && <figcaption class="mt-3 text-center font-body text-sm text-dark-400">{block.caption}</figcaption>}
+</figure>

@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro'
-import { articles } from '@/data/articles'
-import { guides } from '@/data/guides'
-import { categories } from '@/data/posts'
+import { articles, categories } from '@/lib/content'
+import { getGuides } from '@/lib/guides'
 import { siteUrl } from '@/lib/site-urls'
 
 export const prerender = true
 
 /** llms.txt (llmstxt.org): a plain summary AI answer engines can read and cite. Built from blog data so it never drifts. */
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
+  const guides = await getGuides()
   const url = (path: string) => new URL(path, site).href
   const byCategory = categories.map((category) => {
     const items = articles

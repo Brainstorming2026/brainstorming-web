@@ -9,21 +9,21 @@ interface Props {
 const { article } = Astro.props
 ---
 
-<section id="article-summary" class="bg-mist-100 py-16">
-  <div class="mx-auto max-w-[720px] px-6 text-left lg:px-0">
-    <h2 class="font-heading text-2xl font-bold text-dark">{article.summaryTitle}</h2>
+<section id="article-summary" class="bg-art-soft py-16 sm:py-20">
+  <div class="mx-auto max-w-[720px] px-5 text-left sm:px-6 lg:px-0">
+    <h2 class="font-heading text-3xl font-extrabold text-art-deep">{article.summaryTitle}</h2>
     <div class="mt-4 flex flex-col gap-4">
       {(article.summaryParagraphs ?? []).map(paragraph => (
-        <p class="font-body text-[15px] leading-relaxed text-dark/80">{paragraph}</p>
+        <p class="article-text">{paragraph}</p>
       ))}
     </div>
 
     {article.summaryTagline && (
       <div class="mt-8 text-center">
-        <p class="font-heading text-base font-bold text-dark">{article.summaryTagline}</p>
+        <p class="font-heading text-lg font-bold text-art-deep">{article.summaryTagline}</p>
         <a
           href={siteUrl('web', '/contacto')}
-          class="mt-6 inline-block rounded-[10px] bg-primary px-8 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-600"
+          class="mt-6 inline-flex min-h-12 items-center rounded-xl bg-art px-8 font-heading text-base font-bold text-white transition-colors hover:bg-art-strong"
         >
           Contáctanos
         </a>

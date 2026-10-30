@@ -1,0 +1,11 @@
+---
+import type { BlockOf } from '@/data/articles'
+
+interface Props {
+  block: BlockOf<'paragraph'>
+}
+
+const { block } = Astro.props
+---
+
+<p class="article-text">{block.text}</p>

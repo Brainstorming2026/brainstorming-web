@@ -34,5 +34,122 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/pdfs/8-secretos-crear-tu-logo.pdf",
+      "destination": "https://files.brainstorming.la/pdf/a87264ac-ccce-4b65-b074-82be52c9e7e1.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/checklist-tienda-virtual.pdf",
+      "destination": "https://files.brainstorming.la/pdf/04bc70b7-dec3-4da6-a61c-ee05945f384c.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/conseguir-clientes-en-linea.pdf",
+      "destination": "https://files.brainstorming.la/pdf/63d4ad56-10ae-4be5-9a22-d3eb6c3d9204.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/consejos-one-page-efectiva.pdf",
+      "destination": "https://files.brainstorming.la/pdf/05bf6184-4b03-47b2-8981-2ec3d5eddc56.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/construir-pagina-web-5-pasos.pdf",
+      "destination": "https://files.brainstorming.la/pdf/e08ebc59-d060-430e-9cea-d2c4aa6961bd.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/contenido-impactante-instagram.pdf",
+      "destination": "https://files.brainstorming.la/pdf/b755c961-8f09-4761-9ed4-2450110cacd9.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/contratar-equipo-trabajo-exitoso.pdf",
+      "destination": "https://files.brainstorming.la/pdf/dd8c75c5-7ef0-4d71-b8f8-7438cb5cf9c7.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/errores-marketing-digital.pdf",
+      "destination": "https://files.brainstorming.la/pdf/944ab497-0a71-40a1-9b0e-788712e051b3.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/historias-instagram.pdf",
+      "destination": "https://files.brainstorming.la/pdf/d0adf084-4e32-4364-948e-859f3b0fe77e.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/indicadores-campana-digital.pdf",
+      "destination": "https://files.brainstorming.la/pdf/0be6a2ff-6329-40ed-8216-bd7a11b67145.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/kpi-facebook.pdf",
+      "destination": "https://files.brainstorming.la/pdf/d809f88e-2150-41d9-86a9-96c43f38ff8d.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/likes-no-generan-ventas.pdf",
+      "destination": "https://files.brainstorming.la/pdf/de51814c-8ad7-40ad-a931-4749f1499386.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/mandamientos-community-manager.pdf",
+      "destination": "https://files.brainstorming.la/pdf/f4831348-8944-4399-b90f-c975d214e222.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/medidas-imagenes-facebook.pdf",
+      "destination": "https://files.brainstorming.la/pdf/c27d468e-8352-428f-b27f-b685c0b2107f.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/medidas-imagenes-instagram.pdf",
+      "destination": "https://files.brainstorming.la/pdf/f6ed4d57-ade2-4877-a5a7-f32627bd0710.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/mejorar-estrategia-redes-sociales.pdf",
+      "destination": "https://files.brainstorming.la/pdf/f99d00f9-fc29-495d-b0ac-e5153f5ad817.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/pasos-lanzamiento-ecommerce.pdf",
+      "destination": "https://files.brainstorming.la/pdf/e5133a0d-f659-4ea8-8601-ec0ac57eeb75.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/plan-de-medios-perfecto.pdf",
+      "destination": "https://files.brainstorming.la/pdf/0a66b45a-30d7-4a2c-b192-78673e207503.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/plantillas-landing-page.pdf",
+      "destination": "https://files.brainstorming.la/pdf/2d3ba94f-5c51-4d50-89bf-3f924fe72b6a.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/plataformas-esenciales-ecommerce.pdf",
+      "destination": "https://files.brainstorming.la/pdf/0e9fd2ff-f76b-4cbf-8515-23e43effb58a.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/posicionar-marca-google.pdf",
+      "destination": "https://files.brainstorming.la/pdf/a105889a-ebf7-4979-aa5f-7edd2ad2edac.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/preguntas-contratar-proveedor.pdf",
+      "destination": "https://files.brainstorming.la/pdf/c316a1e9-e57a-490b-9149-890b39b50604.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/pdfs/prospectos-aliados-de-por-vida.pdf",
+      "destination": "https://files.brainstorming.la/pdf/704b3dec-4170-4fd9-8a80-1692d68720c8.pdf",
+      "permanent": true
+    }
   ]
 }

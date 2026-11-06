@@ -60,7 +60,7 @@ export const resourceLinks = [
 
 export const siteContact = {
   location: 'Lima, Perú',
-  email: 'conversemos@brainstorming.la',
+  email: 'manuel@brainstorming.la',
   phone: '+51 992 528 363',
   whatsapp: 'https://wa.me/51992528363',
   copyright: '© 2026 Brainstorming',
